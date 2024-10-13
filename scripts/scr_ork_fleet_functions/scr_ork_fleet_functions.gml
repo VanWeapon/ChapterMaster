@@ -75,7 +75,7 @@ function ork_fleet_move(){
         }
         
         with(obj_star){
-            if (is_dead_star()) or (owner=eFACTION.Ork) then instance_deactivate_object(id);
+            if (is_dead_star() || owner=eFACTION.Ork || scr_orbiting_fleet(eFACTION.Ork) !="none") then instance_deactivate_object(id);
         }
         var nex=instance_nearest(x,y,obj_star);
         action_x=nex.x;

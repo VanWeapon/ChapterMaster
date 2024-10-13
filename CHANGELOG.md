@@ -21,6 +21,65 @@ All notable changes to this project will be documented in this file.
     - everything that a normal player doesn't need to know.
 ----------------------------------
 
+## [0.9.3.2]
+
+### New:
+- Introduction of a bug log file `message_log.log`, located in `AppData\Local\Chapter Master`.
+- Introduction of proper error handling of end turn sequences should vastly reduce crashes for player on turn end and will provide error log codes stored in message_log.log and displayed in to the player at turn end.
+- Maximum advantage/disadvantage count is now 8.
+- New cheat - "ruinspopulate" to put an ancient ruins on every planet.
+- Carcharodons are now playable.
+
+### Changed:
+- Hidden game settings that currently don't do anything.
+- Normal Dreadnoughts have 600 as max age at chapter generation.
+- Artifacts now have more relevant stat info in their descriptions.
+- Artifact equip window buttons.
+
+### Fixed:
+- Crash from building forges at secret lairs.
+- Crash from fleets arriving at player fleets trying to trade.
+- Tooltips will now always draw as the top layer.
+- Crash from guard attempting to recruit new guard.
+- Ship occupancy sometimes breaking.
+- Crash from moving vehicles possibly fixed and being monitored.
+- Error log obj_controller.x = ii.x; when arriving at ork fleet.
+- Attempt to fix squad view screen bugging and not appearing. Fix status to be determined following play testing.
+- Custom formations not loading correctly upon save load.
+- Artifact arrays making some artifacts unusable.
+- Ork fleets will no longer death stack.
+- Role settings on the creation screen being click through.
+- Crash from deprecated onceh variable.
+- Added fail safes to stop crash when viewing some planetary features.
+- Artifact screen text overlap, broken strings are fixed.
+- Some of the tooltip issues.
+
+### Under The Hood:
+- `scr_has_adv` and `scr_has_disadv` functions.
+- New error handling method - `try_and_report_loop`, described [>here<](https://discord.com/channels/714022226810372107/1121959429546455050/1293597133093470269).
+- Partly refactored artifact equip popup.
+
+## [0.9.3.1]
+
+### Changed:
+- Infernus pistol melee burden is now 0, like on other pistols.
+
+### Fixed:
+- Crashes: 
+	- Upon ending turn, when forge items complete (`scr_evaluate_forge_item_completion`).
+	- (Probably fixed) After battle (`obj_centerline_Step_0`).
+	- Mid-battle caused by enunit rework (`obj_enunit_Alarm_0`).
+	- Upon ending turn (`obj_en_fleet_Alarm_1`).
+	- When purging planets (`scr_purge_world`).
+	- When using select all (ships) before battle.
+	- Chaplain duplication on drop select causing a crash (yet again).
+- Select All and Select (role) on the company view are now working properly.
+- Land raiders/land speeders being not buildable.
+- Zooming affecting attack/raid window.
+- Crafters advantage not affecting crafter trait rate, due to typo.
+- Aspirant duplication on drop select and a related crash.
+- (Maybe fixed?) Player fleet being unselectable.
+
 ## [0.9.3.0]
 
 ### New:
@@ -51,6 +110,7 @@ All notable changes to this project will be documented in this file.
 - Genestealer cults now have names.
 - Medium and larger forges now have the option to have vehicle hangers built, allowing vehicles to be built at the forge.
 	- Built vehicles will spawn at locations with said hangers.
+
 ### Changed:
 - Stars will no longer spawn on top of each other.
 - Player should now be able to move camera closer to the edge of the screen.
@@ -83,6 +143,7 @@ All notable changes to this project will be documented in this file.
 	- Techmarines now have eye attachments.
 	- Edited Servo-arm and Servo-harness sprites.
 	- Star sprites edited. Black backgrounds removed and slight blur is applied, to reduce jaggedness.
+
 ### Fixed:
 - Crashes: 
 	- Caused Inquisitors snooping on player bases.

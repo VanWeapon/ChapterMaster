@@ -909,7 +909,7 @@ global.weapons = {
 			"artifact": 120
 		},
 		"description": "The Infernus Pistol is a compact pistol varient of the melta gun. A brutal blast of heat to burn away the The Emperor's foes.",
-		"melee_hands": 1,
+		"melee_hands": 0,
 		"ranged_hands": 1,
 		"ammo": 4,
 		"range": 2.1,

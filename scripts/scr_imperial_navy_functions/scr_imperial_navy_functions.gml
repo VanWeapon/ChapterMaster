@@ -264,8 +264,8 @@ function fleet_max_guard(){
 	return maxi;
 }
 
-function fleet_remaining_guard_ratio(){
-	var maxi=0,curr=0,i=0;
+function fleet_guard_current(){
+	var curr=0,i=0;
 	for (i=1;i<array_length(capital_imp);i++){
 	    if (capital_imp[i]>0){ 
 	      	if (capital_number<=i){
@@ -294,6 +294,10 @@ function fleet_remaining_guard_ratio(){
 	    	}
 	    }
 	}
+	return curr;	
+}
+function fleet_remaining_guard_ratio(){
+	var curr=fleet_guard_current();
 	var maxi = fleet_max_guard();
 	guardsmen_ratio=1;
 	if (guardsmen_unloaded=0) then guardsmen_ratio=curr/maxi;

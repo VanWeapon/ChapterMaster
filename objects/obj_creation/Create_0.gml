@@ -68,7 +68,6 @@ target_gear=0;
 tab=0;
 role_names_all="";
 
-// 
 chapter="Unnamed";
 chapter_string="Unnamed";
 chapter_year=0;
@@ -79,7 +78,13 @@ points=0;maxpoints=100;
 fleet_type=1;
 strength=5;cooperation=5;
 purity=5;stability=5;
-var i;i=-1;repeat(6){i+=1;adv[i]="";adv_num[i]=0;dis[i]="";dis_num[i]=0;}
+for(var i=0; i<16; i++){
+    adv[i]="";
+    adv_num[i]=0;
+    dis[i]="";
+    dis_num[i]=0;
+}
+var i;i=-1;repeat(10){i+=1;}
 homeworld="Temperate";homeworld_name=global.name_generator.generate_star_name();
 recruiting="Death";recruiting_name=global.name_generator.generate_star_name();
 flagship_name=global.name_generator.generate_imperial_ship_name();
@@ -194,7 +199,7 @@ chapter_id[14]="Lamenters";
 chapter_tooltip[14]="The Lamenter's accursed and haunted legacy seems to taint much of what they have achieved; their victories often become bitter ashes in their hands.  Nearly extinct, they fight their last days on behalf of the common folk in a crusade of endless penitence.";
 
 chapter_id[15]="Carcharodons";
-//chapter_tooltip[15]="Rumored to be Successors of the Raven Guard, these Astartes are known for their sudden attacks and shock assaults. Travelling through the Imperium via self-sufficient Nomad-Predation based fleets, no enemy is safe from the fury of these bloodthirsty Space Marines.";
+chapter_tooltip[15]="Rumored to be Successors of the Raven Guard, these Astartes are known for their sudden attacks and shock assaults. Travelling through the Imperium via self-sufficient Nomad-Predation based fleets, no enemy is safe from the fury of these bloodthirsty Space Marines.";
 
 chapter_id[16]="Soul Drinkers";
 chapter_tooltip[16]="Sharing ancestry of the Black Templars or Crimson fists. As proud sons of Dorn they share the strong void combat traditions, fielding a large amount of Battle Barges. As well as being fearsome in close combat. Whispers of the Ruinous Powers are however quite enticing."
@@ -309,9 +314,9 @@ if((file_exists("chaptersave#1.ini")=true) and (chapter_made=1)){
 		chapter_master_melee21 = ini_read_real("Creation","chapter_master_melee",chapter_master_melee);
 		chapter_master_ranged21= ini_read_string("Creation","master_ranged",chapter_master_ranged);
 		chapter_master_specialty21=ini_read_string("Creation","master_specialty",chapter_master_specialty);
-		adv21=[1,2,3,4];
-		dis21=[1,2,3,4];
-		for(var i =1;i<=4;i++){
+		adv21=[1,2,3,4,5,6,7,8];
+		dis21=[1,2,3,4,5,6,7,8];
+		for(var i =1;i<=8;i++){
 			
 			adv21[i]=ini_read_string("Creation","adv21"+string(i),"")
 			dis21[i]=ini_read_string("Creation","dis21"+string(i),"")
@@ -331,8 +336,8 @@ ini_close();
 
 
 else if (file_exists("chaptersave#1.ini")=false){
- adv21 = [1,2,3,4]
- dis21 =[1,2,3,4]
+ adv21 = [1,2,3,4,5,6,7,8]
+ dis21 =[1,2,3,4,5,6,7,8]
  disposition21 = [1,2,3,4,5,6,7]
  founding21=4;
  
@@ -615,6 +620,9 @@ advantage[i]="Melee Enthusiasts";
 advantage_tooltip[i]="Rip and tear! Each Company has an additional Assault Squad.  Your marines and dreadnoughts also have boosted attack with melee weapons.";i+=1;
 advantage[i]="Venerable Ancients";
 advantage_tooltip[i]="Even in death they still serve. Your chapter places a staunch reverence for its forebears and has a number of additional venerable dreadnoughts in service ";i+=1;
+advantage[i]="Medicae Primacy";
+advantage_tooltip[i]="Your chapter reveres its Apothecarion above all of it's specialist; You start with more Apothecaries.";i+=1;
+
 i+=1;
 advantage[i]="Cancel";advantage_tooltip[i]="";
 

@@ -1,3 +1,5 @@
+set_zoom_to_defualt();
+
 var __b__;
 __b__ = action_if_number(obj_ncombat, 0, 0);
 if __b__
@@ -22,8 +24,8 @@ draw_set_font(fnt_40k_30b);
 // var xx,yy;
 // xx=view_xview[0]+545;yy=view_yview[0]+212;
 draw_set_halign(fa_left);draw_set_color(c_gray);
-if (attack=0) then draw_text_transformed(xx+545,yy+212,string_hash_to_newline("Raiding ("+string(p_target.name)+" "+scr_roman(obj_controller.selecting_planet)+")"),0.6,0.6,0);
-if (attack=1) then draw_text_transformed(xx+545,yy+212,string_hash_to_newline("Attacking ("+string(p_target.name)+" "+scr_roman(obj_controller.selecting_planet)+")"),0.6,0.6,0);
+var attack_type = attack ? "Attacking" : "Raiding"
+draw_text_transformed(xx+545,yy+212,$"{attack_type} ({planet_numeral_name(planet_number, p_target)} )",0.6,0.6,0);
 
 
 draw_set_color(c_gray);
@@ -379,14 +381,14 @@ if (scr_hit(xx+954,yy+556,xx+1043,yy+579)=true){
         if (sh_target!=-50){sh_target.acted+=1;}
         
         if (attacking==10) or (attacking==11){
-            remove_planet_problem(obj_controller.selecting_planet, "meeting", p_target);
-            remove_planet_problem(obj_controller.selecting_planet, "meeting_trap", p_target);
+            remove_planet_problem(planet_number, "meeting", p_target);
+            remove_planet_problem(planet_number, "meeting_trap", p_target);
         }
             
         instance_create(0,0,obj_ncombat);
         obj_ncombat.battle_object=p_target;
         obj_ncombat.battle_loc=p_target.name;
-        obj_ncombat.battle_id=obj_controller.selecting_planet;
+        obj_ncombat.battle_id=planet_number;
         obj_ncombat.dropping=1-attack;
         obj_ncombat.attacking=attack;
         obj_ncombat.enemy=attacking;
@@ -406,7 +408,7 @@ if (scr_hit(xx+954,yy+556,xx+1043,yy+579)=true){
 
         
         if (obj_ncombat.enemy=9) and (obj_ncombat.battle_object.space_hulk=0){
-            if (has_problem_planet(obj_controller.selecting_planet, "tyranid_org", p_target)) then obj_ncombat.battle_special="tyranid_org";
+            if (has_problem_planet(planet_number, "tyranid_org", p_target)) then obj_ncombat.battle_special="tyranid_org";
         }
         
         if (obj_ncombat.enemy=11){
@@ -484,8 +486,8 @@ if (scr_hit(xx+954,yy+556,xx+1043,yy+579)=true){
                         if (veh_fighting[co][v]!=0) then obj_ncombat.veh_fighting[co][v]=1;
                     }
                     if (attack=1) and (ship_all[500]=1){
-                        if (obj_ini.loc[co][v]=p_target.name) and (obj_ini.TTRPG[co][v].planet_location=obj_controller.selecting_planet) and (fighting[co][v]=1) then obj_ncombat.fighting[co][v]=1;
-                        if (v<=100){if (obj_ini.veh_loc[co][v]=p_target.name) and (obj_ini.veh_wid[co][v]=obj_controller.selecting_planet) then obj_ncombat.veh_fighting[co][v]=1;}
+                        if (obj_ini.loc[co][v]=p_target.name) and (obj_ini.TTRPG[co][v].planet_location=planet_number) and (fighting[co][v]=1) then obj_ncombat.fighting[co][v]=1;
+                        if (v<=100){if (obj_ini.veh_loc[co][v]=p_target.name) and (obj_ini.veh_wid[co][v]=planet_number) then obj_ncombat.veh_fighting[co][v]=1;}
                     }
                 }
             }
@@ -498,7 +500,7 @@ if (scr_hit(xx+954,yy+556,xx+1043,yy+579)=true){
             i+=1;if (ship_all[i]!=0) then scr_battle_roster(ship[i],ship_ide[i],false);
         }
 		//ship_all[500] equals "Local" status on the drop menu
-		if (ship_all[500]=1) and (attack=1) then scr_battle_roster(p_target.name,obj_controller.selecting_planet,true);
+		if (ship_all[500]=1) and (attack=1) then scr_battle_roster(p_target.name,planet_number,true);
     }
 }
 
@@ -539,7 +541,7 @@ if (menu=0) and (purge=1){
     x5+=89;y5+=31;
     
     if (instance_exists(p_target)){
-        if (p_target.p_type[obj_controller.selecting_planet]="Shrine") then nup=true;
+        if (p_target.p_type[planet_number]="Shrine") then nup=true;
     }
     
     // 89,31
@@ -549,7 +551,7 @@ if (menu=0) and (purge=1){
         if (iy=1) and (purge_a<=0) then draw_set_alpha(0.35);
         if (iy=2) and (purge_b<=0) and (purge_d=0) then draw_set_alpha(0.35);
         if (iy=3) and (purge_c<=0) and (purge_d=0) then draw_set_alpha(0.35);
-        if (iy=4) and ((purge_d+purge_b=0) or (p_target.dispo[obj_controller.selecting_planet]<0)) then draw_set_alpha(0.35);
+        if (iy=4) and ((purge_d+purge_b=0) or (p_target.dispo[planet_number]<0)) then draw_set_alpha(0.35);
         if (iy=4) and (nup=true) then draw_set_alpha(0.35);
         
         if (scr_hit(x5,y5+((iy-1)*73),x5+351,y5+((iy-1)*73)+63)=true){r=4;
@@ -574,7 +576,7 @@ if (menu=0) and (purge=1){
                     ships_selected=0;
                     all_sel=0;
                 }
-                if (iy=4) and (purge_d+purge_b!=0) and (p_target.dispo[obj_controller.selecting_planet]>=0) and (nup=false){
+                if (iy=4) and (purge_d+purge_b!=0) and (p_target.dispo[planet_number]>=0) and (nup=false){
                     purge=5;obj_controller.cooldown=8;alarm[2]=1;
                     purge_score=0;
                     ships_selected=0;
@@ -611,15 +613,15 @@ if (menu=0) and (purge>=2){
     var x2,y2;
     x2=__view_get( e__VW.XView, 0 )+535;y2=__view_get( e__VW.YView, 0 )+200;
     draw_set_halign(fa_left);draw_set_color(c_gray);
-    if (purge=2) then draw_text_transformed(x2+14,y2+12,string_hash_to_newline("Bombard Purging "+string(p_target.name)+" "+scr_roman(obj_controller.selecting_planet)),0.6,0.6,0);
-    if (purge=3) then draw_text_transformed(x2+14,y2+12,string_hash_to_newline("Fire Cleansing "+string(p_target.name)+" "+scr_roman(obj_controller.selecting_planet)),0.6,0.6,0);
-    if (purge=4) then draw_text_transformed(x2+14,y2+12,string_hash_to_newline("Selective Purging "+string(p_target.name)+" "+scr_roman(obj_controller.selecting_planet)),0.6,0.6,0);
-    if (purge=5) then draw_text_transformed(x2+14,y2+12,string_hash_to_newline("Assassinate Governor ("+string(p_target.name)+" "+scr_roman(obj_controller.selecting_planet)+")"),0.6,0.6,0);
+    if (purge=2) then draw_text_transformed(x2+14,y2+12,string_hash_to_newline("Bombard Purging "+string(p_target.name)+" "+scr_roman(planet_number)),0.6,0.6,0);
+    if (purge=3) then draw_text_transformed(x2+14,y2+12,string_hash_to_newline("Fire Cleansing "+string(p_target.name)+" "+scr_roman(planet_number)),0.6,0.6,0);
+    if (purge=4) then draw_text_transformed(x2+14,y2+12,string_hash_to_newline("Selective Purging "+string(p_target.name)+" "+scr_roman(planet_number)),0.6,0.6,0);
+    if (purge=5) then draw_text_transformed(x2+14,y2+12,string_hash_to_newline("Assassinate Governor ("+string(p_target.name)+" "+scr_roman(planet_number)+")"),0.6,0.6,0);
     
     
     
     // Disposition here
-    var succession=0,pp=obj_controller.selecting_planet
+    var succession=0,pp=planet_number
 
     var succession = has_problem_planet(pp,"succession",p_target);
     
@@ -718,10 +720,10 @@ if (menu=0) and (purge>=2){
     draw_set_font(fnt_40k_14);draw_set_color(c_gray);draw_set_alpha(1);
     
     var hers,influ,poppy;
-    hers=p_target.p_heresy[obj_controller.selecting_planet]+p_target.p_heresy_secret[obj_controller.selecting_planet];
-    influ=p_target.p_influence[obj_controller.selecting_planet];
-    if (p_target.p_large[obj_controller.selecting_planet]=1) then poppy=string(p_target.p_population[obj_controller.selecting_planet])+"B";
-    if (p_target.p_large[obj_controller.selecting_planet]=0) then poppy=string(scr_display_number(p_target.p_population[obj_controller.selecting_planet]));
+    hers=p_target.p_heresy[planet_number]+p_target.p_heresy_secret[planet_number];
+    influ=p_target.p_influence[planet_number];
+    if (p_target.p_large[planet_number]=1) then poppy=string(p_target.p_population[planet_number])+"B";
+    if (p_target.p_large[planet_number]=0) then poppy=string(scr_display_number(p_target.p_population[planet_number]));
     draw_text(x2+14,y2+312,"Heresy: "+string(max(hers,influ[eFACTION.Tau]))+"%");
     draw_text(x2+14,y2+332,"Population: "+string(poppy));
     
@@ -881,7 +883,7 @@ if (menu=0) and (purge>=2){
                 }
             }
             
-            scr_purge_world(p_target,obj_controller.selecting_planet,purge-1,purge_score);
+            scr_purge_world(p_target,planet_number,purge-1,purge_score);
         }
     }
     

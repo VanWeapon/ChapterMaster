@@ -155,7 +155,7 @@ function scr_arti_descr() {
 
 	if (equipped() && is_array(bearer)){
 		var unit = fetch_unit(bearer);
-		final_description += $". It is currently in the possession of {unit.name_role()}."
+		final_description += $"#It is currently in the possession of {unit.name_role()}."
 	}
 
 	return final_description;

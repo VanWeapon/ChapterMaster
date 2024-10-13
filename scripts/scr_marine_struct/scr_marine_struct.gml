@@ -1255,7 +1255,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine", other_spawn_data={}) 
 					"crafter",
 					[299,298],
 					{
-						advantage:["crafter",[299,297]],
+						advantage:["Crafters",[299,297]],
 						recruit_world_type: [
 							["Forge", -2],
 							["Lava", -2],

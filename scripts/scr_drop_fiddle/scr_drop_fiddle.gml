@@ -40,9 +40,9 @@ function scr_drop_fiddle(argument0, argument1, argument2, argument3) {
                 
 	                if (obj_ini.role[comp][i]=obj_ini.role[100][5]) then capts+=1;
 	                if (unit.IsSpecialist("chap", true)) then chaplains+=1;
-                	if (unit.IsSpecialist("libs")) then psykers++;
-                	if (unit.IsSpecialist("apoth")) then apothecaries++;
-                	if (unit.IsSpecialist("forge")) then techmarines++;
+                	if (unit.IsSpecialist("libs", true)) then psykers+=1;
+                	if (unit.IsSpecialist("apoth", true)) then apothecaries+=1;
+                	if (unit.IsSpecialist("forge", true)) then techmarines+=1;
                 
 	                if (obj_ini.role[comp][i]="Death Company") and (string_count("Dreadnought",obj_ini.armour[comp][i])=0) then mahreens+=1;
 	                if (obj_ini.role[comp][i]=obj_ini.role[100][4]) then terminators+=1;
@@ -84,7 +84,7 @@ function scr_drop_fiddle(argument0, argument1, argument2, argument3) {
 	        }
 	        if (good=1){
 	        	unit = fetch_unit([comp,i]);
-	            if (obj_ini.race[comp][i]!=0) and (unit.ship_location=argument0) and (string_count("Aspirant",obj_ini.role[comp][i])=0) and (obj_ini.god[comp][i]<10) and ((string_count("Bike",obj_ini.mobi[comp][i])=0) or (vehy=1)){// Man
+	            if (obj_ini.race[comp][i]!=0) and (unit.ship_location=argument0) /* and (string_count("Aspirant",obj_ini.role[comp][i])=0) */ and (obj_ini.god[comp][i]<10) and ((string_count("Bike",obj_ini.mobi[comp][i])=0) or (vehy=1)){// Man
 	                ship_use[argument2]-=1;fighting[comp][i]=0;
                             
 	                if (obj_ini.role[comp][i]="Chapter Master"){master=0;ship_use[argument2]-=1;}

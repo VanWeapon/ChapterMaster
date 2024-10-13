@@ -3,12 +3,12 @@ if (instance_exists(orbiting)) and (obj_controller.is_test_map=true){
     draw_set_color(c_red);
     draw_line_width(x,y,orbiting.x,orbiting.y,1);
 }
-scale = 1/obj_controller.map_scale;
+var scale = obj_controller.scale_mod;
 
 if (x<0) or (x>room_width) or (y<0) or (y>room_height) then exit;
 if (image_alpha=0) then exit;
 
-var coords = [0,0];;
+var coords = [0,0];
 var near_star = instance_nearest(x,y, obj_star);
 if (x==near_star.x && y==near_star.y){
     var coords = [24,-24];
@@ -26,21 +26,23 @@ if (obj_controller.zoomed=1){
         within=1;      
     } 
 }
+var select_instance = instance_exists(obj_fleet_select);
+if (!select_instance) then selected=0;
 if (within){
     if (mouse_check_button_pressed(mb_left) && obj_controller.menu==0 && !selected){
         alarm[3]=1;
     }  
-} else {
-    if (mouse_check_button_pressed(mb_left)){
-        if (selected){
-            if (instance_exists(obj_fleet_select)){
+} else (mouse_check_button_pressed(mb_left)){
+    if (selected){
+        if (select_instance){
+            if (instance_exists(obj_fleet_select.player_fleet)){
                 if !(obj_fleet_select.player_fleet.id == self.id && !obj_fleet_select.currently_entered){
                     selected=0;
                 }
             }
-        } else {
-            selected=0;
         }
+    } else {
+        selected=0;
     }
 }
 

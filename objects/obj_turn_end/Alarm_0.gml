@@ -1,6 +1,6 @@
 
 // show_message("biiiiiIIIng");
-
+try_and_report_loop("battle alarm 0 loop", function(){
 instance_activate_object(obj_star);
 combating=0;
 
@@ -68,30 +68,14 @@ repeat(50){
 
 if (battles>0) and (current_battle<=battles){
     var ii, xx, yy, good;
-    ii=0;good=0;
+    ii=0;
+    good=0;
     
-    var battle_star_collect = star_by_name(battle_location[current_battle]);
+    var battle_star = star_by_name(battle_location[current_battle]);
     
-    if (battle_star_collect!="none"){
-        good=1;
-    }
-    
-    /*repeat(200){
-        if (good=0){
-            xx=random(room_width);
-            yy=random(room_height);
-            ii=instance_nearest(xx,yy,obj_star);
-            
-            if (instance_exists(ii)){if (ii.name=battle_location[current_battle]) then good=1;}
-            if (instance_exists(ii)){if (ii.name!=battle_location[current_battle]){good=0;instance_deactivate_object(ii);}}
-            ii.present_fleets-=1;
-        }
-    }*/
-    
-    if (good=1){// trying to find the star
-        instance_activate_object(obj_star);
-        obj_controller.x=ii.x;
-        obj_controller.y=ii.y;
+    if (battle_star!="none"){// trying to find the star
+        obj_controller.x=battle_star.x;
+        obj_controller.y=battle_star.y;
         show=current_battle;
         
         if (battle_world[current_battle]=-50){
@@ -107,9 +91,10 @@ if (battles>0) and (current_battle<=battles){
             
             var e=1;
             repeat(10){
-                e+=1;if (e=11) then e=13;
-                if (ii.present_fleet[e]>0){
-                    obj_controller.temp[1070]=ii.id;
+                e+=1;
+                if (e=11) then e=13;
+                if (battle_star.present_fleet[e]>0){
+                    obj_controller.temp[1070]=battle_star.id;
                     obj_controller.temp[1071]=e;
                     obj_controller.temp[1072]=0;
                     obj_controller.temp[1073]=0;
@@ -156,16 +141,13 @@ if (battles>0) and (current_battle<=battles){
             
             strin[3]="";
             
-            var tempy;tempy=0;
+            var tempy=0;
             tempy=battle_object[current_battle].p_owner[battle_world[current_battle]];
             
             if (tempy=1) or (tempy=2) or (tempy=3){
-                if (battle_object[current_battle].p_fortified[battle_world[current_battle]]=1) then strin[3]="Minimally";
-                if (battle_object[current_battle].p_fortified[battle_world[current_battle]]=2) then strin[3]="Lightly";
-                if (battle_object[current_battle].p_fortified[battle_world[current_battle]]=3) then strin[3]="Moderately";
-                if (battle_object[current_battle].p_fortified[battle_world[current_battle]]=4) then strin[3]="Highly";
-                if (battle_object[current_battle].p_fortified[battle_world[current_battle]]=5) then strin[3]="Extremely";
-                if (battle_object[current_battle].p_fortified[battle_world[current_battle]]=6) then strin[3]="Maximally";
+                var array_string = ["","Minimally","Lightly","Moderately","Highly","Extremely","Maximally"];
+                var battle_fortification = battle_object[current_battle].p_fortified[battle_world[current_battle]];
+                strin[3] = array_string[clamp(battle_fortification, 1, 6)];
             }
             
             tempy=0;
@@ -198,9 +180,13 @@ instance_activate_object(obj_star);
 
 
 if (battle[1]=0) or (current_battle>battles){//                         This is temporary for the sake of testing
-    if (battle[1]=0){obj_controller.x=first_x;obj_controller.y=first_y;}
+    if (battle[1]=0){
+        obj_controller.x=first_x;
+        obj_controller.y=first_y;
+    }
     alarm[1]=1;
 }
 
 /* */
 /*  */
+});

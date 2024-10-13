@@ -1020,8 +1020,8 @@ function scr_ui_manage() {
 					button.alpha = 1;
 					if (button.draw()){
 						cooldown=8;
-						scr_load_all(loading);
-						selecting_types = alll ? "" :"%!@";
+						// scr_load_all(loading); //not sure whether loading was intentional or not
+						sel_all = "all";
 					}
 
 					button.move("right", true, 1);
@@ -1235,19 +1235,20 @@ function scr_ui_manage() {
 	                                var vehicle =display_unit[q];
 	                                vehic_size =scr_unit_size("",ma_role[q],true);
 	                                if ((sh_cargo[sel]+vehic_size)<=sh_cargo_max[sel]) and (man_sel[q]!=0){
-	                                    wombat=sel;
+	                                    var start_ship=obj_ini.veh_lid[vehicle[0]][vehicle[1]];
+	                                    var start_planet=obj_ini.veh_wid[vehicle[0]][vehicle[1]];
 	                                    ma_loc[q]=sh_name[sel];
 	                                    ma_lid[q]=sh_ide[sel];
 	                                    ma_wid[q]=0;
-	                                    veh_loc[vehicle[0]][vehicle[1]]=sh_name[sel];
+	                                    obj_ini.veh_loc[vehicle[0]][vehicle[1]]=sh_name[sel];
 	                                    obj_ini.veh_lid[vehicle[0]][vehicle[1]]=sh_ide[sel];
 	                                    obj_ini.veh_wid[vehicle[0]][vehicle[1]]=0;
 	                                    obj_ini.veh_uid[vehicle[0]][vehicle[1]]=sh_uid[sel];
 	                                   obj_ini.ship_carrying[sh_ide[sel]]+=vehic_size;
-	                                   if (selecting_ship==0){
-	                                   		load_from_star.p_player[selecting_planet]-=vehic_size;
-	                                   } else {
-	                                   	 obj_ini.ship_carrying[selecting_ship] -= vehic_size;
+	                                   if (start_planet){
+	                                   		load_from_star.p_player[start_planet]-=vehic_size;
+	                                   } else if (start_ship){
+	                                   	 obj_ini.ship_carrying[start_ship] -= vehic_size;
 	                                   }
 	                                }
 	                            }

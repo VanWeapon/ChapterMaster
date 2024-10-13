@@ -93,7 +93,8 @@ current_eventing="";
 chaos_rating=0;
 chapter_made = 0;
 obj_cuicons.alarm[1]=1; // Clean up custom icons
-map_scale =1;
+map_scale = 1;
+scale_mod = 1;
 
 diplomacy_pathway = "";
 option_selections=[];
@@ -435,6 +436,7 @@ unit_bio=false;
 view_squad=false;
 company_report=false;
 company_data = {};
+filter_mode = false;
 pauldron_trim=0;
 last_unit=[0,0];
 ui_coloring=""; 
@@ -659,7 +661,7 @@ blood_debt=0;
 // ** Sets penitent or blood debt if chapter disadvantage is selected **
 if (instance_exists(obj_ini)){
     var bloo=0;
-    for(var o=1; o<=4; o++){if (obj_ini.dis[o]="Blood Debt") then bloo=1;}
+    if(scr_has_disadv("Blood Debt")) then bloo=1;
 
     penitent=obj_ini.penitent;
     penitent_current=obj_ini.penitent_current;

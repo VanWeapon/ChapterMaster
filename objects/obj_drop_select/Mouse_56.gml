@@ -146,7 +146,7 @@ if (obj_controller.cooldown<=0) and (once_only=0){// Need to change max_ships to
         instance_create(0,0,obj_ncombat);
         obj_ncombat.battle_object=p_target;
         obj_ncombat.battle_loc=p_target.name;
-        obj_ncombat.battle_id=obj_controller.selecting_planet;
+        obj_ncombat.battle_id=planet_number;
         obj_ncombat.dropping=1-attack;
         obj_ncombat.attacking=attack;
         obj_ncombat.enemy=attacking;
@@ -176,7 +176,7 @@ if (obj_controller.cooldown<=0) and (once_only=0){// Need to change max_ships to
         
         
         if (obj_ncombat.enemy=9){
-            if (has_problem_planet(obj_controller.selecting_planet, "tyranid_org", p_target)) then obj_ncombat.battle_special="tyranid_org";
+            if (has_problem_planet(planet_number, "tyranid_org", p_target)) then obj_ncombat.battle_special="tyranid_org";
         }
         
         if (obj_ncombat.enemy=6) then obj_ncombat.threat=eldar;
@@ -217,8 +217,8 @@ if (obj_controller.cooldown<=0) and (once_only=0){// Need to change max_ships to
                         if (veh_fighting[co][v]!=0) then obj_ncombat.veh_fighting[co][v]=1;
                     }
                     if (attack=1) and (ship_all[500]=1){
-                        if (obj_ini.loc[co][v]=p_target.name) and (obj_ini.TTRPG[co][v].planet_location=obj_controller.selecting_planet) then obj_ncombat.fighting[co][v]=1;
-                        if (v<=100){if (obj_ini.veh_loc[co][v]=p_target.name) and (obj_ini.veh_wid[co][v]=obj_controller.selecting_planet) then obj_ncombat.veh_fighting[co][v]=1;}
+                        if (obj_ini.loc[co][v]=p_target.name) and (obj_ini.TTRPG[co][v].planet_location=planet_number) then obj_ncombat.fighting[co][v]=1;
+                        if (v<=100){if (obj_ini.veh_loc[co][v]=p_target.name) and (obj_ini.veh_wid[co][v]=planet_number) then obj_ncombat.veh_fighting[co][v]=1;}
                     }
                 }
             }
@@ -228,7 +228,7 @@ if (obj_controller.cooldown<=0) and (once_only=0){// Need to change max_ships to
         repeat(31){
             i+=1;if (ship_all[i]!=0) then scr_battle_roster(ship[i],ship_ide[i],false);
         }
-        if (ship_all[500]=1) then scr_battle_roster(p_target.name,obj_controller.selecting_planet,true);
+        if (ship_all[500]=1) then scr_battle_roster(p_target.name,planet_number,true);
         
         
     }

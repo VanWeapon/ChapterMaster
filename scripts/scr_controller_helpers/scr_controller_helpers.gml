@@ -37,7 +37,7 @@ function scr_menu_clear_up(specific_area_function){
 
 		    if (menu>=500) then exit;
 
-		    var zoomeh=0,diyst=999,onceh=0;
+		    var zoomeh=0,diyst=999;
 		    xx=__view_get( e__VW.XView, 0 );
 		    yy=__view_get( e__VW.YView, 0 );
 		    zoomeh=zoomed;
@@ -65,6 +65,7 @@ function scr_change_menu(specific_area_function){
 		});
 		if (continue_sequence){
 			with(obj_fleet_select){instance_destroy();}
+			with(obj_popup){instance_destroy();}
 			specific_area_function(); 
 		}		
 	}
@@ -134,7 +135,6 @@ function scr_toggle_setting(){
             hide_banner=1;
         }
         else if (menu==21){
-            onceh=0;
             if (!settings) {
                 menu=0;
                 cooldown=8000;
@@ -462,9 +462,8 @@ function scr_end_turn(){
 	        }
 	    }
 
-	    if (menu==1) and (onceh==0){
-	        menu=0;
-	        
+	    if (menu==1){
+	        menu=0;	        
 	        cooldown=8000;
 	        click=1;
 	        hide_banner=0;

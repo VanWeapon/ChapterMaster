@@ -5,7 +5,7 @@ function set_chapter_arti_data(){
     artifacts=0;
     menu_artifact=-1;
     unused_artifacts = 0;
-    for (var i=1;i<array_length(obj_ini.artifact);i++){
+    for (var i=0;i<array_length(obj_ini.artifact);i++){
         if (obj_ini.artifact[i] != ""){
             if (menu_artifact==-1) then menu_artifact=i;
             artifacts++;
@@ -102,14 +102,17 @@ function scr_librarium(){
                 artifact_gift = new shutter_button();
                 artifact_destroy = new shutter_button();  
                 if  (menu_artifact>=1){     	
-                	while (menu_artifact>=1){
+                	while (menu_artifact>=0){
                 		menu_artifact--;
                         if (obj_ini.artifact[menu_artifact] != "") then break;
                 	}
                 }
-                if (menu_artifact==0){
+                if (menu_artifact==-1){
                     for (var i=29;i>0;i--){
-                        if (obj_ini.artifact[i] != "") then menu_artifact=i;
+                        if (obj_ini.artifact[i] != ""){
+                            menu_artifact=i;
+                            break;
+                        }
                     }                    
             	}
             }
@@ -128,8 +131,11 @@ function scr_librarium(){
                 }
 
                 if (menu_artifact==30){
-                    for (var i=1;i<30;i++){
-                         if (obj_ini.artifact[i] != "") then menu_artifact=i;
+                    for (var i=0;i<30;i++){
+                         if (obj_ini.artifact[i] != ""){
+                            menu_artifact=i;
+                            break;
+                        }
                     }
                 }
             }
@@ -195,7 +201,7 @@ function scr_librarium(){
                     if (cur_arti.equipped()) then _can_equip = 0;
 
                      if (artifact_equip.draw_shutter(xx + 385, yy + 740, "EQUIP", 0.3, _can_equip)){
-                        if (_can_equip){
+                        if (_can_equip && !instance_exists(obj_popup)){
                             var pop=instance_create(0,0,obj_popup);
                             pop.type=8;
                             cooldown=8;                            
@@ -246,16 +252,25 @@ function scr_librarium(){
                     }
                     var base_type = cur_arti.determine_base_type();
                     if (arti_data && base_type!="device"){
-                        if (base_type=="weapon") { // Weapon
-
+                        if (arti_data.armour_value != 0) {
+                            tip2 += $"{arti_data.armour_value} Armour#";
+                        }
+                        if (arti_data.attack != 0) {
                             tip2 = $"{arti_data.attack} Damage#";
-                            tip2 += $"{arti_data.ammo} Ammunition#";
-
                         }
-                        else if (base_type=="armour") { // Armour
-                            tip2 = $"{arti_data.armour_value} Armour Value";
+                        if (arti_data.hp_mod != 0) {
+                            tip2 += $"{arti_data.hp_mod}% Health Bonus#";
                         }
-                        else if (base_type=="gear") { // Gear
+                        if (arti_data.melee_mod != 0) {
+                            tip2 += $"{arti_data.melee_mod}% Melee Bonus#";
+                        }
+                        if (arti_data.ranged_mod != 0) {
+                            tip2 += $"{arti_data.ranged_mod}% Ranged Bonus#";
+                        }
+                        if (arti_data.damage_resistance_mod != 0) {
+                            tip2 += $"{arti_data.damage_resistance_mod}% Resistance Bonus#";
+                        }
+                        if (base_type=="gear") { // Gear
                             tip2 = tooltip_other;
                         }
                     }

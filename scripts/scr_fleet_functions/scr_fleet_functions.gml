@@ -203,7 +203,9 @@ function scr_efleet_arrive_at_trade_loc(){
 	var arrive_at_player_fleet = (instance_exists(target));
     if (arrive_at_player_fleet){
     	arrive_at_player_fleet = target.object_index == obj_p_fleet;
-    	var chase_fleet = (target.action!="" || point_distance(x,y,target.x,target.y)>40) && obj_ini.fleet_type != ePlayerBase.home_world;
+    	if (arrive_at_player_fleet){
+    		var chase_fleet = (target.action!="" || point_distance(x,y,target.x,target.y)>40) && obj_ini.fleet_type != ePlayerBase.home_world;
+    	}
     } else {
     	arrive_at_player_fleet=false;
     	target=noone;
@@ -222,7 +224,7 @@ function scr_efleet_arrive_at_trade_loc(){
 				action_x=target.action_x;
 				action_y=target.action_y;
 			}
-			else if (target.action="" ){
+			else if (target.action=="" ){
                 action_x=instance_nearest(target.x,target.y,obj_star).x;
                 action_y=instance_nearest(target.x,target.y,obj_star).y;
             }
@@ -233,20 +235,9 @@ function scr_efleet_arrive_at_trade_loc(){
         }
     }
 
-        
-        
-        /*show_message(string(trade_goods));
-        show_message(string_count("_her",trade_goods)=0);
-        show_message(target);
-        show_message(string(point_distance(x,y,target.x,target.y)));
-        show_message(target.action);*/
-        
-        
+  
         
     else if (arrive_at_player_fleet || obj_ini.fleet_type=ePlayerBase.home_world){
-        with(obj_temp2){instance_destroy();}
-        with(obj_temp3){instance_destroy();}
-        with(obj_ground_mission){instance_destroy();}
         
         var targ;
         var cur_star=nearest_star_proper(x, y);
@@ -282,7 +273,6 @@ function scr_efleet_arrive_at_trade_loc(){
 
         set_fleet_movement();
     }
-    exit;
 }
 function scr_orbiting_fleet(faction){
 
@@ -686,7 +676,9 @@ function fleet_arrival_logic(){
                 if (stue2.planets=1) and (stue2.p_type[1]="Dead") then goood=0;
                 }
             }
-        action_x=stue2.x;action_y=stue2.y;alarm[4]=1;// stue.present_fleets-=1;
+        action_x=stue2.x;
+        action_y=stue2.y;
+        alarm[4]=1;// stue.present_fleets-=1;
         instance_activate_object(obj_star);
     }
     

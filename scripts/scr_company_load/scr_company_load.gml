@@ -1,10 +1,10 @@
-function scr_company_load(argument0) {
+function scr_company_load(ship_loc) {
 
-	var i,s,temp;i=-1;s=0;temp=0;
+	var s=0,temp=0;
 
-	repeat(90){i+=1;
-	    if (obj_ini.ship[i]!="") and (obj_ini.ship_location[i]=argument0){
-	        s+=1;
+	for (var i=0;i<array_length(obj_ini.ship);i++){
+	    if (obj_ini.ship[i]!="") and (obj_ini.ship_location[i]==ship_loc){
+	        s++;
 	        sh_ide[s]=i;
 	        sh_name[s]=obj_ini.ship[i];
 	        sh_class[s]=obj_ini.ship_class[i];
@@ -17,7 +17,8 @@ function scr_company_load(argument0) {
 	    }
 	}
 
-	ship_current=1;ship_max=s;ship_see=30;
-
+	ship_current=1;
+	ship_max=s;
+	ship_see=30;
 
 }

@@ -677,7 +677,7 @@ function scr_enemy_ai_e() {
                     if (upgrade.built<=obj_controller.turn && upgrade_type == P_features.Secret_Base){
                         if (upgrade.forge > 0){
                             obj_controller.player_forge_data.player_forges+=sqr(upgrade.forge_data.size);
-                            if (monestary.upgrade.vehicle_hanger){
+                            if (upgrade.forge_data.vehicle_hanger){
                                 array_push(obj_controller.player_forge_data.vehicle_hanger,[name,run]);
                             }                            
                         }

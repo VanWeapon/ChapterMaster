@@ -1,5 +1,10 @@
 
+
+//TODO refactor this entire turd of a construct
 if (hide=true) then exit;
+if (image=="debug"){
+    size=3;
+}
 
 var romanNumerals=scr_roman_numerals();
 var xx,yy;
@@ -178,18 +183,19 @@ if ((zoom=0) and (type<=4)) or (type=98){
         draw_sprite_ext(spr_popup_medium,type,xx+((1600-sprite_width)/2),yy+((900-sprite_height)/2),1,y_scale,0,c_white,1);
         if (image!=""){image_wid=100;image_hei=100;}
     }
-    if (size=1){
+    else if (size=1){
         sprite_index=spr_popup_small;
         image_alpha=0;
         widd=sprite_width-10;
         draw_sprite_ext(spr_popup_small,type,xx+((1600-sprite_width)/2),yy+((900-sprite_height)/2),1,y_scale,0,c_white,1);
         if (image!=""){image_wid=150;image_hei=150;}
     }
-    if (size=3){
+    else if (size=3){
         sprite_index=spr_popup_large;
         image_alpha=0;
         widd=sprite_width-50;
-        draw_sprite_ext(spr_popup_large,type,xx+((1600-sprite_width)/2),yy+((900-sprite_height)/2),1,y_scale,0,c_white,1);
+        var draw_y_scale = image=="debug"? y_scale*1.5 : y_scale;
+        draw_sprite_ext(spr_popup_large,type,xx+((1600-sprite_width)/2),yy+((900-sprite_height)/2),1,draw_y_scale,0,c_white,1);
         if (image!=""){image_wid=200;image_hei=200;}
     }
     
@@ -217,13 +223,15 @@ if ((zoom=0) and (type<=4)) or (type=98){
     if (instance_exists(obj_turn_end)){
         if (obj_turn_end.popups>0) then draw_text(x1+20,y1+(sprite_height*0.07),string_hash_to_newline(string(obj_turn_end.current_popup)+"/"+string(obj_turn_end.popups)));
     }
-    
-    if (image=""){
+    if (image=="debug"){
+        draw_text_ext(x1+5,y1+(sprite_height*0.18),string_hash_to_newline(string(text)),-1,sprite_width-10);
+    }
+    else if (image=""){
         if (size=1) then draw_text_ext(x1+5,y1+(sprite_height*0.18),string_hash_to_newline(string(text)),-1,widd);
         if (size!=1) then draw_text_ext(x1+25,y1+(sprite_height*0.18),string_hash_to_newline(string(text)),-1,widd);
         str_h=string_height_ext(string_hash_to_newline(string(text)),-1,widd)+(sprite_height*0.18);
     }
-    if (image!=""){
+    else if (image!=""){
         if (size=1) then draw_text_ext(x1+15+image_wid,y1+(sprite_height*0.18),string_hash_to_newline(string(text)),-1,widd);
         if (size!=1) then draw_text_ext(x1+35+image_wid,y1+(sprite_height*0.18),string_hash_to_newline(string(text)),-1,widd);
         str_h=string_height_ext(string_hash_to_newline(string(text)),-1,widd)+(sprite_height*0.18);
@@ -390,64 +398,93 @@ if ((zoom=0) and (type<=4)) or (type=98){
 }
 
 // ** Equip Artifact **
-if (type=8) and (instance_exists(obj_controller)){
-    var x2,y2;x2=__view_get( e__VW.XView, 0 )+951;y2=__view_get( e__VW.YView, 0 )+48;
-    
+if (type = 8) and (instance_exists(obj_controller)) {
+    var x2 = xx + 951;
+    var y2 = yy + 48;
+    var before = target_comp;
+    var temp_alpha = 1;
+    arti = obj_ini.artifact_struct[obj_controller.menu_artifact];
+
     // draw_sprite(spr_popup_large,0,x2,y2);
-    
+
     draw_set_font(fnt_40k_14b);
     draw_set_halign(fa_center);
     draw_set_color(c_gray);
-    
-    draw_text(x2+312,y2+26,"Equip Artifact ({obj_ini.artifact[obj_controller.menu_artifact]})");
-    // draw_text(xx+320.5,yy+123.5,"Equip Artifact ("+string(obj_ini.artifact[obj_controller.menu_artifact])+")");
-    
-    draw_set_font(fnt_40k_12);draw_set_halign(fa_left);
-    draw_text(x2+31,y2+55,"View Company:");
-    var check=" ";
 
-    for (var i=0;i<10;i++){
-        check=" ";
-        if (target_comp==i){
-            check="x";
-        }
-        if (i>0){
-            draw_text(x2+77+(81*(i-(i<5?1:6))),y2+(i<5?87:103),$"{romanNumerals[i-1]} [{check}]");
-        } else { // HQ Company
-            draw_text(x2+31,y2+55,$"HQ [{check}]");
+    draw_text(x2 + 312, y2 + 26, $"Equip Artifact ({obj_ini.artifact[obj_controller.menu_artifact]})");
+    // draw_text(x2+320.5,yy+123.5,"Equip Artifact ("+string(obj_ini.artifact[obj_controller.menu_artifact])+")");
+
+    draw_set_font(fnt_40k_12);
+    draw_set_halign(fa_left);
+    draw_text(x2 + 31, y2 + 35, "Select Company:");
+
+    // Draw HQ button
+    temp_alpha = (target_comp == 0) ? 1 : 0.5;
+    var hq_text = $"HQ";
+    var hq_button = draw_unit_buttons([x2 + 60, y2 + 75, x2 + 60 + 60, y2 + 75 + 20], hq_text, [1, 1], , , fnt_40k_12, temp_alpha); // Position for HQ
+    if (point_and_click(hq_button)) {
+        target_comp = 0;
+    }
+
+    // Draw other company buttons
+    for (var i = 1; i < 11; i++) {
+        temp_alpha = (target_comp == i) ? 1 : 0.5;
+        var item_text = $"{romanNumerals[i - 1]}";
+        var x_offset = x2 + 141 + (81 * (i - (i < 6 ? 1 : 6)));
+        var y_offset = y2 + (i < 6 ? 60 : 90);
+        var company_button = draw_unit_buttons([x_offset, y_offset, x_offset+60, y_offset+20], item_text, [1, 1], , , fnt_40k_12, temp_alpha);
+        if (point_and_click(company_button)) {
+            target_comp = i;
         }
     }
+
+    if (before != target_comp) {
+        units = 0;
+        with(obj_controller) {
+            if (obj_popup.target_comp > 0) then scr_company_view(obj_popup.target_comp);
+            if (obj_popup.target_comp = 0) then scr_special_view(0);
+        }
+        var i;
+        i = -1;
+        repeat(array_length(obj_controller.display_unit)) {
+            i += 1;
+            obj_controller.man_sel[i] = 0;
+        }
+        i = -1;
+    }
+
+    // Weapon slot buttons
+    if (arti.determine_base_type() == "weapon") {
+        draw_text(x2 + 30, y2 + 128, ("Replace:"));
     
-    if (target_role>2) then draw_set_alpha(0.25);
-    check=" ";
-    draw_text(x2+30,y2+128,string_hash_to_newline("Replace:"));
+        temp_alpha = (target_role == 1) ? 1 : 0.5;
+        if (point_and_click(draw_unit_buttons([x2 + 150, y2 + 120, x2 + 150 + 120, y2 + 120 + 20], ($"1st Weapon"), [1,1],,,fnt_40k_12,temp_alpha))){
+            target_role = 1;
+        }
     
-    if (target_role=1) then check="x";
-    draw_text(x2+200,y2+128,string_hash_to_newline("1st Weapon ["+string(check)+"]"));
-    check=" ";
-    
-    if (target_role=2) then check="x";
-    draw_text(x2+426,y2+128,string_hash_to_newline("2nd Weapon ["+string(check)+"]"));
-    check=" ";
-    draw_set_alpha(1);
-    
-    
+        temp_alpha = (target_role == 2) ? 1 : 0.5;
+        if (point_and_click(draw_unit_buttons([x2 + 300, y2 + 120, x2 + 300 + 120, y2 + 120 + 20], ($"2nd Weapon"), [1,1],,,fnt_40k_12,temp_alpha))){
+            target_role = 2;
+        }
+    } else {
+        target_role = 3
+    }
+
+
+    // Soldier list
     draw_set_font(fnt_40k_12);
     draw_rectangle(x2+29,y2+160,x2+569,y2+363+356,1);// Main rectangle?
-    
     scr_scrollbar(1520,220,1543,761,23,obj_controller.man_max,obj_controller.man_current);
     draw_rectangle(x2+569,y2+171,x2+592,y2+357+356,1);// Inside of scroll
     draw_rectangle(x2+569,y2+150,x2+592,y2+378+356,1);// Outside of scroll
     draw_sprite_stretched(spr_arrow,2,x2+569,y2+150,23,22);
     draw_sprite_stretched(spr_arrow,3,x2+569,y2+357+356,23,22);
-    
+
     if (target_comp!=-1){
-        var x2,y2,
-        x2=__view_get( e__VW.XView, 0 )+951;y2=__view_get( e__VW.YView, 0 )+48;
-    
         var top,sel,temp1,temp2,temp3,temp4,temp5;temp1="";temp2="";temp3="";temp4="";temp5="";
         top=obj_controller.man_current;sel=top;
-        
+        var unit_x = x2;
+        var unit_y = y2;
         var ma_ar,ma_we1,ma_we2,ma_ge,ma_mb,ttt;
         ma_ar="";ma_we1="";ma_we2="";ma_ge="";ma_mb="";ttt=0;
         
@@ -491,73 +528,92 @@ if (type=8) and (instance_exists(obj_controller)){
             
             if (obj_controller.man_sel[sel]=0) then draw_set_color(c_black);
             if (obj_controller.man_sel[sel]!=0) then draw_set_color(6052956);
-            draw_rectangle(x2+29,y2+150,x2+569,y2+175.4,0);
-            draw_set_color(c_gray);draw_rectangle(x2+29,y2+150,x2+569,y2+175.4,1);
+            draw_rectangle(unit_x+29,unit_y+150,unit_x+569,unit_y+175.4,0);
+            draw_set_color(c_gray);
+            draw_rectangle(unit_x+29,unit_y+150,unit_x+569,unit_y+175.4,1);
             
             // if (obj_controller.man[sel]="man") and (obj_controller.ma_promote[sel]>0) then draw_set_color(c_yellow);
             if (ma_ar="") then draw_set_alpha(0.5);
-            draw_text_transformed(x2+32,y2+151,string_hash_to_newline(string(temp1)),1,1,0);draw_text_transformed(x2+32.5,y2+151.5,string_hash_to_newline(string(temp1)),1,1,0);
+            draw_text_transformed(unit_x+32,unit_y+151,string_hash_to_newline(string(temp1)),1,1,0);draw_text_transformed(unit_x+32.5,unit_y+151.5,string_hash_to_newline(string(temp1)),1,1,0);
             draw_set_color(c_gray);draw_set_alpha(1);
                 
             /*
             if (string_count("Chapter Master",temp1)>0){
-                draw_text_transformed(xx+27+16,y2+64,string(temp1),0.7,0.7,0);draw_text_transformed(xx+28+16,y2+64,string(temp1),0.7,0.7,0);
-                draw_text_transformed(xx+27+16,y2+65,string(temp1),0.7,0.7,0);draw_text_transformed(xx+28+16,y2+65,string(temp1),0.7,0.7,0);
+                draw_text_transformed(xx+27+16,unit_y+64,string(temp1),0.7,0.7,0);draw_text_transformed(xx+28+16,unit_y+64,string(temp1),0.7,0.7,0);
+                draw_text_transformed(xx+27+16,unit_y+65,string(temp1),0.7,0.7,0);draw_text_transformed(xx+28+16,unit_y+65,string(temp1),0.7,0.7,0);
                 // draw inspect icon
-                draw_sprite(spr_inspect_small,0,xx+27,y2+68);
+                draw_sprite(spr_inspect_small,0,xx+27,unit_y+68);
             }
             */
             
-            draw_text_transformed(x2+271,y2+151,string_hash_to_newline(string(temp2)),1,1,0);
-            if (obj_controller.man[sel]="man") and (obj_controller.ma_lid[sel]=0) then draw_text_transformed(x2+271,y2+151,string_hash_to_newline(string(temp2)),1,1,0);
-            if (obj_controller.man[sel]="vehicle") and (obj_controller.ma_lid[sel]=0) then draw_text_transformed(x2+271,y2+151,string_hash_to_newline(string(temp2)),1,1,0);
+            draw_text_transformed(unit_x+271,unit_y+151,string_hash_to_newline(string(temp2)),1,1,0);
+            if (obj_controller.man[sel]="man") and (obj_controller.ma_lid[sel]=0) then draw_text_transformed(unit_x+271,unit_y+151,string_hash_to_newline(string(temp2)),1,1,0);
+            if (obj_controller.man[sel]="vehicle") and (obj_controller.ma_lid[sel]=0) then draw_text_transformed(unit_x+271,unit_y+151,string_hash_to_newline(string(temp2)),1,1,0);
             
             if (temp3="CRITICAL") then draw_set_color(c_red);
-            draw_text_transformed(x2+400,y2+151,string_hash_to_newline(string(temp3)),1,1,0);
+            draw_text_transformed(unit_x+400,unit_y+151,string_hash_to_newline(string(temp3)),1,1,0);
             draw_set_color(c_gray);
             
-            draw_text_transformed(x2+506,y2+151,string_hash_to_newline(string(temp4)),1,1,0);
+            draw_text_transformed(unit_x+506,unit_y+151,string_hash_to_newline(string(temp4)),1,1,0);
             
             draw_set_color(c_gray);
             if (string_count("Artifact",temp5)>0) then draw_set_color(881503);
-            draw_text_transformed(x2+38,y2+164,string_hash_to_newline(string(temp5)),1,1,0);draw_set_color(38144);
+            draw_text_transformed(unit_x+38,unit_y+164,string_hash_to_newline(string(temp5)),1,1,0);draw_set_color(38144);
             
-            y2+=25.4;
+            if (point_and_click([unit_x+29,unit_y+150,unit_x+569,unit_y+175.4])) {
+                if (obj_controller.man_sel[sel] = 0) {
+                    units = 1;
+                    if (prev_selected != 0) {
+                        obj_controller.man_sel[prev_selected] = 0;
+                    }
+                    obj_controller.man_sel[sel] = 1;
+                    prev_selected = sel;
+                } else if (obj_controller.man_sel[sel] = 1) {
+                    units = 0;
+                    obj_controller.man_sel[sel] = 0;
+                }
+            }
+            unit_y+=25.4;
             sel+=1;
         }
     }
-    
-    x2=__view_get( e__VW.XView, 0 )+951;
-    y2=__view_get( e__VW.YView, 0 )+398;
-    
+
+    if (target_role > 0) and (target_comp != -1) and (units = 1) then all_good = 1
+    else all_good = 0;
+    if (arti.determine_base_type() == "weapon" && target_role > 2) then all_good = 0;
+
+    // Screen bottom buttons and shit
+    //
+    var screen_bottom_x = x2;
+    var screen_bottom_y = y2 + 350;
     draw_set_alpha(1);
     draw_set_font(fnt_small);
     draw_set_color(c_gray);
-    draw_rectangle(x2+121,y2+393,x2+231,y2+414,1);
+    draw_rectangle(screen_bottom_x+121,screen_bottom_y+393,screen_bottom_x+231,screen_bottom_y+414,1);
     draw_set_alpha(0.5);
-    draw_rectangle(x2+122,y2+394,x2+230,y2+413,1);
+    draw_rectangle(screen_bottom_x+122,screen_bottom_y+394,screen_bottom_x+230,screen_bottom_y+413,1);
     
     if (all_good=1){
         draw_set_alpha(1);
-        draw_rectangle(x2+408,y2+393,x2+518,y2+414,1);
+        draw_rectangle(screen_bottom_x+408,screen_bottom_y+393,screen_bottom_x+518,screen_bottom_y+414,1);
         draw_set_alpha(0.5);
-        draw_rectangle(x2+409,y2+394,x2+517,y2+413,1);
+        draw_rectangle(screen_bottom_x+409,screen_bottom_y+394,screen_bottom_x+517,screen_bottom_y+413,1);
     }
     if (all_good!=1){
         draw_set_alpha(0.25);
-        draw_rectangle(x2+408,y2+393,x2+518,y2+414,1);
-        draw_rectangle(x2+409,y2+394,x2+517,y2+413,1);
+        draw_rectangle(screen_bottom_x+408,screen_bottom_y+393,screen_bottom_x+518,screen_bottom_y+414,1);
+        draw_rectangle(screen_bottom_x+409,screen_bottom_y+394,screen_bottom_x+517,screen_bottom_y+413,1);
     }
     
     draw_set_alpha(1);
     
     draw_set_halign(fa_center);
-    draw_text(x2+173,y2+397,string_hash_to_newline("Cancel"));draw_text(x2+173.5,y2+397.5,string_hash_to_newline("Cancel"));
+    draw_text(screen_bottom_x+173,screen_bottom_y+397,string_hash_to_newline("Cancel"));draw_text(screen_bottom_x+173.5,screen_bottom_y+397.5,string_hash_to_newline("Cancel"));
     
     if (all_good=1){
-        draw_text(x2+464,y2+397,string_hash_to_newline("Equip!"));
-        draw_text(x2+464.5,y2+397.5,string_hash_to_newline("Equip!"));
-        if point_and_click([x2+430, y2+393,x2+518,y2+414]){
+        draw_text(screen_bottom_x+464,screen_bottom_y+397,string_hash_to_newline("Equip!"));
+        draw_text(screen_bottom_x+464.5,screen_bottom_y+397.5,string_hash_to_newline("Equip!"));
+        if point_and_click([screen_bottom_x+430, screen_bottom_y+393,screen_bottom_x+518,screen_bottom_y+414]){
             obj_controller.cooldown=8000;
 
             var i=-1,this=0,dwarn=false,unit;
@@ -575,7 +631,7 @@ if (type=8) and (instance_exists(obj_controller)){
 
                 if (target_role=1) then replace="weapon1";
                 if (target_role=2) then replace="weapon2";
-                if (target_role>3){
+                if (target_role>2){
                     if (gear_weapon_data("armour", arti_base)!=false){
                         replace="armour";
                     } else if (gear_weapon_data("gear", arti_base)!=false){
@@ -634,11 +690,11 @@ if (type=8) and (instance_exists(obj_controller)){
     }
     if (all_good!=1){
         draw_set_alpha(0.25);
-        draw_text(x2+464,y2+397,"Equip!");
-        draw_text(x2+464.5,y2+397.5,"Equip!");
+        draw_text(screen_bottom_x+464,screen_bottom_y+397,"Equip!");
+        draw_text(screen_bottom_x+464.5,screen_bottom_y+397.5,"Equip!");
     }
     draw_set_alpha(1);
-    
+
 }
 
 var xx,yy;
@@ -681,30 +737,30 @@ if (zoom=0) and (type=6) and (instance_exists(obj_controller)){
     show_name=o_wep1;
     if (a_wep1!="") then show_name=a_wep1;
     if (o_wep1!="") then draw_text(xx+1014,yy+215,string_hash_to_newline(show_name));
-    else draw_text(xx+1014,yy+215,string_hash_to_newline("(None)"));
+    else draw_text(xx+1014,yy+215,"(None)");
     
     show_name=o_wep2;
     if (a_wep2!="") then show_name=a_wep2;
     if (o_wep2!="") then draw_text(xx+1014,yy+235,string_hash_to_newline(string(show_name)));
-    else draw_text(xx+1014,yy+235,string_hash_to_newline("(None)"));
+    else draw_text(xx+1014,yy+235,"(None)");
     
     show_name=o_armour;
     if (a_armour!="") then show_name=a_armour;
     if (o_armour!="") then draw_text(xx+1014,yy+255,string_hash_to_newline(string(show_name)));
-    else draw_text(xx+1014,yy+255,string_hash_to_newline("(None)"));
+    else draw_text(xx+1014,yy+255,"(None)");
     
     show_name=o_gear;
     if (a_gear!="") then show_name=a_gear;
     if (o_gear!="") then draw_text(xx+1014,yy+275,string_hash_to_newline(string(show_name)));
-    else draw_text(xx+1014,yy+275,string_hash_to_newline("(None)"));
+    else draw_text(xx+1014,yy+275,"(None)");
     
     show_name=o_mobi;
     if (a_mobi!="") then show_name=a_mobi;
     if (o_mobi!="") then draw_text(xx+1014,yy+295,string_hash_to_newline(string(show_name)));
-    else draw_text(xx+1014,yy+295,string_hash_to_newline("(None)"));
+    else draw_text(xx+1014,yy+295,"(None)");
     
     draw_text(xx+1296,yy+195,string_hash_to_newline("After"));
-    draw_text(xx+1296.5,yy+195.5,string_hash_to_newline("After"));
+    draw_text(xx+1296.5,yy+195.5,"After");
     
     draw_set_color(c_gray);
     if (n_good1=0) then draw_set_color(255);

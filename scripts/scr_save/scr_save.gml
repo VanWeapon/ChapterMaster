@@ -331,25 +331,25 @@ function scr_save(save_part,save_id) {
 	        }	    	
 	    }
 	    for (g=0;g<array_length(obj_ini.artifact);g++){
-			if (obj_ini.artifact[g]!=""){
-	            ini_write_string("Ini","artifact"+string(g),obj_ini.artifact[g]);
-	            ini_write_string("Ini","artifact_tags"+string(g),base64_encode(json_stringify(obj_ini.artifact_tags[g])));
-	            ini_write_real("Ini","artifact_ident"+string(g),obj_ini.artifact_identified[g]);
-	            ini_write_real("Ini","artifact_condition"+string(g),obj_ini.artifact_condition[g]);
-	            ini_write_real("Ini","artifact_equipped"+string(g),obj_ini.artifact_equipped[g]);
-	            ini_write_string("Ini","artifact_loc"+string(g),obj_ini.artifact_loc[g]);
-	            ini_write_real("Ini","artifact_sid"+string(g),obj_ini.artifact_sid[g]);
-	            ini_write_string("Ini","artifact_quality"+string(g),obj_ini.artifact_quality[g]);
-				var copy_artifact = obj_ini.artifact_struct[g];
-				var new_artifact = {};
-				var names = variable_struct_get_names(copy_artifact);
-				for (var name = 0; name < array_length(names); name++) {
-				  if (!is_method(copy_artifact[$ names[name]])){
-					  variable_struct_set(new_artifact, names[name],copy_artifact[$ names[name]]);
-				  }
-				}
-                ini_write_string("Ini","artifact_struct"+string(g),base64_encode(json_stringify(new_artifact)));	            
-	        }	    	
+
+            ini_write_string("Ini","artifact"+string(g),obj_ini.artifact[g]);
+            ini_write_string("Ini","artifact_tags"+string(g),base64_encode(json_stringify(obj_ini.artifact_tags[g])));
+            ini_write_real("Ini","artifact_ident"+string(g),obj_ini.artifact_identified[g]);
+            ini_write_real("Ini","artifact_condition"+string(g),obj_ini.artifact_condition[g]);
+            ini_write_real("Ini","artifact_equipped"+string(g),obj_ini.artifact_equipped[g]);
+            ini_write_string("Ini","artifact_loc"+string(g),obj_ini.artifact_loc[g]);
+            ini_write_real("Ini","artifact_sid"+string(g),obj_ini.artifact_sid[g]);
+            ini_write_string("Ini","artifact_quality"+string(g),obj_ini.artifact_quality[g]);
+			var copy_artifact = obj_ini.artifact_struct[g];
+			var new_artifact = {};
+			var names = variable_struct_get_names(copy_artifact);
+			for (var name = 0; name < array_length(names); name++) {
+			  if (!is_method(copy_artifact[$ names[name]])){
+				  variable_struct_set(new_artifact, names[name],copy_artifact[$ names[name]]);
+			  }
+			}
+            ini_write_string("Ini","artifact_struct"+string(g),base64_encode(json_stringify(new_artifact)));	            
+
 	    }
 	    //
 	    var g;g=0;repeat(200){g+=1;

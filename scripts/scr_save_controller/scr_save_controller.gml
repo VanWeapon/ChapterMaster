@@ -131,22 +131,22 @@ function scr_save_controller(save_id){
     j=0;
 
     ini_encode_and_json("Formation", "form",obj_controller.bat_formation);
-    ini_encode_and_json("Formation", "form_type",obj_controller.bat_formation);
-    ini_encode_and_json("Formation", "deva",obj_controller.bat_formation);
-    ini_encode_and_json("Formation", "assa",obj_controller.bat_formation);
-    ini_encode_and_json("Formation", "tact",obj_controller.bat_formation);
-    ini_encode_and_json("Formation", "vete",obj_controller.bat_formation);
-    ini_encode_and_json("Formation", "hire",obj_controller.bat_formation);
-    ini_encode_and_json("Formation", "libr",obj_controller.bat_formation);
-    ini_encode_and_json("Formation", "comm",obj_controller.bat_formation);
-    ini_encode_and_json("Formation", "tech",obj_controller.bat_formation);
-    ini_encode_and_json("Formation", "term",obj_controller.bat_formation);
-    ini_encode_and_json("Formation", "hono",obj_controller.bat_formation);
-    ini_encode_and_json("Formation", "drea",obj_controller.bat_formation);
-    ini_encode_and_json("Formation", "rhin",obj_controller.bat_formation);
-    ini_encode_and_json("Formation", "pred",obj_controller.bat_formation);
-    ini_encode_and_json("Formation", "land",obj_controller.bat_formation);
-    ini_encode_and_json("Formation", "scou",obj_controller.bat_formation);
+    ini_encode_and_json("Formation", "form_type",obj_controller.bat_formation_type);
+    ini_encode_and_json("Formation", "deva",obj_controller.bat_deva_for);
+    ini_encode_and_json("Formation", "assa",obj_controller.bat_assa_for);
+    ini_encode_and_json("Formation", "tact",obj_controller.bat_tact_for);
+    ini_encode_and_json("Formation", "vete",obj_controller.bat_vete_for);
+    ini_encode_and_json("Formation", "hire",obj_controller.bat_hire_for);
+    ini_encode_and_json("Formation", "libr",obj_controller.bat_libr_for);
+    ini_encode_and_json("Formation", "comm",obj_controller.bat_comm_for);
+    ini_encode_and_json("Formation", "tech",obj_controller.bat_tech_for);
+    ini_encode_and_json("Formation", "term",obj_controller.bat_term_for);
+    ini_encode_and_json("Formation", "hono",obj_controller.bat_hono_for);
+    ini_encode_and_json("Formation", "drea",obj_controller.bat_drea_for);
+    ini_encode_and_json("Formation", "rhin",obj_controller.bat_rhin_for);
+    ini_encode_and_json("Formation", "pred",obj_controller.bat_pred_for);
+    ini_encode_and_json("Formation", "land",obj_controller.bat_land_for);
+    ini_encode_and_json("Formation", "scou",obj_controller.bat_scou_for);
 
 
     ini_write_string("Controller","random_event_next",obj_controller.random_event_next);

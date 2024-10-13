@@ -16,6 +16,7 @@ void_x=0;
 void_y=0;
 void_wid=0;
 void_hei=0;
+player_fleet=false;
 
 selection_window.inside_method = function(){
 	var mnz=0;
