@@ -45,20 +45,20 @@ function ChapterData() constructor {
 		trim_on: 0,
 	};
 	names = {
-		hchaplain: "",
-		clibrarian: "",
-		fmaster: "",
-		hapothecary: "",
-		honorcapt: "",
-		watchmaster: "",
-		arsenalmaster: "",
-		admiral: "",
-		marchmaster: "",
-		ritesmaster: "",
-		victualler: "",
-		lordexec: "",
-		relmaster: "",
-		recruiter: "",
+		hchaplain: global.name_generator.generate_imperial_name(),
+		clibrarian: global.name_generator.generate_imperial_name(),
+		fmaster: global.name_generator.generate_imperial_name(),
+		hapothecary: global.name_generator.generate_imperial_name(),
+		recruiter: global.name_generator.generate_imperial_name(),
+		admiral: global.name_generator.generate_imperial_name(),
+		honorcapt: global.name_generator.generate_imperial_name(),
+		watchmaster: global.name_generator.generate_imperial_name(),
+		arsenalmaster: global.name_generator.generate_imperial_name(),
+		marchmaster: global.name_generator.generate_imperial_name(),
+		ritesmaster: global.name_generator.generate_imperial_name(),
+		victualler: global.name_generator.generate_imperial_name(),
+		lordexec: global.name_generator.generate_imperial_name(),
+		relmaster: global.name_generator.generate_imperial_name(),
 	};
 	mutations = {
 		preomnor: 0,
@@ -75,7 +75,7 @@ function ChapterData() constructor {
 		occulobe: 0,
 		mucranoid: 0,
 	};
-	battle_cry = "For the Emperor!";
+	battle_cry = "For the Emperor";
 	equal_specialists = 0;
 	load_to_ships = {
 		escort_load: 0,
@@ -92,7 +92,9 @@ function ChapterData() constructor {
 		ranged: 0,
 		specialty: CM_SPECIALTY.NONE,
 		/// @type {Array<String>}
-		traits: []
+		traits: [],
+		gear: "",
+		mobi: ""
 	};
 	extra_ships = {
 		battle_barges: 0,
@@ -135,15 +137,21 @@ function ChapterData() constructor {
 	squad_name = "Squad";
 	custom_squads = {};
 
-	/// @desc Returns true if loaded successfully, false if not. Should probably crash the game if false
-	/// @param {Enum.CHAPTERS} chapter_id 
-	/// @returns {Bool} 
-	function load_from_json(chapter_id){
-		var file_loader = new JsonFileListLoader();
 
-		var load_result = file_loader.load_struct_from_json_file($"main\\chapters\\{chapter_id}.json", "chapter");
+	/// @desc Returns true if loaded successfully, false if not.
+	/// @param {Enum.CHAPTERS} chapter_id 
+	/// @param {Bool} use_app_data if set to true will read from %AppData%/Local/ChapterMaster instead of /datafiles
+	/// @returns {Bool} 
+	function load_from_json(chapter_id, use_app_data = false){
+		var file_loader = new JsonFileListLoader();
+		var load_result;
+		if(use_app_data){
+			load_result = file_loader.load_struct_from_json_file($"chaptersave#{chapter_id}.json", "chapter", true);
+		} else {
+			 load_result = file_loader.load_struct_from_json_file($"main\\chapters\\{chapter_id}.json", "chapter", false);
+		}
 		if(!load_result.is_success){
-			debugl($"No chapter json exits for chapter_id {chapter_id}");
+			// debugl($"No chapter json exits for chapter_id {chapter_id}");
 			return false;
 		}
 		var json_chapter = load_result.value.chapter;
@@ -759,92 +767,17 @@ if (argument0="Lamenters"){founding=5;points=150;
 
 	#region Custom Chapter
 	//generates custom chapter if it exists
-	if (argument0=chapter21){
-		points=100;
-	    selected_chapter=21;chapter=argument0;icon=icon21;icon_name=icon_name21;founding=founding21;
-	    fleet_type=fleet_type21;
-		strength=strength21;
-		purity=purity21;
-		stability=stability21;
-		cooperation=cooperation21;
-	    homeworld=homeworld21;
-	    homeworld_name=homeworld_name21;
-	    recruiting=recruiting_world21;
-	    recruiting_name=recruiting_name21;
-	    homeworld_exists=homeworld_rule21;
-	    recruiting_exists=recruiting_exists21;
-	    homeworld_rule=homeworld_rule21;
-	    aspirant_trial=aspirant_trial21;
-	    discipline=discipline21;
-	    // Pauldron2: Left, Pauldron: Right
-	    color_to_main=color_to_main21;
-		color_to_secondary=color_to_secondary21;
-		color_to_trim=color_to_trim21;
-	    color_to_pauldron2=color_to_pauldron2_21;
-	    color_to_paulrdon=color_to_pauldron21;
-	    color_to_lens=color_to_lens21;
-	    color_to_weapon=color_to_weapon21;
-	    col_special=col_special21;trim=trim21;
-	    hapothecary=hapothecary21;
-	    hchaplain=hchaplain21;
-	    clibrarian=clibrarian21;
-	    fmaster=fmaster21;
-	    admiral=admiral21
-		recruiter=recruiter21
-	    battle_cry=battle_cry_21
-		load_to_ships=[2,0,0];
-		complex_livery_data = complex_livery21;
-		
-		for (var i=1;i<=20;i++){
-		    role[100][i] = role_21[i];
-			wep1[100][i]=wep1_21[i]
-			wep2[100][i]=wep2_21[i]
-			armour[100][i]=armour_21[i]
-			gear[100][i]=gear_21[i]
-			mobi[100][i]=mobi_21[i]
+	if (is_real(argument0) && argument0 >= CHAPTERS.CUSTOM_1 && argument0 <= CHAPTERS.CUSTOM_10){
+		obj_creation.use_chapter_object = true;
+		var chapter_obj = new ChapterData();
+		var successfully_loaded = chapter_obj.load_from_json(argument0, true);
+		if(!successfully_loaded){
+			var issue = $"No json file exists for chapter id {argument0} and name {argument0}";
+			debugl (issue);
+			scr_popup("Error Loading Chapter", issue, "debug");
+			return false;
 		}
-	
-		
-		//monastery_name=monastery_name21;
-		//master_name=master_name21
-	    equal_specialists=equal_specialists21
-    
-	    load_to_ships=[2,0,0];
-	    // load_to_ships=0;
-    
-	    successors=successors;
-	    mutations=mutations21;
-		mutations_selected=mutations_selected21;
-		
-	    preomnor=preomnor21;
-		voice=voice21;
-		doomed=doomed21;
-		lyman=lyman21;
-		omophagea=omophagea21;
-		ossmodula=ossmodula21;
-		membrane=membrane21;
-	    zygote=zygote21;
-		betchers=betchers21;
-		catalepsean=catalepsean21;
-		secretions=secretions;
-		occulobe=occulobe;
-		mucranoid=mucranoid21;
-	    disposition[1]=disposition21[1];// Prog
-	    disposition[2]=disposition21[2];
-		disposition[3]=disposition21[3];
-		disposition[4]=disposition21[4];
-		disposition[5]=disposition21[5];
-	    disposition[6]=disposition21[6];// Astartes
-	    disposition[7]=disposition21[7];// Reserved
-	    chapter_master_name=chapter_master_name21;
-		chapter_master_melee=chapter_master_melee21;
-	    chapter_master_ranged=chapter_master_ranged21;
-		chapter_master_specialty=chapter_master_specialty21;
-    
-		for(var i = 1; i <= 8; i++){
-	    	adv[i]=adv21[i];
-			dis[i]=dis21[i];
-		}
+		global.chapter_creation_object = chapter_obj;
 	}
 	#endregion
 

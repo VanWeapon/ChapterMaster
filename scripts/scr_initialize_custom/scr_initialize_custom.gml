@@ -457,6 +457,9 @@ function progenitor_map(){
 }
 
 function trial_map(trial_name){
+	if(is_real(trial_name)){
+		return trial_name;
+	}
 	switch(trial_name){
 		case "BLOOD_DUEL":
 		case "BLOODDUEL":
