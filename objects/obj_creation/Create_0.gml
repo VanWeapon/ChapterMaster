@@ -1040,6 +1040,12 @@ adv_num = array_create(array_length(obj_creation.all_advantages), 0);
 dis_num = array_create(array_length(obj_creation.all_disadvantages), 0);
 
 
+adv = array_create(8, "");
+dis = array_create(8, "");
+adv_num = array_create(array_length(obj_creation.all_advantages), 0);
+dis_num = array_create(array_length(obj_creation.all_disadvantages), 0);
+
+
 
 
 // disadvantage[i]="Embargo";dis_tooltip[i]="NOT IMPLEMENTED YET.";i+=1;// Greatly increases the cost of common wargear and disallows advanced items.
