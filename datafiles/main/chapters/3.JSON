@@ -1,33 +1,33 @@
 {
     "chapter": {
-        "id": 2,
-        "name": "White Scars",
-        "flavor": "Known and feared for their highly mobile way of war, the White Scars are the masters of lightning strikes and hit-and-run tactics.  They are particularly adept in the use of Attack Bikes and field large numbers of them.",
+        "id": 3,
+        "name": "Space Wolves",
+        "flavor": "Brave sky warriors hailing from the icy deathworld of Fenris, the Space Wolves are a non-Codex compliant chapter, and deadly in close combat.  They fight on their own terms and damn any who wish otherwise.",
         "origin": 1, // 1 - Founding, 2 -successor, 3 - Other/non-canon/fanmade, 4 - Custom
         "points": 150,
         "founding": 0, // The id of the founding chapter, 0 for unknown or none
-        "splash": 2,
-        "icon": 2, // in \images\creation\creation_icons.png, the index from the left, 0 being blank square and 1 being dark angels etc
-        "icon_name": "ws", // ? dunno what this is used for yet but the icon breaks if you dont use it 
+        "splash": 3,
+        "icon": 3, // in \images\creation\creation_icons.png, the index from the left, 0 being blank square and 1 being dark angels etc
+        "icon_name": "sw", // ? dunno what this is used for yet but the icon breaks if you dont use it 
         "fleet_type": 1, // 1= Homeworld, 2 = Fleet based, 3 = Penitent
-        "strength": 5, // 1-10
-        "purity": 10, // 1-10
-        "stability": 8, // 1-10
-        "cooperation": 5, // 1-10
+        "strength": 10, // 1-10
+        "purity": 8, // 1-10
+        "stability": 5, // 1-10
+        "cooperation": 4, // 1-10
         "homeworld_exists": 1, // 1 = true
         "recruiting_exists": 0, // 1 = true
-        "homeworld_rule": 3, // 1 = Govenor, 2 = Countries, 3 = Personal Rule
-        "homeworld": "Feudal", // "Lava" "Desert" "Forge" "Hive" "Death" "Agri" "Feudal" "Temperate" "Ice" "Dead" "Shrine"
-        "homeworld_name": "Chogoris",
+        "homeworld_rule": 2, // 1 = Govenor, 2 = Countries, 3 = Personal Rule
+        "homeworld": "Ice", // "Lava" "Desert" "Forge" "Hive" "Death" "Agri" "Feudal" "Temperate" "Ice" "Dead" "Shrine"
+        "homeworld_name": "Fenris",
         "recruiting": "", //"Lava" "Desert" "Forge" "Hive" "Death" "Agri" "Feudal" "Temperate" "Ice" "Dead" "Shrine"
         "recruiting_name": "",
         "discipline": "rune Magick", // one of 'default' 'biomancy' 'pyromancy' 'telekinesis' 'rune Magick'
-        "aspirant_trial": "SURVIVAL", // ? need to find the best way to do this
+        "aspirant_trial": "EXPOSURE", // ? need to find the best way to do this
         "advantages": [ //TODO something with these after rework of adv organisation
             "",
-            "Lightning Warriors",
-            "Brothers",
             "Melee Enthusiasts",
+            "Medicae Primacy",
+            "",
             "",
             "",
             "",
@@ -36,8 +36,8 @@
         ],
         "disadvantages": [
             "",
-            "Splintered",
-            "",
+            "Black Rage",
+            "Suspicious",
             "",
             "",
             "",
@@ -46,42 +46,42 @@
             ""
         ],
         "colors": {
-            "main": "White",
-            "secondary": "White",
-            "pauldron_r": "White",
-            "pauldron_l": "White",
-            "trim": "Red",
+            "main": "Fenrisian Grey",
+            "secondary": "Fenrisian Grey",
+            "pauldron_r": "Dark Gold",
+            "pauldron_l": "Dark Gold",
+            "trim": "Dark Gold",
             "lens": "Red",
-            "weapon": "Black",
+            "weapon": "Dark Gold",
             "special": 0, // 0 - normal, 1 - Breastplate, 2 - Vertical, 3 - Quadrant
             "trim_on": 0 // 0 no, 1 yes for special trim colours // todo update ref for new name
         },
         "names": {
             //Chapter Staff
-            "hchaplain": "Jaghorin",
-            "clibrarian": "Saghai",
-            "fmaster": "Khamkar",
-            "hapothecary": "Ogholei",
+            "hchaplain": "Ulrik the Slayer",
+            "clibrarian": "Njal Stormcaller",
+            "fmaster": "Krom Dragongaze",
+            "hapothecary": "Ulstvan Morkaison",
             //Company Captains 1 - 10
-            "honorcapt": "Jurga",
-            "watchmaster": "Khajog",
-            "arsenalmaster": "Kor'sarro",
-            "admiral": "Joghaten",
-            "marchmaster": "Suboden",
-            "ritesmaster": "Seglei",
-            "victualler": "Dorghai",
-            "lordexec": "Vorgha",
-            "relmaster": "Khadajei",
-            "recruiter": "Jodagha"
+            "honorcapt": "Bran Redmaw",
+            "watchmaster": "Engir Krakendoom",
+            "arsenalmaster": "Erik Morkai",
+            "admiral": "Gunnar Red Moon",
+            "marchmaster": "Harald Deathwolf",
+            "ritesmaster": "Bjorn Stormwolf",
+            "victualler": "Vorek Gnarlfist",
+            "lordexec": "Krom Dragongaze",
+            "relmaster": "Ragnar Blackmane",
+            "recruiter": "Sven Bloodhowl"
         },
-        "battle_cry": "For the Emperor and the Khan!",
-        "equal_specialists": 0,
+        "battle_cry": "For Russ and the Allfather!",
+        "equal_specialists": 1,
         "load_to_ships": {
             "escort_load": 2, // 0 no, 2 yes, 1 doesnt do anything :)
             "split_scouts": 0, // 0 no, 1 yes
             "split_vets": 0 // 0 no, 1 yes
         },
-        "successors": 12, //total number of successor chapters
+        "successors": 1, //total number of successor chapters
         "mutations": {
             "preomnor": 0,
             "voice": 0,
@@ -101,37 +101,44 @@
             0, // nothing
             0, // Progenitor faction
             50, // Imperium
-            50, // Admech
-            50, //Inquisition
-            50, // Ecclesiarchy
-            65, // Astartes
+            40, // Admech
+            15, //Inquisition
+            15, // Ecclesiarchy
+            40, // Astartes
             0 // nothing
         ],
         "chapter_master": {
-            "name": "Jubal Khan",
-            "specialty": 1, //1 Leader, 2 Champion, 3 Psyker,
-            "melee": 5, // 1 twin power fists ... 8 force staff
-            "ranged": 3, // 1 boltstorm gauntlets ... 7 storm shield
+            "name": "Logan Grimnar",
+            "specialty": 2, //1 Leader, 2 Champion, 3 Psyker,
+            "melee": 6, // 1 twin power fists ... 8 force staff
+            "ranged": 1, // 1 boltstorm gauntlets ... 7 storm shield
             // All chapter masters have the trait `Lead by Example` by default
             "traits": [
-                "old_guard"
+                "ancient",
+                "melee_enthusiast",
+                "feet_floor"
             ],
             "gear": "",
-            "mobi": ""
+            "mobi": "",
+            "armour": "Terminator Armour"
         },
-        "artifact": {},
+        "artifact": {
+            "name": "Axe of Morkai",
+            "description": "Once a Khornate axe of great power it was reforged in the image of the death wolf Morkai",
+            "base_weapon_type": "Executioner Power Axe"
+        },
         "company_titles": [
             "",
-            "The Spearpoint Brotherhood",
-            "The Firefist Brotherhood",
-            "The Eagle Brotherhood",
-            "The Tulwar Brotherhood",
-            "The Stormwrath Brotherhood",
-            "The Hawkeye Brotherhood",
-            "The Plainstalker Brotherhood",
-            "The Bloodrider Brotherhood",
-            "The Stormbolt Brotherhood",
-            "The Windspeaker Brotherhood"
+            "The Bloodmaws",
+            "The Seawolves",
+            "The Sons of Morkai",
+            "The Red Moons",
+            "The Deathwolves",
+            "The Stormwolves",
+            "The Ironwolves",
+            "The Drakeslayers",
+            "The Blackmanes",
+            ""
         ],
         "flagship_name": "",
         /**
@@ -159,15 +166,15 @@
         * Stacks with advantages/disadvantages
         */
         "extra_specialists": {
-            "chaplains": 0,
+            "chaplains": -20,
             "techmarines": 0,
-            "apothecary": 0,
+            "apothecary": 4,
             "epistolary": 0,
             "codiciery": 0,
             "lexicanum": 0,
             "terminator": 0,
             "assault": 0,
-            "veteran": 0,
+            "veteran": 40,
             "devastator": 0
         },
         /**
@@ -178,15 +185,15 @@
         */
         // * Not working yet
         "extra_marines": {
-            "second": 0,
-            "third": 0,
-            "fourth": 0,
-            "fifth": 0,
-            "sixth": 0,
-            "seventh": 0,
-            "eighth": 0,
-            "ninth": 0,
-            "tenth": 0
+            "second": 40,
+            "third": 40,
+            "fourth": 40,
+            "fifth": 40,
+            "sixth": 40,
+            "seventh": 40,
+            "eighth": 40,
+            "ninth": 40,
+            "tenth": 60
         },
         // * Not working yet
         "extra_vehicles": {
@@ -210,20 +217,57 @@
         */
         "custom_roles": {
             "honour_guard": {
-                "name": "Keshig",
-                "wep1": "Power Sword",
+                "name": "Wolf Guard",
+                "wep1": "Power Axe",
                 "wep2": "Bolter",
-                "armour": "Terminator Armour"
+                "armour": "Power Armour"
+            },
+            "veteran": {
+                "name": "Veteran",
+                "wep1": "Chainaxe"
             },
             "captain": {
-                "name": "Khan",
+                "name": "Wolf Lord",
                 "wep1": "Power Sword"
             },
+            "tactical": {
+                "name": "Grey Hunter"
+            },
+            "devastator": {
+                "name": "Long Fang"
+            },
+            "assault": {
+                "name": "Blood Claw",
+                "wep1": "Chainaxe"
+            },
+            "scout": {
+                "name": "Wolf Scout",
+                "wep1": "Sniper Rifle",
+                "wep2": "Chainaxe"
+            },
+            "chaplain": {
+                "name": "Wolf Priest",
+                "wep1": "Power Axe"
+            },
+            "techmarine": {
+                "name": "Iron Priest",
+                "wep1": "Power Axe"
+            },
             "apothecary": {
-                "name": "Emchi"
+                "name": "Wolf Priest",
+                "wep1": "Power Axe"
             },
             "librarian": {
-                "name": "Stormseer"
+                "name": "Rune Priest",
+                "wep1": "Force Staff"
+            },
+            "sergeant": {
+                "name": "Pack Leader",
+                "wep1": "Chainaxe"
+            },
+            "veteran_sergeant": {
+                "name": "Wolf Guard Pack Leader",
+                "wep1": "Chainaxe"
             }
         },
         /**
@@ -255,7 +299,7 @@
                 - gear: special equipment needed for certain roles, like a Roasrius or Narthecium
         *   - type_data: names the squad, allows certain formations ? idk what that does yet
         */
-        "squad_name": "Squad",
+        "squad_name": "Pack",
         "custom_squads": {}
     }
 }

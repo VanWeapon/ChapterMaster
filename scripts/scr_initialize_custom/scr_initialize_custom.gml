@@ -1129,6 +1129,7 @@ function scr_initialize_custom() {
 				veteran += 30;
 				break;
 			case "Space Wolves":
+				break;
 				veteran += 40;
 				second += 40;
 				third += 40;
@@ -2381,16 +2382,25 @@ function scr_initialize_custom() {
 	var arti;
 
 	// From json
-	if(obj_creation.use_chapter_object && struct_exists(obj_creation, "artifact") && struct_exists(obj_creation.artifact, "name")){
-		arti = obj_ini.artifact_struct[last_artifact];
-		arti.name = obj_creation.artifact.name;
-		arti.custom_description = obj_creation.artifact.description;
-		obj_ini.artifact[last_artifact] = obj_creation.artifact.base_weapon_type;
-		arti.bearer = [0,1];
-		obj_ini.artifact_identified[last_artifact] = 0;
-		chapter_master_equip.wep1 = last_artifact;
-		chapter_master_equip.gear = obj_creation.chapter_master.gear;
-		chapter_master_equip.mobi = obj_creation.chapter_master.mobi;
+	if(obj_creation.use_chapter_object){
+		if(struct_exists(obj_creation, "artifact") && struct_exists(obj_creation.artifact, "name")){
+			arti = obj_ini.artifact_struct[last_artifact];
+			arti.name = obj_creation.artifact.name;
+			arti.custom_description = obj_creation.artifact.description;
+			obj_ini.artifact[last_artifact] = obj_creation.artifact.base_weapon_type;
+			arti.bearer = [0,1];
+			obj_ini.artifact_identified[last_artifact] = 0;
+			chapter_master_equip.wep1 = last_artifact;
+		}
+		if(struct_exists(obj_creation.chapter_master, "gear") && obj_creation.chapter_master.gear != ""){
+			chapter_master_equip.gear = obj_creation.chapter_master.gear;
+		}
+		if(struct_exists(obj_creation.chapter_master, "mobi") && obj_creation.chapter_master.mobi != ""){
+			chapter_master_equip.mobi = obj_creation.chapter_master.mobi;
+		}
+		if(struct_exists(obj_creation.chapter_master, "armour") && obj_creation.chapter_master.armour != ""){
+			chapter_master_equip.armour = obj_creation.chapter_master.armour;
+		}
 	} else {
 		//hardcoded
 		switch (global.chapter_name) {
@@ -2470,6 +2480,7 @@ function scr_initialize_custom() {
 				obj_ini.artifact[last_artifact] = "Terminator Armour";
 				break;
 			case "Space Wolves":
+				break;
 				chapter_master_equip.armour = "Terminator Armour";
 				chapter_master.add_trait("ancient");
 				chapter_master.add_trait("melee_enthusiast");
@@ -3008,7 +3019,8 @@ function scr_initialize_custom() {
 			man_size += 1;
 		}
 
-		if (global.chapter_name != "Space Wolves") and(global.chapter_name != "Iron Hands") {
+		// TODO there should be a disadvantage that removes chaplains, for now just dont add any if total is 0 or less
+		if (chaplains > 0 && global.chapter_name != "Iron Hands") {
 			k += 1;
 			commands += 1; // Chaplain
 			TTRPG[company][k] = new TTRPG_stats("chapter", company, k);
@@ -3018,10 +3030,10 @@ function scr_initialize_custom() {
 			name[company][k] = global.name_generator.generate_space_marine_name();
 			spawn_unit = TTRPG[company][k]
 			spawn_unit.marine_assembling();
-			wep1[company][k] = wep1[defaults_slot, 14];
+			wep1[company][k] = wep1[defaults_slot, Role.CHAPLAIN ];
 			wep2[company][k] = "Storm Bolter";
 			armour[company][k] = "Terminator Armour";
-			gear[company][k] = gear[defaults_slot, 14]
+			gear[company][k] = gear[defaults_slot, Role.CHAPLAIN ]
 			if(scr_has_adv("Crafters")){
 				armour[company][k] = "Tartaros";
 			}
@@ -3642,7 +3654,7 @@ function scr_initialize_custom() {
 			gear[company][k] = gear[defaults_slot, Role.APOTHECARY];
 			if (mobi[defaults_slot, Role.APOTHECARY] != "") then mobi[company][k] = mobi[defaults_slot, Role.APOTHECARY];
 
-			if (global.chapter_name = "Space Wolves") {
+			if (scr_has_adv("Medicae Primacy")) {
 				k += 1;
 				commands += 1; // Company Apothecary
 				race[company][k] = 1;

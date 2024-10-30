@@ -94,7 +94,8 @@ function ChapterData() constructor {
 		/// @type {Array<String>}
 		traits: [],
 		gear: "",
-		mobi: ""
+		mobi: "",
+		armour: "",
 	};
 	extra_ships = {
 		battle_barges: 0,
@@ -330,56 +331,6 @@ function scr_chapter_new(argument0) {
 	        role[i,2]="Huscarl";wep1[i,2]="Power Sword";wep2[i,2]="Storm Shield";armour[i,2]="Power Armour";
 		}
 	}
-
-
-	if (argument0="Space Wolves"){points=150;
-	    selected_chapter=3;chapter=argument0;icon=3;icon_name="sw";founding=0;fleet_type=1;strength=10;purity=8;stability=5;cooperation=4;
-	    adv[1]="Melee Enthusiasts";dis[1]="Black Rage";dis[2]="Suspicious";
-	    homeworld="Ice";homeworld_name="Fenris";
-	    homeworld_exists=1;recruiting_exists=0;homeworld_rule=2;aspirant_trial=eTrials.EXPOSURE;discipline="rune Magick";
-	    // Pauldron2: Left, Pauldron: Right
-	    color_to_main="Fenrisian Grey";color_to_secondary="Fenrisian Grey";color_to_trim="Dark Gold";
-	    color_to_pauldron="Dark Gold";color_to_pauldron2="Dark Gold";color_to_lens="Red";
-	    color_to_weapon="Dark Gold";col_special=0;trim=0;
-	    hapothecary="Ulstvan Morkaison";hchaplain="Ulrik the Slayer";clibrarian="Njal Stormcaller";fmaster="Krom Dragongaze";
-		honorcapt="Bran Redmaw";watchmaster="Engir Krakendoom";arsenalmaster="Erik Morkai";admiral="Gunnar Red Moon";marchmaster="Harald Deathwolf";
-		ritesmaster="Bjorn Stormwolf";victualler="Vorek Gnarlfist";lordexec="Krom Dragongaze";relmaster="Ragnar Blackmane";recruiter="Sven Bloodhowl";
-	    battle_cry="For Russ and the Allfather";// monastery_name="The Fang";master_name=
-	    equal_specialists=1;load_to_ships=[2,0,0];successors=1;
-	    mutations=0;mutations_selected=0;
-	    preomnor=0;voice=0;doomed=0;lyman=0;omophagea=0;ossmodula=0;membrane=0;
-	    zygote=0;betchers=0;catalepsean=0;secretions=0;occulobe=0;mucranoid=0;
-	    // disposition[1]=0;// Prog
-	    disposition[2]=50;disposition[3]=40;disposition[4]=15;disposition[5]=15;
-	    disposition[6]=40;// Astartes
-	    disposition[7]=0;// Reserved
-	    chapter_master_name="Logan Grimnar";chapter_master_melee=6;
-	    chapter_master_ranged=1;chapter_master_specialty=2;
-		
-		//Weird since they have 13 companies if the hard coding changes in the future this will as well
-	    /*company_title[0]="Champions of Fenris";*/company_title[1]="The Bloodmaws";company_title[2]="The Seawolves";
-	    company_title[3]="The Sons of Morkai";company_title[4]="The Red Moons";company_title[5]="The Deathwolves";
-	    company_title[6]="The Stormwolves";company_title[7]="The Ironwolves";company_title[8]="The Drakeslayers";
-	    company_title[9]="The Blackmanes";/*company_title[10]="The Firehowlers";company_title[12]="The Grimbloods";
-	    company_title[13]="The Wulfen";*/
-    
-	    i=99;repeat(3){i+=1;
-	        role[i,2]="Wolf Guard";wep1[i,2]="Power Axe";wep2[i,2]="Bolter";armour[i,2]="Power Armour";
-	        role[i,3]="Veteran";wep1[i,3]="Chainaxe";
-	        role[i,5]="Wolf Lord";role[i,8]="Grey Hunter";role[i,9]="Long Fang";
-	        role[i,10]="Blood Claw";wep1[i,10]="Chainaxe";
-	        role[i,12]="Wolf Scout";wep1[i,12]="Sniper Rifle";wep2[i,12]="Chainaxe";
-	        race[i,14]=0;role[i,14]="Wolf Priest";wep1[i,14]="Power Axe";
-	        role[i,15]="Wolf Priest";wep1[i,15]="Power Axe";
-	        role[i,16]="Iron Priest";wep1[i,16]="Power Axe";
-	        role[i,17]="Rune Priest";wep1[i,17]="Force Staff";
-			role[i,18]="Pack Leader";wep1[i,18]="Chainaxe";
-			role[i,19]="Wolf Guard Pack Leader";wep1[i,19]="Chainaxe";
-	    }
-	}
-
-
-
 
 	if (argument0="Blood Angels"){points=150;
 	    selected_chapter=5;chapter=argument0;icon=5;icon_name="ba";founding=0;fleet_type=1;strength=5;purity=9;stability=9;cooperation=7;
