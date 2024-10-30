@@ -326,6 +326,7 @@
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"raid1.png","CopyToMask":-1,"filePath":"datafiles/images/ui",},
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"resources.png","CopyToMask":-1,"filePath":"datafiles/images/ui",},
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"1.JSON","CopyToMask":-1,"filePath":"datafiles/main/chapters",},
+    {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"2.JSON","CopyToMask":-1,"filePath":"datafiles/main/chapters",},
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"31.JSON","CopyToMask":-1,"filePath":"datafiles/main/chapters",},
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"help.ini","CopyToMask":9223372036854775807,"filePath":"datafiles/main",},
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"chaos.json","CopyToMask":-1,"filePath":"datafiles/main/names",},
