@@ -3933,20 +3933,20 @@ function scr_initialize_custom() {
 			if (rhinoy > 0) then repeat(rhinoy) {
 				v += 1;
 				man_size += 10;
-				scr_add_vehicle("Rhino", company, "standard","standard","standard","standard","standard");
-				// veh_race[company, v] = 1;
-				// veh_loc[company, v] = home_name;
-				// veh_role[company, v] = "Rhino";
-				// veh_wep1[company, v] = "Storm Bolter";
-				// veh_wep2[company, v] = "HK Missile";
-				// veh_wep3[company, v] = "";
-				// veh_upgrade[company, v] = "";
-				// veh_acc[company, v] = "Dozer Blades";
-				// veh_hp[company, v] = 100;
-				// veh_chaos[company, v] = 0;
-				// veh_pilots[company, v] = 0;
-				// veh_lid[company, v] = 0;
-				// veh_wid[company, v] = 2;
+				// scr_add_vehicle("Rhino", company, "standard","standard","standard","standard","standard");
+				veh_race[company, v] = 1;
+				veh_loc[company, v] = home_name;
+				veh_role[company, v] = "Rhino";
+				veh_wep1[company, v] = "Storm Bolter";
+				veh_wep2[company, v] = "HK Missile";
+				veh_wep3[company, v] = "";
+				veh_upgrade[company, v] = "";
+				veh_acc[company, v] = "Dozer Blades";
+				veh_hp[company, v] = 100;
+				veh_chaos[company, v] = 0;
+				veh_pilots[company, v] = 0;
+				veh_lid[company, v] = 0;
+				veh_wid[company, v] = 2;
 			}
 			if (whirly > 0) then repeat(whirly) {
 				v += 1;
