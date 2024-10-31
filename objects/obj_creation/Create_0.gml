@@ -50,7 +50,7 @@ premades=true;
 /// Opt in/out of loading from json vs hardcoded for specific chapters, this way i dont have to do all in one go to test
 use_chapter_object = false;
 
-livery_picker = new colour_item(100,230);
+livery_picker = new ColourItem(100,230);
 livery_picker.scr_unit_draw_data();
 full_liveries = array_create(21,DeepCloneStruct(livery_picker.map_colour));
 complex_livery=false;
@@ -388,7 +388,7 @@ function ChapterTrait(_id, _name, _description, _points_cost, _meta = []) constr
         for (var i=0;i<array_length(meta);i++){
             array_push(obj_creation.chapter_trait_meta, meta[i]);
         }
-        show_debug_message($"Meta updated, added: {meta}, all meta: {chapter_trait_meta}");
+        show_debug_message($"Meta updated, added: {meta}, all meta: {obj_creation.chapter_trait_meta}");
 
     }
     static remove_meta = function(){
@@ -402,7 +402,7 @@ function ChapterTrait(_id, _name, _description, _points_cost, _meta = []) constr
                 }
             }
         }
-        show_debug_message($"Meta updated, removed: {meta}, all meta: {chapter_trait_meta}");
+        show_debug_message($"Meta updated, removed: {meta}, all meta: {obj_creation.chapter_trait_meta}");
     }
 
     static print_meta = function(){
@@ -492,16 +492,17 @@ var all_advantages = [
         {
             name : "Boarders",
             description : "Boarding other ships is the specialty of your chapter.  Your chapter is more lethal when boarding ships, have dedicated boarding squads, and two extra strike cruisers.",
-            value : 20,
+            value : 30,
         },
         {
             name : "Bolter Drilling",
             description : "Bolter drills are sacred to your chapter; all marines have increased attack with Bolter weaponry.",
             value : 25,
+            meta : ["Weapon Specialty"]
         },
         {
-            name : "Brothers",
-            description : "Your chapter places great emphasis on comradely and loyalty.  You start with a well-equipped Honour Guard.",
+            name : "Retinue of Renown",
+            description : "Your chapter master is guarded by renown heroes of the chapter.  You start with a larger well-equipped Honour Guard.",
             value : 20,
         },
         {
@@ -554,7 +555,7 @@ var all_advantages = [
             name : "Kings of Space",
             description : "Veterans of naval combat, your chapter fleet has bonuses to offense, defence, an additional battle barge, and may always be controlled regardless of whether or not the Chapter Master is present.",
             value : 40,
-            meta : [],
+            meta : ["Naval"],
         },
         {
             name : "Lightning Warriors",
@@ -572,19 +573,19 @@ var all_advantages = [
             name : "Psyker Abundance",
             description : "The Psyker mutation runs rampant in your chapter.  Librarians train in 60% the normal time and receive bonus experience.",
             value : 30,
-            meta : ["Psyker Views"],
+            meta : ["Psyker Views","Specialists"],
         }, 
         {
             name : "Reverent Guardians",
             description : "Your chapter places great faith in the Imperial Cult; you start with more Chaplains and any Ecclesiarchy disposition increases are enhanced.",
             value : 10,
-            meta : ["Faith","Imperium Trust"],
+            meta : ["Faith","Imperium Trust","Specialists"],
         },
         {
             name : "Tech-Brothers",
             description : "Your chapter has better ties to the mechanicus; you have more techmarines and higher mechanicus disposition.",
             value : 25,
-            meta : ["Mechanicus Faith"],
+            meta : ["Mechanicus Faith","Specialists"],
         }, 
         {
             name : "Tech-Scavengers",
@@ -597,28 +598,35 @@ var all_advantages = [
             value : 15,
         },
         {
-            name : "Slow and Purposeful",
-            description : "Careful and steady is your chapters doctrine; all infantry have slightly less attack but boosted defences.",
-            value : 15,
+            name : "Devastator Doctrine",
+            description : "The steady advance of overwhelming firepower is your chapters combat doctrine each company has an additional Devastator squad, all infantry have boosted defence, and heavy weapons have increased attack.",
+            value : 30,
             meta : ["Doctrine"],
         },
         {
-            name : "Melee Enthusiasts",
-            description : "Rip and tear! Each Company has an additional Assault Squad.  Your marines and dreadnoughts also have boosted attack with melee weapons.",
-            value : 15,
+            name : "Assault Doctrine",
+            description : "Your chapter prefers quick close quarter assaults on the enemy each Company has an additional Assault Squad and your marines are more skilled in melee.",
+            value : 20,
             meta : ["Doctrine"],
         },
         {
             name : "Venerable Ancients",
             description : "Even in death they still serve. Your chapter places a staunch reverence for its forebears and has a number of additional venerable dreadnoughts in service.",
-            value : 25,
+            value : 40,
             meta : ["Doctrine"],
         },
         {
             name : "Medicae Primacy",
             description : "Your chapter reveres its Apothecarion above all of it's specialist; You start with more Apothecaries.",
             value : 25,
-        },                                                                                                                                                                              
+            meta : ["Specialists"]
+        },
+        {
+            name : "Ryzan Patronage",
+            description : "Your chapter has strong ties to the Forgeworld of Ryza as a result your Techmarines are privy to the secrets of their Techpriests enhancing your Plasma and Las weaponry.",
+            value : 25,
+            meta : ["Weapon Specialty"] 
+        },                                                                                                                                                                             
     ]
 
 
@@ -704,7 +712,13 @@ var all_disadvantages = [
         name : "Psyker Intolerant",
         description : "Witches are hated by your chapter.  You cannot create Librarians but gain a little bonus attack against psykers.",
         value : 20,
-        meta : ["Psyker Views"]
+        meta : ["Psyker Views"],
+    },
+    {
+        name : "Obliterated",
+        description : "A recent string of unfortunate events has left your chapter decimated. You have very little left, will your story continue?",
+        value : 60,
+        meta : ["Status"],
     },                  
 ]
 
@@ -739,7 +753,6 @@ for(var slot = 99; slot <= 103; slot++){
         armour[slot,i]="";
         gear[slot,i]="";
         mobi[slot,i]="";
-        experience[y,i]=0;
     }
 }
 

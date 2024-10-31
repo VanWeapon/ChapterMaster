@@ -334,7 +334,7 @@ function scr_chapter_new(argument0) {
 
 	if (argument0="Blood Angels"){points=150;
 	    selected_chapter=5;chapter=argument0;icon=5;icon_name="ba";founding=0;fleet_type=1;strength=5;purity=9;stability=9;cooperation=7;
-	    adv[1]="Melee Enthusiasts";dis[1]="Black Rage";
+	    adv[1]="Assault Doctrine";dis[1]="Black Rage";
 	    homeworld="Desert";homeworld_name="Baal";
 	    homeworld_exists=1;recruiting_exists=0;homeworld_rule=3;aspirant_trial=eTrials.BLOODDUEL;
 	    // Pauldron2: Left, Pauldron: Right
@@ -369,7 +369,7 @@ function scr_chapter_new(argument0) {
 
 	if (argument0="Iron Hands"){points=150;
 	    selected_chapter=6;chapter=argument0;icon=6;icon_name="ih";founding=0;fleet_type=1;strength=5;purity=8;stability=8;cooperation=2;
-	    adv[1]="Tech-Brothers";adv[2]="Slow and Purposeful";dis[1]="Splintered";dis[2]="Suspicious";
+	    adv[1]="Tech-Brothers";adv[2]="Devastator Doctrine";dis[1]="Splintered";dis[2]="Suspicious";
 	    homeworld="Lava";homeworld_name="Medusa";homeworld_exists=1;recruiting_exists=0;
 	    homeworld_rule=3;aspirant_trial=eTrials.KNOWLEDGE;
 	    // Pauldron2: Left, Pauldron: Right
@@ -406,7 +406,7 @@ function scr_chapter_new(argument0) {
 
 	if (argument0="Salamanders"){points=150;
 	    selected_chapter=8;chapter=argument0;icon=8;icon_name="sl";founding=0;fleet_type=1;strength=2;purity=8;stability=8;cooperation=10;
-	    adv[1]="Crafters";adv[2]="Slow and Purposeful";
+	    adv[1]="Crafters";adv[2]="Devastator Doctrine";
 	    homeworld="Lava";homeworld_name="Nocturne";homeworld_exists=1;recruiting_exists=0;
 	    homeworld_rule=1;aspirant_trial=eTrials.APPRENTICESHIP;discipline="pyromancy";
 	    // Pauldron2: Left, Pauldron: Right
@@ -441,7 +441,7 @@ function scr_chapter_new(argument0) {
 
 	if (argument0="Raven Guard"){points=150;
 		selected_chapter=9;chapter=argument0;icon=9;icon_name="rg";founding=0;fleet_type=1;strength=5;purity=8;stability=4;cooperation=5;
-	    adv[1]="Ambushers";adv[2]="Melee Enthusiasts";dis[1]="Splintered";
+	    adv[1]="Ambushers";adv[2]="Assault Doctrine";dis[1]="Splintered";
 	    homeworld="Dead";homeworld_name="Deliverance";homeworld_exists=1;recruiting_exists=1;
 	    homeworld_rule=1;aspirant_trial=eTrials.EXPOSURE;
 	    // Pauldron2: Left, Pauldron: Right
@@ -475,7 +475,7 @@ function scr_chapter_new(argument0) {
 		if (argument0="Black Templars"){founding=4;points=200;
 	    selected_chapter=10;chapter=argument0;icon=10;icon_name="bt";founding=4;
 	    fleet_type=3;strength=5;purity=7;stability=10;cooperation=5;
-	    adv[1]="Melee Enthusiasts";adv[2]="Kings of Space";adv[3]="Reverent Guardians";adv[4]="Brothers, All";dis[1]="Psyker Intolerant";dis[2]="Suspicious";
+	    adv[1]="Assault Doctrine";adv[2]="Kings of Space";adv[3]="Reverent Guardians";adv[4]="Brothers, All";dis[1]="Psyker Intolerant";dis[2]="Suspicious";
 	    homeworld_exists=0;recruiting_exists=1;
 	    recruiting_name=global.name_generator.generate_star_name();
 		aspirant_trial=eTrials.APPRENTICESHIP;
@@ -539,7 +539,7 @@ if (argument0="Minotaurs"){founding=10;points=450;
 		founding=10;points=100;
 	    selected_chapter=12;chapter=argument0;icon=12;icon_name="br";
 	    fleet_type=2;strength=5;purity=10;stability=6;cooperation=7;
-	    adv[1]="Scavengers";adv[2]="Psyker Abundance";dis[1]="Suspicious";
+	    adv[1]="Tech-Scavengers";adv[2]="Psyker Abundance";dis[1]="Suspicious";
 	    hapothecary="Galan";hchaplain="Mikelus";clibrarian="Jonah Orion";fmaster="Martellus";
 		honorcapt="Apollo Diomedes";watchmaster="Yriel Rikarius";marchmaster="Aramus";
 		ritesmaster="Tarkus";victualler="Atanaxis";lordexec="Thaddeus";relmaster="Avitus";recruiter="Cyrus";
@@ -595,7 +595,7 @@ if (argument0="Crimson Fists"){founding=4;points=150;
 if (argument0="Lamenters"){founding=5;points=150;
 	    selected_chapter=14;chapter=argument0;icon=14;icon_name="cd";
 	    fleet_type=3;strength=5;purity=8;stability=4;cooperation=5;
-	    adv[1]="Melee Enthusiasts";adv[2]="Boarders";dis[1]="Suspicious";
+	    adv[1]="Assault Doctrine";adv[2]="Boarders";dis[1]="Suspicious";
 	    homeworld="Dead";homeworld_name="Lacrima Vex";
 	    homeworld_exists=0;recruiting_exists=1;
 	    recruiting="Death";recruiting_name=global.name_generator.generate_star_name();
@@ -620,7 +620,7 @@ if (argument0="Lamenters"){founding=5;points=150;
 	if (argument0="Carcharodons"){founding=9;points=100;
 	    selected_chapter=15;chapter=argument0;icon=15;icon_name="cd";
 	    fleet_type=2;strength=5;purity=8;stability=4;cooperation=5;
-	    adv[1]="Melee Enthusiasts";adv[2]="Boarders";adv[3]="Kings of Space";dis[1]="Splintered";dis[2]="Suspicious";
+	    adv[1]="Assault Doctrine";adv[2]="Boarders";adv[3]="Kings of Space";dis[1]="Splintered";dis[2]="Suspicious";
 	    homeworld_exists=0;recruiting_exists=0;flagship_name="Nicor";
 	    recruiting="Death";recruiting_name=global.name_generator.generate_star_name();
 	    homeworld_rule=0;aspirant_trial=eTrials.CHALLENGE;
@@ -653,7 +653,7 @@ if (argument0="Lamenters"){founding=5;points=150;
 	if (argument0="Soul Drinkers"){points=200;
 	    selected_chapter=16;chapter=argument0;icon=14;icon_name="sd";founding= 4;
 	    fleet_type=2;strength=2;purity=10;stability=2;cooperation=2;
-	    adv[1]="Melee Enthusiasts";adv[2]="Kings of Space";adv[3]="Boarders";adv[4]="Daemon Binders";dis[1]="Suspicious";
+	    adv[1]="Assault Doctrine";adv[2]="Kings of Space";adv[3]="Boarders";adv[4]="Daemon Binders";dis[1]="Suspicious";
 	    homeworld="Dead";homeworld_name="Entymion";
 	    homeworld_exists=0;recruiting_exists=1;
 	    recruiting="Death";recruiting_name=global.name_generator.generate_star_name();
@@ -865,7 +865,7 @@ if (argument0="Lamenters"){founding=5;points=150;
 
 
 	maxpoints=points;
-	var livery_picker = new colour_item(0,0);
+	var livery_picker = new ColourItem(0,0);
 	livery_picker.scr_unit_draw_data();
 	full_liveries = array_create(21,DeepCloneStruct(livery_picker.map_colour));	
 	return true;

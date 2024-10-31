@@ -350,7 +350,7 @@ function PlanetData(planet, system) constructor{
     ]
     static xenos_and_heretics = function(){
     	var xh_force = 0;
-    	for (var i=5;i<array_length(planet_forces)i++){
+    	for (var i=5;i<array_length(planet_forces); i++){
     		xh_force += planet_forces[i];
     	} 
     	return xh_force;
