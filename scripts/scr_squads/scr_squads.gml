@@ -13,7 +13,7 @@ function create_squad(squad_type, company, squad_loadout = true, squad_index=fal
 	var fill_squad =  obj_ini.squad_types[$ squad_type];			//grab all the squad struct info from the squad_types struct
 	squad = new UnitSquad(squad_type, company);
 	squad.base_company = company;
-	squad.add_type_data(fill_squad[$ "type_data"]);		
+	squad.add_type_data(fill_squad[$"type_data"]);		
 	squad_unit_types = squad.find_squad_unit_types();
 	var squad_fulfilment = squad.squad_fulfilment;
 
@@ -287,7 +287,7 @@ function UnitSquad(squad_type = undefined, company = undefined) constructor{
 
 	static add_type_data = function(data){
 		type_data=data;
-		display_name = type_data[$ "display_data"];
+		display_name = type_data[$"display_data"];
 		if (struct_exists(type_data, "class")){
 			class = type_data.class;
 		}
@@ -644,7 +644,7 @@ function game_start_squads(){
 		}		
 		last_squad_count = array_length(obj_ini.squads);
 		while (last_squad_count == array_length(obj_ini.squads)){
-			if (global.chapter_name == "Imperial Fists") or (array_contains(obj_ini.adv, "Boarders")) {
+			if (array_contains(obj_ini.adv, "Boarders")) {
 				last_squad_count = (array_length(obj_ini.squads) + 1);
 				if(last_squad_count%2 == 0){		
 					create_squad("assault_squad", company);

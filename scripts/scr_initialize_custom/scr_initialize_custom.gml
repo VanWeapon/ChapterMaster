@@ -19,7 +19,7 @@ enum Role {
 	VETERAN_SERGEANT = 19
 }
 
-enum PROGENITOR {
+enum ePROGENITOR {
     NONE,
     DARK_ANGELS,
     WHITE_SCARS,
@@ -156,7 +156,7 @@ function progenitor_livery(progenitor, specific = "none") {
     }
 
     switch (progenitor) {
-        case PROGENITOR.SPACE_WOLVES:
+        case ePROGENITOR.SPACE_WOLVES:
             livery_data = {
                 sgt: {
                     helm_pattern: 3,
@@ -189,7 +189,7 @@ function progenitor_livery(progenitor, specific = "none") {
             };
             break;
 
-        case PROGENITOR.DARK_ANGELS:
+        case ePROGENITOR.DARK_ANGELS:
             livery_data = {
                 sgt: {
                     helm_pattern: 0,
@@ -222,7 +222,7 @@ function progenitor_livery(progenitor, specific = "none") {
             };
             break;
 
-        case PROGENITOR.RAVEN_GUARD:
+        case ePROGENITOR.RAVEN_GUARD:
             livery_data = {
                 sgt: {
                     helm_pattern: 0,
@@ -255,7 +255,7 @@ function progenitor_livery(progenitor, specific = "none") {
             };
             break;
 
-        case PROGENITOR.SALAMANDERS:
+        case ePROGENITOR.SALAMANDERS:
             livery_data = {
                 sgt: {
                     helm_pattern: 0,
@@ -288,7 +288,7 @@ function progenitor_livery(progenitor, specific = "none") {
             };
             break;
 
-        case PROGENITOR.WHITE_SCARS:
+        case ePROGENITOR.WHITE_SCARS:
             livery_data = {
                 sgt: {
                     helm_pattern: 0,
@@ -321,7 +321,7 @@ function progenitor_livery(progenitor, specific = "none") {
             };
             break;
 
-        case PROGENITOR.IRON_HANDS:
+        case ePROGENITOR.IRON_HANDS:
             livery_data = {
                 sgt: {
                     helm_pattern: 0,
@@ -354,7 +354,7 @@ function progenitor_livery(progenitor, specific = "none") {
             };
             break;
 
-        case PROGENITOR.ULTRAMARINES:
+        case ePROGENITOR.ULTRAMARINES:
             livery_data = {
                 sgt: {
                     helm_pattern: 0,
@@ -387,7 +387,7 @@ function progenitor_livery(progenitor, specific = "none") {
             };
             break;
 
-        case PROGENITOR.IMPERIAL_FISTS:
+        case ePROGENITOR.IMPERIAL_FISTS:
             livery_data = {
                 sgt: {
                     helm_pattern: 0,
@@ -420,7 +420,7 @@ function progenitor_livery(progenitor, specific = "none") {
             };
             break;
 
-        case PROGENITOR.BLOOD_ANGELS:
+        case ePROGENITOR.BLOOD_ANGELS:
             livery_data = {
                 sgt: {
                     helm_pattern: 1,
@@ -562,7 +562,7 @@ function scr_initialize_custom() {
 	global.game_seed = floor(random(99999999)) + string_to_integer(global.chapter_name) + string_to_integer(obj_creation.chapter_master_name);
 
 
-    if (progenitor == PROGENITOR.RANDOM) {
+    if (progenitor == ePROGENITOR.RANDOM) {
         global.founding_secret = array_random_element([
             "Dark Angels",
             "Emperor's Children",
@@ -649,7 +649,7 @@ function scr_initialize_custom() {
 	home_name = obj_creation.homeworld_name;
 	fleet_type = obj_creation.fleet_type;
 
-	if (obj_creation.fleet_type != FLEET_TYPE.HOMEWORLD) {
+	if (obj_creation.fleet_type != eFLEET_TYPES.HOMEWORLD) {
 		battle_barges = 1;
 		if scr_has_adv ("Kings of Space") battle_barges += 1;
 		strike_cruisers = 6;
@@ -660,7 +660,7 @@ function scr_initialize_custom() {
 		
 		// obj_controller.fleet_type="Fleet";
 	}
-	if (obj_creation.fleet_type = FLEET_TYPE.HOMEWORLD) {
+	if (obj_creation.fleet_type = eFLEET_TYPES.HOMEWORLD) {
 		strike_cruisers = 8;
 		if (array_contains(obj_creation.adv, "Boarders")) strike_cruisers += 2;
 		gladius = 7;
@@ -679,13 +679,13 @@ function scr_initialize_custom() {
 	*/
 	if (obj_creation.custom = 0) {
 		flagship_name = obj_creation.flagship_name;
-		if (obj_creation.fleet_type != FLEET_TYPE.HOMEWORLD) {
+		if (obj_creation.fleet_type != eFLEET_TYPES.HOMEWORLD) {
 			battle_barges = 4;
 			strike_cruisers = 3;
 			gladius = 7;
 			hunters = 3;
 		}
-		if (obj_creation.fleet_type == FLEET_TYPE.HOMEWORLD) {
+		if (obj_creation.fleet_type == eFLEET_TYPES.HOMEWORLD) {
 			battle_barges = 2;
 			strike_cruisers = 8;
 			gladius = 7;
@@ -700,10 +700,10 @@ function scr_initialize_custom() {
 			hunters = hunters + obj_creation.extra_ships.hunters;
 		} else {
 			// hardcoded mode 
-			if (obj_creation.fleet_type != FLEET_TYPE.HOMEWORLD) {
+			if (obj_creation.fleet_type != eFLEET_TYPES.HOMEWORLD) {
 				if (global.chapter_name = "Soul Drinkers") then gladius -= 4;
 			}
-			if (obj_creation.fleet_type == FLEET_TYPE.HOMEWORLD) {
+			if (obj_creation.fleet_type == eFLEET_TYPES.HOMEWORLD) {
 				if (global.chapter_name = "Raven Guard") {
 					flagship_name = "Avenger"
 				}
@@ -741,7 +741,7 @@ function scr_initialize_custom() {
 
 				}
 			}
-			if (obj_creation.fleet_type == FLEET_TYPE.PENITENCE) {
+			if (obj_creation.fleet_type == eFLEET_TYPES.PENITENCE) {
 				if (global.chapter_name = "Lamenters") {
 					strike_cruisers = 2;
 					gladius = 2;
@@ -1009,7 +1009,7 @@ function scr_initialize_custom() {
 		apothecary += 7;
 	}
 	
-	if ((progenitor > PROGENITOR.NONE) && (progenitor < PROGENITOR.RANDOM) || (global.chapter_name = "Doom Benefactors") && (obj_creation.custom == 0)) {
+	if ((progenitor > ePROGENITOR.NONE) && (progenitor < ePROGENITOR.RANDOM) || (global.chapter_name = "Doom Benefactors") && (obj_creation.custom == 0)) {
 		if (obj_creation.strength <= 4) then ninth = 0;
 		if (obj_creation.strength <= 3) then eighth = 0;
 		if (obj_creation.strength <= 2) then seventh = 0;
@@ -1316,6 +1316,7 @@ function scr_initialize_custom() {
 		mobi[0, i] = "";
 		age[0, i] = ((millenium * 1000) + year) - 10;
 		god[0, i] = 0;
+		/// @type {Array<Array<Struct.TTRPG_stats>>} 
 		TTRPG[0, i] = new TTRPG_stats("chapter", 0, i, "blank");
 	}
 	for (i = 0; i <= 100; i++) {
@@ -1492,10 +1493,10 @@ function scr_initialize_custom() {
 
 	*/
 	var squad_name = "Squad";
-	if (global.chapter_name == "Space Wolves" || obj_ini.progenitor == PROGENITOR.SPACE_WOLVES) {
+	if (global.chapter_name == "Space Wolves" || obj_ini.progenitor == ePROGENITOR.SPACE_WOLVES) {
 		squad_name = "Pack";
 	}
-	if (global.chapter_name == "Iron Hands" || obj_ini.progenitor == PROGENITOR.IRON_HANDS) {
+	if (global.chapter_name == "Iron Hands" || obj_ini.progenitor == ePROGENITOR.IRON_HANDS) {
 		squad_name = "Clave";
 	}
 	if(obj_creation.use_chapter_object){
@@ -2152,7 +2153,7 @@ function scr_initialize_custom() {
 			}]
 		])
 	}
-	if (global.chapter_name == "Imperial Fists") or (scr_has_adv("Boarders")) {
+	if (scr_has_adv("Boarders")) {
 		variable_struct_set(st, "breachers", [
 				[roles.assault, {
 					"max": 9,
@@ -2260,88 +2261,6 @@ function scr_initialize_custom() {
 			}]
 		])
 
-	if (global.chapter_name == "Dark Angels" && false) {
-		variable_struct_set(st, "terminator_squad", [
-			// Terminator Sergeant
-			[roles.veteran_sergeant, {
-				"max": 1,
-				"min": 1,
-				"role": $"Deathwing {roles.sergeant}",
-				"loadout": {
-					"required": {
-						"wep1": ["Power Sword", 1],
-					},
-				}
-			}],
-			// Terminator
-			[roles.terminator, {
-				"max": 4,
-				"min": 2,
-				"role": $"Deathwing {roles.terminator}",
-				"loadout": {
-					"required": {
-						"wep1": ["", 0],
-						"wep2": [wep2[100, 4], 3],
-					},
-					"option": {
-						"wep1": [
-							[
-								["Power Fist", "Chainfist"], 4
-							],
-						],
-						"wep2": [
-							[
-								["Heavy Flamer", "Heavy Flamer", "Heavy Flamer", "Assault Cannon", "Assault Cannon", "Plasma Cannon", ], 1
-							],
-						],
-					}
-				}
-			}],
-			["type_data", {
-				"display_data": $"Deathwing {roles.terminator} {squad_name}",
-				"formation_options": ["terminator", "veteran", "assault", "devastator", "scout", "tactical"],
-			}]
-		])
-		variable_struct_set(st, "terminator_assault_squad", [
-			// Assault Terminator Sergeant
-			[roles.veteran_sergeant, {
-				"max": 1,
-				"min": 1,
-				"role": $"Deathwing {roles.sergeant}",
-				"loadout": {
-					"required": {
-						"wep1": ["Thunder Hammer", 1],
-						"wep2": ["Storm Shield", 1],
-					},
-				},
-			}],
-			// Assault Terminator
-			[roles.terminator, {
-				"max": 4,
-				"min": 2,
-				"role": $"Deathwing {roles.terminator}",
-				"loadout": {
-					"required": {
-						"wep1": ["Thunder Hammer", 1],
-						"wep2": ["Storm Shield", 1],
-					},
-					"option": {
-						"wep1": [
-							[
-								["Lightning Claw"], 3, {
-									"wep2":"Lightning Claw",
-								}
-							],
-						],
-					}
-				},
-			}, ],
-			["type_data", {
-				"display_data": $"Deathwing {roles.terminator} {squad_name}",
-				"formation_options": ["terminator", "veteran", "assault", "devastator", "scout", "tactical"],
-			}]
-		])
-	}
 
 	var squad_names = struct_get_names(st);
 	// show_debug_message($" {squad_names}");
@@ -2467,18 +2386,6 @@ function scr_initialize_custom() {
 	} else {
 		//hardcoded
 		switch (global.chapter_name) {
-			case "Dark Angels":
-				break;
-				chapter_master.add_trait("old_guard");
-				chapter_master.add_trait("melee_enthusiast");
-				arti = obj_ini.artifact_struct[last_artifact];
-				arti.name = "Sword of Secrets";
-				arti.custom_description = "A master-crafted Power Sword of formidable potency created soon after the disappearance of Lion El'Jonson. It is the mightiest of the Heavenfall Blades,";
-				obj_ini.artifact[last_artifact] = "Power Sword";
-				arti.bearer = [0, 1];
-				obj_ini.artifact_identified[last_artifact] = 0;
-				chapter_master_equip.wep1 = last_artifact;
-				break;
 			case "Blood Angels":
 				chapter_master.add_trait("ancient");
 				chapter_master.add_trait("old_guard");
@@ -2541,20 +2448,6 @@ function scr_initialize_custom() {
 				arti.bearer = [0, 1];
 				obj_ini.artifact_identified[last_artifact] = 0;
 				obj_ini.artifact[last_artifact] = "Terminator Armour";
-				break;
-			case "Space Wolves":
-				break;
-				chapter_master_equip.armour = "Terminator Armour";
-				chapter_master.add_trait("ancient");
-				chapter_master.add_trait("melee_enthusiast");
-				chapter_master.add_trait("feet_floor");
-				arti = obj_ini.artifact_struct[last_artifact];
-				arti.name = "Axe of Morkai";
-				arti.custom_description = "Once a Khornate axe of great power it was reforged in the image of the death wolf Morkai";
-				obj_ini.artifact[last_artifact] = "Executioner Power Axe";
-				arti.bearer = [0, 1];
-				obj_ini.artifact_identified[last_artifact] = 0;
-				chapter_master_equip.wep1 = last_artifact;
 				break;
 			case "Black Templars":
 				chapter_master.add_trait("melee_enthusiast");
@@ -3006,7 +2899,7 @@ function scr_initialize_custom() {
 		if (obj_creation.adv[o] = "Retinue of Renown") then chapter_option = 1;
 	}
 	if (chapter_option = 1) then _honour_guard_count += 10;
-	if (progenitor == PROGENITOR.DARK_ANGELS && obj_creation.custom = 0) { _honour_guard_count += 6; }
+	if (progenitor == ePROGENITOR.DARK_ANGELS && obj_creation.custom = 0) { _honour_guard_count += 6; }
 	if (_honour_guard_count == 0) {
 		_honour_guard_count = 3
 	}
@@ -4031,7 +3924,7 @@ function scr_initialize_custom() {
 			penitent_end = obj_creation.strength * 48;
 		}
 	} else {
-		if (fleet_type == FLEET_TYPE.PENITENCE) {
+		if (fleet_type == eFLEET_TYPES.PENITENCE) {
 			penitent = 1;
 			penitent_max = (obj_creation.strength * 60);
 			penitent_current = 1;
@@ -4084,7 +3977,7 @@ function add_unit_to_company(ttrpg_name, company, slot, role_name, role_id, wep1
 	if(mobi != ""){
 		obj_ini.mobi[company][slot] = mobi;
 	}
-	var spawn_unit = obj_ini.TTRPG[company][slot];
+	var spawn_unit = fetch_unit([company,slot]);
 	if(role_id == Role.CHAMPION){
 		spawn_unit.add_trait("champion");
 	}

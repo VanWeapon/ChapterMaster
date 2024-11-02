@@ -580,7 +580,7 @@ function scr_image_cache(path, image_id){
 			array_set(obj_img.image_cache[$path], image_id, drawing_sprite);
 		} else {
 			drawing_sprite = -1;
-			debugl($"No directory/file found matching {dir}");
+			// debugl($"No directory/file found matching {dir}"); // too much noise
 		}
 	}
 	return drawing_sprite;

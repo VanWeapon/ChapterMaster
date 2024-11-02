@@ -1,17 +1,18 @@
 /// @description Constructor for loading Chapter data from JSON and providing type completion
+/// see the actual json files for extended documentation on each property
 function ChapterData() constructor {
-	id = CHAPTERS.UNKNOWN;
+	id = eCHAPTERS.UNKNOWN;
 	name = "";
 	points = 0;
 	flavor = "";
-	origin = CHAPTER_ORIGIN.NONE;
-	founding = CHAPTERS.UNKNOWN;
+	origin = eCHAPTER_ORIGINS.NONE;
+	founding = eCHAPTERS.UNKNOWN;
 	successors = 0;
 	splash = 0;
 	icon = 0;
 	icon_name = "";
 	aspirant_trial = eTrials.BLOODDUEL;
-	fleet_type = FLEET_TYPE.NONE;
+	fleet_type = eFLEET_TYPES.NONE;
 	strength = 0;
 	purity = 0;
 	stability = 0;
@@ -22,12 +23,12 @@ function ChapterData() constructor {
 	recruiting_exists = 0;
 	recruiting = ""; 
 	recruiting_name = "";
-	homeworld_rule = HOMEWORLD_RULE.NONE;
+	homeworld_rule = eHOMEWORLD_RULE.NONE;
 	flagship_name = "";
 	monastary_name = "";
 	advantages = array_create(9);
 	disadvantages = array_create(9);
-	discipline = "default";
+	discipline = "default"; // todo convert to enum
 
 	full_liveries = "none"
 
@@ -83,14 +84,14 @@ function ChapterData() constructor {
 		split_vets: 0,
 	};
 	/// @type {Array<Real>} 
-	disposition = [];
+	disposition = array_create(10, 0);
 	/// @type {Array<String>} 
-	company_titles = [];
+	company_titles = array_create(11, "");
 	chapter_master = {
 		name: "",
 		melee: 0,
 		ranged: 0,
-		specialty: CM_SPECIALTY.NONE,
+		specialty: eCM_SPECIALTY.NONE,
 		/// @type {Array<String>}
 		traits: [],
 		gear: "",
@@ -140,7 +141,7 @@ function ChapterData() constructor {
 
 
 	/// @desc Returns true if loaded successfully, false if not.
-	/// @param {Enum.CHAPTERS} chapter_id 
+	/// @param {Enum.eCHAPTERS} chapter_id 
 	/// @param {Bool} use_app_data if set to true will read from %AppData%/Local/ChapterMaster instead of /datafiles
 	/// @returns {Bool} 
 	function load_from_json(chapter_id, use_app_data = false){
@@ -167,13 +168,15 @@ function ChapterData() constructor {
 }
 
 /// @mixin obj_creation
+/// @description called when a chapter's icon is clicked on the first page after the main menu.
+/// used to set up initialise the data that is later fed into `scr_initialize_custom` when the game starts
 function scr_chapter_new(argument0) {
 
 	full_liveries = "none"; // until chapter objects are in full use kicks off livery propogation
 
 	// argument0 = chapter
 	obj_creation.use_chapter_object = false; // for the new json testing
-	var chapter_id = CHAPTERS.UNKNOWN;
+	var chapter_id = eCHAPTERS.UNKNOWN;
 
 	//1st captain =	honor_captain_name	
 	//2nd captain =	watch_master_name	
@@ -186,7 +189,7 @@ function scr_chapter_new(argument0) {
 	//9th captain =	relic_master_name
 	//10th captain = recruiter_name
 
-	var i;
+	var i = 0;
 	world = array_create(20, "");
 	world_type = array_create(20, "");
 	world_feature = array_create(20, "");
@@ -295,42 +298,7 @@ function scr_chapter_new(argument0) {
 		company_title[10]="The Scions of Ultramar";
 
 	}
-	//Waiting on new disadv to give anymore adv.
-  if (argument0="Imperial Fists"){points=150;
-		selected_chapter=4;chapter=argument0;icon=4;icon_name="if";founding=0;fleet_type=1;strength=6;purity=7;stability=10;cooperation=8;
-		adv[1]="Bolter Drilling";adv[2]="Siege Masters";
-		homeworld="Ice";homeworld_name="Inwit";recruiting="Hive";recruiting_name="Necromunda";
-		homeworld_exists=1;recruiting_exists=1;homeworld_rule=2;aspirant_trial=eTrials.SURVIVAL;discipline="telekinesis";
-
-		color_to_main="Gold";color_to_secondary="Gold";color_to_trim="Red";color_to_pauldron="Gold"
-		color_to_pauldron2="Gold";color_to_lens="Red";color_to_weapon="Black"
-		hapothecary="Dyserna";hchaplain="Guaron";clibrarian="Vidos Harn";fmaster="Atornus Geis";
-		admiral="Kyne Phasn";honorcapt="Darnath Lysander";watchmaster="Helion";arsenalmaster="Tor Garadon";;marchmaster="Maluan";
-		ritesmaster="Antaros";victualler="Jonas";lordexec="Chalosa";relmaster="Kaheron";recruiter="Taelos";
-
-		battle_cry="Primarch-Progenitor, to your glory and the glory of him on earth!";
-	        equal_specialists=0;load_to_ships=[2,0,0];
-			successors=21;
-	        mutations=2;mutations_selected=2;
-	        preomnor=0;voice=0;doomed=0;lyman=0;omophagea=0;ossmodula=0;membrane=1;
-	        zygote=0;betchers=1;catalepsean=0;secretions=0;occulobe=0;mucranoid=0;
-	        // disposition[1]=0;// Prog
-	        disposition[2]=75;disposition[3]=60;disposition[4]=50;disposition[5]=60;
-	        disposition[6]=60;// Astartes
-	        disposition[7]=0;// Reserved
-	        chapter_master_name="Vorn Hagen";chapter_master_melee=4;
-	        chapter_master_ranged=7;chapter_master_specialty=1;
-
-	        company_title[1]="The Fists of Dorn";company_title[2]="The Scions of Redemption";company_title[3]="The Sentinels of Terra";
-	        company_title[4]="The Reductors";company_title[5]="The Heralds of Truth";company_title[6]="The Siege Hammers";
-	        company_title[7]="Guardians of Phalanx";company_title[8]="Dorn's Huscarls";company_title[9]="The Wardens";
-	        company_title[10]="The Eyes of Dorn";
-
-	    i=99;repeat(3){
-	    	i+=1;
-	        role[i,2]="Huscarl";wep1[i,2]="Power Sword";wep2[i,2]="Storm Shield";armour[i,2]="Power Armour";
-		}
-	}
+	
 
 	if (argument0="Blood Angels"){points=150;
 	    selected_chapter=5;chapter=argument0;icon=5;icon_name="ba";founding=0;fleet_type=1;strength=5;purity=9;stability=9;cooperation=7;
@@ -718,7 +686,7 @@ if (argument0="Lamenters"){founding=5;points=150;
 
 	#region Custom Chapter
 	//generates custom chapter if it exists
-	if (is_real(argument0) && argument0 >= CHAPTERS.CUSTOM_1 && argument0 <= CHAPTERS.CUSTOM_10){
+	if (is_real(argument0) && argument0 >= eCHAPTERS.CUSTOM_1 && argument0 <= eCHAPTERS.CUSTOM_10){
 		obj_creation.use_chapter_object = true;
 		var chapter_obj = new ChapterData();
 		var successfully_loaded = chapter_obj.load_from_json(argument0, true);
@@ -872,21 +840,21 @@ if (argument0="Lamenters"){founding=5;points=150;
 }
 
 
-enum FLEET_TYPE {
+enum eFLEET_TYPES {
 	NONE = 0,
 	HOMEWORLD = 1,
 	FLEET_BASED,
 	PENITENCE,
 }
 
-enum HOMEWORLD_RULE {
+enum eHOMEWORLD_RULE {
 	NONE = 0,
 	GOVERNOR = 1,
 	COUNTRY,
 	PERSONAL,
 }
 
-enum CM_SPECIALTY {
+enum eCM_SPECIALTY {
 	NONE = 0,
 	LEADER = 1,
 	CHAMPION,

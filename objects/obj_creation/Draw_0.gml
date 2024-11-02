@@ -51,10 +51,10 @@ if (slate4>0){
 		draw_text_transformed(440,custom_y,string_hash_to_newline("Custom Chapters"),0.75,0.75,0);
         draw_text_transformed(440,other_y,string_hash_to_newline("Other"),0.75,0.75,0);
 
-        var founding_chapters = array_filter(all_chapters, function(item){ return item.origin == CHAPTER_ORIGIN.FOUNDING});
-        var successor_chapters = array_filter(all_chapters, function(item){ return item.origin == CHAPTER_ORIGIN.SUCCESSOR});
-        var custom_chapters = array_filter(all_chapters, function(item){ return item.origin == CHAPTER_ORIGIN.CUSTOM});
-        var other_chapters = array_filter(all_chapters, function(item){ return item.origin == CHAPTER_ORIGIN.NON_CANON});
+        var founding_chapters = array_filter(all_chapters, function(item){ return item.origin == eCHAPTER_ORIGINS.FOUNDING});
+        var successor_chapters = array_filter(all_chapters, function(item){ return item.origin == eCHAPTER_ORIGINS.SUCCESSOR});
+        var custom_chapters = array_filter(all_chapters, function(item){ return item.origin == eCHAPTER_ORIGINS.CUSTOM});
+        var other_chapters = array_filter(all_chapters, function(item){ return item.origin == eCHAPTER_ORIGINS.NON_CANON});
 
         
 
@@ -1618,7 +1618,7 @@ if (slide=6){
     
     //adds "Save Chapter" button if custom chapter in a save slot
 
-    if(custom>0 && global.chapter_id != CHAPTERS.UNKNOWN){
+    if(custom>0 && global.chapter_id != eCHAPTERS.UNKNOWN){
         draw_rectangle(1000,135,1180,170,1)
         draw_text_transformed(1090,140,string("Save Chapter"),0.6,0.6,0);draw_set_font(fnt_40k_14b);
 	    if (scr_hit(1000,135,1180,170)) {
