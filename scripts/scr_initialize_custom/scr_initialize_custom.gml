@@ -2876,25 +2876,7 @@ function scr_initialize_custom() {
 		k += 1;
 		commands += 1;
 		man_size += 1;
-		TTRPG[company][k] = new TTRPG_stats("chapter", company, k);
-		spawn_unit = TTRPG[company][k];
-		race[company][k] = 1;
-		loc[company][k] = home_name;
-		role[company][k] = roles.honour_guard;
-		name[company][k] = global.name_generator.generate_space_marine_name();
-		spawn_unit.marine_assembling();
-		spawn_unit.add_trait(choose("guardian", "champion", "observant", "perfectionist","natural_leader"));
-		gear[company][k] = gear[defaults_slot, Role.HONOUR_GUARD];
-		mobi[company][k] = mobi[defaults_slot,  Role.HONOUR_GUARD];
-		// wep1 power sword // wep2 storm bolter default
-		wep1[company][k] = choose("Power Sword", "Power Axe", "Power Spear");
-		wep2[company][k] = wep2[defaults_slot,  Role.HONOUR_GUARD];
-		armour[company][k] = armour[defaults_slot,  Role.HONOUR_GUARD];
-		if (global.chapter_name == "Dark Angels") {
-			armour[company][k] = "Terminator Armour";
-			wep1[company][k] = "Mace of Absolution";
-			wep2[company][k] = "Storm Shield";
-		}
+		add_unit_to_company("marine", company, k, roles.honour_guard, Role.HONOUR_GUARD, wep1[defaults_slot][Role.HONOUR_GUARD], wep2[defaults_slot][Role.HONOUR_GUARD],gear[defaults_slot][Role.HONOUR_GUARD],mobi[defaults_slot][Role.HONOUR_GUARD],armour[defaults_slot][Role.HONOUR_GUARD]);
 	}
 
 	specials = k;
@@ -3947,6 +3929,9 @@ function add_unit_to_company(ttrpg_name, company, slot, role_name, role_id, wep1
 		obj_ini.mobi[company][slot] = mobi;
 	}
 	var spawn_unit = fetch_unit([company,slot]);
+	if(role_id == Role.HONOUR_GUARD){
+		spawn_unit.add_trait(choose("guardian", "champion", "observant", "perfectionist","natural_leader"));
+	}
 	if(role_id == Role.CHAMPION){
 		spawn_unit.add_trait("champion");
 	}

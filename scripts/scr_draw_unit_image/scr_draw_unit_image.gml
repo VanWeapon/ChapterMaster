@@ -411,7 +411,7 @@ function scr_draw_unit_image(_background=false){
         var reverent_guardians = false;
         var tech_brothers_trait = -5;
         var body_part;
-        var dev_trait = 0,
+        var dev_trait = 0;
 
         // if (unit_role=="Chapter Master"){unit_specialization=111;}
         // // Honour Guard
@@ -994,8 +994,9 @@ function scr_draw_unit_image(_background=false){
                             armour_bypass=true;
                         }
                     } 
-                    if (unit_chapter=="Blood Angels"){
+                    if (unit_chapter=="Blood Angels" || global.chapter_id == eCHAPTERS.BLOOD_ANGELS){
                         if (unit_role=="Chapter Master"){
+
                             armour_bypass=true;
                             hide_bionics = true;
                             robes_bypass = true;
@@ -1004,6 +1005,7 @@ function scr_draw_unit_image(_background=false){
                             // Draw wings;
                             draw_sprite(spr_dante,1,x_surface_offset,y_surface_offset);
                         } else if (unit_role==obj_ini.role[100][2]){
+                            
                             armour_bypass=true;
                             hide_bionics = true;
                             robes_bypass = true;
@@ -1039,7 +1041,7 @@ function scr_draw_unit_image(_background=false){
                     specific_helm = spr_generic_terminator_sgt;
                     if(unit_chapter == "Dark Angels"){
                         specific_helm = false;
-                        if (unit_role == obj_ini.role[100][2]){
+                        if (unit_role == obj_ini.role[100][Role.HONOUR_GUARD]){
                             armour_bypass=true;
                             armour_draw=[spr_da_term_honor,0];
                             hide_bionics = true;

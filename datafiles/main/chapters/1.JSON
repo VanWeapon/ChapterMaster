@@ -215,7 +215,8 @@
         "custom_roles": {
             "honour_guard": {
                 "name": "Deathwing Knight",
-                "wep1": "Mace of Absolution"
+                "wep1": "Mace of Absolution",
+                "armour": "Terminator Armour"
             },
             "captain": {
                 "name": "Master",
