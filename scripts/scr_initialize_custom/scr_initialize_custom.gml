@@ -715,11 +715,6 @@ function scr_initialize_custom() {
 					flagship_name = "Laurels of Victory";
 				}
 
-				if (global.chapter_name = "Imperial Fists") {
-					flagship_name = "Spear of Vengeance";
-					battle_barges += 1;
-				}
-
 				if (global.chapter_name = "Crimson Fists") {
 					flagship_name = "Throne's Fury";
 					battle_barges -= 1;
