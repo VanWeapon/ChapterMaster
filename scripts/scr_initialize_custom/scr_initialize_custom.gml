@@ -1142,18 +1142,6 @@ function scr_initialize_custom() {
 				ninth = 0;
 				tenth -= 40;
 				break;
-			case "Blood Angels":
-				chaplains += 4;
-				apothecary += 4;
-				epistolary += 1;
-				codiciery += 1;
-				lexicanum += 2;
-				break;
-			case "Dark Angels":
-				chaplains += 4;
-				veteran = 5;
-				terminator = 100;
-				break;
 			case "Lamenters":
 				tenth = 0;
 				ninth = 0;
@@ -2381,20 +2369,6 @@ function scr_initialize_custom() {
 	} else {
 		//hardcoded
 		switch (global.chapter_name) {
-			case "Blood Angels":
-				chapter_master.add_trait("ancient");
-				chapter_master.add_trait("old_guard");
-				chapter_master.add_trait("melee_enthusiast");
-				arti = obj_ini.artifact_struct[last_artifact];
-				arti.name = "Axe Mortalis";
-				arti.custom_description = "An immensely powerful Power Axe, the Axe Mortalis, forged in the days immediately after the end of the Horus Heresy.";
-				obj_ini.artifact[last_artifact] = "Power Axe";
-				arti.bearer = [0, 1];
-				obj_ini.artifact_identified[last_artifact] = 0;
-				chapter_master_equip.wep1=last_artifact;
-				chapter_master_equip.gear="Iron Halo";
-				chapter_master_equip.mobi="Jump Pack";
-				break;
 			case "Iron Hands":
 				chapter_master_equip.wep1 = "Power Axe";
 				chapter_master.add_trait("flesh_is_weak");

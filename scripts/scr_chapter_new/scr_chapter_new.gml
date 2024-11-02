@@ -299,42 +299,6 @@ function scr_chapter_new(argument0) {
 
 	}
 	
-
-	if (argument0="Blood Angels"){points=150;
-	    selected_chapter=5;chapter=argument0;icon=5;icon_name="ba";founding=0;fleet_type=1;strength=5;purity=9;stability=9;cooperation=7;
-	    adv[1]="Assault Doctrine";dis[1]="Black Rage";
-	    homeworld="Desert";homeworld_name="Baal";
-	    homeworld_exists=1;recruiting_exists=0;homeworld_rule=3;aspirant_trial=eTrials.BLOODDUEL;
-	    // Pauldron2: Left, Pauldron: Right
-	    color_to_main="Sanguine Red";color_to_secondary="Sanguine Red";color_to_trim="Lighter Black";
-	    color_to_pauldron="Sanguine Red";color_to_pauldron2="Sanguine Red";color_to_lens="Lime";
-	    color_to_weapon="Black";col_special=0;trim=0;
-	    hchaplain="Astorath the Grim";clibrarian="Mephiston";fmaster="Incarael";hapothecary="Corbulo";
-		honorcapt="Areno Karlaen";watchmaster="Donatos Aphael";arsenalmaster="Machiavi";admiral="Castigon";marchmaster="Sendini";
-		ritesmaster="Raxiatel";victualler="Phaeton";lordexec="Zedrenael";relmaster="Sendroth";recruiter="Borgio";
-	    battle_cry="For the Emperor and Sanguinius! Death! DEATH";// monastery_name="Fortress of Hera";master_name=
-	    equal_specialists=0;load_to_ships=[2,0,0];successors=3;
-	    mutations=0;mutations_selected=0;
-	    preomnor=0;voice=0;doomed=0;lyman=0;omophagea=0;ossmodula=0;membrane=0;
-	    zygote=0;betchers=0;catalepsean=0;secretions=0;occulobe=0;mucranoid=0;
-	    // disposition[1]=0;// Prog
-	    disposition[2]=75;disposition[3]=60;disposition[4]=50;disposition[5]=60;
-	    disposition[6]=60;// Astartes
-	    disposition[7]=0;// Reserved
-	    chapter_master_name="Dante";chapter_master_melee=6;
-	    chapter_master_ranged=2;chapter_master_specialty=2;
-	    company_title[1]="Archangels";company_title[2]="The Blooded";company_title[3]="Ironhelms";
-	    company_title[4]="Knights of Baal";company_title[5]="Daemonbanes";company_title[6]="Eternals";
-	    company_title[7]="Unconquerables";company_title[8]="Bloodbanes";company_title[9]="Sunderers";
-	    company_title[10]="Redeemers";
-    
-	    i=99;repeat(3){i+=1;
-	        role[i,2]="Sanguinary Guard";wep1[i,2]="Power Axe";wep2[i,2]="Bolt Pistol";mobi[i,2]="Jump Pack";
-	        role[i,15]="Sanguinary Priest";wep1[i,15]="Power Axe";
-	    }
-	}
-
-
 	if (argument0="Iron Hands"){points=150;
 	    selected_chapter=6;chapter=argument0;icon=6;icon_name="ih";founding=0;fleet_type=1;strength=5;purity=8;stability=8;cooperation=2;
 	    adv[1]="Tech-Brothers";adv[2]="Devastator Doctrine";dis[1]="Splintered";dis[2]="Suspicious";
