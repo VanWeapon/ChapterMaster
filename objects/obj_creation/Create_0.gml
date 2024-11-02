@@ -109,6 +109,7 @@ icon=1;
 icon_name="da";
 /// @instancevar {Real} custom 0 if premade, 1 if random, 2 if custom
 custom=0;
+/// @instancevar {Enum.PROGENITOR} founding 
 founding=1;
 chapter_tooltip="";
 points=0;

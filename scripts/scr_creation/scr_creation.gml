@@ -21,14 +21,14 @@ function scr_creation(slide_num) {
 	    change_slide=1;
 	    goto_slide=3;
 	    cooldown=8000;
-	    race[100,14]=1;
-	    var k,ahuh;k=0;ahuh=0;
-	    repeat(4){
-	    	k+=1;
-	    	if (dis[k]="Psyker Intolerant") then ahuh=1;
-	    }
-	    if (ahuh=1) then race[100,17]=0;
-	    if (chapter_name="Iron Hands") or (chapter_name="Space Wolves") then race[100,14]=0;
+	    race[100,Role.CHAPLAIN]=1;
+		race[100,Role.LIBRARIAN]=1;
+	    if(scr_has_disadv("Psyker Intolerant")){
+			race[100,Role.LIBRARIAN]=0;
+		}
+	    if (chapter_name="Iron Hands" || chapter_name="Space Wolves"){
+			race[100,Role.CHAPLAIN]=0;	
+		} 
 	}
 
 
