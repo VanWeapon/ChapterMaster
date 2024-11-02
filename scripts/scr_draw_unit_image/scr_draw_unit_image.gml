@@ -25,12 +25,28 @@ enum UnitSpecialColours {
     Ravenwing,
     Gold,
 }
-function get_complex_set(set = "mk7"){
-     set_pieces = {
-        right_pauldron : spr_gothic_numbers_right_pauldron,
-        left_knee : spr_numeral_left_knee,
+
+enum eARMOUR_SET {
+    None,
+    MK3,
+    MK4,
+    MK5,
+    MK6,
+    MK7,
+    MK8,
+    Indomitus,
+    Tartaros,
+}
+
+function get_complex_set(set = eARMOUR_SET.MK7){
+    var set_pieces = {};
+
+    if (!array_contains([eARMOUR_SET.Indomitus, eARMOUR_SET.Tartaros], set)) {
+        set_pieces.right_pauldron = spr_gothic_numbers_right_pauldron;
+        set_pieces.left_knee = spr_numeral_left_knee;
     }
-    if (set == "mk7"){
+
+    if (set == eARMOUR_SET.MK7){
         set_pieces.armour = spr_mk7_complex;
         set_pieces.left_arm = spr_mk7_left_arm;
         set_pieces.right_arm = spr_mk7_right_arm;
@@ -41,21 +57,21 @@ function get_complex_set(set = "mk7"){
         set_pieces.chest_variants = spr_mk7_chest_variants;
         set_pieces.leg_variants = spr_mk7_leg_variants;
         set_pieces.backpack = spr_mk7_complex_backpack;
-    }else if (set == "mk6"){
+    }else if (set == eARMOUR_SET.MK6){
         set_pieces.armour = spr_mk6_complex;
         set_pieces.backpack = spr_mk6_complex_backpack;
         set_pieces.left_arm = spr_mk6_left_arm;
         set_pieces.right_arm = spr_mk6_right_arm;
         set_pieces.left_trim = spr_mk7_left_trim;
         set_pieces.right_trim = spr_mk7_right_trim;
-    }else if (set == "mk5"){
+    }else if (set == eARMOUR_SET.MK5){
         set_pieces.armour = spr_mk5_complex;
         set_pieces.backpack = spr_mk5_complex_backpack;
         set_pieces.left_arm = spr_mk5_left_arm;
         set_pieces.right_arm = spr_mk5_right_arm;
         set_pieces.left_trim = spr_mk7_left_trim;
         set_pieces.right_trim = spr_mk7_right_trim;        
-    }else if (set == "mk4"){
+    }else if (set == eARMOUR_SET.MK4){
         set_pieces.chest_variants = spr_mk4_chest_variants;
         set_pieces.armour = spr_mk4_complex;
         set_pieces.backpack = spr_mk4_complex_backpack;
@@ -65,13 +81,13 @@ function get_complex_set(set = "mk7"){
         set_pieces.left_trim = spr_mk4_left_trim;
         set_pieces.right_trim = spr_mk4_right_trim;
         set_pieces.mouth_variants = spr_mk4_mouth_variants;        
-    }else if (set == "mk3"){
+    }else if (set == eARMOUR_SET.MK3){
         set_pieces.armour = spr_mk3_complex;
         set_pieces.backpack = spr_mk3_complex_backpack;
         set_pieces.left_arm = spr_mk3_left_arm;
         set_pieces.right_arm = spr_mk3_right_arm;     
         set_pieces.head = spr_mk3_head_variants;     
-    }else if (set == "mk8"){
+    }else if (set == eARMOUR_SET.MK8){
         set_pieces.armour = spr_mk8_complex;
         set_pieces.backpack = spr_mk8_complex_backpack;
         set_pieces.left_arm = spr_mk8_left_arm;
@@ -79,14 +95,14 @@ function get_complex_set(set = "mk7"){
         set_pieces.leg_variants = spr_mk7_leg_variants; 
         set_pieces.left_trim = spr_mk7_left_trim;
         set_pieces.right_trim = spr_mk7_right_trim;                    
-    }else if (set == "indomitus"){
+    }else if (set == eARMOUR_SET.Indomitus){
         set_pieces.armour = spr_indomitus_complex;
         set_pieces.left_arm = spr_indomitus_left_arm;
         set_pieces.right_arm = spr_indomitus_right_arm;
         set_pieces.backpack = spr_indomitus_backpack_variants;
         set_pieces.chest_variants = spr_indomitus_chest_variants;
         set_pieces.leg_variants = spr_indomitus_leg_variants;                 
-    }else if (set == "tartaros"){
+    }else if (set == eARMOUR_SET.Tartaros){
         set_pieces.armour = spr_tartaros_complex;
         set_pieces.left_arm = spr_tartaros_left_arm;
         set_pieces.right_arm = spr_tartaros_right_arm;                  
@@ -859,7 +875,7 @@ function scr_draw_unit_image(_background=false){
                     armour_bypass=true;
                 }else if (unit_armour=="MK3 Iron Armour"){
                     specific_armour_sprite = spr_mk3_complex;
-                    complex_set = get_complex_set("mk3");
+                    complex_set = get_complex_set(eARMOUR_SET.MK3);
                     complex_livery = true;
                     specific_helm = spr_generic_sgt_mk3;
                     if (unit_progenitor == PROGENITOR.DARK_ANGELS){
@@ -876,7 +892,7 @@ function scr_draw_unit_image(_background=false){
                 } else if (unit_armour=="MK4 Maximus"){
                     specific_helm = spr_generic_sgt_mk4;
                     specific_armour_sprite = spr_mk4_complex;
-                    complex_set = get_complex_set("mk4");
+                    complex_set = get_complex_set(eARMOUR_SET.MK4);
                     complex_livery = true;
                     if (array_contains(["Champion",obj_ini.role[100][2],obj_ini.role[100][5]], unit_role)){
                         /*if (unit_chapter=="Ultramarines"){
@@ -901,7 +917,7 @@ function scr_draw_unit_image(_background=false){
                     }
                 } else if (unit_armour=="MK5 Heresy"){
                     specific_armour_sprite = spr_mk5_complex;
-                    complex_set = get_complex_set("mk5");
+                    complex_set = get_complex_set(eARMOUR_SET.MK5);
                     complex_livery = true;
                     //TODO sort this mess out streamline system somehow
                     specific_helm = spr_generic_sgt_mk5;
@@ -918,7 +934,7 @@ function scr_draw_unit_image(_background=false){
                     }                   
                 } else if (unit_armour=="MK6 Corvus"){
                     specific_armour_sprite = spr_mk6_complex;
-                    complex_set = get_complex_set("mk6");
+                    complex_set = get_complex_set(eARMOUR_SET.MK6);
                     complex_livery = true;
                     specific_armour_sprite = spr_beakie_colors;
                     specific_helm = spr_generic_sgt_mk6;
@@ -936,7 +952,7 @@ function scr_draw_unit_image(_background=false){
 
                 } else if (unit_armour=="MK7 Aquila" || unit_armour="Power Armour"){
                     specific_armour_sprite = spr_mk7_complex;
-                    complex_set = get_complex_set("mk7");
+                    complex_set = get_complex_set(eARMOUR_SET.MK7);
                     complex_livery = true;
                     specific_helm = spr_generic_sgt_mk7;
                     if (obj_ini.progenitor == PROGENITOR.DARK_ANGELS){
@@ -953,6 +969,7 @@ function scr_draw_unit_image(_background=false){
                 } else if (unit_armour=="MK8 Errant"){
                     specific_helm = spr_generic_sgt_mk8;
                     specific_armour_sprite = spr_mk8_colors;
+                    complex_set = get_complex_set(eARMOUR_SET.MK8);
                     complex_livery = true;
                     if (unit_progenitor == PROGENITOR.DARK_ANGELS) {
                         specific_helm = false;
@@ -1013,11 +1030,11 @@ function scr_draw_unit_image(_background=false){
                     }
                 } else if (unit_armour="Tartaros"){
                     specific_armour_sprite = spr_tartaros_complex;
-                    complex_set = get_complex_set("tartaros");
+                    complex_set = get_complex_set(eARMOUR_SET.Tartaros);
                     complex_livery = true;
                 } else if (unit_armour="Terminator Armour"){
                     specific_armour_sprite = spr_indomitus_complex;
-                    complex_set = get_complex_set("indomitus");
+                    complex_set = get_complex_set(eARMOUR_SET.Indomitus);
                     complex_livery = true;
                     specific_helm = spr_generic_terminator_sgt;
                     if(unit_chapter == "Dark Angels"){
@@ -1159,10 +1176,10 @@ function scr_draw_unit_image(_background=false){
                                 var choice = get_body_data("variation","head")%sprite_get_number(complex_set.head);
                                 draw_sprite(complex_set.head,choice,x_surface_offset,y_surface_offset);
                             }                            
-                            if (struct_exists(set_pieces, "right_pauldron")){
+                            if (struct_exists(complex_set, "right_pauldron")){
                                 draw_sprite(complex_set.right_pauldron,company,x_surface_offset,y_surface_offset);
                             }
-                            if (struct_exists(set_pieces, "left_knee")){
+                            if (struct_exists(complex_set, "left_knee")){
                                 draw_sprite(complex_set.left_knee,company,x_surface_offset,y_surface_offset);
                             }                                                                                                                                         
                         } else {
