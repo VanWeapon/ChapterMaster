@@ -1,32 +1,32 @@
 {
     "chapter": {
-        "id": 6,
-        "name": "Iron Hands",
-        "flavor": "The flesh is weak, and the weak shall perish. Such is the creed of these mercilessly efficient cyborg warriors. A chapter with strong ties to the Mechanicum, they crush the foes of the Emperor and Machine God alike with a plethora of exotic technology and ancient weaponry.",
+        "id": 7,
+        "name": "Ultramarines",
+        "flavor": "An honourable and venerated chapter, the Ultramarines are considered to be amongst the best of the best. Their Primarch was the author of the great tome of the “Codex Astartes”, and they are considered exemplars of what a perfect Space Marine Chapter should be like.",
         "origin": 1, // 1 - Founding, 2 -successor, 3 - Other/non-canon/fanmade, 4 - Custom
         "points": 150,
         "founding": 0, // The id of the founding chapter, 0 for unknown or none
-        "splash": 6,
-        "icon": 6, // in \images\creation\creation_icons.png, the index from the left, 0 being blank square and 1 being dark angels etc
-        "icon_name": "ih", // ? dunno what this is used for yet but the icon breaks if you dont use it 
+        "splash": 7,
+        "icon": 7, // in \images\creation\creation_icons.png, the index from the left, 0 being blank square and 1 being dark angels etc
+        "icon_name": "um", // ? dunno what this is used for yet but the icon breaks if you dont use it 
         "fleet_type": 1, // 1= Homeworld, 2 = Fleet based, 3 = Penitent
         "strength": 5, // 1-10
-        "purity": 8, // 1-10
-        "stability": 8, // 1-10
-        "cooperation": 2, // 1-10
+        "purity": 10, // 1-10
+        "stability": 10, // 1-10
+        "cooperation": 10, // 1-10
         "homeworld_exists": 1, // 1 = true
-        "recruiting_exists": 0, // 1 = true
+        "recruiting_exists": 1, // 1 = true
         "homeworld_rule": 3, // 1 = Govenor, 2 = Countries, 3 = Personal Rule
-        "homeworld": "Lava", // "Lava" "Desert" "Forge" "Hive" "Death" "Agri" "Feudal" "Temperate" "Ice" "Dead" "Shrine"
-        "homeworld_name": "Medusa",
-        "recruiting": "", //"Lava" "Desert" "Forge" "Hive" "Death" "Agri" "Feudal" "Temperate" "Ice" "Dead" "Shrine"
-        "recruiting_name": "",
+        "homeworld": "Temperate", // "Lava" "Desert" "Forge" "Hive" "Death" "Agri" "Feudal" "Temperate" "Ice" "Dead" "Shrine"
+        "homeworld_name": "Macragge",
+        "recruiting": "Death", //"Lava" "Desert" "Forge" "Hive" "Death" "Agri" "Feudal" "Temperate" "Ice" "Dead" "Shrine"
+        "recruiting_name": "Parmenio",
         "discipline": "default", // one of 'default' 'biomancy' 'pyromancy' 'telekinesis' 'rune Magick'
-        "aspirant_trial": "KNOWLEDGE", // ? need to find the best way to do this
+        "aspirant_trial": "EXPOSURE", // ? need to find the best way to do this
         "advantages": [ //TODO something with these after rework of adv organisation
             "",
-            "Tech-Brothers",
-            "Devastator Doctrine",
+            "",
+            "",
             "",
             "",
             "",
@@ -36,8 +36,8 @@
         ],
         "disadvantages": [
             "",
-            "Splintered",
-            "Suspicious",
+            "",
+            "",
             "",
             "",
             "",
@@ -46,42 +46,42 @@
             ""
         ],
         "colors": {
-            "main": "Black",
-            "secondary": "Black",
-            "pauldron_r": "Black",
-            "pauldron_l": "Black",
-            "trim": "Silver",
-            "lens": "Dark Red",
-            "weapon": "Silver",
+            "main": "Dark Ultramarine",
+            "secondary": "Dark Ultramarine",
+            "pauldron_r": "Dark Ultramarine",
+            "pauldron_l": "Dark Ultramarine",
+            "trim": "Gold",
+            "lens": "Red",
+            "weapon": "Red",
             "special": 0, // 0 - normal, 1 - Breastplate, 2 - Vertical, 3 - Quadrant
-            "trim_on": 0 // 0 no, 1 yes for special trim colours // todo update ref for new name
+            "trim_on": 0 // 0 no, 1 yes for special trim colours 
         },
         "names": {
             //Chapter Staff
-            "hchaplain": "Jorggir Shidd",
-            "clibrarian": "Lydriik",
-            "fmaster": "Feirros",
-            "hapothecary": "Anaar Telech",
+            "hchaplain": "Ortan Cassius",
+            "clibrarian": "Varro Tigurius",
+            "fmaster": "Fennias Maxim",
+            "hapothecary": "Corpus Helix",
             //Company Captains 1 - 10
-            "honorcapt": "Caanok Var",
-            "watchmaster": "Eutuun Hes",
-            "arsenalmaster": "Sind Grolvoch",
-            "admiral": "Maarkul Rumann",
-            "marchmaster": "Tyrrod",
-            "ritesmaster": "Golloth",
-            "victualler": "Raan",
-            "lordexec": "Doroor Hesh",
-            "relmaster": "Verrox",
-            "recruiter": "Telavech"
+            "honorcapt": "Severus Agemman",
+            "watchmaster": "Cato Sicarius",
+            "arsenalmaster": "Mikael Fabian",
+            "admiral": "Uriel Ventris",
+            "marchmaster": "Caito Galenus",
+            "ritesmaster": "Maximus Epathus",
+            "victualler": "Gerad Ixion",
+            "lordexec": "Numitor",
+            "relmaster": "Sinon",
+            "recruiter": "Antilochus"
         },
-        "battle_cry": "The flesh is weak!",
-        "equal_specialists": 1,
+        "battle_cry": "Courage and honour!",
+        "equal_specialists": 0,
         "load_to_ships": {
             "escort_load": 2, // 0 no, 2 yes, 1 doesnt do anything :)
             "split_scouts": 0, // 0 no, 1 yes
             "split_vets": 0 // 0 no, 1 yes
         },
-        "successors": 6, //total number of successor chapters
+        "successors": 27, //total number of successor chapters
         "mutations": {
             "preomnor": 0,
             "voice": 0,
@@ -100,45 +100,62 @@
         "disposition": [ // todo maybe convert to struct
             0, // nothing
             0, // Progenitor faction
-            30, // Imperium
-            80, // Admech
-            35, //Inquisition
-            30, // Ecclesiarchy
-            50, // Astartes
+            80, // Imperium
+            65, // Admech
+            65, //Inquisition
+            65, // Ecclesiarchy
+            65, // Astartes
             0 // nothing
         ],
         "chapter_master": {
-            "name": "Kardan Stronos",
-            "specialty": 2, //1 Leader, 2 Champion, 3 Psyker,
-            "melee": 4, // 1 twin power fists ... 8 force staff
-            "ranged": 3, // 1 boltstorm gauntlets ... 7 storm shield
+            "name": "Marneus Calgar",
+            "specialty": 1, //1 Leader, 2 Champion, 3 Psyker,
+            "melee": 1, // 1 twin power fists ... 8 force staff
+            "ranged": 1, // 1 boltstorm gauntlets ... 7 storm shield
             // All chapter masters have the trait `Lead by Example` by default
             "traits": [
-                "flesh_is_weak",
-                "zealous_faith",
-                "tinkerer",
-                "old_guard"
+                "still_standing",
+                "tyrannic_vet"
             ],
-            "gear": "",
+            "gear": "Iron Halo",
             "mobi": "",
             "armour": "",
-            "bionics": 10
+            "bionics": 4
         },
-        "artifact": {},
+        "artifact": [
+            {
+                "name": "Gauntlet of Ultramar",
+                "description": "A mighty Power Fist with an Integrated Bolter that was reclaimed from a fallen Chaos champion, slain during the Gamalia Reclusiam Massacre by the Primarch of the Ultramarines, Roboute Guilliman himself",
+                "base_weapon_type": "Boltstorm Gauntlet",
+                "slot": "wep1"
+            },
+            {
+                "name": "Gauntlet of Ultramar",
+                "description": "A mighty Power Fist with an Integrated Bolter that was reclaimed from a fallen Chaos champion, slain during the Gamalia Reclusiam Massacre by the Primarch of the Ultramarines, Roboute Guilliman himself",
+                "base_weapon_type": "Boltstorm Gauntlet",
+                "slot": "wep2"
+            },
+            {
+                "name": "Armour of Antilochus",
+                "description": "A masterwork suit of the standard Indomitus pattern Terminator Armour. It incorporates a Teleport Homer, allowing Terminator squads of the veteran First Company to deploy next to their Chapter Master's side.",
+                "base_weapon_type": "Terminator Armour",
+                "slot": "armour"
+            }
+        ],
         "company_titles": [
             "",
-            "Clan Avernii",
-            "Clan Garrsak",
-            "Clan Raukaan",
-            "Clan Kaargul",
-            "Clan Haarmek",
-            "Clan Sorrgol",
-            "Clan Borrgos",
-            "Clan Morlaag",
-            "Clan Vurgaan",
-            "Clan Dorrvok"
+            "Warriors of Ultramar",
+            "Guardians of the Temple",
+            "Scourge of the Xenos",
+            "Defenders of Ultramar",
+            "Wardens of the Eastern Fringe",
+            "Brethren of the Forge",
+            "Defenders of Caeserean",
+            "Honourblades",
+            "Stormbringers",
+            "The Scions of Ultramar"
         ],
-        "flagship_name": "",
+        "flagship_name": "Laurels of Victory",
         /**
         * * Default fleet composition
         * * Homeworld 
@@ -164,19 +181,19 @@
         * * Stacks with advantages/disadvantages
         */
         "extra_specialists": {
-            "chaplains": -20,
+            "chaplains": 0,
             "chaplains_per_company": 0,
             "techmarines": 0,
-            "techmarines_per_company": 1,
+            "techmarines_per_company": 0,
             "apothecary": 0,
             "apothecary_per_company": 0,
             "epistolary": 0,
             "epistolary_per_company": 0,
             "codiciery": 0,
             "lexicanum": 0,
-            "terminator": -20,
+            "terminator": 0,
             "assault": 0,
-            "veteran": 20,
+            "veteran": 0,
             "devastator": 0
         },
         /**
@@ -217,14 +234,7 @@
         * `custom_roles` should be used for specialist/leadership type roles, 
         * for combat roles, `custom_squads` should probably? be used instead 
         */
-        "custom_roles": {
-            "chaplain": {
-                "name": "Iron Father"
-            },
-            "techmarine": {
-                "name": "Iron Father"
-            }
-        },
+        "custom_roles": {},
         /**
         * * Custom squad roles, loadouts and formations
         * When companies are made, squads are formed based on these rules: 
@@ -254,7 +264,7 @@
                 - gear: special equipment needed for certain roles, like a Roasrius or Narthecium
         *   - type_data: names the squad, allows certain formations ? idk what that does yet
         */
-        "squad_name": "Clave",
+        "squad_name": "Squad",
         "custom_squads": {}
     }
 }
