@@ -698,11 +698,6 @@ function scr_initialize_custom() {
 				if (global.chapter_name = "Raven Guard") {
 					flagship_name = "Avenger"
 				}
-				if (global.chapter_name = "Salamanders") {
-					flagship_name = "Flamewrought";
-				}
-
-
 				if (global.chapter_name = "Crimson Fists") {
 					flagship_name = "Throne's Fury";
 					battle_barges -= 1;
@@ -991,7 +986,8 @@ function scr_initialize_custom() {
 		apothecary += 7;
 	}
 	
-	if ((progenitor > ePROGENITOR.NONE) && (progenitor < ePROGENITOR.RANDOM) || (global.chapter_name = "Doom Benefactors") && (obj_creation.custom == 0)) {
+	// Strength ratings are made up for founding chapters
+	if (progenitor > ePROGENITOR.NONE && progenitor < ePROGENITOR.RANDOM) {
 		if (obj_creation.strength <= 4) then ninth = 0;
 		if (obj_creation.strength <= 3) then eighth = 0;
 		if (obj_creation.strength <= 2) then seventh = 0;
@@ -1119,18 +1115,6 @@ function scr_initialize_custom() {
 	} else {
 		//hardcoded method
 		switch (global.chapter_name) {
-			case "Salamanders":
-				veteran += 20;
-				second += 20;
-				third += 20;
-				fourth += 20;
-				fifth += 20;
-				sixth += 20;
-				seventh = 0;
-				eighth = 0;
-				ninth = 0;
-				tenth -= 40;
-				break;
 			case "Lamenters":
 				tenth = 0;
 				ninth = 0;
@@ -1634,7 +1618,7 @@ function scr_initialize_custom() {
 			[roles.veteran_sergeant, {
 				"max": 1,
 				"min": 1,
-				"role": $"Sternguard {roles.sergeant}",
+				"role": $"Sternguard {roles.veteran_sergeant}",
 				"loadout": {
 					"required": {
 						"wep1": ["Stalker Pattern Bolter", 1],
@@ -1687,7 +1671,7 @@ function scr_initialize_custom() {
 			[roles.veteran_sergeant, {
 				"max": 1,
 				"min": 1,
-				"role": $"Vanguard {roles.sergeant}",
+				"role": $"Vanguard {roles.veteran_sergeant}",
 				"loadout": {
 					"required": {
 						"wep1": ["Thunder Hammer", 1],
@@ -1973,7 +1957,7 @@ function scr_initialize_custom() {
 	// show_debug_message($"roles object for chapter {chapter_name} after setting from obj");
 	// show_debug_message($"{st}");
 
-	if (global.chapter_name == "Salamanders") or (scr_has_adv("Crafters")) { //salamanders squads
+	if (scr_has_adv("Crafters")) { //salamanders squads
 		variable_struct_set(st, "assault_squad", [
 			[roles.assault, {
 				"max": 9,
@@ -2412,18 +2396,6 @@ function scr_initialize_custom() {
 			case "Lamenters":
 				chapter_master.add_trait("shitty_luck");
 				chapter_master.add_trait("old_guard");
-			case "Salamanders":
-				chapter_master.add_trait("old_guard");
-				chapter_master.add_trait("tinkerer");
-				chapter_master.add_trait("slow_and_purposeful");
-				arti = obj_ini.artifact_struct[last_artifact];
-				arti.name = "Stormbearer";
-				arti.custom_description = "A masterwork Thunder Hammer, Stormbearer is thought to be made from the same material as that used to create Thunderhead, the Thunder Hammer of Vulkan.";
-				obj_ini.artifact[last_artifact] = "Thunder Hammer";
-				arti.bearer = [0, 1];
-				obj_ini.artifact_identified[last_artifact] = 0;
-				chapter_master_equip.wep1 = last_artifact;
-				break;
 			case "Raven Guard":
 				mobi[0, 1] = "Jump Pack&SIL|";
 				chapter_master.add_trait("lightning_warriors");
@@ -2972,7 +2944,6 @@ function scr_initialize_custom() {
 		k += 1;
 		man_size += 1;
 		add_unit_to_company("marine", company, k, roles.veteran, Role.VETERAN, "default","default","default","default","default");
-
 	}
 
 	repeat(scr_has_adv("Venerable Ancients") ? 3 : 2) {
@@ -3026,7 +2997,7 @@ function scr_initialize_custom() {
 	firsts = k;
 
 
-
+	show_debug_message($"2: {second} 3: {third} 4: {fourth} 5: {fifth} 6: {sixth} 7: {seventh} 8: {eighth} 9: {ninth} 10: {tenth}")
 	//non HQ and non firsst company initialised here
 	for (company = 2; company < 11; company++) {
 		// Initialize marines
@@ -3058,7 +3029,6 @@ function scr_initialize_custom() {
 
 		v = 0;
 		k = 0;
-		v = 0;
 
 
 		if (obj_creation.equal_specialists = 1) {
@@ -3079,8 +3049,8 @@ function scr_initialize_custom() {
 
 			// if (company=2){dready=1;
 			dready = 1;
-			if (scr_has_disadv("Sieged")) or (obj_creation.custom = 0) then dready =+ 1;
-			if (scr_has_adv("Venerable Ancients")) then dready += 1;
+			if (scr_has_disadv("Sieged") || obj_creation.custom = 0) {dready =+ 1;}
+			if (scr_has_adv("Venerable Ancients")) {dready += 1;}
 			rhinoy = 8;
 			whirly = whirlwind;
 			speedy = 2;
@@ -3103,7 +3073,7 @@ function scr_initialize_custom() {
 				whirly = whirlwind;
 				speedy = 2;
 				if scr_has_adv("Lightning Warriors") then speedy += 2; rhinoy -= 2;
-				if (second = 0) then stahp = 1;
+				if (second <= 0) then stahp = 1;
 			}
 	
 			if (company = 3) {
@@ -3117,7 +3087,7 @@ function scr_initialize_custom() {
 				whirly = whirlwind;
 				speedy = 2;
 				if (array_contains(obj_creation.adv, "Lightning Warriors")) then speedy += 2; rhinoy -= 2;
-				if (third = 0) then stahp = 1;
+				if (third <= 0) then stahp = 1;
 			}
 
 			if (company = 4) {
@@ -3131,7 +3101,7 @@ function scr_initialize_custom() {
 				whirly = whirlwind;
 				speedy = 2;
 				if (array_contains(obj_creation.adv, "Lightning Warriors")) then speedy += 2; rhinoy -= 2;
-				if (fourth = 0) then stahp = 1;
+				if (fourth <= 0) then stahp = 1;
 			}
 
 			if (company = 5) {
@@ -3145,7 +3115,7 @@ function scr_initialize_custom() {
 				whirly = whirlwind;
 				speedy = 2;
 				if (array_contains(obj_creation.adv, "Lightning Warriors")) then speedy += 2; rhinoy -= 2;
-				if (fifth = 0) then stahp = 1;
+				if (fifth <= 0) then stahp = 1;
 			}
 
 			if (company = 6) {
@@ -3158,7 +3128,7 @@ function scr_initialize_custom() {
 				rhinoy = 8;
 				whirly = whirlwind;
 				speedy = 0;
-				if (sixth = 0) then stahp = 1;
+				if (sixth <= 0) then stahp = 1;
 			}
 
 			if (company = 7) {
@@ -3171,7 +3141,7 @@ function scr_initialize_custom() {
 				rhinoy = 8;
 				whirly = 0;
 				speedy = 8;
-				if (seventh = 0) then stahp = 1;
+				if (seventh <= 0) then stahp = 1;
 			}
 
 			if (company = 8) {
@@ -3184,7 +3154,7 @@ function scr_initialize_custom() {
 				rhinoy = 2;
 				whirly = 0;
 				speedy = 2;
-				if (eighth = 0) then stahp = 1;
+				if (eighth <= 0) then stahp = 1;
 			}
 
 			if (company = 9) {
@@ -3198,7 +3168,7 @@ function scr_initialize_custom() {
 				rhinoy = 2;
 				whirly = 0;
 				speedy = 0;
-				if (ninth = 0) then stahp = 1;
+				if (ninth <= 0) then stahp = 1;
 			}
 			if (company = 10) {
 				temp1 = tenth;
@@ -3212,7 +3182,7 @@ function scr_initialize_custom() {
 
 				// if (obj_creation.custom=0) then temp1-=5;
 
-				if (tenth = 0) then stahp = 1;
+				if (tenth <= 0) then stahp = 1;
 			}
 		}
 

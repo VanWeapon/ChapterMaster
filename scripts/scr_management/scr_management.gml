@@ -399,8 +399,8 @@ function scr_management(argument0) {
 				if (unit.role() == role_names[Role.ANCIENT]) then num[8]++;
 				if (unit.role() == role_names[Role.CHAMPION]) then num[9]++;
 				if (unit.role() == role_names[Role.TERMINATOR]) then num[10]++;
-				if (unit.role() == role_names[Role.VETERAN_SERGEANT]) then num[11]++;
-				if (unit.role() == role_names[Role.SERGEANT]) then num[12]++;
+				if (unit.role() == role_names[Role.SERGEANT]) then num[11]++;
+				if (unit.role() == role_names[Role.VETERAN_SERGEANT]) then num[12]++;
 				if (unit.role() == role_names[Role.VETERAN]) then num[13]++;
 				if (unit.role() == role_names[Role.TACTICAL]) then num[14]++;
 				if (unit.role() == role_names[Role.ASSAULT]) then num[15]++;

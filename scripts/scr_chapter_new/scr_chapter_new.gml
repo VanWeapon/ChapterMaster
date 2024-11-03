@@ -269,42 +269,6 @@ function scr_chapter_new(argument0) {
 
 	#region V1 Chapter Initialised factions
 
-	
-	if (argument0="Salamanders"){points=150;
-	    selected_chapter=8;chapter=argument0;icon=8;icon_name="sl";founding=0;fleet_type=1;strength=2;purity=8;stability=8;cooperation=10;
-	    adv[1]="Crafters";adv[2]="Devastator Doctrine";
-	    homeworld="Lava";homeworld_name="Nocturne";homeworld_exists=1;recruiting_exists=0;
-	    homeworld_rule=1;aspirant_trial=eTrials.APPRENTICESHIP;discipline="pyromancy";
-	    // Pauldron2: Left, Pauldron: Right
-	    color_to_main="Firedrake Green";color_to_secondary="Firedrake Green";color_to_trim="Dark Gold";
-	    color_to_pauldron="Black";color_to_pauldron2="Black";color_to_lens="Red";
-	    color_to_weapon="Black";col_special=0;trim=0;
-	    fmaster="Argos";clibrarian="Velcona";hapothecary="Harath Shen";hchaplain="Leotrak Esar";
-		watchmaster="Pellas Mir'San";arsenalmaster="Adrax Agatone" admiral="Dac'tyr";
-		marchmaster="Mulcebor";ritesmaster="Ur'zan Draakgard";recruiter="Sol Ba'ken";
-	    battle_cry="Into the fires of battle!  Unto the anvil of war";// monastery_name="Fortress of Hera";master_name=
-	    equal_specialists=0;load_to_ships=[2,0,0];successors=2;
-	    mutations=1;mutations_selected=1;
-	    preomnor=0;voice=0;doomed=0;lyman=0;omophagea=0;ossmodula=0;membrane=0;
-	    zygote=0;betchers=0;catalepsean=0;secretions=1;occulobe=0;mucranoid=0;
-	    // disposition[1]=0;// Prog
-	    disposition[2]=80;disposition[3]=65;disposition[4]=65;disposition[5]=60;
-	    disposition[6]=60;// Astartes
-	    disposition[7]=0;// Reserved
-	    chapter_master_name="Tu'Shan";chapter_master_melee=4;
-	    chapter_master_ranged=2;chapter_master_specialty=2;
-		
-	    company_title[1]="The Firedrakes";company_title[2]="Defenders of Nocturne";company_title[3]="The Pyroclasts";
-		company_title[4]="The Branded";company_title[5]="The Drake Hunters";company_title[6]="The Flamehammers";
-		company_title[10]="Sons of Nocturne";
-	
-		    for(i=100;i<=102;i++){
-	        role[i,3]="Firedrake";wep1[i,3]="Power Sword";
-			role[i,19]="Firedrake Master";wep1[i,3]="Power Sword";
-			}
-	}
-
-
 	if (argument0="Raven Guard"){points=150;
 		selected_chapter=9;chapter=argument0;icon=9;icon_name="rg";founding=0;fleet_type=1;strength=5;purity=8;stability=4;cooperation=5;
 	    adv[1]="Ambushers";adv[2]="Assault Doctrine";dis[1]="Splintered";
