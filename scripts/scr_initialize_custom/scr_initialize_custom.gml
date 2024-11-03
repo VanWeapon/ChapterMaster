@@ -835,10 +835,13 @@ function scr_initialize_custom() {
 
 	/* Default Specialists */
 	var chaplains = 8,
+		chaplains_per_company = 1,
 	 	techmarines = 8,
 		techmarines_per_company = 1,
 		apothecary = 8,
+		apothecary_per_company = 1,
 		epistolary = 2,
+		epistolary_per_company = 1,
 		codiciery = 2,
 		lexicanum = 4,
 		terminator = 20,
@@ -987,6 +990,7 @@ function scr_initialize_custom() {
 		tenth -= 4;
 	}
 	if scr_has_adv("Medicae Primacy") {
+		apothecary_per_company += 1;
 		apothecary += 7;
 	}
 	
@@ -1082,9 +1086,13 @@ function scr_initialize_custom() {
 			show_debug_message($"updating specialist {s_name} with {s_val})");
 			switch (s_name){
 				case "chaplains": chaplains = chaplains + real(s_val); break;
+				case "chaplains_per_company": chaplains_per_company = chaplains_per_company + real(s_val); break;
 				case "techmarines": techmarines  = techmarines  + real(s_val); break;
+				case "techmarines_per_company": techmarines_per_company = techmarines_per_company + real(s_val); break;
 				case "apothecary": apothecary = apothecary  + real(s_val); break;
+				case "apothecary_per_company": apothecary_per_company = apothecary_per_company + real(s_val); break;
 				case "epistolary": epistolary = epistolary  + real(s_val); break;
+				case "epistolary_per_company": epistolary_per_company = epistolary_per_company + real(s_val); break;
 				case "codiciery": codiciery  = codiciery + real(s_val); break;
 				case "lexicanum": lexicanum  = lexicanum + real(s_val); break;
 				case "terminator": terminator  = terminator + real(s_val); break;
@@ -1170,15 +1178,16 @@ function scr_initialize_custom() {
 				ninth += 40;
 				tenth += 60;
 				break;
-			case "Iron Hands":
-				chaplains = 0;
-				techmarines_per_company += 1;
-				break;
 		}
 	}
+	if(chaplains <= 0) {chaplains_per_company = 0};
+	if(apothecary <= 0) {apothecary_per_company = 0};
+	if(techmarines <= 0) {techmarines_per_company = 0};
+	if(epistolary <= 0) {epistolary_per_company = 0};
+
 
 	// todo this kind of logic should just be accounted for in the json data for extra_marines
-	if (obj_creation.custom = 0) and(global.chapter_name != "Iron Hands") and(global.chapter_name != "Doom Benefactors") {
+	if (obj_creation.custom == 0) {
 		if (veteran >= 20) and(global.founding = 0) {
 			veteran -= 20;
 			terminator += 20;
@@ -1187,8 +1196,6 @@ function scr_initialize_custom() {
 			veteran -= 10;
 			terminator += 10;
 		}
-		// if (global.chapter_name="Lamenters") then terminator=0;
-		// tenth-=1;
 	}
 
 
@@ -1459,10 +1466,10 @@ function scr_initialize_custom() {
 
 	*/
 	var squad_name = "Squad";
-	if (global.chapter_name == "Space Wolves" || obj_ini.progenitor == ePROGENITOR.SPACE_WOLVES) {
+	if (obj_ini.progenitor == ePROGENITOR.SPACE_WOLVES) {
 		squad_name = "Pack";
 	}
-	if (global.chapter_name == "Iron Hands" || obj_ini.progenitor == ePROGENITOR.IRON_HANDS) {
+	if (obj_ini.progenitor == ePROGENITOR.IRON_HANDS) {
 		squad_name = "Clave";
 	}
 	if(obj_creation.use_chapter_object){
@@ -2349,10 +2356,16 @@ function scr_initialize_custom() {
 		if(struct_exists(obj_creation.chapter_master, "armour") && obj_creation.chapter_master.armour != ""){
 			chapter_master_equip.armour = obj_creation.chapter_master.armour;
 		}
+		if(struct_exists(obj_creation.chapter_master, "bionics") && obj_creation.chapter_master.bionics != ""){
+			for (i = 0; i < real(obj_creation.chapter_master.bionics); i++) {
+				chapter_master.add_bionics("none", "standard", false);
+			}
+		}
 	} else {
 		//hardcoded
 		switch (global.chapter_name) {
 			case "Iron Hands":
+				break;
 				chapter_master_equip.wep1 = "Power Axe";
 				chapter_master.add_trait("flesh_is_weak");
 				chapter_master.add_trait("zealous_faith");
@@ -2858,7 +2871,7 @@ function scr_initialize_custom() {
 		k += 1;
 		commands += 1;
 		man_size += 1;
-		add_unit_to_company("marine", company, k, roles.honour_guard, Role.HONOUR_GUARD, wep1[defaults_slot][Role.HONOUR_GUARD], wep2[defaults_slot][Role.HONOUR_GUARD],gear[defaults_slot][Role.HONOUR_GUARD],mobi[defaults_slot][Role.HONOUR_GUARD],armour[defaults_slot][Role.HONOUR_GUARD]);
+		add_unit_to_company("marine", company, k, roles.honour_guard, Role.HONOUR_GUARD,"default", "default","default","default","default");
 	}
 
 	specials = k;
@@ -2887,352 +2900,180 @@ function scr_initialize_custom() {
 
 	if (veteran + terminator > 0) {
 		k += 1;
-		commands += 1; // Captain
-		TTRPG[company][k] = new TTRPG_stats("chapter", company, k);
-		race[company][k] = 1;
-		loc[company][k] = home_name;
-		role[company][k] = roles.captain;
-		wep1[company][k] = "Relic Blade";
+		commands += 1; // 1st company Captain
 		name[company][k] = honor_captain_name;
-		wep2[company][k] = choose("Storm Shield", "Storm Bolter");
-		gear[company][k] = gear[defaults_slot, 5];
-		spawn_unit = TTRPG[company][k]
-		spawn_unit.marine_assembling();
-		armour[company][k] = "Terminator Armour";
+		var _armour = "Terminator Armour";
 		if(scr_has_adv("Crafters")){
-			armour[company][k] = "Tartaros";
+			var _armour = "Tartaros";
 		}
-		if (terminator <= 0) then armour[company][k] = "MK6 Corvus";
-		if (mobi[defaults_slot, 5] != "") then mobi[company][k] = mobi[defaults_slot, 5];
-		if (armour[company][k] = "Terminator Armour") or(armour[company][k] = "Tartaros") {
+		if (terminator <= 0) {
+			_armour = "MK6 Corvus";
+		}
+
+		var _spawn_unit = add_unit_to_company("marine", company, k, roles.captain, Role.CAPTAIN, "Relic Blade",choose("Storm Shield", "Storm Bolter"),"default","default",_armour);
+		if (_spawn_unit.armour() == "Terminator Armour" || _spawn_unit.armour() == "Tartaros") {
 			man_size += 1;
 		}
 
-		// TODO there should be a disadvantage that removes chaplains, for now just dont add any if total is 0 or less
-		if (chaplains > 0 && global.chapter_name != "Iron Hands") {
+		repeat(chaplains_per_company){
 			k += 1;
-			commands += 1; // Chaplain
-			TTRPG[company][k] = new TTRPG_stats("chapter", company, k);
-			race[company][k] = 1;
-			loc[company][k] = home_name;
-			role[company][k] = roles.chaplain;
-			name[company][k] = global.name_generator.generate_space_marine_name();
-			spawn_unit = TTRPG[company][k]
-			spawn_unit.marine_assembling();
-			wep1[company][k] = wep1[defaults_slot, Role.CHAPLAIN ];
-			wep2[company][k] = "Storm Bolter";
-			armour[company][k] = "Terminator Armour";
-			gear[company][k] = gear[defaults_slot, Role.CHAPLAIN ]
+			commands += 1; // 1st company Chaplain
+			var _armour = "Terminator Armour";
 			if(scr_has_adv("Crafters")){
-				armour[company][k] = "Tartaros";
+				var _armour = "Tartaros";
 			}
-			if (terminator <= 0) then armour[company][k] = "MK6 Corvus";
-			if (mobi[defaults_slot, 14] != "") then mobi[company][k] = mobi[defaults_slot, 14];
-			if (armour[company][k] = "Terminator") or(armour[company][k] = "Tartaros") then man_size += 1;
-		}
+			if (terminator <= 0) {
+				_armour = "MK6 Corvus";
+			}
+			var _spawn_unit = add_unit_to_company("marine", company, k, roles.chaplain, Role.CHAPLAIN,"default","Storm Bolter","default","default",_armour);
 
-		k += 1;
-		commands += 1; // Apothecary
-		race[company][k] = 1;
-		TTRPG[company][k] = new TTRPG_stats("chapter", company, k);
-		loc[company][k] = home_name;
-		role[company][k] = roles.apothecary;
-		name[company][k] = global.name_generator.generate_space_marine_name();
-		spawn_unit = TTRPG[company][k]
-		spawn_unit.marine_assembling();
-		wep1[company][k] = "Storm Bolter";
-		wep2[company][k] = "";
-		armour[company][k] = "Terminator Armour";
-		gear[company][k] = gear[defaults_slot, 15];
-		if(scr_has_adv("Crafters")){
-			armour[company][k] = "Tartaros";
+			if (_spawn_unit.armour() == "Terminator Armour" || _spawn_unit.armour() == "Tartaros") {
+				man_size += 1;
+			}
 		}
-		if (terminator <= 0) then armour[company][k] = "MK6 Corvus";
-		if (mobi[defaults_slot, 15] != "") then mobi[company][k] = mobi[defaults_slot, 15];
-		if (armour[company][k] = "Terminator") or(armour[company][k] = "Tartaros") then man_size += 1;
-
-		if (global.chapter_name = "Space Wolves") {
+		repeat(apothecary_per_company){
 			k += 1;
-			commands += 1; // Apothecary
-			TTRPG[company][k] = new TTRPG_stats("chapter", company, k);
-			race[company][k] = 1;
-			loc[company][k] = home_name;
-			role[company][k] = roles.apothecary;
-			name[company][k] = global.name_generator.generate_space_marine_name();
-			spawn_unit = TTRPG[company][k]
-			spawn_unit.marine_assembling();
-			wep1[company][k] = wep1[defaults_slot, 15];
-			wep2[company][k] = wep2[defaults_slot, 15];
-			armour[company][k] = "Terminator Armour";
-			gear[company][k] = gear[defaults_slot, 15];
+			commands += 1; // 1st company Apothecary
+			var _armour = "Terminator Armour";
 			if(scr_has_adv("Crafters")){
-				armour[company][k] = "Tartaros";
-			}			
-			if (terminator <= 0) then armour[company][k] = "MK6 Corvus";
-			if (mobi[defaults_slot, 15] != "") then mobi[company][k] = mobi[defaults_slot, 15];
-			if (armour[company][k] = "Terminator") or(armour[company][k] = "Tartaros") then man_size += 1;
+				var _armour = "Tartaros";
+			}
+			if (terminator <= 0) {
+				_armour = "MK6 Corvus";
+			}
+			var _spawn_unit = add_unit_to_company("marine", company, k, roles.apothecary, Role.APOTHECARY,"Storm Bolter","","default","default",_armour);
+
+			if (_spawn_unit.armour() == "Terminator Armour" || _spawn_unit.armour() == "Tartaros") {
+				man_size += 1;
+			}
 		}
 
-		if (!array_contains(obj_creation.dis, "Psyker Intolerant")) {
-			k += 1; // Company Librarian
-			commands += 1;
-			race[company][k] = 1;
-			TTRPG[company][k] = new TTRPG_stats("chapter", company, k);
-			loc[company][k] = home_name;
-			role[company][k] = roles.librarian;
-			name[company][k] = global.name_generator.generate_space_marine_name();
-			if (mobi[defaults_slot, 17] != "") then mobi[company][k] = mobi[defaults_slot, 17];
-			spawn_unit = TTRPG[company][k]
-			spawn_unit.marine_assembling();
-			gear[company][k] = gear[defaults_slot, 17];
-			wep1[company][k] = wep1[defaults_slot, 17];
-			wep2[company][k] = choose_weighted(weapon_weighted_lists.pistols);
-			armour[company][k] = "Terminator Armour";
-			if(scr_has_adv("Crafters")){
-				armour[company][k] = "Tartaros";
-			}
-			if (terminator <= 0) then armour[company][k] = "MK6 Corvus";
-			if (mobi[defaults_slot, 15] != "") then mobi[company][k] = mobi[defaults_slot, 15];
-			if (armour[company][k] = "Terminator") or(armour[company][k] = "Tartaros") then man_size += 1;
-			if (scr_has_adv("Psyker Abundance")){
-				spawn_unit.add_exp(10);
-			}
-			var let = "";
-			var letmax = 0;
-			if (obj_creation.discipline = "default") {
-				let = "D";
-				letmax = 7;
-			}
-			if (obj_creation.discipline = "biomancy") {
-				let = "B";
-				letmax = 5;
-			}
-			if (obj_creation.discipline = "pyromancy") {
-				let = "P";
-				letmax = 5;
-			}
-			if (obj_creation.discipline = "telekinesis") {
-				let = "T";
-				letmax = 4;
-			}
-			if (obj_creation.discipline = "rune Magick") {
-				let = "R";
-				letmax = 5;
-			}
-			spe[company][k] += string(let) + "0|";
-			TTRPG[company][k].add_trait("warp_touched");
-			TTRPG[company][k].psionic = choose(8, 9, 10, 11, 12, 13, 14);
-			TTRPG[company][k].update_powers();
-		}
+		if (!scr_has_disadv("Psyker Intolerant")) {
+			repeat(epistolary_per_company){
+				k += 1; // 1st company  Librarian
+				commands += 1;
+				var _armour = "Terminator Armour";
+				if(scr_has_adv("Crafters")){
+					var _armour = "Tartaros";
+				}
+				if (terminator <= 0) {
+					_armour = "MK6 Corvus";
+				}
+				var _spawn_unit = add_unit_to_company("marine", company, k, roles.librarian, Role.LIBRARIAN,"default",choose_weighted(weapon_weighted_lists.pistols),"default","default",_armour);
 
+				if (_spawn_unit.armour() == "Terminator Armour" || _spawn_unit.armour() == "Tartaros") {
+					man_size += 1;
+				}
+			}
+		}
 		repeat(techmarines_per_company){
 			k += 1;
-			commands += 1; // Techmarine
-			race[company][k] = 1;
-			TTRPG[company][k] = new TTRPG_stats("chapter", company, k);
-			loc[company][k] = home_name;
-			role[company][k] = roles.techmarine;
-			name[company][k] = global.name_generator.generate_space_marine_name();
-			spawn_unit = TTRPG[company][k]
-			spawn_unit.marine_assembling();
-			wep1[company][k] = wep1[defaults_slot, 16];
-			wep2[company][k] = "Storm Bolter";
-			armour[company][k] = "Terminator Armour";
-			gear[company][k] = gear[defaults_slot, 16];
+			commands += 1; // 1st company Techmarine
+			var _armour = "Terminator Armour";
 			if(scr_has_adv("Crafters")){
-				armour[company][k] = "Tartaros";
+				_armour = "Tartaros";
 			}
-			if (terminator <= 0) then armour[company][k] = "Artificer Armour";
-			if (mobi[defaults_slot, 16] != "") then mobi[company][k] = mobi[defaults_slot, 16];
-			if (armour[company][k] = "Terminator") or(armour[company][k] = "Tartaros") then man_size += 1;
+			if (terminator <= 0){
+				_armour = "Artificer Armour"
+			}
+			var _spawn_unit = add_unit_to_company("marine", company, k, roles.techmarine, Role.TECHMARINE, "default","Storm Bolter","default","default",_armour);
+			if (_spawn_unit.armour() == "Terminator" || _spawn_unit.armour() == "Tartaros") {
+				man_size += 1;
+			} 
 		}
+		
 
-		k += 1; // Standard bearer
+		k += 1; // 1st company Standard bearer
 		man_size += 1;
-		race[company][k] = 1;
-		TTRPG[company][k] = new TTRPG_stats("chapter", company, k);
-		loc[company][k] = home_name;
-		role[company][k] = roles.ancient;
-		name[company][k] = global.name_generator.generate_space_marine_name();
-		spawn_unit = TTRPG[company][k]
-		spawn_unit.marine_assembling();
-		wep1[company][k] = "Company Standard";
-		wep2[company][k] = "Storm Bolter";
-		armour[company][k] = "Terminator Armour";
+		var _armour = "Terminator Armour";
 		if(scr_has_adv("Crafters")){
-				armour[company][k] = "Tartaros";
-			}
-		if (terminator <= 0) then armour[company][k] = "MK6 Corvus";
-		if (mobi[defaults_slot, 5] != "") then mobi[company][k] = mobi[defaults_slot, 5];
-		if (armour[company][k] = "Terminator Armour") or(armour[company][k] = "Tartaros") {
+			_armour = "Tartaros";
+		}
+		if (terminator <= 0){
+			_armour = "MK6 Corvus"
+		}
+		var _spawn_unit = add_unit_to_company("marine", company, k, roles.ancient, Role.ANCIENT, "default","Storm Bolter","default","default",_armour);
+		if (_spawn_unit.armour() == "Terminator" || _spawn_unit.armour() == "Tartaros") {
 			man_size += 1;
 		}
 
 		k += 1;
 		man_size += 1;
-		TTRPG[company][k] = new TTRPG_stats("chapter", company, k); // Champion
-		race[company][k] = 1;
-		loc[company][k] = home_name;
-		role[company][k] = roles.champion;
-		name[company][k] = global.name_generator.generate_space_marine_name();
-		spawn_unit = TTRPG[company][k]
-		spawn_unit.marine_assembling();
-		wep1[company][k] = "Thunder Hammer";
-		wep2[company][k] = "Storm Bolter";
-		gear[company][k] = gear[defaults_slot, 7];
-		armour[company][k] = "Terminator Armour";
+		var _armour = "Terminator Armour";
 		if(scr_has_adv("Crafters")){
-			armour[company][k] = "Tartaros";
+			_armour = "Tartaros";
 		}
-		if (terminator <= 0) then armour[company][k] = "MK6 Corvus";
+		if (terminator <= 0){
+			_armour = "MK6 Corvus"
+		}
+		var _wep1 = "Thunder Hammer";
+		var _wep2 = "Storm Bolter";
 		if (global.chapter_name == "Dark Angels"){
-			wep1[company][k] = "Heavy Thunder Hammer";
-			wep2[company][k] = "";
+			_wep1 = "Heavy Thunder Hammer";
+			_wep2 = "";
 		}
-		if (armour[company][k] = "Terminator") or(armour[company][k] = "Tartaros") then man_size += 1;
+		var _spawn_unit = add_unit_to_company("marine", company, k, roles.champion, Role.CHAMPION, _wep1,_wep2,"default","default",_armour);
+		if (_spawn_unit.armour() == "Terminator" || _spawn_unit.armour() == "Tartaros") {
+			man_size += 1;
+		}
 	}
-
-	// go 5 under the required xp amount 
 
 	if (terminator > 0) then repeat(terminator) {
 		k += 1;
 		man_size += 2
-		// repeat(max(terminator-4,0)){k+=1;man_size+=2;
-		race[company][k] = 1;
-		TTRPG[company][k] = new TTRPG_stats("chapter", company, k);
-		loc[company][k] = home_name;
-		role[company][k] = roles.terminator;
-		wep1[company][k] = wep1[defaults_slot, 4];
-		name[company][k] = global.name_generator.generate_space_marine_name();
-		wep2[company][k] = wep2[defaults_slot, 4];
-		spawn_unit = TTRPG[company][k]
-		spawn_unit.marine_assembling();
+		add_unit_to_company("marine", company, k, roles.terminator, Role.TERMINATOR, "default","default","default","default","default");
 	}
 	repeat(veteran) {
 		k += 1;
 		man_size += 1;
-		TTRPG[company][k] = new TTRPG_stats("chapter", company, k);
-		race[company][k] = 1;
-		loc[company][k] = home_name;
-		role[company][k] = roles.veteran;
-		name[company][k] = global.name_generator.generate_space_marine_name();
-		spawn_unit = TTRPG[company][k]
-		spawn_unit.marine_assembling();
-		wep1[company][k] = wep1[defaults_slot, 3];
-		wep2[company][k] = wep2[defaults_slot, 3];
-		gear[company][k] = gear[defaults_slot, 3];
-		mobi[company][k] = mobi[defaults_slot, 3];
+		add_unit_to_company("marine", company, k, roles.veteran, Role.VETERAN, "default","default","default","default","default");
+
 	}
 
 	repeat(scr_has_adv("Venerable Ancients") ? 3 : 2) {
 		k += 1;
 		commands += 1;
-		TTRPG[company][k] = new TTRPG_stats("chapter", company, k, "dreadnought");
-		race[company][k] = 1;
-		loc[company][k] = home_name;
-		role[company][k] = "Venerable " + string(roles.dreadnought);
-		wep1[company][k] = wep1[defaults_slot, 6];
-		man_size += 8;
-		wep2[company][k] = "Plasma Cannon";
-		armour[company][k] = "Dreadnought";
-		name[company][k] = global.name_generator.generate_space_marine_name();
-		spawn_unit = TTRPG[company][k]
-		spawn_unit.roll_age();
-		spawn_unit.roll_experience();
+		add_unit_to_company("dreadnought", company, k, "Venerable" + string(roles.dreadnought),Role.DREADNOUGHT, "default", "Plasma Cannon","default","default","Dreadnought");
 	}
 
 	for (var i = 0; i < 4; i++) {
 		v += 1;
 		man_size += 10;
-		veh_race[company, v] = 1;
-		veh_loc[company, v] = home_name;
-		veh_role[company, v] = "Rhino";
-		veh_wep1[company, v] = "Storm Bolter";
-		veh_wep2[company, v] = "HK Missile";
-		veh_wep3[company, v] = "";
-		veh_upgrade[company, v] = "Artificer Hull";
-		veh_acc[company, v] = "Dozer Blades";
-		veh_hp[company, v] = 100;
-		veh_chaos[company, v] = 0;
-		veh_pilots[company, v] = 0;
-		veh_lid[company, v] = 0;
-		veh_wid[company, v] = 2;
+		add_veh_to_company("Rhino", company, v, "Storm Bolter", "HK Missile", "", "Artificer Hull", "Dozer Blades")
 	}
+
 	var predrelic = 2;
-	if (global.chapter_name = "Iron Hands") then predrelic = 3;
-	if (obj_creation.custom == 1) and (array_contains(obj_creation.adv, "Tech-Brothers")) then predrelic +=2;
+	if (scr_has_adv("Tech-Brothers")) then predrelic +=2;
 	repeat(predrelic) {
 		v += 1;
 		man_size += 10;
-		var predtype;
-		predtype = choose(1, 2, 3, 4)
-		veh_race[company, v] = 1;
-		veh_loc[company, v] = home_name;
-		veh_role[company, v] = "Predator";
-		if (predtype = 1) {
-			veh_wep1[company, v] = "Plasma Destroyer Turret";
-			veh_wep2[company, v] = "Lascannon Sponsons";
-			veh_wep3[company, v] = "HK Missile";
-			veh_upgrade[company, v] = "Artificer Hull";
-			veh_acc[company, v] = "Searchlight";
+		var predtype = choose(1, 2, 3, 4);
+		switch (predtype){
+			case 1:
+				add_veh_to_company("Predator", company, v, "Plasma Destroyer Turret", "Lascannon Sponsons", "HK Missile", "Artificer Hull", "Searchlight")
+			break;
+			case 2: 
+				add_veh_to_company("Predator", company, v, "Heavy Conversion Beamer Turret", "Lascannon Sponsons", "HK Missile", "Artificer Hull", "Searchlight")
+			break;
+			case 3: 
+				add_veh_to_company("Predator", company, v, "Flamestorm Cannon Turret", "Heavy Flamer Sponsons", "Storm Bolter", "Artificer Hull", "Dozer Blades")
+			break;
+			case 4:
+				add_veh_to_company("Predator", company, v, "Magna-Melta Turret", "Heavy Flamer Sponsons", "Storm Bolter", "Artificer Hull", "Dozer Blades")
+			break;
 		}
-		if (predtype = 2) {
-			veh_wep1[company, v] = "Heavy Conversion Beamer Turret";
-			veh_wep2[company, v] = "Lascannon Sponsons";
-			veh_wep3[company, v] = "HK Missile";
-			veh_upgrade[company, v] = "Artificer Hull";
-			veh_acc[company, v] = "Searchlight";
-		}
-		if (predtype = 3) {
-			veh_wep1[company, v] = "Flamestorm Cannon Turret";
-			veh_wep2[company, v] = "Heavy Flamer Sponsons";
-			veh_wep3[company, v] = "Storm Bolter";
-			veh_upgrade[company, v] = "Artificer Hull";
-			veh_acc[company, v] = "Dozer Blades";
-		}
-		if (predtype = 4) {
-			veh_wep1[company, v] = "Magna-Melta Turret";
-			veh_wep2[company, v] = "Heavy Flamer Sponsons";
-			veh_wep3[company, v] = "Storm Bolter";
-			veh_upgrade[company, v] = "Artificer Hull";
-			veh_acc[company, v] = "Dozer Blades";
-		}
-		veh_hp[company, v] = 100;
-		veh_chaos[company, v] = 0;
-		veh_pilots[company, v] = 0;
-		veh_lid[company, v] = 0;
 	}
 	if (global.chapter_name != "Lamenters") then repeat(6) {
 		v += 1;
 		man_size += 20;
-		veh_race[company, v] = 1;
-		veh_loc[company, v] = home_name;
-		veh_role[company, v] = "Land Raider";
-		veh_hp[company, v] = 100;
-		veh_chaos[company, v] = 0;
-		veh_pilots[company, v] = 0;
-		veh_lid[company, v] = 0;
-		veh_wid[company, v] = 2;
-		if (floor(v mod 4) == 1) or(floor(v mod 4) == 2) {
-			veh_wep1[company, v] = "Twin Linked Heavy Bolter Mount";
-			veh_wep2[company, v] = "Twin Linked Lascannon Sponsons";
-			veh_wep3[company, v] = "HK Missile";
-			veh_upgrade[company, v] = "Heavy Armour";
-			veh_acc[company, v] = "Searchlight";
+		if (floor(v % 4) == 1) or(floor(v % 4) == 2) {
+			add_veh_to_company("Land Raider", company, v, "Twin Linked Heavy Bolter Mount", "Twin Linked Lascannon Sponsons", "HK Missile", "Heavy Armour", "Searchlight")
 		}
-		if (floor(v mod 4) == 3) {
-			veh_wep1[company, v] = "Twin Linked Assault Cannon Mount";
-			veh_wep2[company, v] = "Hurricane Bolter Sponsons";
-			veh_wep3[company, v] = "Storm Bolter";
-			veh_upgrade[company, v] = "Heavy Armour";
-			veh_acc[company, v] = "Frag Assault Launchers";
+		if (floor(v % 4) == 3) {
+			add_veh_to_company("Land Raider", company, v, "Twin Linked Assault Cannon Mount", "Hurricane Bolter Sponsons", "Storm Bolter", "Heavy Armour", "Frag Assault Launchers")
 		}
-		if (floor(v mod 4) == 0) {
-			veh_wep1[company, v] = "Twin Linked Assault Cannon Mount";
-			veh_wep2[company, v] = "Flamestorm Cannon Sponsons";
-			veh_wep3[company, v] = "Storm Bolter";
-			veh_upgrade[company, v] = "Heavy Armour";
-			veh_acc[company, v] = "Frag Assault Launchers";
+		if (floor(v % 4) == 0) {
+			add_veh_to_company("Land Raider", company, v, "Twin Linked Assault Cannon Mount", "Flamestorm Cannon Sponsons", "Storm Bolter", "Heavy Armour", "Frag Assault Launchers")
 		}
 	}
 	v = 0;
@@ -3499,69 +3340,59 @@ function scr_initialize_custom() {
 
 			var _mobi = mobi[defaults_slot, Role.CAPTAIN];
 			if (company = 8) and(obj_creation.equal_specialists = 0) then _mobi = "Jump Pack";
-			add_unit_to_company("marine", company, k, roles.captain, Role.CAPTAIN, wep1[defaults_slot, Role.CAPTAIN],choose_weighted(weapon_weighted_lists.pistols),gear[defaults_slot, Role.CAPTAIN],_mobi,"");
+			add_unit_to_company("marine", company, k, roles.captain, Role.CAPTAIN, "default",choose_weighted(weapon_weighted_lists.pistols),"default",_mobi,"");
 
-			if (chaplains > 0 && global.chapter_name != "Iron Hands") {
+			repeat (chaplains_per_company){
 				k += 1;
 				commands += 1; // Company Chaplain
 				var _mobi = mobi[defaults_slot, Role.CHAPLAIN];
 				if (company = 8) and(obj_creation.equal_specialists = 0) then _mobi = "Jump Pack";
-				add_unit_to_company("marine", company, k, roles.chaplain, Role.CHAPLAIN, wep1[defaults_slot, Role.CHAPLAIN],choose_weighted(weapon_weighted_lists.pistols),gear[defaults_slot, Role.CHAPLAIN],_mobi,"");
+				add_unit_to_company("marine", company, k, roles.chaplain, Role.CHAPLAIN,"default",choose_weighted(weapon_weighted_lists.pistols),"default",_mobi,"");
 			}
-
-			k += 1;
-			commands += 1; // Company Apothecary
-			add_unit_to_company("marine", company, k, roles.apothecary, Role.APOTHECARY, wep1[defaults_slot, Role.APOTHECARY],choose_weighted(weapon_weighted_lists.pistols),gear[defaults_slot, Role.APOTHECARY],mobi[defaults_slot, Role.APOTHECARY],"");
-
-			if (scr_has_adv("Medicae Primacy")) {
+			repeat (apothecary_per_company){
 				k += 1;
 				commands += 1; // Company Apothecary
-				add_unit_to_company("marine", company, k, roles.apothecary, Role.APOTHECARY, wep1[defaults_slot, Role.APOTHECARY],choose_weighted(weapon_weighted_lists.pistols),gear[defaults_slot, Role.APOTHECARY],mobi[defaults_slot, Role.APOTHECARY],"");
+				add_unit_to_company("marine", company, k, roles.apothecary, Role.APOTHECARY, "default",choose_weighted(weapon_weighted_lists.pistols),"default","default","");
 			}
 
 			repeat(techmarines_per_company) {
 				k += 1; // Company Techmarine
 				commands += 1;
-				add_unit_to_company("marine", company, k, roles.techmarine, Role.TECHMARINE, wep1[defaults_slot, Role.TECHMARINE],choose_weighted(weapon_weighted_lists.pistols),gear[defaults_slot, Role.TECHMARINE],mobi[defaults_slot, Role.TECHMARINE],"");
+				add_unit_to_company("marine", company, k, roles.techmarine, Role.TECHMARINE, "default",choose_weighted(weapon_weighted_lists.pistols),"default","default","");
 			}
 
 			if (!scr_has_disadv("Psyker Intolerant")) {
 				k += 1; // Company Librarian
 				commands += 1;
-				var _spawn_unit = add_unit_to_company("marine", company, k, roles.librarian, Role.LIBRARIAN, wep1[defaults_slot, Role.LIBRARIAN],choose_weighted(weapon_weighted_lists.pistols),gear[defaults_slot, Role.LIBRARIAN],mobi[defaults_slot, Role.LIBRARIAN],"");
-				if (scr_has_adv("Psyker Abundance")){
-					_spawn_unit.add_exp(10);
-				}
+				var _spawn_unit = add_unit_to_company("marine", company, k, roles.librarian, Role.LIBRARIAN, "default",choose_weighted(weapon_weighted_lists.pistols),"default","default","");
 			}
 
 			k += 1; // Standard Bearer
-			add_unit_to_company("marine", company, k, roles.ancient, Role.ANCIENT, wep1[defaults_slot, Role.ANCIENT],wep2[defaults_slot, Role.ANCIENT],"","","");
+			add_unit_to_company("marine", company, k, roles.ancient, Role.ANCIENT, "default","default","default","default","");
 			
 			k += 1;
 			man_size += 1; // Champion
 			if (company == 8) and(obj_creation.equal_specialists = 0){
-				add_unit_to_company("marine", company, k, roles.champion, Role.CHAMPION, wep1[defaults_slot, Role.CHAMPION],wep2[defaults_slot, Role.CHAMPION],gear[defaults_slot, Role.CHAMPION],"Jump Pack","");
+				add_unit_to_company("marine", company, k, roles.champion, Role.CHAMPION, "default","default","default","Jump Pack","");
 			} else {
-				add_unit_to_company("marine", company, k, roles.champion, Role.CHAMPION, wep1[defaults_slot, Role.CHAMPION],wep2[defaults_slot, Role.CHAMPION],gear[defaults_slot, Role.CHAMPION],"","");
+				add_unit_to_company("marine", company, k, roles.champion, Role.CHAMPION, "default","default","default","","");
 			}
 
 			// have equal spec true or false have same old_guard chance
 			// it doesn't fully make sense why new marines in reserve companies would have the same chance
 			// but otherwise you'd always pick true so you'd have more shit
 			// just making em the same to reduce meta/power gaming
-			if (obj_creation.equal_specialists = 1) {
+			if (obj_creation.equal_specialists == 1) {
 				if (company < 10) {
 					repeat(temp1) {
 						k += 1;
 						man_size += 1;
-						add_unit_to_company("marine", company, k, roles.tactical, Role.TACTICAL, wep1[defaults_slot, Role.TACTICAL], wep2[defaults_slot, Role.TACTICAL], "", "", "");
+						add_unit_to_company("marine", company, k, roles.tactical, Role.TACTICAL, "default","default", "", "", "");
 					}
 					repeat(assault) {
 						k += 1;
 						man_size += 1;
-						var _wep1 = wep1[defaults_slot, Role.ASSAULT];
-						var _wep2 = wep2[defaults_slot, Role.ASSAULT];
-						add_unit_to_company("marine", company, k, roles.assault, Role.ASSAULT, _wep1, _wep2, "", mobi[defaults_slot, Role.ASSAULT], "");
+						add_unit_to_company("marine", company, k, roles.assault, Role.ASSAULT, "default", "default", "", "default", "");
 					}
 					repeat(devastator) {
 						k += 1;
@@ -3570,16 +3401,14 @@ function scr_initialize_custom() {
 						if (wep1[defaults_slot, Role.DEVASTATOR] == "Heavy Ranged") {
 							_wep1 = choose("Multi-Melta", "Lascannon", "Missile Launcher", "Heavy Bolter");
 						} 
-						add_unit_to_company("marine", company, k, roles.devastator, Role.DEVASTATOR, _wep1, "","", mobi[defaults_slot, Role.DEVASTATOR], "");
+						add_unit_to_company("marine", company, k, roles.devastator, Role.DEVASTATOR, _wep1, "","", "default", "");
 					}
 				}
 				if (company = 10) {
 					repeat(temp1) {
 						k += 1;
 						man_size += 1;
-						var _wep1 = wep1[defaults_slot, Role.SCOUT];
-						var _wep2 = wep2[defaults_slot, Role.SCOUT];
-						add_unit_to_company("scout", company, k, roles.scout, Role.SCOUT, _wep1, _wep2, "", "", "Scout Armour");
+						add_unit_to_company("scout", company, k, roles.scout, Role.SCOUT, "default", "default", "", "", "Scout Armour");
 					}
 				}
 			}
@@ -3588,17 +3417,14 @@ function scr_initialize_custom() {
 				if (company < 8) then repeat(temp1) {
 					k += 1;
 					man_size += 1;
-					add_unit_to_company("marine", company, k, roles.tactical, Role.TACTICAL, wep1[defaults_slot, Role.TACTICAL], wep2[defaults_slot, Role.TACTICAL], "", "", "");
+					add_unit_to_company("marine", company, k, roles.tactical, Role.TACTICAL, "default", "default", "", "", "");
 				} 
 				
 				// reserve company only of assault
 				if (company = 8) then repeat(temp1) {
 					k += 1;
 					man_size += 1; // assault reserve company
-					var _wep1 = wep1[defaults_slot, Role.ASSAULT];
-					var _wep2 = wep2[defaults_slot, Role.ASSAULT];
-
-					add_unit_to_company("marine", company, k, roles.assault,Role.ASSAULT, _wep1, _wep2, "", mobi[defaults_slot, Role.ASSAULT], "");
+					add_unit_to_company("marine", company, k, roles.assault,Role.ASSAULT, "default", "default", "", "default", "");
 				} 
 				
 				// reserve company only devo
@@ -3609,25 +3435,20 @@ function scr_initialize_custom() {
 					if (wep1[defaults_slot, Role.DEVASTATOR] == "Heavy Ranged") {
 						_wep1 = choose("Multi-Melta", "Lascannon", "Missile Launcher", "Heavy Bolter");
 					} 
-					add_unit_to_company("marine", company, k, roles.devastator,Role.DEVASTATOR, _wep1, "","", mobi[defaults_slot, Role.DEVASTATOR], "");
+					add_unit_to_company("marine", company, k, roles.devastator,Role.DEVASTATOR, _wep1, "","","default", "");
 				}
 	
 				if (company = 10) then
 				for (var i = 0; i < temp1; i++) {
 					k += 1;
 					man_size += 1;
-					var _wep1 = wep1[defaults_slot, Role.SCOUT];
-					var _wep2 = wep2[defaults_slot, Role.SCOUT];
-					add_unit_to_company("scout", company, k, roles.scout,Role.SCOUT, _wep1, _wep2, "", "", "Scout Armour");
+					add_unit_to_company("scout", company, k, roles.scout,Role.SCOUT, "default", "default", "", "", "Scout Armour");
 				}
 
 				if (company_unit2 = "assault") then repeat(assault) {
 					k += 1;
 					man_size += 1;
-					var _wep1 = wep1[defaults_slot, Role.ASSAULT];
-					var _wep2 = wep2[defaults_slot, Role.ASSAULT];
-
-					add_unit_to_company("marine", company, k, roles.assault,Role.ASSAULT, _wep1, _wep2, "", mobi[defaults_slot, Role.ASSAULT], "");
+					add_unit_to_company("marine", company, k, roles.assault,Role.ASSAULT, "default", "default", "", "default", "");
 				}
 
 				if (company_unit3 = "devastator") then repeat(devastator) {
@@ -3637,8 +3458,7 @@ function scr_initialize_custom() {
 					if (wep1[defaults_slot, Role.DEVASTATOR] == "Heavy Ranged") {
 						_wep1 = choose("Multi-Melta", "Lascannon", "Missile Launcher", "Heavy Bolter");
 					} 
-
-					add_unit_to_company("marine", company, k, roles.devastator, Role.DEVASTATOR, _wep1, "","", mobi[defaults_slot, Role.DEVASTATOR], "");
+					add_unit_to_company("marine", company, k, roles.devastator, Role.DEVASTATOR, _wep1, "","", "default", "");
 				}
 			}
 
@@ -3648,11 +3468,10 @@ function scr_initialize_custom() {
 					man_size += 10;
 					commands += 1;
 					var _wep1 =  "Close Combat Weapon"; 
-					var _wep2 = wep2[defaults_slot, Role.DREADNOUGHT];
 					if(company == 9) {
 						_wep1 = "Missile Launcher"; 
 					}
-					add_unit_to_company("dreadnought", company, k, roles.dreadnought, Role.DREADNOUGHT, _wep1, _wep2, "","","Dreadnought");
+					add_unit_to_company("dreadnought", company, k, roles.dreadnought, Role.DREADNOUGHT, _wep1, "default", "","","Dreadnought");
 				}
 			}
 
@@ -3869,6 +3688,8 @@ function scr_initialize_custom() {
 	}
 }
 
+/// @description helper function to streamline code inside of scr_initialize_custom, should only be used as part of
+/// game setup and not during normal gameplay
 function add_veh_to_company(name, company, slot, wep1, wep2, wep3, upgrade, accessory) {
 	obj_ini.veh_race[company, slot] = 1;
 	obj_ini.veh_loc[company, slot] = obj_ini.home_name;
@@ -3885,28 +3706,53 @@ function add_veh_to_company(name, company, slot, wep1, wep2, wep3, upgrade, acce
 	obj_ini.veh_wid[company, slot] = 2;
 }
 
+/// @description helper function to streamline code inside of scr_initialize_custom, should only be used as part of
+/// game setup and not during normal gameplay.
+/// each item slot can be "" or "default" or a named item. "" will assign items from the available item pool. 
+/// "default" will set it to the value in the default slot for the given role, see `load_default_gear`
 function add_unit_to_company(ttrpg_name, company, slot, role_name, role_id, wep1, wep2, gear, mobi, armour){
 	obj_ini.TTRPG[company][slot] = new TTRPG_stats("chapter", company, slot, ttrpg_name);
-	var spawn_unit = fetch_unit([company,slot]);
-	spawn_unit.update_weapon_one(wep1, false, false);
-	spawn_unit.update_role(role_name);
 	obj_ini.race[company][slot] = 1;
 	obj_ini.loc[company][slot] = obj_ini.home_name;
+	obj_ini.role[company][slot] = role_name;
 	
 	if(obj_ini.name[company][slot] == ""){
 		obj_ini.name[company][slot] = global.name_generator.generate_space_marine_name();
 	}
+	var spawn_unit = fetch_unit([company,slot]);
+	
+	if(wep1 == "default"){
+		spawn_unit.update_weapon_one(obj_ini.wep1[obj_ini.defaults_slot][role_id], false, false);
+	} else {
+		spawn_unit.update_weapon_one(wep1, false, false);
+	}
 	if(wep2 != ""){
-		spawn_unit.update_weapon_two(wep2, false, false);
+		if(wep2 == "default"){
+			spawn_unit.update_weapon_two(obj_ini.wep2[obj_ini.defaults_slot][role_id], false, false);
+		} else {
+			spawn_unit.update_weapon_two(wep2, false, false);
+		}
 	}
 	if(armour != ""){
-		spawn_unit.update_armour(armour, false, false);
+		if(armour == "default"){
+			spawn_unit.update_armour(obj_ini.armour[obj_ini.defaults_slot][role_id], false, false);
+		} else {
+			spawn_unit.update_armour(armour, false, false);
+		}
 	}
 	if(gear != ""){
-		spawn_unit.update_gear(gear, false, false);
+		if(gear == "default"){
+			spawn_unit.update_gear(obj_ini.gear[obj_ini.defaults_slot][role_id], false, false);
+		} else {
+			spawn_unit.update_gear(gear, false, false);
+		}
 	}
 	if(mobi != ""){
-		spawn_unit.update_mobility_item(mobi, false, false);
+		if(mobi == "default"){
+			spawn_unit.update_mobility_item(obj_ini.mobi[obj_ini.defaults_slot][role_id], false, false);
+		} else {
+			spawn_unit.update_mobility_item(mobi, false, false);
+		}
 	}
 	if(role_id == Role.HONOUR_GUARD){
 		spawn_unit.add_trait(choose("guardian", "champion", "observant", "perfectionist","natural_leader"));
@@ -3936,6 +3782,9 @@ function add_unit_to_company(ttrpg_name, company, slot, role_name, role_id, wep1
 		spawn_unit.add_trait("warp_touched");
 		spawn_unit.psionic = choose(8, 9, 10, 11, 12, 13, 14);
 		spawn_unit.update_powers();
+		if(scr_has_adv("Psyker Abundance")){
+			spawn_unit.add_exp(10);
+		}
 	}
 	if(ttrpg_name == "marine" || ttrpg_name == "scout"){
 		spawn_unit.marine_assembling();

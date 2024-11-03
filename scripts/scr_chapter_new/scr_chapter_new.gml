@@ -299,43 +299,6 @@ function scr_chapter_new(argument0) {
 
 	}
 	
-	if (argument0="Iron Hands"){points=150;
-	    selected_chapter=6;chapter=argument0;icon=6;icon_name="ih";founding=0;fleet_type=1;strength=5;purity=8;stability=8;cooperation=2;
-	    adv[1]="Tech-Brothers";adv[2]="Devastator Doctrine";dis[1]="Splintered";dis[2]="Suspicious";
-	    homeworld="Lava";homeworld_name="Medusa";homeworld_exists=1;recruiting_exists=0;
-	    homeworld_rule=3;aspirant_trial=eTrials.KNOWLEDGE;
-	    // Pauldron2: Left, Pauldron: Right
-	    color_to_main="Black";color_to_secondary="Black";color_to_trim="Silver";
-	    color_to_pauldron="Black";color_to_pauldron2="Black";color_to_lens="Dark Red";
-	    color_to_weapon="Silver";col_special=0;trim=0;
-	    hchaplain="Jorggir Shidd";clibrarian="Lydriik";fmaster="Feirros";hapothecary="Anaar Telech";
-		honorcapt="Caanok Var";watchmaster="Eutuun Hes";arsenalmaster="Sind Grolvoch";admiral="Maarkul Rumann";marchmaster="Tyrrod";
-		ritesmaster="Golloth";victualler="Raan";lordexec="Doroor Hesh";relmaster="Verrox";recruiter="Telavech";
-	    battle_cry="The flesh is weak";// monastery_name="Fortress of Hera";master_name=
-	    equal_specialists=1;load_to_ships=[2,0,0];successors=6;
-	    mutations=0;mutations_selected=0;
-	    preomnor=0;voice=0;doomed=0;lyman=0;omophagea=0;ossmodula=0;membrane=0;
-	    zygote=0;betchers=0;catalepsean=0;secretions=0;occulobe=0;mucranoid=0;
-	    // disposition[1]=0;// Prog
-	    disposition[2]=30;disposition[3]=80;disposition[4]=35;disposition[5]=30;
-	    disposition[6]=50;// Astartes
-	    disposition[7]=0;// Reserved
-	    chapter_master_name="Kardan Stronos";chapter_master_melee=4;
-	    chapter_master_ranged=3;chapter_master_specialty=2;
-    
-	    company_title[1]="Clan Avernii";company_title[2]="Clan Garrsak";company_title[3]="Clan Raukaan";
-	    company_title[4]="Clan Kaargul";company_title[5]="Clan Haarmek";company_title[6]="Clan Sorrgol";
-	    company_title[7]="Clan Borrgos";company_title[8]="Clan Morlaag";company_title[9]="Clan Vurgaan";
-	    company_title[10]="Clan Dorrvok";
-    
-	   for(i=100;i<=102;i++){
-	        race[i,14]=0;role[i,14]="Iron Father";role[i,16]="Iron Father";
-			role[i,5]="Iron Captain";wep1[i,5]="Power Axe";
-	    }
-	}
-
-
-
 	if (argument0="Salamanders"){points=150;
 	    selected_chapter=8;chapter=argument0;icon=8;icon_name="sl";founding=0;fleet_type=1;strength=2;purity=8;stability=8;cooperation=10;
 	    adv[1]="Crafters";adv[2]="Devastator Doctrine";

@@ -343,6 +343,7 @@
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"31.JSON","CopyToMask":-1,"filePath":"datafiles/main/chapters",},
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"4.JSON","CopyToMask":-1,"filePath":"datafiles/main/chapters",},
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"5.JSON","CopyToMask":-1,"filePath":"datafiles/main/chapters",},
+    {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"6.JSON","CopyToMask":-1,"filePath":"datafiles/main/chapters",},
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"help.ini","CopyToMask":9223372036854775807,"filePath":"datafiles/main",},
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"chaos.json","CopyToMask":-1,"filePath":"datafiles/main/names",},
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"eldar.json","CopyToMask":-1,"filePath":"datafiles/main/names",},

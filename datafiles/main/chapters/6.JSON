@@ -1,32 +1,32 @@
 {
     "chapter": {
-        "id": 3,
-        "name": "Space Wolves",
-        "flavor": "Brave sky warriors hailing from the icy deathworld of Fenris, the Space Wolves are a non-Codex compliant chapter, and deadly in close combat.  They fight on their own terms and damn any who wish otherwise.",
+        "id": 6,
+        "name": "Iron Hands",
+        "flavor": "The flesh is weak, and the weak shall perish. Such is the creed of these mercilessly efficient cyborg warriors. A chapter with strong ties to the Mechanicum, they crush the foes of the Emperor and Machine God alike with a plethora of exotic technology and ancient weaponry.",
         "origin": 1, // 1 - Founding, 2 -successor, 3 - Other/non-canon/fanmade, 4 - Custom
         "points": 150,
         "founding": 0, // The id of the founding chapter, 0 for unknown or none
-        "splash": 3,
-        "icon": 3, // in \images\creation\creation_icons.png, the index from the left, 0 being blank square and 1 being dark angels etc
-        "icon_name": "sw", // ? dunno what this is used for yet but the icon breaks if you dont use it 
+        "splash": 6,
+        "icon": 6, // in \images\creation\creation_icons.png, the index from the left, 0 being blank square and 1 being dark angels etc
+        "icon_name": "ih", // ? dunno what this is used for yet but the icon breaks if you dont use it 
         "fleet_type": 1, // 1= Homeworld, 2 = Fleet based, 3 = Penitent
-        "strength": 10, // 1-10
+        "strength": 5, // 1-10
         "purity": 8, // 1-10
-        "stability": 5, // 1-10
-        "cooperation": 4, // 1-10
+        "stability": 8, // 1-10
+        "cooperation": 2, // 1-10
         "homeworld_exists": 1, // 1 = true
         "recruiting_exists": 0, // 1 = true
-        "homeworld_rule": 2, // 1 = Govenor, 2 = Countries, 3 = Personal Rule
-        "homeworld": "Ice", // "Lava" "Desert" "Forge" "Hive" "Death" "Agri" "Feudal" "Temperate" "Ice" "Dead" "Shrine"
-        "homeworld_name": "Fenris",
+        "homeworld_rule": 3, // 1 = Govenor, 2 = Countries, 3 = Personal Rule
+        "homeworld": "Lava", // "Lava" "Desert" "Forge" "Hive" "Death" "Agri" "Feudal" "Temperate" "Ice" "Dead" "Shrine"
+        "homeworld_name": "Medusa",
         "recruiting": "", //"Lava" "Desert" "Forge" "Hive" "Death" "Agri" "Feudal" "Temperate" "Ice" "Dead" "Shrine"
         "recruiting_name": "",
-        "discipline": "rune Magick", // one of 'default' 'biomancy' 'pyromancy' 'telekinesis' 'rune Magick'
-        "aspirant_trial": "EXPOSURE", // ? need to find the best way to do this
+        "discipline": "default", // one of 'default' 'biomancy' 'pyromancy' 'telekinesis' 'rune Magick'
+        "aspirant_trial": "KNOWLEDGE", // ? need to find the best way to do this
         "advantages": [ //TODO something with these after rework of adv organisation
             "",
-            "Assault Doctrine",
-            "Medicae Primacy",
+            "Tech-Brothers",
+            "Devastator Doctrine",
             "",
             "",
             "",
@@ -36,7 +36,7 @@
         ],
         "disadvantages": [
             "",
-            "Black Rage",
+            "Splintered",
             "Suspicious",
             "",
             "",
@@ -46,42 +46,42 @@
             ""
         ],
         "colors": {
-            "main": "Fenrisian Grey",
-            "secondary": "Fenrisian Grey",
-            "pauldron_r": "Dark Gold",
-            "pauldron_l": "Dark Gold",
-            "trim": "Dark Gold",
-            "lens": "Red",
-            "weapon": "Dark Gold",
+            "main": "Black",
+            "secondary": "Black",
+            "pauldron_r": "Black",
+            "pauldron_l": "Black",
+            "trim": "Silver",
+            "lens": "Dark Red",
+            "weapon": "Silver",
             "special": 0, // 0 - normal, 1 - Breastplate, 2 - Vertical, 3 - Quadrant
             "trim_on": 0 // 0 no, 1 yes for special trim colours // todo update ref for new name
         },
         "names": {
             //Chapter Staff
-            "hchaplain": "Ulrik the Slayer",
-            "clibrarian": "Njal Stormcaller",
-            "fmaster": "Krom Dragongaze",
-            "hapothecary": "Ulstvan Morkaison",
+            "hchaplain": "Jorggir Shidd",
+            "clibrarian": "Lydriik",
+            "fmaster": "Feirros",
+            "hapothecary": "Anaar Telech",
             //Company Captains 1 - 10
-            "honorcapt": "Bran Redmaw",
-            "watchmaster": "Engir Krakendoom",
-            "arsenalmaster": "Erik Morkai",
-            "admiral": "Gunnar Red Moon",
-            "marchmaster": "Harald Deathwolf",
-            "ritesmaster": "Bjorn Stormwolf",
-            "victualler": "Vorek Gnarlfist",
-            "lordexec": "Krom Dragongaze",
-            "relmaster": "Ragnar Blackmane",
-            "recruiter": "Sven Bloodhowl"
+            "honorcapt": "Caanok Var",
+            "watchmaster": "Eutuun Hes",
+            "arsenalmaster": "Sind Grolvoch",
+            "admiral": "Maarkul Rumann",
+            "marchmaster": "Tyrrod",
+            "ritesmaster": "Golloth",
+            "victualler": "Raan",
+            "lordexec": "Doroor Hesh",
+            "relmaster": "Verrox",
+            "recruiter": "Telavech"
         },
-        "battle_cry": "For Russ and the Allfather!",
+        "battle_cry": "The flesh is weak!",
         "equal_specialists": 1,
         "load_to_ships": {
             "escort_load": 2, // 0 no, 2 yes, 1 doesnt do anything :)
             "split_scouts": 0, // 0 no, 1 yes
             "split_vets": 0 // 0 no, 1 yes
         },
-        "successors": 1, //total number of successor chapters
+        "successors": 6, //total number of successor chapters
         "mutations": {
             "preomnor": 0,
             "voice": 0,
@@ -100,47 +100,49 @@
         "disposition": [ // todo maybe convert to struct
             0, // nothing
             0, // Progenitor faction
-            50, // Imperium
-            40, // Admech
-            15, //Inquisition
-            15, // Ecclesiarchy
-            40, // Astartes
+            30, // Imperium
+            80, // Admech
+            35, //Inquisition
+            30, // Ecclesiarchy
+            50, // Astartes
             0 // nothing
         ],
         "chapter_master": {
-            "name": "Logan Grimnar",
+            "name": "Kardan Stronos",
             "specialty": 2, //1 Leader, 2 Champion, 3 Psyker,
-            "melee": 6, // 1 twin power fists ... 8 force staff
-            "ranged": 1, // 1 boltstorm gauntlets ... 7 storm shield
+            "melee": 4, // 1 twin power fists ... 8 force staff
+            "ranged": 3, // 1 boltstorm gauntlets ... 7 storm shield
             // All chapter masters have the trait `Lead by Example` by default
             "traits": [
-                "ancient",
-                "melee_enthusiast",
-                "feet_floor"
+                "flesh_is_weak",
+                "zealous_faith",
+                "tinkerer",
+                "old_guard"
             ],
-            "gear": "",
-            "mobi": "",
-            "armour": "Terminator Armour"
+            "gear": "Iron Halo",
+            "mobi": "Jump Pack",
+            "armour": "",
+            "bionics": 10
         },
         "artifact": {
-            "name": "Axe of Morkai",
-            "description": "Once a Khornate axe of great power it was reforged in the image of the death wolf Morkai",
-            "base_weapon_type": "Executioner Power Axe"
+            "name": "Axe Mortalis",
+            "description": "An immensely powerful Power Axe, the Axe Mortalis, forged in the days immediately after the end of the Horus Heresy.",
+            "base_weapon_type": "Power Axe"
         },
         "company_titles": [
             "",
-            "The Bloodmaws",
-            "The Seawolves",
-            "The Sons of Morkai",
-            "The Red Moons",
-            "The Deathwolves",
-            "The Stormwolves",
-            "The Ironwolves",
-            "The Drakeslayers",
-            "The Blackmanes",
-            ""
+            "Clan Avernii",
+            "Clan Garrsak",
+            "Clan Raukaan",
+            "Clan Kaargul",
+            "Clan Haarmek",
+            "Clan Sorrgol",
+            "Clan Borrgos",
+            "Clan Morlaag",
+            "Clan Vurgaan",
+            "Clan Dorrvok"
         ],
-        "flagship_name": "",
+        "flagship_name": "Spear of Vengeance",
         /**
         * * Default fleet composition
         * * Homeworld 
@@ -163,19 +165,22 @@
         * * Default Company specialists (divided based on `load_to_ships.split_vets` setting)
         * - 20 Terminators, 85 Veterans, 20 Devastators, 20 Assault
         * Use negative numbers to subtract
-        * Stacks with advantages/disadvantages
+        * * Stacks with advantages/disadvantages
         */
         "extra_specialists": {
             "chaplains": -20,
+            "chaplains_per_company": 0,
             "techmarines": 0,
-            "apothecary": 4,
+            "techmarines_per_company": 1,
+            "apothecary": 0,
             "apothecary_per_company": 0,
             "epistolary": 0,
+            "epistolary_per_company": 0,
             "codiciery": 0,
             "lexicanum": 0,
-            "terminator": 0,
+            "terminator": -20,
             "assault": 0,
-            "veteran": 40,
+            "veteran": 20,
             "devastator": 0
         },
         /**
@@ -186,15 +191,15 @@
         */
         // * Not working yet
         "extra_marines": {
-            "second": 40,
-            "third": 40,
-            "fourth": 40,
-            "fifth": 40,
-            "sixth": 40,
-            "seventh": 40,
-            "eighth": 40,
-            "ninth": 40,
-            "tenth": 60
+            "second": 0,
+            "third": 0,
+            "fourth": 0,
+            "fifth": 0,
+            "sixth": 0,
+            "seventh": 0,
+            "eighth": 0,
+            "ninth": 0,
+            "tenth": 0
         },
         // * Not working yet
         "extra_vehicles": {
@@ -217,58 +222,11 @@
         * for combat roles, `custom_squads` should probably? be used instead 
         */
         "custom_roles": {
-            "honour_guard": {
-                "name": "Wolf Guard",
-                "wep1": "Power Axe",
-                "wep2": "Bolter",
-                "armour": "Power Armour"
-            },
-            "veteran": {
-                "name": "Veteran",
-                "wep1": "Chainaxe"
-            },
-            "captain": {
-                "name": "Wolf Lord",
-                "wep1": "Power Sword"
-            },
-            "tactical": {
-                "name": "Grey Hunter"
-            },
-            "devastator": {
-                "name": "Long Fang"
-            },
-            "assault": {
-                "name": "Blood Claw",
-                "wep1": "Chainaxe"
-            },
-            "scout": {
-                "name": "Wolf Scout",
-                "wep1": "Sniper Rifle",
-                "wep2": "Chainaxe"
-            },
             "chaplain": {
-                "name": "Wolf Priest",
-                "wep1": "Power Axe"
+                "name": "Iron Father"
             },
             "techmarine": {
-                "name": "Iron Priest",
-                "wep1": "Power Axe"
-            },
-            "apothecary": {
-                "name": "Wolf Priest",
-                "wep1": "Power Axe"
-            },
-            "librarian": {
-                "name": "Rune Priest",
-                "wep1": "Force Staff"
-            },
-            "sergeant": {
-                "name": "Pack Leader",
-                "wep1": "Chainaxe"
-            },
-            "veteran_sergeant": {
-                "name": "Wolf Guard Pack Leader",
-                "wep1": "Chainaxe"
+                "name": "Iron Father"
             }
         },
         /**
@@ -300,7 +258,7 @@
                 - gear: special equipment needed for certain roles, like a Roasrius or Narthecium
         *   - type_data: names the squad, allows certain formations ? idk what that does yet
         */
-        "squad_name": "Pack",
+        "squad_name": "Clave",
         "custom_squads": {}
     }
 }
