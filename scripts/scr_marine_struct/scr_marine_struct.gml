@@ -1617,7 +1617,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine", other_spawn_data={}) 
 	}
 
 	weapon_one_data={quality:"standard"};
-  weapon_one_quality = "standard";
+  	weapon_one_quality = "standard";
 
 	static weapon_viable = function(new_weapon,quality){
 		viable = true;

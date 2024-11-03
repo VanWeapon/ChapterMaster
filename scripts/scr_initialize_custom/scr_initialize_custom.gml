@@ -3887,27 +3887,27 @@ function add_veh_to_company(name, company, slot, wep1, wep2, wep3, upgrade, acce
 
 function add_unit_to_company(ttrpg_name, company, slot, role_name, role_id, wep1, wep2, gear, mobi, armour){
 	obj_ini.TTRPG[company][slot] = new TTRPG_stats("chapter", company, slot, ttrpg_name);
+	var spawn_unit = fetch_unit([company,slot]);
+	spawn_unit.update_weapon_one(wep1, false, false);
+	spawn_unit.update_role(role_name);
 	obj_ini.race[company][slot] = 1;
 	obj_ini.loc[company][slot] = obj_ini.home_name;
-	obj_ini.role[company][slot] = role_name;
-	obj_ini.wep1[company][slot] = wep1;
 	
 	if(obj_ini.name[company][slot] == ""){
 		obj_ini.name[company][slot] = global.name_generator.generate_space_marine_name();
 	}
 	if(wep2 != ""){
-		obj_ini.wep2[company][slot] = wep2;
+		spawn_unit.update_weapon_two(wep2, false, false);
 	}
 	if(armour != ""){
-		obj_ini.armour[company][slot] = armour;
+		spawn_unit.update_armour(armour, false, false);
 	}
 	if(gear != ""){
-		obj_ini.gear[company][slot] = gear;
+		spawn_unit.update_gear(gear, false, false);
 	}
 	if(mobi != ""){
-		obj_ini.mobi[company][slot] = mobi;
+		spawn_unit.update_mobility_item(mobi, false, false);
 	}
-	var spawn_unit = fetch_unit([company,slot]);
 	if(role_id == Role.HONOUR_GUARD){
 		spawn_unit.add_trait(choose("guardian", "champion", "observant", "perfectionist","natural_leader"));
 	}
