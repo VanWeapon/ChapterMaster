@@ -637,10 +637,7 @@ function scr_initialize_custom() {
 	adv = obj_creation.adv;
 	dis = obj_creation.dis;
 
-	battle_barges = 0;
-	strike_cruisers = 0;
-	gladius = 0;
-	hunters = 0;
+
 
 	recruiting_type = obj_creation.recruiting;
 	recruit_trial = obj_creation.aspirant_trial;
@@ -649,25 +646,20 @@ function scr_initialize_custom() {
 	home_name = obj_creation.homeworld_name;
 	fleet_type = obj_creation.fleet_type;
 
-	if (obj_creation.fleet_type != eFLEET_TYPES.HOMEWORLD) {
-		battle_barges = 1;
-		if scr_has_adv ("Kings of Space") battle_barges += 1;
-		strike_cruisers = 6;
-		if scr_has_adv("Boarders") then strike_cruisers += 2;
-		gladius = 7;
-		hunters = 3;
-		if scr_has_disadv("Obliterated") then battle_barges = 0; strike_cruisers = 1; gladius = 2; hunters = 0;
-		
-		// obj_controller.fleet_type="Fleet";
-	}
-	if (obj_creation.fleet_type = eFLEET_TYPES.HOMEWORLD) {
+	battle_barges = 0;
+	strike_cruisers = 0;
+	gladius = 0;
+	hunters = 0;
+
+	if (obj_creation.fleet_type == eFLEET_TYPES.HOMEWORLD) {
 		strike_cruisers = 8;
-		if (array_contains(obj_creation.adv, "Boarders")) strike_cruisers += 2;
 		gladius = 7;
 		hunters = 3;
-		if (array_contains(obj_creation.adv, "Kings of Space")) battle_barges += 1;
-		if scr_has_disadv("Obliterated") then battle_barges = 0; strike_cruisers = 1; gladius = 2; hunters = 0;
-		// obj_controller.fleet_type="Homeworld";
+	} else {
+		battle_barges = 1;
+		strike_cruisers = 6;
+		gladius = 7;
+		hunters = 3;
 	}
 
 	/**
@@ -677,17 +669,16 @@ function scr_initialize_custom() {
 	* * Fleet based and Penitent 
 	* - 4 Battle Barges, 3 Strike Cruisers, 7 Gladius, 3 Hunters
 	*/
-	if (obj_creation.custom = 0) {
+	if (obj_creation.custom == 0) {
 		flagship_name = obj_creation.flagship_name;
-		if (obj_creation.fleet_type != eFLEET_TYPES.HOMEWORLD) {
-			battle_barges = 4;
-			strike_cruisers = 3;
-			gladius = 7;
-			hunters = 3;
-		}
 		if (obj_creation.fleet_type == eFLEET_TYPES.HOMEWORLD) {
 			battle_barges = 2;
 			strike_cruisers = 8;
+			gladius = 7;
+			hunters = 3;
+		} else {
+			battle_barges = 4;
+			strike_cruisers = 3;
 			gladius = 7;
 			hunters = 3;
 		}
@@ -721,12 +712,6 @@ function scr_initialize_custom() {
 					gladius -= 3;
 					strike_cruisers -= 4
 				}
-
-				if (global.chapter_name = "Dark Angels") {
-					flagship_name = "Invincible Reason";
-					battle_barges++;
-
-				}
 				if (global.chapter_name = "Black Templars") {
 					flagship_name = "Eternal Crusader";
 
@@ -749,6 +734,11 @@ function scr_initialize_custom() {
 			}
 		}
 	}
+
+	if (scr_has_adv ("Kings of Space")) {battle_barges += 1;}
+	if (scr_has_adv("Boarders")){ strike_cruisers += 2;}
+	if (scr_has_disadv("Obliterated")) {battle_barges = 0; strike_cruisers = 1; gladius = 2; hunters = 0;}
+
 	var ship_summary_str = $"Ships: bb: {battle_barges} sc: {strike_cruisers} g: {gladius} h: {hunters}"
 	debugl(ship_summary_str);
 	show_debug_message(ship_summary_str);
