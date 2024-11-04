@@ -2527,7 +2527,7 @@ function jsonify_marine_struct(company, marine){
 	return json_stringify(new_marine);
 }
 
-/// @param {Array<Real>} unit where unit[0] is slot and unit[1] is the role
+/// @param {Array<Real>} unit where unit[0] is company and unit[1] is the position
 /// @returns {Struct.TTRPG_stats} unit
 function fetch_unit(unit){
 	return obj_ini.TTRPG[unit[0]][unit[1]];

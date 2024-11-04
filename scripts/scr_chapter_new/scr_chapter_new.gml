@@ -10,21 +10,21 @@ function ChapterData() constructor {
 	successors = 0;
 	splash = 0;
 	icon = 0;
-	icon_name = "";
+	icon_name = "aa";
 	aspirant_trial = eTrials.BLOODDUEL;
 	fleet_type = eFLEET_TYPES.NONE;
 	strength = 0;
 	purity = 0;
 	stability = 0;
 	cooperation = 0;
-	homeworld = ""; //e.g. "Death"
-	homeworld_name = ""; // e.g. "The Rock"
+	homeworld = "Hive"; //e.g. "Death"
+	homeworld_name = global.name_generator.generate_star_name(); // e.g. "The Rock"
 	homeworld_exists = 0;
 	recruiting_exists = 0;
-	recruiting = ""; 
-	recruiting_name = "";
+	recruiting = "Death"; 
+	recruiting_name = global.name_generator.generate_star_name();
 	homeworld_rule = eHOMEWORLD_RULE.NONE;
-	flagship_name = "";
+	flagship_name = global.name_generator.generate_imperial_ship_name();
 	monastary_name = "";
 	advantages = array_create(9);
 	disadvantages = array_create(9);
@@ -88,7 +88,7 @@ function ChapterData() constructor {
 	/// @type {Array<String>} 
 	company_titles = array_create(11, "");
 	chapter_master = {
-		name: "",
+		name: global.name_generator.generate_imperial_name(),
 		melee: 0,
 		ranged: 0,
 		specialty: eCM_SPECIALTY.NONE,
@@ -161,7 +161,12 @@ function ChapterData() constructor {
 		for(var i = 0; i < array_length(keys); i++){
 			var key = keys[i];
 			var val = struct_get(json_chapter, key);
-			struct_set(self, key, val);
+
+			// Treat incoming empty vals as 'use default' and don't overwrite
+			// a value if it was already set in the chapter constructor
+			if(self[key] != "" && val != ""){
+				struct_set(self, key, val);
+			}
 		}
 		return true;
 	}
@@ -212,16 +217,17 @@ function scr_chapter_new(argument0) {
 	lordexec=global.name_generator.generate_space_marine_name();
 	relmaster=global.name_generator.generate_space_marine_name();
 	recruiter=global.name_generator.generate_space_marine_name();
+
 	
 	function load_default_gear(_role_id, _role_name, _wep1, _wep2, _armour, _mobi, _gear){
 		for(var i = 100; i <=102; i++){
-			role[i, _role_id] = _role_name;
-			wep1[i, _role_id] = _wep1;
-			wep2[i, _role_id] = _wep2;
-			armour[i, _role_id] = _armour;
-			mobi[i, _role_id] = _mobi;
-			gear[i, _role_id] = _gear;
-			race[i, _role_id] = 1;
+			obj_creation.role[i][_role_id] = _role_name;
+			obj_creation.wep1[i][_role_id] = _wep1;
+			obj_creation.wep2[i][_role_id] = _wep2;
+			obj_creation.armour[i][_role_id] = _armour;
+			obj_creation.mobi[i][_role_id] = _mobi;
+			obj_creation.gear[i][_role_id] = _gear;
+			obj_creation.race[i][_role_id] = 1;
 		}
 	}
 	load_default_gear(Role.HONOUR_GUARD, "Honour Guard", "Power Sword", "Bolter", "Artificer Armour", "", "");
@@ -520,7 +526,6 @@ if (argument0="Lamenters"){founding=5;points=150;
 		
 		obj_creation.homeworld_exists = chapter_object.homeworld_exists;
 		obj_creation.homeworld = chapter_object.homeworld;
-		obj_creation.homeworld_name = chapter_object.homeworld_name;
 		obj_creation.homeworld_rule = chapter_object.homeworld_rule;
 
 		obj_creation.recruiting_exists = chapter_object.recruiting_exists;
