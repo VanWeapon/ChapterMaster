@@ -97,7 +97,7 @@
             "occulobe": 0,
             "mucranoid": 0
         },
-        "disposition": [ // todo maybe convert to struct
+        "disposition": [
             0, // nothing
             0, // Progenitor faction
             50, // Imperium
