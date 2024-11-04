@@ -3,7 +3,7 @@
         "id": 1,
         "name": "Chapter Name",
         "flavor": "Chapter Lore",
-        "origin": 1, // 1 - Founding, 2 -successor, 3 - Other/non-canon/fanmade, 4 - Custom
+        "origin": 3, // 1 - Founding, 2 -successor, 3 - Other/non-canon/fanmade, 4 - Custom
         "points": 150,
         "founding": 0, // The id of the founding chapter, 0 for unknown or none
         "splash": 1,
@@ -17,13 +17,13 @@
         "homeworld_exists": 1, // 1 = true
         "recruiting_exists": 1, // 1 = true
         "homeworld_rule": 1, // 1 = Govenor, 2 = Countries, 3 = Personal Rule
-        "homeworld": "Dead", // "Lava" "Desert" "Forge" "Hive" "Death" "Agri" "Feudal" "Temperate" "Ice" "Dead" "Shrine"
-        "homeworld_name": "The Rock",
+        "homeworld": "Hive", // "Lava" "Desert" "Forge" "Hive" "Death" "Agri" "Feudal" "Temperate" "Ice" "Dead" "Shrine"
+        "homeworld_name": "",
         "recruiting": "Death", //"Lava" "Desert" "Forge" "Hive" "Death" "Agri" "Feudal" "Temperate" "Ice" "Dead" "Shrine"
-        "recruiting_name": "Kimmeria",
+        "recruiting_name": "",
         "discipline": "default", // one of 'default' 'biomancy' 'pyromancy' 'telekinesis' 'rune Magick'
         "aspirant_trial": "SURVIVAL", // ? need to find the best way to do this
-        "advantages": [ //TODO something with these after rework of adv organisation
+        "advantages": [
             "",
             "",
             "",
