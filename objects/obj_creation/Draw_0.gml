@@ -962,7 +962,7 @@ if (slide=3){
     
     
     
-    var fleet_type_text = fleet_type==1?"Homeworld":"Flagship";
+    var fleet_type_text = fleet_type==eFLEET_TYPES.HOMEWORLD ? "Homeworld" : "Flagship";
     draw_text_transformed(644,218,fleet_type_text,0.6,0.6,0);
 
     var eh,eh2;eh=0;eh2=0;name_bad=0;
@@ -980,7 +980,7 @@ if (slide=3){
     if (homeworld="Shrine") then eh=16;
     if (fleet_type!=1) then eh=15;
     
-    if (fleet_type=1){
+    if (fleet_type == eFLEET_TYPES.HOMEWORLD){
         scr_image("planet",eh,580,244,128,128);
         // draw_sprite(spr_planet_splash,eh,580,244);
         
@@ -1024,7 +1024,7 @@ if (slide=3){
             }
         }
     }
-    if (fleet_type!=1){
+    if (fleet_type != eFLEET_TYPES.HOMEWORLD){
         // draw_sprite(spr_planet_splash,eh,580,244);
         scr_image("planet",eh,580,244,128,128);
         
@@ -1051,7 +1051,7 @@ if (slide=3){
     
     
     
-    if (fleet_type!=3){
+    if (fleet_type!=eFLEET_TYPES.PENITENCE){
         if (fleet_type!=1) or (custom<2) then draw_set_alpha(0.5);
         yar=0;if (recruiting_exists=1) then yar=1;draw_sprite(spr_creation_check,yar,858,221);yar=0;
         if (scr_hit(858,221,858+32,221+32)) and (cooldown<=0) and (mouse_left>=1) and (custom>1) and (fleet_type=1){cooldown=8000;var onceh;onceh=0;
@@ -1127,7 +1127,7 @@ if (slide=3){
         }
     }
     
-    if (recruiting_exists=0) and (homeworld_exists=1){
+    if (recruiting_exists==0 && homeworld_exists==1){
         // draw_sprite(spr_planet_splash,eh,580+333,244);
         scr_image("planet",eh,580+333,244,128,128);
         
@@ -1139,8 +1139,8 @@ if (slide=3){
     
     
     if (scr_hit(575,216,710,242)){
-        if (fleet_type!=1){tooltip="Battle Barge";tooltip2="The name of your Flagship Battle Barge.";}
-        if (fleet_type=1){tooltip="Homeworld";tooltip2="The world that your Chapter's Fortress Monastery is located upon.  More civilized worlds are more easily defensible but the citizens may pose a risk or be a nuisance.";}
+        if (fleet_type!=eFLEET_TYPES.HOMEWORLD){tooltip="Battle Barge";tooltip2="The name of your Flagship Battle Barge.";}
+        if (fleet_type==eFLEET_TYPES.HOMEWORLD){tooltip="Homeworld";tooltip2="The world that your Chapter's Fortress Monastery is located upon.  More civilized worlds are more easily defensible but the citizens may pose a risk or be a nuisance.";}
     }
     if (scr_hit(895,216,1075,242)){
         tooltip="Recruiting World";tooltip2="The world that your Chapter selects recruits from.  More harsh worlds provide recruits with more grit and warrior mentality.  If you are a homeworld-based Chapter, you may uncheck 'Recruiting World' to recruit from your homeworld instead.";
@@ -1155,7 +1155,7 @@ if (slide=3){
     
     draw_set_halign(fa_left);
     
-    if (fleet_type=1){
+    if (fleet_type == eFLEET_TYPES.HOMEWORLD){
         if (custom<2) then draw_set_alpha(0.5);
         draw_text_transformed(445,480,"Homeworld Rule",0.6,0.6,0);
         draw_text_transformed(485,512,"Planetary Governer",0.5,0.5,0);

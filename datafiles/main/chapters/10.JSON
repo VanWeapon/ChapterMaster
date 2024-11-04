@@ -22,7 +22,7 @@
         "recruiting": "", //"Lava" "Desert" "Forge" "Hive" "Death" "Agri" "Feudal" "Temperate" "Ice" "Dead" "Shrine"
         "recruiting_name": "",
         "discipline": "default", // one of 'default' 'biomancy' 'pyromancy' 'telekinesis' 'rune Magick'
-        "aspirant_trial": "EXPOSURE", // ? need to find the best way to do this
+        "aspirant_trial": "APPRENTICESHIP", // ? need to find the best way to do this
         "advantages": [ //TODO something with these after rework of adv organisation
             "",
             "Assault Doctrine",
