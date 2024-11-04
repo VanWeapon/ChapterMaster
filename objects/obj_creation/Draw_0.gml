@@ -288,10 +288,10 @@ if (slate4>0){
             draw_set_color(0);
             draw_set_halign(fa_left);
             
-            if (highlight<=25){
+            if (highlight<=array_length(all_chapters)){
                 var chap = all_chapters[highlight];
                 tooltip=chap.name;
-                if(chap.progenitor != 0) {tooltip += "  - Progenitor Chapter: " + all_chapters[chap.progenitor].name};
+                if(chap.progenitor != 0 && chap.progenitor <10) {tooltip += "  - Progenitor: " + all_chapters[chap.progenitor].name};
                 tooltip2=chap.tooltip;
             }
             if (highlight=1001) then tooltip="Custom";
@@ -1765,12 +1765,19 @@ if (slide>=2) or (goto_slide>=2){
 
 
 
-if (tooltip!="") and (tooltip2!="") and (change_slide<=0){
+if (tooltip!="" && tooltip2!="" && change_slide<=0){
     draw_set_alpha(1);
-    draw_set_font(fnt_40k_14);draw_set_halign(fa_left);draw_set_color(0);
-    draw_rectangle(mouse_x+18,mouse_y+20,mouse_x+string_width_ext(string_hash_to_newline(tooltip2),-1,500)+24,mouse_y+44+string_height_ext(string_hash_to_newline(tooltip2),-1,500),0);
+    draw_set_color(0);
+    draw_set_halign(fa_left);
+    draw_set_font(fnt_40k_14b);
+    var _width1 = string_width_ext(string_hash_to_newline(tooltip),-1,500);
+    draw_set_font(fnt_40k_14);
+    var _width2 = string_width_ext(string_hash_to_newline(tooltip2),-1,500);
+    var _height = string_height_ext(string_hash_to_newline(tooltip2),-1,500);
+   
+    draw_rectangle(mouse_x+18,mouse_y+20,mouse_x+max(_width1, _width2)+24,mouse_y+44+_height,0);
     draw_set_color(38144);
-    draw_rectangle(mouse_x+18,mouse_y+20,mouse_x+string_width_ext(string_hash_to_newline(tooltip2),-1,500)+24,mouse_y+44+string_height_ext(string_hash_to_newline(tooltip2),-1,500),1);
+    draw_rectangle(mouse_x+18,mouse_y+20,mouse_x+max(_width1, _width2)+24,mouse_y+44+_height,1);
     draw_set_font(fnt_40k_14b);
     draw_text(mouse_x+22,mouse_y+22,string_hash_to_newline(string(tooltip)));
     draw_set_font(fnt_40k_14);

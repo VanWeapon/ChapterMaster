@@ -517,20 +517,13 @@ if (argument0="Lamenters"){founding=5;points=150;
 		obj_creation.col_special = chapter_object.colors.special;
 		obj_creation.trim = chapter_object.colors.trim_on;
 
-		obj_creation.hchaplain = chapter_object.names.hchaplain;
-		obj_creation.clibrarian = chapter_object.names.clibrarian;
-		obj_creation.fmaster = chapter_object.names.fmaster;
-		obj_creation.hapothecary = chapter_object.names.hapothecary;
-		obj_creation.honorcapt = chapter_object.names.honorcapt;
-		obj_creation.watchmaster = chapter_object.names.watchmaster;
-		obj_creation.arsenalmaster = chapter_object.names.arsenalmaster;
-		obj_creation.admiral = chapter_object.names.admiral;
-		obj_creation.marchmaster = chapter_object.names.marchmaster;
-		obj_creation.ritesmaster = chapter_object.names.ritesmaster;
-		obj_creation.victualler = chapter_object.names.victualler;
-		obj_creation.lordexec = chapter_object.names.lordexec;
-		obj_creation.relmaster = chapter_object.names.relmaster;
-		obj_creation.recruiter  = chapter_object.names.recruiter;
+		// handles making sure blank names are generated properly and only 
+		// actual values being set in the json will overwrite them
+		struct_foreach(chapter_object.names, function(key, val){
+			if(val != ""){
+				struct_set(obj_creation, key, val);
+			}
+		});
 
 		obj_creation.battle_cry = chapter_object.battle_cry;
 		obj_creation.discipline = chapter_object.discipline;
@@ -550,8 +543,10 @@ if (argument0="Lamenters"){founding=5;points=150;
 		obj_creation.disposition = chapter_object.disposition;
 
 		obj_creation.chapter_master = chapter_object.chapter_master;
-		
-		obj_creation.chapter_master_name = chapter_object.chapter_master.name;
+
+		if(chapter_object.chapter_master.name != ""){
+			obj_creation.chapter_master_name = chapter_object.chapter_master.name;
+		}
 		obj_creation.chapter_master_melee = chapter_object.chapter_master.melee;
 		obj_creation.chapter_master_ranged = chapter_object.chapter_master.ranged;
 		obj_creation.chapter_master_specialty = chapter_object.chapter_master.specialty;
