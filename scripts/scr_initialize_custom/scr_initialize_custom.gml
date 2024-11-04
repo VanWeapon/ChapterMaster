@@ -695,9 +695,6 @@ function scr_initialize_custom() {
 				if (global.chapter_name = "Soul Drinkers") then gladius -= 4;
 			}
 			if (obj_creation.fleet_type == eFLEET_TYPES.HOMEWORLD) {
-				if (global.chapter_name = "Raven Guard") {
-					flagship_name = "Avenger"
-				}
 				if (global.chapter_name = "Crimson Fists") {
 					flagship_name = "Throne's Fury";
 					battle_barges -= 1;
@@ -2396,14 +2393,7 @@ function scr_initialize_custom() {
 			case "Lamenters":
 				chapter_master.add_trait("shitty_luck");
 				chapter_master.add_trait("old_guard");
-			case "Raven Guard":
-				mobi[0, 1] = "Jump Pack&SIL|";
-				chapter_master.add_trait("lightning_warriors");
-				chapter_master.add_trait("still_standing");
-				chapter_master.add_trait("seasoned");
-				break;
-				case "Carcharodons":
-				
+			case "Carcharodons":
 				chapter_master.add_trait("melee_enthusiast")
 				chapter_master.add_trait("slow_and_purposeful");
 				chapter_master.add_trait("ancient");			

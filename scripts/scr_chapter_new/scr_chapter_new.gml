@@ -269,38 +269,6 @@ function scr_chapter_new(argument0) {
 
 	#region V1 Chapter Initialised factions
 
-	if (argument0="Raven Guard"){points=150;
-		selected_chapter=9;chapter=argument0;icon=9;icon_name="rg";founding=0;fleet_type=1;strength=5;purity=8;stability=4;cooperation=5;
-	    adv[1]="Ambushers";adv[2]="Assault Doctrine";dis[1]="Splintered";
-	    homeworld="Dead";homeworld_name="Deliverance";homeworld_exists=1;recruiting_exists=1;
-	    homeworld_rule=1;aspirant_trial=eTrials.EXPOSURE;
-	    // Pauldron2: Left, Pauldron: Right
-	    color_to_main="Black";color_to_secondary="Black";color_to_trim="Silver";
-	    color_to_pauldron="Black";color_to_pauldron2="Black";color_to_lens="Dark Red";
-	    color_to_weapon="Black";col_special=0;trim=0;
-	    hchaplain="Jolaran Tael";fmaster="Saar Laeron";clibrarian="Taalis Shraek";hapothecary="Vynda Aason"
-	    honorcapt="Vykar Kaed";watchmaster="Aaja Solari";arsenalmaster="Vordin Krayn";admiral="Aethon Shaan";marchmaster="Kyrin Solaq";
-		ritesmaster="Syras Colfaen";victualler="Aervar Qeld";lordexec="Reszasz Krevaan";relmaster="Vos Delorn";recruiter="Kalae Korvydae";
-	    battle_cry="Victorus aut Mortis";// monastery_name="Fortress of Hera";master_name=
-	    equal_specialists=0;load_to_ships=[2,0,0];successors=8;
-	    mutations=2;mutations_selected=2;
-	    preomnor=0;voice=0;doomed=0;lyman=0;omophagea=0;ossmodula=0;membrane=0;
-	    zygote=0;betchers=1;catalepsean=0;secretions=0;occulobe=0;mucranoid=1;
-	    // disposition[1]=0;// Prog
-	    disposition[2]=80;disposition[3]=50;disposition[4]=50;disposition[5]=50;
-	    disposition[6]=60;// Astartes
-	    disposition[7]=0;// Reserved
-	    chapter_master_name="Kayvaan Shrike";chapter_master_melee=2;
-	    chapter_master_ranged=1;chapter_master_specialty=1;
-		
-	    company_title[1]="The Blackwings";company_title[2]="The Shadowborne";company_title[3]="The Ghoststalkers";
-		company_title[4]="The Silent";company_title[5]="The Watchful";company_title[6]="The Darkened Blades";
-		company_title[7]="The Whisperclaws";company_title[8]="The Unseen";company_title[9]="The Dirgesingers";company_title[10]="The Subtle";
-		for(i=100;i<=102;i++){
-		role[i,5]="Shadow Captain";wep1[i,5]="Lightning Claw";
-		role[i,2]="Shadow Warden";mobi[i,2]="Jump Pack";
-		}
-	}
 	
 		if (argument0="Black Templars"){founding=4;points=200;
 	    selected_chapter=10;chapter=argument0;icon=10;icon_name="bt";founding=4;
