@@ -26,7 +26,7 @@
         "advantages": [ //TODO something with these after rework of adv organisation
             "",
             "Enemy: Fallen",
-            "",
+            "Reverent Guardians",
             "",
             "",
             "",
@@ -164,7 +164,7 @@
         * Stacks with advantages/disadvantages
         */
         "extra_specialists": {
-            "chaplains": 4,
+            "chaplains": 0,
             "techmarines": 0,
             "apothecary": 0,
             "epistolary": 0,
