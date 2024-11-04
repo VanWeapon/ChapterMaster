@@ -40,36 +40,7 @@ function scr_creation(slide_num) {
     
 	    if (slide_num=3.5){
 
-			if (array_length(col)>0){
-			    if (color_to_main!=""){
-			        main_color = max(array_find_value(col,color_to_main),0);
-			        color_to_main = "";
-			    }
-			    if (color_to_secondary!=""){
-			        secondary_color = max(array_find_value(col,color_to_secondary),0);
-			        color_to_secondary = "";
-			    }
-			    if (color_to_trim!=""){
-			        main_trim = max(array_find_value(col,color_to_trim),0);
-			        color_to_trim = "";
-			    }
-			    if (color_to_pauldron!=""){
-			        right_pauldron = max(array_find_value(col,color_to_pauldron),0);
-			        color_to_pauldron = "";  
-			    }
-			    if (color_to_pauldron2!=""){
-			        left_pauldron = max(array_find_value(col,color_to_pauldron2),0);
-			        color_to_pauldron2 = "";
-			    }
-			    if (color_to_lens!=""){
-			        lens_color = max(array_find_value(col,color_to_lens),0);
-			        color_to_lens = ""; 
-			    }
-			    if (color_to_weapon!=""){
-			        weapon_color = max(array_find_value(col,color_to_weapon),0);
-			        color_to_weapon = "";
-			    }
-			}
+			
 			if (full_liveries == ""){
 			    var struct_cols = {
 			        main_color :main_color,

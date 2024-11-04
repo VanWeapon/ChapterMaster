@@ -207,37 +207,30 @@ if (array_length(col)>0){
     if (color_to_main!=""){
         main_color = max(array_find_value(col,color_to_main),0);
         color_to_main = "";
-        full_liveries = "";
     }
     if (color_to_secondary!=""){
         secondary_color = max(array_find_value(col,color_to_secondary),0);
         color_to_secondary = "";
-        full_liveries = "";
     }
     if (color_to_trim!=""){
         main_trim = max(array_find_value(col,color_to_trim),0);
         color_to_trim = "";
-        full_liveries = "";
     }
     if (color_to_pauldron!=""){
         right_pauldron = max(array_find_value(col,color_to_pauldron),0);
-        color_to_pauldron = "";  
-        full_liveries = "";   
+        color_to_pauldron = "";   
     }
     if (color_to_pauldron2!=""){
         left_pauldron = max(array_find_value(col,color_to_pauldron2),0);
         color_to_pauldron2 = "";
-        full_liveries = "";
     }
     if (color_to_lens!=""){
         lens_color = max(array_find_value(col,color_to_lens),0);
         color_to_lens = ""; 
-        full_liveries = ""; 
     }
     if (color_to_weapon!=""){
         weapon_color = max(array_find_value(col,color_to_weapon),0);
         color_to_weapon = "";
-        full_liveries = "";
     }
 }
 if (full_liveries == ""){
