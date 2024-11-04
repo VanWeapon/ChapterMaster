@@ -11,7 +11,7 @@ function scr_save_chapter(chapter_id){
 	chap.founding = founding;
 	chap.origin = eCHAPTER_ORIGINS.CUSTOM;
 	chap.icon = icon;
-	chap.icon_name = obj_creation.icon_name || "da";
+	chap.icon_name = obj_creation.icon_name!= "" ? obj_creation.icon_name : "da";
 	chap.aspirant_trial = aspirant_trial;
 	chap.fleet_type = fleet_type;
 	chap.strength = strength;
@@ -37,6 +37,8 @@ function scr_save_chapter(chapter_id){
 		weapon: color_to_weapon,
 		special: col_special
 	};
+	chap.full_liveries = full_liveries;
+	chap.complex_livery_data = complex_livery_data;
 	chap.names = {
 		hapothecary: hapothecary,
 		hchaplain: hchaplain,

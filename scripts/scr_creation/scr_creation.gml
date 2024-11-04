@@ -33,7 +33,10 @@ function scr_creation(slide_num) {
 
 
 	if (floor(slide_num)==3 && (recruiting_name!=homeworld_name || custom == 0)){
-	    change_slide=1;goto_slide=4;cooldown=8000;alarm[0]=1;
+	    change_slide=1;
+	    goto_slide=4;
+	    cooldown=8000;
+	    alarm[0]=1;
     
 	    if (slide_num=3.5){
 
@@ -41,40 +44,33 @@ function scr_creation(slide_num) {
 			    if (color_to_main!=""){
 			        main_color = max(array_find_value(col,color_to_main),0);
 			        color_to_main = "";
-			        full_liveries = "none";
 			    }
 			    if (color_to_secondary!=""){
 			        secondary_color = max(array_find_value(col,color_to_secondary),0);
 			        color_to_secondary = "";
-			        full_liveries = "none";
 			    }
 			    if (color_to_trim!=""){
 			        main_trim = max(array_find_value(col,color_to_trim),0);
 			        color_to_trim = "";
-			        full_liveries = "none";
 			    }
 			    if (color_to_pauldron!=""){
 			        right_pauldron = max(array_find_value(col,color_to_pauldron),0);
 			        color_to_pauldron = "";  
-			        full_liveries = "none";   
 			    }
 			    if (color_to_pauldron2!=""){
 			        left_pauldron = max(array_find_value(col,color_to_pauldron2),0);
 			        color_to_pauldron2 = "";
-			        full_liveries = "none";
 			    }
 			    if (color_to_lens!=""){
 			        lens_color = max(array_find_value(col,color_to_lens),0);
 			        color_to_lens = ""; 
-			        full_liveries = "none"; 
 			    }
 			    if (color_to_weapon!=""){
 			        weapon_color = max(array_find_value(col,color_to_weapon),0);
 			        color_to_weapon = "";
-			        full_liveries = "none";
 			    }
 			}
-			if (full_liveries == "none"){
+			if (full_liveries == ""){
 			    var struct_cols = {
 			        main_color :main_color,
 			        secondary_color:secondary_color,

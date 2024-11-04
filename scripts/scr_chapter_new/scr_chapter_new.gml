@@ -30,7 +30,7 @@ function ChapterData() constructor {
 	disadvantages = array_create(9);
 	discipline = "default"; // todo convert to enum
 
-	full_liveries = "none"
+	full_liveries = "";
 
 	colors = {
 		main: "Grey",
@@ -164,8 +164,10 @@ function ChapterData() constructor {
 
 			// Treat incoming empty vals as 'use default' and don't overwrite
 			// a value if it was already set in the chapter constructor
-			if(self[key] != "" && val == ""){
-				continue;
+			if (struct_exists(self, key)){
+				if(self[key] != "" && val == ""){
+					continue;
+				}
 			}
 			struct_set(self, key, val);
 		}
@@ -178,7 +180,7 @@ function ChapterData() constructor {
 /// used to set up initialise the data that is later fed into `scr_initialize_custom` when the game starts
 function scr_chapter_new(argument0) {
 
-	full_liveries = "none"; // until chapter objects are in full use kicks off livery propogation
+	full_liveries = ""; // until chapter objects are in full use kicks off livery propogation
 
 	// argument0 = chapter
 	obj_creation.use_chapter_object = false; // for the new json testing
