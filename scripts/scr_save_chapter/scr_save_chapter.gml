@@ -27,14 +27,14 @@ function scr_save_chapter(chapter_id){
 	chap.advantages = adv;
 	chap.disadvantages = dis;
 	chap.colors = {
-		main: color_to_main,
-		secondary: color_to_secondary,
-		pauldron_l: color_to_pauldron,
-		pauldron_r: color_to_pauldron2,
-		trim: color_to_trim,
-		trim_on: trim,
-		lens: color_to_lens,
-		weapon: color_to_weapon,
+		main: col[main_color],
+		secondary: col[secondary_color],
+		pauldron_l: col[left_pauldron],
+		pauldron_r: col[right_pauldron],
+		trim: col[main_trim],
+		//trim_on: trim,
+		lens: col[lens_color],
+		weapon: col[weapon_color],
 		special: col_special
 	};
 	chap.full_liveries = full_liveries;

@@ -43,7 +43,7 @@ function ChapterData() constructor {
 		/// 0 - normal, 1 - Breastplate, 2 - Vertical, 3 - Quadrant
 		special: 0,
 		/// 0 no, 1 yes for special trim colours
-		trim_on: 0,
+		//trim_on: 0,
 	};
 	names = {
 		hchaplain: global.name_generator.generate_imperial_name(),
@@ -508,6 +508,7 @@ if (argument0="Lamenters"){founding=5;points=150;
 		obj_creation.dis = chapter_object.disadvantages;
 
 		obj_creation.full_liveries = chapter_object.full_liveries;
+		obj_creation.complex_livery_data = chapter_object.complex_livery_data;
 
 		obj_creation.color_to_main = chapter_object.colors.main;
 		obj_creation.color_to_secondary = chapter_object.colors.secondary;
@@ -517,7 +518,7 @@ if (argument0="Lamenters"){founding=5;points=150;
 		obj_creation.color_to_lens = chapter_object.colors.lens;
 		obj_creation.color_to_weapon = chapter_object.colors.weapon;
 		obj_creation.col_special = chapter_object.colors.special;
-		obj_creation.trim = chapter_object.colors.trim_on;
+		//obj_creation.trim = chapter_object.colors.trim_on;
 
 		// handles making sure blank names are generated properly and only 
 		// actual values being set in the json will overwrite them

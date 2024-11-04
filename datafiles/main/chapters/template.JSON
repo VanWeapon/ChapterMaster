@@ -54,7 +54,7 @@
             "lens": "Red",
             "weapon": "Dark Red",
             "special": 0, // 0 - normal, 1 - Breastplate, 2 - Vertical, 3 - Quadrant
-            "trim_on": 0 // 0 no, 1 yes for pauldron trim colours. Trim colour will still be used for certain complex livery items 
+            //"trim_on": 0 // 0 no, 1 yes for pauldron trim colours. Trim colour will still be used for certain complex livery items 
         },
         "names": {
             //Chapter Staff
