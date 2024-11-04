@@ -3,11 +3,11 @@
         "id": 1,
         "name": "Chapter Name",
         "flavor": "Chapter Lore",
-        "origin": 3, // 1 - Founding, 2 -successor, 3 - Other/non-canon/fanmade, 4 - Custom
+        "origin": 3, // 1 - Founding, 2 - Successor, 3 - Other/non-canon/fanmade, 4 - Custom
         "points": 150,
-        "founding": 0, // The id of the founding chapter, 0 for unknown or none
-        "splash": 1,
-        "icon": 1, // in \images\creation\creation_icons.png, the index from the left, 0 being blank square and 1 being dark angels etc
+        "founding": 0, // The id of the founding chapter, 0 for unknown or none, 10 for random
+        "splash": 1, // in \images\creation\chapters\splash folder, the img number, 1 being Dark Angels etc.
+        "icon": 1, // in \images\creation\chapters\icons folder, the icon number, 1 being Dark Angels etc.
         "icon_name": "aa", // ? dunno what this is used for yet but the icon breaks if you dont use it 
         "fleet_type": 1, // 1= Homeworld, 2 = Fleet based, 3 = Penitent
         "strength": 5, // 1-10
@@ -17,14 +17,14 @@
         "homeworld_exists": 1, // 1 = true
         "recruiting_exists": 1, // 1 = true
         "homeworld_rule": 1, // 1 = Govenor, 2 = Countries, 3 = Personal Rule
-        "homeworld": "Hive", // "Lava" "Desert" "Forge" "Hive" "Death" "Agri" "Feudal" "Temperate" "Ice" "Dead" "Shrine"
-        "homeworld_name": "",
-        "recruiting": "Death", //"Lava" "Desert" "Forge" "Hive" "Death" "Agri" "Feudal" "Temperate" "Ice" "Dead" "Shrine"
-        "recruiting_name": "",
+        "homeworld": "Hive", // one of  "Lava" "Desert" "Forge" "Hive" "Death" "Agri" "Feudal" "Temperate" "Ice" "Dead" "Shrine"
+        "homeworld_name": "", // Homeworld Planet name, leave blank to autogenerate
+        "recruiting": "Death", // one of "Lava" "Desert" "Forge" "Hive" "Death" "Agri" "Feudal" "Temperate" "Ice" "Dead" "Shrine"
+        "recruiting_name": "", // Recruiting Planet name, leave blank to autogenerate
         "discipline": "default", // one of 'default' 'biomancy' 'pyromancy' 'telekinesis' 'rune Magick'
-        "aspirant_trial": "SURVIVAL", // ? need to find the best way to do this
+        "aspirant_trial": "SURVIVAL", // one of "BLOODDUEL" "HUNTING" "SURVIVAL" "EXPOSURE" "KNOWLEDGE" "CHALLENGE"  "APPRENTICESHIP" 
         "advantages": [
-            "",
+            "", // leave the first entry blank for now
             "",
             "",
             "",
@@ -35,7 +35,7 @@
             ""
         ],
         "disadvantages": [
-            "",
+            "", // leave the first entry blank for now
             "",
             "",
             "",
@@ -54,14 +54,14 @@
             "lens": "Red",
             "weapon": "Dark Red",
             "special": 0, // 0 - normal, 1 - Breastplate, 2 - Vertical, 3 - Quadrant
-            "trim_on": 0 // 0 no, 1 yes for special trim colours 
+            "trim_on": 0 // 0 no, 1 yes for pauldron trim colours. Trim colour will still be used for certain complex livery items 
         },
         "names": {
             //Chapter Staff
-            "hchaplain": "",
-            "clibrarian": "",
-            "fmaster": "",
-            "hapothecary": "",
+            "hchaplain": "", // Head Chaplain
+            "clibrarian": "", // Chief Librarian
+            "fmaster": "", // Forge Master
+            "hapothecary": "", // Head Apothecary
             //Company Captains 1 - 10
             "honorcapt": "",
             "watchmaster": "",
@@ -75,11 +75,11 @@
             "recruiter": ""
         },
         "battle_cry": "For the Emperor!",
-        "equal_specialists": 0,
+        "equal_specialists": 0, // 0 if no, 1 if yes. If yes, will distribute specialist roles like Assaults and Devastators equally between companies. Otherwise all Assaults go in Company 8 and all Devastators in Company 9
         "load_to_ships": {
             "escort_load": 2, // 0 no, 2 yes, 1 doesnt do anything :)
-            "split_scouts": 0, // 0 no, 1 yes
-            "split_vets": 0 // 0 no, 1 yes
+            "split_scouts": 0, // 0 no, 1 yes. If yes, splits scouts between companies equally. Otherwise all scouts are kept in 10th Company.
+            "split_vets": 0 // 0 no, 1 yes. If yes, all veterans are distrubuted equally between companies. Otherwise all veterans are kept in the 1st Company
         },
         "successors": 0, //total number of successor chapters
         "mutations": {
@@ -118,7 +118,7 @@
             ],
             "gear": "",
             "mobi": "",
-            "armour": ""
+            "armour": "" // default is Artificer armour, only needed to set if changing to something else.
         },
         "artifact": [
             {
@@ -141,7 +141,7 @@
             "9th Company",
             "10th Company"
         ],
-        "flagship_name": "Flagship Name",
+        "flagship_name": "Flagship Name", // leave blank to autogenerate
         /**
         * * Default fleet composition
         * * Homeworld 
@@ -150,6 +150,7 @@
         * - 4 Battle Barges, 3 Strike Cruisers, 7 Gladius, 3 Hunters
         * 
         * use negative numbers to subtract ships
+        * * Stacks with advantages/disadvantages
         */
         "extra_ships": {
             "battle_barges": 0,
@@ -164,7 +165,7 @@
         * * Default Company specialists (divided based on `load_to_ships.split_vets` setting)
         * - 20 Terminators, 85 Veterans, 20 Devastators, 20 Assault
         * Use negative numbers to subtract
-        * Stacks with advantages/disadvantages
+        * * Stacks with advantages/disadvantages
         */
         "extra_specialists": {
             "chaplains": 0,
@@ -182,9 +183,8 @@
         * * Default Marine strength
         * - 100 marines per company
         * use negative numbers to subtract
-        * Stacks with strength for non-founding chapters
+        * * Stacks with strength for non-founding chapters only
         */
-        // * Not working yet
         "extra_marines": {
             "second": 0,
             "third": 0,
@@ -196,12 +196,12 @@
             "ninth": 0,
             "tenth": 0
         },
-        // * Not working yet
         "extra_vehicles": {
             "rhino": 0,
             "whirlwind": 0,
             "predator": 0,
-            "land_raider": 0
+            "land_raider": 0,
+            "land_speeder": 0
         },
         /** Add extra starting items ["Item Name", Number to add] */
         "extra_equipment": [
@@ -213,7 +213,7 @@
         /** 
         * Provide a place to change the default name and equipment preferences of roles for this chapter
         * `custom_roles` should be used for specialist/leadership type roles, 
-        * for combat roles, `custom_squads` should probably? be used instead 
+        * To affect an entire squad, see `custom_squads` below
         */
         "custom_roles": {
             // "honour_guard": {
@@ -294,7 +294,7 @@
                 - mobi: Mobility item, e.g. Jump Packs. 
                 - armour: required armour 
                 - gear: special equipment needed for certain roles, like a Roasrius or Narthecium
-        *   - type_data: names the squad, allows certain formations ? idk what that does yet
+        *   - type_data: names the squad, allows certain formations 
         */
         "squad_name": "Squad",
         "custom_squads": {}
