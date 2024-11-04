@@ -701,10 +701,6 @@ function scr_initialize_custom() {
 					gladius -= 3;
 					strike_cruisers -= 4
 				}
-				if (global.chapter_name = "Black Templars") {
-					flagship_name = "Eternal Crusader";
-
-				}
 				if (global.chapter_name = "Minotaurs") {
 					flagship_name = "Daedelos Krata";
 
@@ -2366,18 +2362,6 @@ function scr_initialize_custom() {
 					chapter_master.add_bionics("none", "standard", false);
 				}
 				chapter_master.add_trait("old_guard");
-				break;
-			case "Black Templars":
-				chapter_master.add_trait("melee_enthusiast");
-				chapter_master.add_trait("zealous_faith");
-				chapter_master.add_trait("old_guard");
-				arti = obj_ini.artifact_struct[last_artifact];
-				arti.name = "Sword of the High Marshalls";
-				arti.custom_description = "A relic blade forged from the shards of Rogal Dorn's shattered sword passed down by the High Marshalls as a sign of office";
-				obj_ini.artifact[last_artifact] = "Relic Blade";
-				arti.bearer = [0, 1];
-				obj_ini.artifact_identified[last_artifact] = 0;
-				chapter_master_equip.wep1 = last_artifact;
 				break;
 			case "Minotaurs":
 				chapter_master.add_trait("very_hard_to_kill");

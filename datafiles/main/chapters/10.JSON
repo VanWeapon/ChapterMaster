@@ -1,34 +1,34 @@
 {
     "chapter": {
-        "id": 9,
-        "name": "Raven Guard",
-        "flavor": "Clinging to the shadows and riding the edge of lightning the Raven Guard strike out at the hated enemy with stealth and speed. Using lightning strikes, hit and run tactics, and guerrilla warfare, they are known for being there one second and gone the next.",
-        "origin": 1, // 1 - Founding, 2 -successor, 3 - Other/non-canon/fanmade, 4 - Custom
-        "points": 150,
-        "founding": 0, // The id of the founding chapter, 0 for unknown or none
-        "splash": 9,
-        "icon": 9, // in \images\creation\creation_icons.png, the index from the left, 0 being blank square and 1 being dark angels etc
-        "icon_name": "rg", // ? dunno what this is used for yet but the icon breaks if you dont use it 
-        "fleet_type": 1, // 1= Homeworld, 2 = Fleet based, 3 = Penitent
+        "id": 10,
+        "name": "Black Templars",
+        "flavor": "Not adhering to the Codex Astartes, Black Templars are a Chapter on an Eternal Crusade with unique organization and high numbers. Masters of assault, they charge at the enemy with zeal unmatched. They hate psykers, and as such, have no Librarians.",
+        "origin": 2, // 1 - Founding, 2 -successor, 3 - Other/non-canon/fanmade, 4 - Custom
+        "points": 200,
+        "founding": 4, // The id of the founding chapter, 0 for unknown or none
+        "splash": 10,
+        "icon": 10, // in \images\creation\creation_icons.png, the index from the left, 0 being blank square and 1 being dark angels etc
+        "icon_name": "bt", // ? dunno what this is used for yet but the icon breaks if you dont use it 
+        "fleet_type": 3, // 1= Homeworld, 2 = Fleet based, 3 = Penitent
         "strength": 5, // 1-10
-        "purity": 8, // 1-10
-        "stability": 4, // 1-10
+        "purity": 7, // 1-10
+        "stability": 10, // 1-10
         "cooperation": 5, // 1-10
-        "homeworld_exists": 1, // 1 = true
+        "homeworld_exists": 0, // 1 = true
         "recruiting_exists": 1, // 1 = true
         "homeworld_rule": 1, // 1 = Govenor, 2 = Countries, 3 = Personal Rule
-        "homeworld": "Dead", // "Lava" "Desert" "Forge" "Hive" "Death" "Agri" "Feudal" "Temperate" "Ice" "Dead" "Shrine"
-        "homeworld_name": "Deliverance",
-        "recruiting": "Death", //"Lava" "Desert" "Forge" "Hive" "Death" "Agri" "Feudal" "Temperate" "Ice" "Dead" "Shrine"
+        "homeworld": "", // "Lava" "Desert" "Forge" "Hive" "Death" "Agri" "Feudal" "Temperate" "Ice" "Dead" "Shrine"
+        "homeworld_name": "",
+        "recruiting": "", //"Lava" "Desert" "Forge" "Hive" "Death" "Agri" "Feudal" "Temperate" "Ice" "Dead" "Shrine"
         "recruiting_name": "",
         "discipline": "default", // one of 'default' 'biomancy' 'pyromancy' 'telekinesis' 'rune Magick'
         "aspirant_trial": "EXPOSURE", // ? need to find the best way to do this
         "advantages": [ //TODO something with these after rework of adv organisation
             "",
-            "Ambushers",
             "Assault Doctrine",
-            "",
-            "",
+            "Kings of Space",
+            "Reverent Guardians",
+            "Retinue of Renown",
             "",
             "",
             "",
@@ -36,8 +36,8 @@
         ],
         "disadvantages": [
             "",
-            "Splintered",
-            "",
+            "Psyker Intolerant",
+            "Suspicious",
             "",
             "",
             "",
@@ -48,8 +48,8 @@
         "colors": {
             "main": "Black",
             "secondary": "Black",
-            "pauldron_r": "Black",
-            "pauldron_l": "Black",
+            "pauldron_r": "White",
+            "pauldron_l": "White",
             "trim": "Silver",
             "lens": "Dark Red",
             "weapon": "Black",
@@ -58,30 +58,30 @@
         },
         "names": {
             //Chapter Staff
-            "hchaplain": "Jolaran Tael",
-            "clibrarian": "Taalis Shraek",
-            "fmaster": "Saar Laeron",
-            "hapothecary": "Vynda Aason",
+            "hchaplain": "Grimaldus",
+            "clibrarian": "",
+            "fmaster": "Jurisian",
+            "hapothecary": "Colber",
             //Company Captains 1 - 10
-            "honorcapt": "Vykar Kaed",
-            "watchmaster": "Aaja Solari",
-            "arsenalmaster": "Vordin Krayn",
-            "admiral": "Aethon Shaan",
-            "marchmaster": "Kyrin Solaq",
-            "ritesmaster": "Syras Colfaen",
-            "victualler": "Aervar Qeld",
-            "lordexec": "Reszasz Krevaan",
-            "relmaster": "Vos Delorn",
-            "recruiter": "Kalae Korvydae"
+            "honorcapt": "",
+            "watchmaster": "",
+            "arsenalmaster": "",
+            "admiral": "Stenheir",
+            "marchmaster": "",
+            "ritesmaster": "",
+            "victualler": "",
+            "lordexec": "",
+            "relmaster": "",
+            "recruiter": "Emrik"
         },
-        "battle_cry": "Victorus aut Mortis!",
+        "battle_cry": "No Pity! No Remorse! No Fear!",
         "equal_specialists": 0,
         "load_to_ships": {
             "escort_load": 2, // 0 no, 2 yes, 1 doesnt do anything :)
             "split_scouts": 0, // 0 no, 1 yes
             "split_vets": 0 // 0 no, 1 yes
         },
-        "successors": 8, //total number of successor chapters
+        "successors": 0, //total number of successor chapters
         "mutations": {
             "preomnor": 0,
             "voice": 0,
@@ -89,55 +89,59 @@
             "lyman": 0,
             "omophagea": 0,
             "ossmodula": 0,
-            "membrane": 0,
+            "membrane": 1,
             "zygote": 0,
             "betchers": 1,
             "catalepsean": 0,
             "secretions": 0,
             "occulobe": 0,
-            "mucranoid": 1
+            "mucranoid": 0
         },
         "disposition": [ // todo maybe convert to struct
             0, // nothing
-            0, // Progenitor faction
-            80, // Imperium
-            50, // Admech
-            50, //Inquisition
-            50, // Ecclesiarchy
-            60, // Astartes
+            50, // Progenitor faction
+            60, // Imperium
+            40, // Admech
+            30, //Inquisition
+            80, // Ecclesiarchy
+            35, // Astartes
             0 // nothing
         ],
         "chapter_master": {
-            "name": "Kayvaan Shrike",
-            "specialty": 1, //1 Leader, 2 Champion, 3 Psyker,
-            "melee": 2, // 1 twin power fists ... 8 force staff
-            "ranged": 1, // 1 boltstorm gauntlets ... 7 storm shield
+            "name": "Helbrecht",
+            "specialty": 2, //1 Leader, 2 Champion, 3 Psyker,
+            "melee": 5, // 1 twin power fists ... 8 force staff
+            "ranged": 2, // 1 boltstorm gauntlets ... 7 storm shield
             // All chapter masters have the trait `Lead by Example` by default
             "traits": [
-                "lightning_warriors",
-                "still_standing",
-                "seasoned"
+                "melee_enthusiast",
+                "zealous_faith",
+                "old_guard"
             ],
-            "gear": "Jump Pack",
+            "gear": "",
             "mobi": "",
             "armour": "",
             "bionics": 0
         },
-        "artifact": [],
+        "artifact": {
+            "name": "Sword of the High Marshalls",
+            "description": "A relic blade forged from the shards of Rogal Dorn's shattered sword passed down by the High Marshalls as a sign of office",
+            "base_weapon_type": "Relic Blade"
+        },
         "company_titles": [
             "",
-            "The Blackwings",
-            "The Shadowborne",
-            "The Ghoststalkers",
-            "The Silent",
-            "The Watchful",
-            "The Darkened Blades",
-            "The Whisperclaws",
-            "The Unseen",
-            "The Dirgesingers",
-            "The Subtle"
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
         ],
-        "flagship_name": "Avenger",
+        "flagship_name": "Eternal Crusader",
         /**
         * * Default fleet composition
         * * Homeworld 
@@ -216,12 +220,11 @@
         */
         "custom_roles": {
             "captain": {
-                "name": "Shadow Captain",
-                "wep1": "Lightning Claw"
+                "name": "Marshall",
+                "wep1": "Power Sword"
             },
-            "honour_guard": {
-                "name": "Shadow Warden",
-                "mobi": "Jump Pack"
+            "veteran": {
+                "name": "Sword Brother"
             }
         },
         /**

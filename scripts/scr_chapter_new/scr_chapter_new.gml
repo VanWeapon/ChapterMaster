@@ -269,39 +269,7 @@ function scr_chapter_new(argument0) {
 
 	#region V1 Chapter Initialised factions
 
-	
-		if (argument0="Black Templars"){founding=4;points=200;
-	    selected_chapter=10;chapter=argument0;icon=10;icon_name="bt";founding=4;
-	    fleet_type=3;strength=5;purity=7;stability=10;cooperation=5;
-	    adv[1]="Assault Doctrine";adv[2]="Kings of Space";adv[3]="Reverent Guardians";adv[4]="Brothers, All";dis[1]="Psyker Intolerant";dis[2]="Suspicious";
-	    homeworld_exists=0;recruiting_exists=1;
-	    recruiting_name=global.name_generator.generate_star_name();
-		aspirant_trial=eTrials.APPRENTICESHIP;
-	    // Pauldron2: Left, Pauldron: Right
-	    color_to_main="Black";color_to_secondary="Black";color_to_trim="Silver";
-	    color_to_pauldron2="White";color_to_pauldron="White";color_to_lens="Dark Red";
-	    color_to_weapon="Black";col_special=0;trim=0;
-	    battle_cry="No Pity! No Remorse! No Fear";
-	    equal_specialists=1;load_to_ships=[2,0,0];successors=0;
-	    mutations=2;mutations_selected=2;
-	    preomnor=0;voice=0;doomed=0;lyman=0;omophagea=0;ossmodula=0;membrane=1;
-	    zygote=0;betchers=1;catalepsean=0;secretions=0;occulobe=0;mucranoid=0;
-		hchaplain="Grimaldus"; fmaster="Jurisian"; recruiter="Emrik";
-		admiral="Stenheir";hapothecary="Colber";
-	   disposition[1]=50;// Prog
-	    disposition[2]=60;//Imperium
-		disposition[3]=40;//Admech
-		disposition[4]=30;//Inquisition
-		disposition[5]=80;//Ecclesiarchy
-	    disposition[6]=35;// Astartes
-	    disposition[7]=0;// Reserved
-	    chapter_master_name="Helbrecht";chapter_master_melee=5;
-	    chapter_master_ranged=2;chapter_master_specialty=2;
-		role[i,5]="Marshall";wep1[i,5]="Power Sword";
-		role[i,3]="Sword Brother";
-	}
-	
-if (argument0="Minotaurs"){founding=10;points=450;
+	if (argument0="Minotaurs"){founding=10;points=450;
 	    selected_chapter=11;chapter=argument0;icon=11;icon_name="min";founding=10;
 	    fleet_type=2;strength=5;purity=10;stability=10;cooperation=2;
 	    adv[1]="Paragon";adv[2]="Siege Masters";adv[3]="Boarders";adv[4]="Enemy: Fallen";dis[1]="Suspicious";
