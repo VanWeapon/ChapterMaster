@@ -275,38 +275,6 @@ function scr_chapter_new(argument0) {
 
 
 	#region V1 Chapter Initialised factions
-
-	if (argument0="Minotaurs"){founding=10;points=450;
-	    selected_chapter=11;chapter=argument0;icon=11;icon_name="min";founding=10;
-	    fleet_type=2;strength=5;purity=10;stability=10;cooperation=2;
-	    adv[1]="Paragon";adv[2]="Siege Masters";adv[3]="Boarders";adv[4]="Enemy: Fallen";dis[1]="Suspicious";
-	    homeworld_exists=0;recruiting_exists=1;
-	    recruiting="Death";recruiting_name=global.name_generator.generate_star_name();
-	    homeworld_rule=0;aspirant_trial=eTrials.CHALLENGE;
-	    // Pauldron2: Left, Pauldron: Right
-	    color_to_main="Lightest Brown";color_to_secondary="Lightest Brown";color_to_trim="Light Brown";
-	    color_to_pauldron2="Dark Red";color_to_pauldron="Dark Red";color_to_lens="Red";
-	    color_to_weapon="Dark Red";col_special=0;trim=1;
-		hchaplain="Ivanus Enkomi"; 
-		fmaster="Varro Crag";clibrarian="Lykos Gorgon";hapothecary="Raze Korthos"
-	    recruiter="Axion Eurytos";admiral="Thoul Brontes";
-	    battle_cry="...";
-	    equal_specialists=0;load_to_ships=[2,0,0];successors=0;
-	    mutations=0;mutations_selected=0;
-	    preomnor=0;voice=0;doomed=0;lyman=0;omophagea=0;ossmodula=0;membrane=0;
-	    zygote=0;betchers=0;catalepsean=0;secretions=0;occulobe=0;mucranoid=0;
-	    disposition[1]=0;// Prog
-	    disposition[2]=100;//Imperium
-		disposition[3]=50;//Admech
-		disposition[4]=60;//Inquisition
-		disposition[5]=25;//Ecclesiarchy
-	    disposition[6]=30;// Astartes
-	    disposition[7]=0;// Reserved
-	    chapter_master_name="Asterion Moloc";chapter_master_melee=5;
-	    chapter_master_ranged=7;chapter_master_specialty=2;
-	}
-
-	
 	
 	if (argument0="Blood Ravens"){
 		founding=10;points=100;

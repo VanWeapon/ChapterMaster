@@ -701,10 +701,6 @@ function scr_initialize_custom() {
 					gladius -= 3;
 					strike_cruisers -= 4
 				}
-				if (global.chapter_name = "Minotaurs") {
-					flagship_name = "Daedelos Krata";
-
-				}
 			}
 			if (obj_creation.fleet_type == eFLEET_TYPES.PENITENCE) {
 				if (global.chapter_name = "Lamenters") {
@@ -2363,17 +2359,6 @@ function scr_initialize_custom() {
 				}
 				chapter_master.add_trait("old_guard");
 				break;
-			case "Minotaurs":
-				chapter_master.add_trait("very_hard_to_kill");
-				chapter_master.add_trait("seasoned");
-				chapter_master_equip.armour = "Tartaros";
-				arti = obj_ini.artifact_struct[last_artifact];
-				arti.name = "The Black Spear";
-				arti.custom_description = "An ancient artefact that is steeped in blood and said to have once been used by the Legio Custodes.";
-				obj_ini.artifact[last_artifact] = "Power Spear";
-				arti.bearer = [0, 1];
-				obj_ini.artifact_identified[last_artifact] = 0;
-				chapter_master_equip.wep1 = last_artifact;
 			case "Lamenters":
 				chapter_master.add_trait("shitty_luck");
 				chapter_master.add_trait("old_guard");
