@@ -519,7 +519,7 @@ function scr_livery_setup(){
                         full_liveries[livery_picker.role_set] = DeepCloneStruct(livery_picker.map_colour);
                         livery_picker.role_set = role_id;
                         livery_picker.map_colour = full_liveries[role_id];
-                        if (!livery_picker.map_colour.is_change){
+                        if (!livery_picker.map_colour.is_changed){
                             livery_picker.map_colour = DeepCloneStruct(full_liveries[0]);
                         }
                     }

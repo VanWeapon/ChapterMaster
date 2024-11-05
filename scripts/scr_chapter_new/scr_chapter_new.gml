@@ -30,7 +30,9 @@ function ChapterData() constructor {
 	disadvantages = array_create(9);
 	discipline = "default"; // todo convert to enum
 
-	full_liveries = "none"
+	full_liveries = "";
+	complex_livery_data = complex_livery_default();
+
 
 	colors = {
 		main: "Grey",
@@ -43,7 +45,7 @@ function ChapterData() constructor {
 		/// 0 - normal, 1 - Breastplate, 2 - Vertical, 3 - Quadrant
 		special: 0,
 		/// 0 no, 1 yes for special trim colours
-		trim_on: 0,
+		//trim_on: 0,
 	};
 	names = {
 		hchaplain: global.name_generator.generate_space_marine_name(),
@@ -164,8 +166,10 @@ function ChapterData() constructor {
 
 			// Treat incoming empty vals as 'use default' and don't overwrite
 			// a value if it was already set in the chapter constructor
-			if(self[key] != "" && val == ""){
-				continue;
+			if (struct_exists(self, key)){
+				if(self[key] != "" && val == ""){
+					continue;
+				}
 			}
 			struct_set(self, key, val);
 		}
@@ -178,7 +182,7 @@ function ChapterData() constructor {
 /// used to set up initialise the data that is later fed into `scr_initialize_custom` when the game starts
 function scr_chapter_new(argument0) {
 
-	full_liveries = "none"; // until chapter objects are in full use kicks off livery propogation
+	full_liveries = ""; // until chapter objects are in full use kicks off livery propogation
 
 	// argument0 = chapter
 	obj_creation.use_chapter_object = false; // for the new json testing
@@ -305,6 +309,11 @@ function scr_chapter_new(argument0) {
 		obj_creation.dis = chapter_object.disadvantages;
 
 		obj_creation.full_liveries = chapter_object.full_liveries;
+		obj_creation.complex_livery_data = chapter_object.complex_livery_data;
+		if (obj_creation.full_liveries!=""){
+			obj_creation.livery_picker.map_colour = full_liveries[0];
+			obj_creation.livery_picker.role_set = 0;   		
+		}
 
 		obj_creation.color_to_main = chapter_object.colors.main;
 		obj_creation.color_to_secondary = chapter_object.colors.secondary;
@@ -314,8 +323,65 @@ function scr_chapter_new(argument0) {
 		obj_creation.color_to_lens = chapter_object.colors.lens;
 		obj_creation.color_to_weapon = chapter_object.colors.weapon;
 		obj_creation.col_special = chapter_object.colors.special;
-		obj_creation.trim = chapter_object.colors.trim_on;
+		//obj_creation.trim = chapter_object.colors.trim_on;
+		with (obj_creation){
+			if (array_length(col)>0){
+			    if (color_to_main!=""){
+			        main_color = max(array_find_value(col,color_to_main),0);
+			        color_to_main = "";
+			    }
+			    if (color_to_secondary!=""){
+			        secondary_color = max(array_find_value(col,color_to_secondary),0);
+			        color_to_secondary = "";
+			    }
+			    if (color_to_trim!=""){
+			        main_trim = max(array_find_value(col,color_to_trim),0);
+			        color_to_trim = "";
+			    }
+			    if (color_to_pauldron!=""){
+			        right_pauldron = max(array_find_value(col,color_to_pauldron),0);
+			        color_to_pauldron = "";  
+			    }
+			    if (color_to_pauldron2!=""){
+			        left_pauldron = max(array_find_value(col,color_to_pauldron2),0);
+			        color_to_pauldron2 = "";
+			    }
+			    if (color_to_lens!=""){
+			        lens_color = max(array_find_value(col,color_to_lens),0);
+			        color_to_lens = ""; 
+			    }
+			    if (color_to_weapon!=""){
+			        weapon_color = max(array_find_value(col,color_to_weapon),0);
+			        color_to_weapon = "";
+			    }
+			}
+			if (obj_creation.full_liveries==""){
+			    var struct_cols = {
+			        main_color :main_color,
+			        secondary_color:secondary_color,
+			        main_trim:main_trim,
+			        right_pauldron:right_pauldron,
+			        left_pauldron:left_pauldron,
+			        lens_color:lens_color,
+			        weapon_color:weapon_color
+			    }
+			    obj_creation.livery_picker = new ColourItem(100,230);
+			    obj_creation.livery_picker.scr_unit_draw_data();
+			    obj_creation.livery_picker.set_defualt_armour(struct_cols,col_special);
+			    obj_creation.full_liveries = array_create(21,DeepCloneStruct(obj_creation.livery_picker.map_colour)); 			    
+			    obj_creation.full_liveries[Role.LIBRARIAN] = obj_creation.livery_picker.set_defualt_librarian(struct_cols);
 
+			    obj_creation.full_liveries[Role.CHAPLAIN] = obj_creation.livery_picker.set_defualt_chaplain(struct_cols);
+
+			    obj_creation.full_liveries[Role.APOTHECARY] = obj_creation.livery_picker.set_defualt_apothecary(struct_cols);
+
+			    obj_creation.full_liveries[Role.TECHMARINE] = obj_creation.livery_picker.set_defualt_techmarines(struct_cols);
+			    obj_creation.livery_picker.scr_unit_draw_data();
+			    obj_creation.livery_picker.set_defualt_armour(struct_cols,col_special); 			
+			}
+			obj_creation.livery_picker.map_colour = full_liveries[0];
+			obj_creation.livery_picker.role_set = 0;  			 			
+		}
 		// handles making sure blank names are generated properly and only 
 		// actual values being set in the json will overwrite them
 		struct_foreach(chapter_object.names, function(key, val){
@@ -399,9 +465,6 @@ function scr_chapter_new(argument0) {
 
 
 	maxpoints=points;
-	var livery_picker = new ColourItem(0,0);
-	livery_picker.scr_unit_draw_data();
-	full_liveries = array_create(21,DeepCloneStruct(livery_picker.map_colour));	
 	return true;
 }
 

@@ -52,7 +52,7 @@ use_chapter_object = false;
 
 livery_picker = new ColourItem(100,230);
 livery_picker.scr_unit_draw_data();
-full_liveries = array_create(21,DeepCloneStruct(livery_picker.map_colour));
+full_liveries = "";
 complex_livery=false;
 complex_selection = "sgt";
 complex_depth_selection = 0;
