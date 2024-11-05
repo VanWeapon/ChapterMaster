@@ -520,8 +520,6 @@ function trial_map(trial_name){
 function scr_initialize_custom() {
 
 	show_debug_message("Executing scr_initialize_custom");
-	show_debug_message($"Using chapter object? {obj_creation.use_chapter_object}");
-
 	
 	progenitor = obj_creation.founding;
 	successors = obj_creation.successors;
@@ -1033,67 +1031,45 @@ function scr_initialize_custom() {
 	}
 
 
-	if(obj_creation.use_chapter_object){
-		var c_specialists = obj_creation.extra_specialists;
-		var c_specialist_names = struct_get_names(c_specialists);
-		for(var s = 0; s < array_length(c_specialist_names); s++){
-			var s_name = c_specialist_names[s];
-			var s_val = struct_get(c_specialists, s_name);
-			show_debug_message($"updating specialist {s_name} with {s_val})");
-			switch (s_name){
-				case "chaplains": chaplains = chaplains + real(s_val); break;
-				case "chaplains_per_company": chaplains_per_company = chaplains_per_company + real(s_val); break;
-				case "techmarines": techmarines  = techmarines  + real(s_val); break;
-				case "techmarines_per_company": techmarines_per_company = techmarines_per_company + real(s_val); break;
-				case "apothecary": apothecary = apothecary  + real(s_val); break;
-				case "apothecary_per_company": apothecary_per_company = apothecary_per_company + real(s_val); break;
-				case "epistolary": epistolary = epistolary  + real(s_val); break;
-				case "epistolary_per_company": epistolary_per_company = epistolary_per_company + real(s_val); break;
-				case "codiciery": codiciery  = codiciery + real(s_val); break;
-				case "lexicanum": lexicanum  = lexicanum + real(s_val); break;
-				case "terminator": terminator  = terminator + real(s_val); break;
-				case "assault": assault = assault + real(s_val); break;
-				case "veteran": veteran = veteran + real(s_val); break;
-				case "devastator": devastator = devastator + real(s_val); break;
-			}
+	var c_specialists = obj_creation.extra_specialists;
+	var c_specialist_names = struct_get_names(c_specialists);
+	for(var s = 0; s < array_length(c_specialist_names); s++){
+		var s_name = c_specialist_names[s];
+		var s_val = struct_get(c_specialists, s_name);
+		show_debug_message($"updating specialist {s_name} with {s_val})");
+		switch (s_name){
+			case "chaplains": chaplains = chaplains + real(s_val); break;
+			case "chaplains_per_company": chaplains_per_company = chaplains_per_company + real(s_val); break;
+			case "techmarines": techmarines  = techmarines  + real(s_val); break;
+			case "techmarines_per_company": techmarines_per_company = techmarines_per_company + real(s_val); break;
+			case "apothecary": apothecary = apothecary  + real(s_val); break;
+			case "apothecary_per_company": apothecary_per_company = apothecary_per_company + real(s_val); break;
+			case "epistolary": epistolary = epistolary  + real(s_val); break;
+			case "epistolary_per_company": epistolary_per_company = epistolary_per_company + real(s_val); break;
+			case "codiciery": codiciery  = codiciery + real(s_val); break;
+			case "lexicanum": lexicanum  = lexicanum + real(s_val); break;
+			case "terminator": terminator  = terminator + real(s_val); break;
+			case "assault": assault = assault + real(s_val); break;
+			case "veteran": veteran = veteran + real(s_val); break;
+			case "devastator": devastator = devastator + real(s_val); break;
 		}
-		// todo untested
-		var c_marines = obj_creation.extra_marines;
-		var c_marines_names = struct_get_names(c_marines);
-		for(var s = 0; s < array_length(c_marines_names); s++){
-			var s_name = c_marines_names[s];
-			var s_val = struct_get(c_marines, s_name);
-			switch(s_name){
-				case "second": second = second + real(s_val); break;
-				case "third": third = third + real(s_val); break;
-				case "fourth": fourth = fourth + real(s_val); break;
-				case "fifth": fifth = fifth + real(s_val); break;
-				case "sixth": sixth = sixth + real(s_val); break;
-				case "seventh": seventh = seventh + real(s_val); break;
-				case "eighth": eighth = eighth + real(s_val); break;
-				case "ninth": ninth = ninth + real(s_val); break;
-				case "tenth": tenth = tenth + real(s_val); break;
-			}
-		}
-	} else {
-		//hardcoded method
-		switch (global.chapter_name) {
-			case "Lamenters":
-				tenth = 0;
-				ninth = 0;
-				eighth = 0;
-				seventh = 0;
-				sixth = 0;
-				fifth = 0;
-				techmarines = 4;
-				chaplains = 4;
-				apothecary = 4;
-				epistolary = 3;
-				codiciery = 3;
-				lexicanum = 6;
-				terminator = 5;
-				veteran += 10;
-				break;
+	}
+	// todo untested
+	var c_marines = obj_creation.extra_marines;
+	var c_marines_names = struct_get_names(c_marines);
+	for(var s = 0; s < array_length(c_marines_names); s++){
+		var s_name = c_marines_names[s];
+		var s_val = struct_get(c_marines, s_name);
+		switch(s_name){
+			case "second": second = second + real(s_val); break;
+			case "third": third = third + real(s_val); break;
+			case "fourth": fourth = fourth + real(s_val); break;
+			case "fifth": fifth = fifth + real(s_val); break;
+			case "sixth": sixth = sixth + real(s_val); break;
+			case "seventh": seventh = seventh + real(s_val); break;
+			case "eighth": eighth = eighth + real(s_val); break;
+			case "ninth": ninth = ninth + real(s_val); break;
+			case "tenth": tenth = tenth + real(s_val); break;
 		}
 	}
 	if(chaplains <= 0) {chaplains_per_company = 0};
@@ -1257,21 +1233,8 @@ function scr_initialize_custom() {
 	load_default_gear(Role.SERGEANT, "Sergeant", "Chainsword", "Bolt Pistol", "Power Armour", "", "");
 	load_default_gear(Role.VETERAN_SERGEANT, "Veteran Sergeant", "Chainsword", "Plasma Pistol", "Power Armour", "", "");
  	
-	// Hardcoded method
-	if(obj_creation.use_chapter_object == false){
-		// 100 is defaults, 101 is the allowable starting equipment // info
-		for (i = 0; i <= 20; i++) {
-			race[100, i] = obj_creation.race[100, i];
-			role[100, i] = obj_creation.role[100, i];
-			wep1[100, i] = obj_creation.wep1[100, i];
-			wep2[100, i] = obj_creation.wep2[100, i];
-			armour[100, i] = obj_creation.armour[100, i];
-			gear[100, i] = obj_creation.gear[100, i];
-			mobi[100, i] = obj_creation.mobi[100, i];
-		}
-	}
-	
-	if(obj_creation.use_chapter_object && struct_exists(obj_creation, "custom_roles")){
+
+	if(struct_exists(obj_creation, "custom_roles")){
 		var c_roles = obj_creation.custom_roles;
 		var possible_custom_roles = [
 			["chapter_master", Role.CHAPTER_MASTER],
@@ -1385,15 +1348,14 @@ function scr_initialize_custom() {
 						of all required loadout options
 
 	*/
-	var squad_name = "Squad";
-	if (obj_ini.progenitor == ePROGENITOR.SPACE_WOLVES) {
-		squad_name = "Pack";
-	}
-	if (obj_ini.progenitor == ePROGENITOR.IRON_HANDS) {
-		squad_name = "Clave";
-	}
-	if(obj_creation.use_chapter_object){
-		squad_name = obj_creation.squad_name;
+	var squad_name = obj_creation.squad_name;
+	if(obj_creation.custom != 0){
+		if (obj_ini.progenitor == ePROGENITOR.SPACE_WOLVES) {
+			squad_name = "Pack";
+		}
+		if (obj_ini.progenitor == ePROGENITOR.IRON_HANDS) {
+			squad_name = "Clave";
+		}
 	}
 	squad_types = {};
 	var st = {
@@ -1873,7 +1835,7 @@ function scr_initialize_custom() {
 	// show_debug_message($"{st}");
 
 
-	if(obj_creation.use_chapter_object && struct_exists(obj_creation, "custom_squads") && true){
+	if(struct_exists(obj_creation, "custom_squads")){
 		var custom_squads = obj_creation.custom_squads;
 		// show_debug_message($"custom roles {custom_squads}");
 		if(array_length(struct_get_names(custom_squads)) != 0){
@@ -2257,83 +2219,46 @@ function scr_initialize_custom() {
 	var arti;
 
 	// From json
-	if(obj_creation.use_chapter_object){
-		if(struct_exists(obj_creation, "artifact") ){
-			if(is_struct(obj_creation.artifact) && struct_exists(obj_creation.artifact, "name")){
+	if(struct_exists(obj_creation, "artifact") ){
+		if(is_struct(obj_creation.artifact) && struct_exists(obj_creation.artifact, "name")){
+			arti = obj_ini.artifact_struct[last_artifact];
+			arti.name = obj_creation.artifact.name;
+			arti.custom_description = obj_creation.artifact.description;
+			obj_ini.artifact[last_artifact] = obj_creation.artifact.base_weapon_type;
+			arti.bearer = [0,1];
+			obj_ini.artifact_identified[last_artifact] = 0;
+			chapter_master_equip.wep1 = last_artifact;
+		} else if(is_array(obj_creation.artifact) && array_length(obj_creation.artifact) > 0){
+			for(var a = 0; a < array_length(obj_creation.artifact); a++){
 				arti = obj_ini.artifact_struct[last_artifact];
-				arti.name = obj_creation.artifact.name;
-				arti.custom_description = obj_creation.artifact.description;
-				obj_ini.artifact[last_artifact] = obj_creation.artifact.base_weapon_type;
+				arti.name = obj_creation.artifact[a].name;
+				arti.custom_description = obj_creation.artifact[a].description;
+				obj_ini.artifact[last_artifact] = obj_creation.artifact[a].base_weapon_type;
 				arti.bearer = [0,1];
 				obj_ini.artifact_identified[last_artifact] = 0;
-				chapter_master_equip.wep1 = last_artifact;
-			} else if(is_array(obj_creation.artifact) && array_length(obj_creation.artifact) > 0){
-				for(var a = 0; a < array_length(obj_creation.artifact); a++){
-					arti = obj_ini.artifact_struct[last_artifact];
-					arti.name = obj_creation.artifact[a].name;
-					arti.custom_description = obj_creation.artifact[a].description;
-					obj_ini.artifact[last_artifact] = obj_creation.artifact[a].base_weapon_type;
-					arti.bearer = [0,1];
-					obj_ini.artifact_identified[last_artifact] = 0;
-					switch (obj_creation.artifact[a].slot){
-						case "wep1": chapter_master_equip.wep1 = last_artifact; break;
-						case "wep2": chapter_master_equip.wep2 = last_artifact; break;
-						case "armour": chapter_master_equip.armour = last_artifact; break;
-						case "gear": chapter_master_equip.gear = last_artifact; break;
-						case "mobi": chapter_master_equip.armour = last_artifact; break;
-					}
-					last_artifact++;
+				switch (obj_creation.artifact[a].slot){
+					case "wep1": chapter_master_equip.wep1 = last_artifact; break;
+					case "wep2": chapter_master_equip.wep2 = last_artifact; break;
+					case "armour": chapter_master_equip.armour = last_artifact; break;
+					case "gear": chapter_master_equip.gear = last_artifact; break;
+					case "mobi": chapter_master_equip.armour = last_artifact; break;
 				}
+				last_artifact++;
 			}
 		}
-		if(struct_exists(obj_creation.chapter_master, "gear") && obj_creation.chapter_master.gear != ""){
-			chapter_master_equip.gear = obj_creation.chapter_master.gear;
-		}
-		if(struct_exists(obj_creation.chapter_master, "mobi") && obj_creation.chapter_master.mobi != ""){
-			chapter_master_equip.mobi = obj_creation.chapter_master.mobi;
-		}
-		if(struct_exists(obj_creation.chapter_master, "armour") && obj_creation.chapter_master.armour != ""){
-			chapter_master_equip.armour = obj_creation.chapter_master.armour;
-		}
-		if(struct_exists(obj_creation.chapter_master, "bionics") && obj_creation.chapter_master.bionics != ""){
-			for (i = 0; i < real(obj_creation.chapter_master.bionics); i++) {
-				chapter_master.add_bionics("none", "standard", false);
-			}
-		}
-	} else {
-		//hardcoded
-		switch (global.chapter_name) {
-			case "Doom Benefactors":
-				for (i = 0; i < 4; i++) {
-					chapter_master.add_bionics("none", "standard", false);
-				}
-				chapter_master.add_trait("old_guard");
-				break;
-			case "Carcharodons":
-				chapter_master.add_trait("melee_enthusiast")
-				chapter_master.add_trait("slow_and_purposeful");
-				chapter_master.add_trait("ancient");			
-				arti = obj_ini.artifact_struct[last_artifact];
-				arti.name = "Hunger";
-				arti.custom_description = "An artifact Lightning Claw of unknown origin that has an inner maw of adamantium toothed chainblades usually paired with Slake";
-				obj_ini.artifact[last_artifact] = "Lightning Claw";
-				obj_ini.artifact_identified[last_artifact] = 0;
-				arti.bearer = [0, 1];
-				chapter_master_equip.wep1 = last_artifact;
-				
-				arti.name = "Hunger & Slake";
-				arti.custom_description = "An artifact Lightning Claw of unknown origin that has an inner maw of adamantium toothed chainblades usually paired with Hunger";
-				obj_ini.artifact[last_artifact] = "Lightning Claw";
-				obj_ini.artifact_identified[last_artifact] = 0;
-				arti.bearer = [0, 1];
-				chapter_master_equip.wep2 = last_artifact;
-				
-				chapter_master_equip.armour = "Terminator Armour"
-				
-				break;
-			default:
-				chapter_master.add_trait("old_guard");
-
+	}
+	if(struct_exists(obj_creation.chapter_master, "gear") && obj_creation.chapter_master.gear != ""){
+		chapter_master_equip.gear = obj_creation.chapter_master.gear;
+	}
+	if(struct_exists(obj_creation.chapter_master, "mobi") && obj_creation.chapter_master.mobi != ""){
+		chapter_master_equip.mobi = obj_creation.chapter_master.mobi;
+	}
+	if(struct_exists(obj_creation.chapter_master, "armour") && obj_creation.chapter_master.armour != ""){
+		chapter_master_equip.armour = obj_creation.chapter_master.armour;
+	}
+	if(struct_exists(obj_creation.chapter_master, "bionics") && obj_creation.chapter_master.bionics != ""){
+		for (i = 0; i < real(obj_creation.chapter_master.bionics); i++) {
+			chapter_master.add_bionics("none", "standard", false);
 		}
 	}
 	spe[company, 1] = "";
@@ -3216,43 +3141,12 @@ function scr_initialize_custom() {
 	
 	scr_add_item("Bike", 40);
 
-	if(obj_creation.use_chapter_object){
-		for(var e = 0; e < array_length(obj_creation.extra_equipment); e++){
-			var e_name = obj_creation.extra_equipment[e][0];
-			var e_qty = obj_creation.extra_equipment[e][1];
-			scr_add_item(e_name, e_qty);
-		}
-		//below isn't working yet, something to do with total company men count
-		
-		// if(obj_creation.extra_vehicles.rhino != 0){
-		// 	for(var r = 0; r<obj_creation.extra_vehicles.rhino; r++){
-		// 		scr_add_vehicle("Rhino", 0, "standard", "standard","standard", "standard","standard");
-		// 	}
-		// }
-		// if(obj_creation.extra_vehicles.whirlwind != 0){
-		// 	for(var r = 0; r<obj_creation.extra_vehicles.whirlwind; r++){
-		// 		scr_add_vehicle("Whirlwind", 0, "standard", "standard","standard", "standard","standard");
-		// 	}
-		// }
-		// if(obj_creation.extra_vehicles.predator != 0){
-		// 	for(var r = 0; r<obj_creation.extra_vehicles.predator; r++){
-		// 		scr_add_vehicle("Predator", 0, "standard", "standard","standard", "standard","standard");
-		// 	}
-		// }
-		// if(obj_creation.extra_vehicles.land_raider != 0){
-		// 	for(var r = 0; r<obj_creation.extra_vehicles.land_raider; r++){
-		// 		scr_add_vehicle("Land Raider", 0, "standard", "standard","standard", "standard","standard");
-		// 	}
-		// }
-		// if(obj_creation.extra_vehicles.land_speeder != 0){
-		// 	for(var r = 0; r<obj_creation.extra_vehicles.land_raider; r++){
-		// 		scr_add_vehicle("Land Speeder", 0, "standard", "standard","standard", "standard","standard");
-		// 	}
-		// }
+	for(var e = 0; e < array_length(obj_creation.extra_equipment); e++){
+		var e_name = obj_creation.extra_equipment[e][0];
+		var e_qty = obj_creation.extra_equipment[e][1];
+		scr_add_item(e_name, e_qty);
 	}
 	
-	if (global.chapter_name = "Iron Hands") then scr_add_item("Bionics", 200);
-
 	if(scr_has_disadv("Sieged")){
 		scr_add_item("Narthecium", 4);
 		scr_add_item(wep1[defaults_slot, Role.APOTHECARY], 4);

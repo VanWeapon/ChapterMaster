@@ -207,10 +207,10 @@
         },
         /** Add extra starting items ["Item Name", Number to add] */
         "extra_equipment": [
-            // [
-            //     "Bolter",
-            //     20
-            // ]
+            [
+                "Bionics",
+                200
+            ]
         ],
         /** 
         * Provide a place to change the default name and equipment preferences of roles for this chapter
