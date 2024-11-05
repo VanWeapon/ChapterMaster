@@ -694,23 +694,13 @@ function scr_initialize_custom() {
 			if (obj_creation.fleet_type != eFLEET_TYPES.HOMEWORLD) {
 				if (global.chapter_name = "Soul Drinkers") then gladius -= 4;
 			}
-			if (obj_creation.fleet_type == eFLEET_TYPES.HOMEWORLD) {
-				if (global.chapter_name = "Crimson Fists") {
-					flagship_name = "Throne's Fury";
-					battle_barges -= 1;
-					gladius -= 3;
-					strike_cruisers -= 4
-				}
-			}
+
 			if (obj_creation.fleet_type == eFLEET_TYPES.PENITENCE) {
 				if (global.chapter_name = "Lamenters") {
 					strike_cruisers = 2;
 					gladius = 2;
 					hunters = 1;
 					battle_barges = 0;
-				}
-				if (global.chapter_name = "Blood Ravens") {
-					battle_barges = 1;
 				}
 			}
 		}
@@ -1131,9 +1121,6 @@ function scr_initialize_custom() {
 				second -= 20;
 				terminator -= 5;
 				veteran -= 20;
-				break;
-			case "Crimson Fists":
-				veteran += 30;
 				break;
 			case "Space Wolves":
 				break;

@@ -676,6 +676,11 @@ var all_disadvantages = [
         value : 15,
     },
     {
+        name : "Shitty Luck",
+        description: "This is actually really helpful and beneficial for your chapter.  Trust me.",
+        value: 20,
+    },
+    {
         name : "Sieged",
         description : "A recent siege has reduced the number of your marines greatly.  You retain a normal amount of equipment but some is damaged.",
         value : 30,
