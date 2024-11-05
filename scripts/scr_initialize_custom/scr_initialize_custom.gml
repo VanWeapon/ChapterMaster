@@ -683,27 +683,11 @@ function scr_initialize_custom() {
 			hunters = 3;
 		}
 
-		if(obj_creation.use_chapter_object){
-			// json loading
-			battle_barges = battle_barges + obj_creation.extra_ships.battle_barges;
-			strike_cruisers = strike_cruisers + obj_creation.extra_ships.strike_cruisers;
-			gladius = gladius + obj_creation.extra_ships.gladius;
-			hunters = hunters + obj_creation.extra_ships.hunters;
-		} else {
-			// hardcoded mode 
-			if (obj_creation.fleet_type != eFLEET_TYPES.HOMEWORLD) {
-				if (global.chapter_name = "Soul Drinkers") then gladius -= 4;
-			}
+		battle_barges = battle_barges + obj_creation.extra_ships.battle_barges;
+		strike_cruisers = strike_cruisers + obj_creation.extra_ships.strike_cruisers;
+		gladius = gladius + obj_creation.extra_ships.gladius;
+		hunters = hunters + obj_creation.extra_ships.hunters;
 
-			if (obj_creation.fleet_type == eFLEET_TYPES.PENITENCE) {
-				if (global.chapter_name = "Lamenters") {
-					strike_cruisers = 2;
-					gladius = 2;
-					hunters = 1;
-					battle_barges = 0;
-				}
-			}
-		}
 	}
 
 	if (scr_has_adv ("Kings of Space")) {battle_barges += 1;}
@@ -1109,31 +1093,6 @@ function scr_initialize_custom() {
 				lexicanum = 6;
 				terminator = 5;
 				veteran += 10;
-				break;
-			case "Soul Drinkers":
-				tenth -= 38;
-				seventh = 0;
-				sixth = 40;
-				assault -= 10;
-				fifth -= 20;
-				fourth -= 20;
-				third -= 20;
-				second -= 20;
-				terminator -= 5;
-				veteran -= 20;
-				break;
-			case "Space Wolves":
-				break;
-				veteran += 40;
-				second += 40;
-				third += 40;
-				fourth += 40;
-				fifth += 40;
-				sixth += 40;
-				seventh += 40;
-				eighth += 40;
-				ninth += 40;
-				tenth += 60;
 				break;
 		}
 	}
