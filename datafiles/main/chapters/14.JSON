@@ -39,7 +39,7 @@
             "Suspicious",
             "Shitty Luck",
             "Sieged",
-            "",
+            "Poor Equipment",
             "",
             "",
             "",
@@ -114,20 +114,14 @@
             "ranged": 2, // 1 boltstorm gauntlets ... 7 storm shield
             // All chapter masters have the trait `Lead by Example` by default
             "traits": [
-                ""
+                "shitty_luck",
+                "old_guard"
             ],
             "gear": "",
             "mobi": "",
             "armour": "" // default is Artificer armour, only needed to set if changing to something else.
         },
-        "artifact": [
-            {
-                "name": "Artifact Name",
-                "description": "Artefact Lore",
-                "base_weapon_type": "Power Sword",
-                "slot": "wep1"
-            }
-        ],
+        "artifact": [],
         "company_titles": [
             "",
             "1st Company",
@@ -153,10 +147,10 @@
         * * Stacks with advantages/disadvantages
         */
         "extra_ships": {
-            "battle_barges": 0,
-            "gladius": 0,
-            "strike_cruisers": 0,
-            "hunters": 0
+            "battle_barges": -2,
+            "gladius": -5,
+            "strike_cruisers": -1,
+            "hunters": -2
         },
         /**
         * * Default HQ Layout (Does not include company specialists)
@@ -217,13 +211,10 @@
         */
         "custom_roles": {
             // "honour_guard": {
-            //     "name": "Honour Guard",
-            //     "wep1": "Power Sword",
-            //     "wep2": "Bolter"
+            //     "armour": "MK6 Corvus"
             // },
             // "veteran": {
-            //     "name": "Veteran",
-            //     "wep1": "Chainaxe"
+            //     "armour": "MK6 Corvus"
             // },
             // "captain": {
             //     "name": "Captain",

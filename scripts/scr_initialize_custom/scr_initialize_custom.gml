@@ -1143,7 +1143,6 @@ function scr_initialize_custom() {
 	if(epistolary <= 0) {epistolary_per_company = 0};
 
 
-	// todo this kind of logic should just be accounted for in the json data for extra_marines
 	if (obj_creation.custom == 0) {
 		if (veteran >= 20) and(global.founding = 0) {
 			veteran -= 20;
@@ -1276,7 +1275,12 @@ function scr_initialize_custom() {
 		gear[defaults_slot, _role_id] = _gear;
 		race[defaults_slot, _role_id] = 1;
 	}
-	load_default_gear(Role.HONOUR_GUARD, "Honour Guard", "Power Sword", "Bolter", "Artificer Armour", "", "");
+	var _hi_qual_armour = "Artificer Armour";
+	if(scr_has_disadv("Poor Equipment")){
+		_hi_qual_armour = "Power Armour";
+	}
+
+	load_default_gear(Role.HONOUR_GUARD, "Honour Guard", "Power Sword", "Bolter", _hi_qual_armour, "", "");
 	load_default_gear(Role.VETERAN, "Veteran", "Combiflamer", "Chainsword","Power Armour", "", "");
 	load_default_gear(Role.TERMINATOR, "Terminator", "Power Fist", "Storm Bolter", "Terminator Armour", "", "");
 	load_default_gear(Role.CAPTAIN, "Captain", "Power Sword", "Bolt Pistol", "Power Armour", "", "Iron Halo");
@@ -1289,7 +1293,7 @@ function scr_initialize_custom() {
 	load_default_gear(Role.SCOUT, "Scout", "Bolter", "Combat Knife", "Scout Armour", "", "");
 	load_default_gear(Role.CHAPLAIN, "Chaplain", "Crozius Arcanum", "Bolt Pistol", "Power Armour", "", "Rosarius");
 	load_default_gear(Role.APOTHECARY, "Apothecary", "Chainsword", "Bolt Pistol", "Power Armour", "", "Narthecium");
-	load_default_gear(Role.TECHMARINE, "Techmarine", "Power Axe", "Bolt Pistol", "Artificer Armour", "Servo-arm", "");
+	load_default_gear(Role.TECHMARINE, "Techmarine", "Power Axe", "Bolt Pistol", _hi_qual_armour, "Servo-arm", "");
 	load_default_gear(Role.LIBRARIAN, "Librarian", "Force Staff", "Bolt Pistol", "Power Armour", "", "Psychic Hood");
 	load_default_gear(Role.SERGEANT, "Sergeant", "Chainsword", "Bolt Pistol", "Power Armour", "", "");
 	load_default_gear(Role.VETERAN_SERGEANT, "Veteran Sergeant", "Chainsword", "Plasma Pistol", "Power Armour", "", "");
@@ -2346,9 +2350,6 @@ function scr_initialize_custom() {
 				}
 				chapter_master.add_trait("old_guard");
 				break;
-			case "Lamenters":
-				chapter_master.add_trait("shitty_luck");
-				chapter_master.add_trait("old_guard");
 			case "Carcharodons":
 				chapter_master.add_trait("melee_enthusiast")
 				chapter_master.add_trait("slow_and_purposeful");
@@ -2428,17 +2429,23 @@ function scr_initialize_custom() {
 	}
 	chapter_master.marine_assembling();
 
-	//TODO All heads of specialties data should be in chapter data
+	var _hq_armour = "Artificer Armour";
+	if(scr_has_disadv("Poor Equipment")){
+		_hq_armour = "MK6 Corvus";
+	}
+
+	k = 1;
+	commands = 1;
+
 	// Forge Master
 	name[company, 2] = obj_creation.fmaster;
-	var _forge_master = add_unit_to_company("marine", company, 2, "Forge Master", Role.TECHMARINE, "Infernus Pistol", "Power Axe", "", "Servo-harness", "Artificer Armour");
+	var _forge_master = add_unit_to_company("marine", company, 2, "Forge Master", Role.TECHMARINE, "Infernus Pistol", "Power Axe", "", "Servo-harness", _hq_armour);
 	if (_forge_master.technology < 40) {
 		_forge_master.technology = 40;
 	}
 	_forge_master.add_trait("mars_trained");
 	_forge_master.add_bionics("right_arm", "standard", false);
 	_forge_master.marine_assembling();
-	if (global.chapter_name = "Lamenters") then armour[company, 2] = "MK6 Corvus";
 	if (global.chapter_name = "Iron Hands") {
 		repeat(9) {
 			_forge_master.add_bionics("none", "standard", false);
@@ -2448,116 +2455,49 @@ function scr_initialize_custom() {
 			_forge_master.add_bionics("none", "standard", false)
 		};
 	}
+	k+=1;
+	commands +=1;
+
 	// Master of Sanctity (Chaplain)
 	if (chaplains > 0){
-		TTRPG[company, 3] = new TTRPG_stats("chapter", company, 3);
-		race[company, 3] = 1;
-		loc[company, 3] = home_name;
-		role[company, 3] = "Master of Sanctity";
-		wep1[company, 3] = wep1[defaults_slot, 14];
 		name[company, 3] = high_chaplain_name;
-		wep2[company, 3] = "Plasma Pistol";
-		armour[company, 3] = "Artificer Armour";
-		gear[company, 3] = gear[defaults_slot, 14];
-		chaos[company, 3] = -100;
-		if (global.chapter_name = "Lamenters") then armour[company, 3] = "MK6 Corvus";
-		spawn_unit = TTRPG[company, 3];
-		if (spawn_unit.piety < 45) {
-			spawn_unit.piety = 45;
+		var _hchap = add_unit_to_company("marine", company, 3, "Master of Sanctity", Role.CHAPLAIN, "default", "Plasma Pistol", "default", "", _hq_armour);
+		_hchap.edit_corruption(-100);
+		if (_hchap.piety < 45) {
+			_hchap.piety = 45;
 		}
-		spawn_unit.marine_assembling();
-		spawn_unit.add_trait("zealous_faith");
+		_hchap.add_trait("zealous_faith");
+		k+=1;
+		commands +=1;
 	}
 
 	// Maser of the Apothecarion (Apothecary)
-	TTRPG[company, 4] = new TTRPG_stats("chapter", company, 4);
-	race[company, 4] = 1;
-	loc[company, 4] = home_name;
-	role[company, 4] = "Master of the Apothecarion";
-	wep1[company, 4] = wep1[defaults_slot, 15];
 	name[company, 4] = obj_creation.hapothecary;
-	wep2[company, 4] = "Plasma Pistol";
-	armour[company, 4] = "Artificer Armour";
-	gear[company, 4] = gear[defaults_slot, 15];
-	chaos[company, 4] = 0;
-	spawn_unit = TTRPG[company][4];
-	spawn_unit.marine_assembling();
-	if (global.chapter_name = "Lamenters") then armour[company, 4] = "MK6 Corvus";
+	var _hapoth = add_unit_to_company("marine", company, 4, "Master of the Apothecarion", Role.APOTHECARY, "default", "Plasma Pistol", "default", "", _hq_armour);
+	_hapoth.edit_corruption(0);
+	k+=1;
+	commands +=1;
 
 	// Chief Librarian
-	TTRPG[company][5] = new TTRPG_stats("chapter", company, 5);
-	var cheif_lib = TTRPG[company][5];
-	race[company, 5] = 1;
-	loc[company, 5] = home_name;
-	role[company, 5] = string("Chief {0}", role[100, 17]);
-	wep1[company, 5] = wep1[defaults_slot, 17];
-	name[company, 5] = obj_creation.clibrarian;
-	wep2[company, 5] = "Plasma Pistol";
-	armour[company, 5] = "Artificer Armour";
-	gear[company, 5] = gear[defaults_slot, 17];
-	chaos[company, 5] = 0;
-	spawn_unit = TTRPG[company][5];
-	spawn_unit.marine_assembling();
-	if (global.chapter_name = "Lamenters") then armour[company, 5] = "MK6 Corvus";
-	if (obj_creation.discipline = "default") {
-		let = "D";
-		letmax = 7;
+	if(!scr_has_disadv("Psyker Intolerant")){
+		name[company, 5] = obj_creation.clibrarian;
+		var _clibrarian = add_unit_to_company("marine", company, 5, string("Chief {0}", roles.librarian), Role.LIBRARIAN, "default", "Plasma Pistol", "default", "", _hq_armour);
+		_clibrarian.edit_corruption(0);
+		_clibrarian.psionic = choose(13, 14, 15, 16);
+		_clibrarian.update_powers();
+		_clibrarian.add_trait("warp_touched");
+		k+=1;
+		commands +=1;
 	}
-	if (obj_creation.discipline = "biomancy") {
-		let = "B";
-		letmax = 5;
-	}
-	if (obj_creation.discipline = "pyromancy") {
-		let = "P";
-		letmax = 5;
-	}
-	if (obj_creation.discipline = "telekinesis") {
-		let = "T";
-		letmax = 5;
-	}
-	if (obj_creation.discipline = "rune Magick") {
-		let = "R";
-		letmax = 5;
-	}
-	spe[company, 5] = string(let) + "0|";
-	cheif_lib.psionic = choose(13, 14, 15, 16);
-	cheif_lib.update_powers();
-	cheif_lib.add_trait("warp_touched");
-	k = 0;
-	commands += 5;
-	k = 5;
-	man_size = 5;
 
-	if (intolerant == 1) {
-		race[company, 5] = 0;
-		loc[company, 5] = "";
-		role[company, 5] = "";
-		wep1[company, 5] = "";
-		name[company, 5] = "";
-		wep2[company, 5] = "";
-		armour[company, 5] = "";
-		gear[company, 5] = "";
-		man_size -= 1;
-		commands -= 1;
-		TTRPG[company, 5] = new TTRPG_stats("chapter", company, 1, "blank");
-	}
+	man_size = k;
 
 	// Techmarines in the armoury
 	repeat(techmarines) {
 		k += 1;
 		commands += 1;
 		man_size += 1;
-		TTRPG[company][k] = new TTRPG_stats("chapter", company, k);
-		race[company][k] = 1;
-		loc[company][k] = home_name;
-		role[company][k] = roles.techmarine;
-		name[company][k] = global.name_generator.generate_space_marine_name();
-		spawn_unit = TTRPG[company][k];
-		spawn_unit.marine_assembling();
-		wep1[company][k] = wep1[defaults_slot, 16];
-		wep2[company][k] = choose_weighted(weapon_weighted_lists.pistols);
-		gear[company][k] = gear[defaults_slot, 16];
-		mobi[company][k] = mobi[defaults_slot, 16];
+		add_unit_to_company("marine", company, k, roles.techmarine, Role.TECHMARINE, "default", choose_weighted(weapon_weighted_lists.pistols), "default", "default", "");
 	}
 
 	// Librarians in the librarium
@@ -2565,93 +2505,18 @@ function scr_initialize_custom() {
 		k += 1;
 		commands += 1;
 		man_size += 1;
-		TTRPG[company][k] = new TTRPG_stats("chapter", company, k);
-		spawn_unit = TTRPG[company][k];
-		race[company][k] = 1;
-		loc[company][k] = home_name;
-		role[company][k] = roles.librarian;
-		name[company][k] = global.name_generator.generate_space_marine_name();
-		wep1[company][k] = wep1[defaults_slot, 17];
-		wep2[company][k] = choose_weighted(weapon_weighted_lists.pistols);
-		gear[company][k] = gear[101, 17];
-		if (scr_has_adv("Psyker Abundance")){
-			spawn_unit.add_exp(10);
-		}
-		var
-		let = "", letmax = 0;
-		if (obj_creation.discipline = "default") {
-			let = "D";
-			letmax = 7;
-		}
-		if (obj_creation.discipline = "biomancy") {
-			let = "B";
-			letmax = 5;
-		}
-		if (obj_creation.discipline = "pyromancy") {
-			let = "P";
-			letmax = 5;
-		}
-		if (obj_creation.discipline = "telekinesis") {
-			let = "T";
-			letmax = 5;
-		}
-		if (obj_creation.discipline = "rune Magick") {
-			let = "R";
-			letmax = 5;
-		}
-		spe[company][k] += string(let) + "0|";
-		spawn_unit.marine_assembling();
-		spawn_unit.add_trait("warp_touched");
-		spawn_unit.psionic = choose(13, 14, 15, 16);
-		spawn_unit.update_powers();
+		var _epi = add_unit_to_company("marine", company, k, roles.librarian, Role.LIBRARIAN, "default", choose_weighted(weapon_weighted_lists.pistols), "default", "default", "");
+		_epi.psionic = choose(13, 14, 15, 16);
+		_epi.update_powers();
 	}
 	// Codiciery
 	repeat(codiciery) {
 		k += 1;
 		commands += 1;
 		man_size += 1;
-		TTRPG[company][k] = new TTRPG_stats("chapter", company, k);
-		spawn_unit = TTRPG[company][k];
-		race[company][k] = 1;
-		loc[company][k] = home_name;
-		role[company][k] = "Codiciery";
-		name[company][k] = global.name_generator.generate_space_marine_name();
-		wep1[company][k] = wep1[defaults_slot, 17];
-		wep2[company][k] = choose_weighted(weapon_weighted_lists.pistols);
-		gear[company][k] = gear[101, 17];
-		if (scr_has_adv("Psyker Abundance")){
-			spawn_unit.add_exp(10);
-		}
-		var
-		let, letmax;
-		let = "";
-		letmax = 0;
-		if (obj_creation.discipline = "default") {
-			let = "D";
-			letmax = 7;
-		}
-		if (obj_creation.discipline = "biomancy") {
-			let = "B";
-			letmax = 5;
-		}
-		if (obj_creation.discipline = "pyromancy") {
-			let = "P";
-			letmax = 5;
-		}
-		if (obj_creation.discipline = "telekinesis") {
-			let = "T";
-			letmax = 4;
-		}
-		if (obj_creation.discipline = "rune Magick") {
-			let = "R";
-			letmax = 5;
-		}
-		spe[company][k] += string(let) + "0|";
-		spawn_unit = TTRPG[company][k];
-		spawn_unit.marine_assembling();
-		spawn_unit.add_trait("warp_touched");
-		spawn_unit.psionic = choose(11, 12, 13, 14, 15);
-		spawn_unit.update_powers();
+		var _codi = add_unit_to_company("marine", company, k, "Codiciery", Role.LIBRARIAN, "default", choose_weighted(weapon_weighted_lists.pistols), "default", "default", "");
+		_codi.psionic = choose(11, 12, 13, 14, 15);
+		_codi.update_powers();
 	}
 
 	// Lexicanum
@@ -2659,45 +2524,9 @@ function scr_initialize_custom() {
 		k += 1;
 		commands += 1;
 		man_size += 1;
-		TTRPG[company][k] = new TTRPG_stats("chapter", company, k);
-		var spawn_unit = TTRPG[company][k];
-		race[company][k] = 1;
-		loc[company][k] = home_name;
-		role[company][k] = "Lexicanum";
-		name[company][k] = global.name_generator.generate_space_marine_name();
-		wep1[company][k] = wep1[defaults_slot, 17];
-		wep2[company][k] = choose_weighted(weapon_weighted_lists.pistols);
-		gear[company][k] = gear[101, 17];
-		if (scr_has_adv("Psyker Abundance")){
-			spawn_unit.add_exp(10);
-		}
-		var
-		let = "", letmax = 0;
-		if (obj_creation.discipline = "default") {
-			let = "D";
-			letmax = 7;
-		}
-		if (obj_creation.discipline = "biomancy") {
-			let = "B";
-			letmax = 5;
-		}
-		if (obj_creation.discipline = "pyromancy") {
-			let = "P";
-			letmax = 5;
-		}
-		if (obj_creation.discipline = "telekinesis") {
-			let = "T";
-			letmax = 4;
-		}
-		if (obj_creation.discipline = "rune Magick") {
-			let = "R";
-			letmax = 5;
-		}
-		spe[company][k] += string(let) + "0|";
-		spawn_unit = TTRPG[company][k];
-		spawn_unit.marine_assembling();
-		spawn_unit.add_trait("warp_touched");
-		spawn_unit.psionic = choose(8, 9, 10, 11, 12, 13, 14);
+		var _lexi = add_unit_to_company("marine", company, k, "Lexicanum", Role.LIBRARIAN, "default", choose_weighted(weapon_weighted_lists.pistols), "default", "default", "");
+		_lexi.psionic = choose(8, 9, 10, 11, 12, 13, 14);
+		_lexi.update_powers();
 	}
 
 	// Apothecaries in Apothecarion
@@ -2837,7 +2666,11 @@ function scr_initialize_custom() {
 				_armour = "Tartaros";
 			}
 			if (terminator <= 0){
-				_armour = "Artificer Armour"
+				if(scr_has_disadv("Poor Equipment")){
+					_armour = "MK6 Corvus";
+				} else {
+					_armour = "Artificer Armour"
+				}
 			}
 			var _spawn_unit = add_unit_to_company("marine", company, k, roles.techmarine, Role.TECHMARINE, "default","Storm Bolter","default","default",_armour);
 			if (_spawn_unit.armour() == "Terminator" || _spawn_unit.armour() == "Tartaros") {

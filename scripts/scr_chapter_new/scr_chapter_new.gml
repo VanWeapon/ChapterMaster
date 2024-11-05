@@ -46,20 +46,20 @@ function ChapterData() constructor {
 		trim_on: 0,
 	};
 	names = {
-		hchaplain: global.name_generator.generate_imperial_name(),
-		clibrarian: global.name_generator.generate_imperial_name(),
-		fmaster: global.name_generator.generate_imperial_name(),
-		hapothecary: global.name_generator.generate_imperial_name(),
-		recruiter: global.name_generator.generate_imperial_name(),
-		admiral: global.name_generator.generate_imperial_name(),
-		honorcapt: global.name_generator.generate_imperial_name(),
-		watchmaster: global.name_generator.generate_imperial_name(),
-		arsenalmaster: global.name_generator.generate_imperial_name(),
-		marchmaster: global.name_generator.generate_imperial_name(),
-		ritesmaster: global.name_generator.generate_imperial_name(),
-		victualler: global.name_generator.generate_imperial_name(),
-		lordexec: global.name_generator.generate_imperial_name(),
-		relmaster: global.name_generator.generate_imperial_name(),
+		hchaplain: global.name_generator.generate_space_marine_name(),
+		clibrarian: global.name_generator.generate_space_marine_name(),
+		fmaster: global.name_generator.generate_space_marine_name(),
+		hapothecary: global.name_generator.generate_space_marine_name(),
+		recruiter: global.name_generator.generate_space_marine_name(),
+		admiral: global.name_generator.generate_space_marine_name(),
+		honorcapt: global.name_generator.generate_space_marine_name(),
+		watchmaster: global.name_generator.generate_space_marine_name(),
+		arsenalmaster: global.name_generator.generate_space_marine_name(),
+		marchmaster: global.name_generator.generate_space_marine_name(),
+		ritesmaster: global.name_generator.generate_space_marine_name(),
+		victualler: global.name_generator.generate_space_marine_name(),
+		lordexec: global.name_generator.generate_space_marine_name(),
+		relmaster: global.name_generator.generate_space_marine_name(),
 	};
 	mutations = {
 		preomnor: 0,
@@ -88,7 +88,7 @@ function ChapterData() constructor {
 	/// @type {Array<String>} 
 	company_titles = array_create(11, "");
 	chapter_master = {
-		name: global.name_generator.generate_imperial_name(),
+		name: global.name_generator.generate_space_marine_name(),
 		melee: 0,
 		ranged: 0,
 		specialty: eCM_SPECIALTY.NONE,
@@ -202,23 +202,6 @@ function scr_chapter_new(argument0) {
 	
 
 	points=100;maxpoints=100;custom=0;
-	//Chapter Staff
-	hapothecary=global.name_generator.generate_space_marine_name();
-	hchaplain=global.name_generator.generate_space_marine_name();
-	clibrarian=global.name_generator.generate_space_marine_name();
-	fmaster=global.name_generator.generate_space_marine_name();
-	//Company Captains
-	honorcapt=global.name_generator.generate_space_marine_name();
-	watchmaster=global.name_generator.generate_space_marine_name();
-	arsenalmaster=global.name_generator.generate_space_marine_name();
-	admiral=global.name_generator.generate_space_marine_name();
-	marchmaster=global.name_generator.generate_space_marine_name();
-	ritesmaster=global.name_generator.generate_space_marine_name();
-	victualler=global.name_generator.generate_space_marine_name();
-	lordexec=global.name_generator.generate_space_marine_name();
-	relmaster=global.name_generator.generate_space_marine_name();
-	recruiter=global.name_generator.generate_space_marine_name();
-
 	
 	function load_default_gear(_role_id, _role_name, _wep1, _wep2, _armour, _mobi, _gear){
 		for(var i = 100; i <=102; i++){
@@ -277,39 +260,6 @@ function scr_chapter_new(argument0) {
 	#region V1 Chapter Initialised factions
 	
 
-	if (argument0="Carcharodons"){founding=9;points=100;
-	    selected_chapter=15;chapter=argument0;icon=15;icon_name="cd";
-	    fleet_type=2;strength=5;purity=8;stability=4;cooperation=5;
-	    adv[1]="Assault Doctrine";adv[2]="Boarders";adv[3]="Kings of Space";dis[1]="Splintered";dis[2]="Suspicious";
-	    homeworld_exists=0;recruiting_exists=0;flagship_name="Nicor";
-	    recruiting="Death";recruiting_name=global.name_generator.generate_star_name();
-	    homeworld_rule=0;aspirant_trial=eTrials.CHALLENGE;
-	    color_to_main="Codex Grey";color_to_secondary="Codex Grey";color_to_trim="Copper";
-	    color_to_pauldron2="Dark Grey";color_to_pauldron="Dark Grey";color_to_lens="Red";
-	    color_to_weapon="Black";col_special=0;trim=1;
-		hapothecary="Tamaron";hchaplain="Niko'manu";clibrarian="Te Kahurangi";fmaster="Uthulu";
-		honorcapt="Tagaloa";watchmaster="Akamu";arsenalmaster="Akia";admiral="Mannfor";marchmaster="Fa'atiu";
-		ritesmaster="Mafui'e";victualler="Aleki";lordexec="Atonga";relmaster="Enele";recruiter="Bail Sharr"
-	    battle_cry="Silence";
-	    equal_specialists=0;load_to_ships=[2,1,1];successors=0;
-	    mutations=1;mutations_selected=1;
-	    preomnor=0;voice=0;doomed=0;lyman=0;omophagea=0;ossmodula=0;membrane=0;
-	    zygote=0;betchers=0;catalepsean=0;secretions=0;occulobe=0;mucranoid=1;
-	    disposition[1]=30;// Prog
-	    disposition[2]=40;disposition[3]=40;disposition[4]=40;disposition[5]=30;
-	    disposition[6]=30;// Astartes
-	    disposition[7]=0;// Reserved
-	    chapter_master_name="Tyberos";chapter_master_melee=2;
-	    chapter_master_ranged=1;chapter_master_specialty=2;
-		role[i,4]="Red Brother";
-		role[i,5]="Company Master";wep1[i,5]="Eviscerator";
-		role[i,19]="Veteran Strike Leader";wep1[i,19]="Power Axe";
-		role[i,18]="Strike Leader";wep1[i,18]="Chainaxe";
-		role[i,8]="Void Brother";wep2[i,8]="Chainaxe";
-		role[i,10]="Devourer";wep1[i,10]="Chainaxe";
-		
-	}
-	
 	if (argument0="Soul Drinkers"){points=200;
 	    selected_chapter=16;chapter=argument0;icon=14;icon_name="sd";founding= 4;
 	    fleet_type=2;strength=2;purity=10;stability=2;cooperation=2;

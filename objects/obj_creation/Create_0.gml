@@ -510,6 +510,7 @@ var all_advantages = [
             name : "Crafters",
             description : "Your chapter views artifacts as sacred; you start with better gear and maintain all equipment with more ease.",
             value : 35,
+            meta : ["Gear Quality"]
         },
         {
             name : "Daemon Binders",
@@ -725,7 +726,13 @@ var all_disadvantages = [
         description : "A recent string of unfortunate events has left your chapter decimated. You have very little left, will your story continue?",
         value : 60,
         meta : ["Status"],
-    },                  
+    },
+    {
+        name : "Poor Equipment",
+        description : "Whether due to being cut off from forge worlds or bad luck, your chapter no longer has enough high quality gear to go around. Your elite troops will have to make do with standard armour.",
+        value: 10,
+        meta : ["Gear Quality"]
+    }          
 ]
 
 obj_creation.all_disadvantages = []
@@ -739,10 +746,10 @@ for (var i=0;i<array_length(all_disadvantages);i++){
     array_push(obj_creation.all_disadvantages, new_dis);
 }
 
-adv = array_create(8, "");
-dis = array_create(8, "");
-adv_num = array_create(array_length(obj_creation.all_advantages), 0);
-dis_num = array_create(array_length(obj_creation.all_disadvantages), 0);
+adv = array_create(9, "");
+dis = array_create(9, "");
+adv_num = array_create(9, 0);
+dis_num = array_create(9, 0);
 
 // disadvantage[i]="Embargo";dis_tooltip[i]="NOT IMPLEMENTED YET.";i+=1;// Greatly increases the cost of common wargear and disallows advanced items.
 // disadvantage[i]="First In, Last Out";dis_tooltip[i]="NOT IMPLEMENTED YET.";i+=1;
