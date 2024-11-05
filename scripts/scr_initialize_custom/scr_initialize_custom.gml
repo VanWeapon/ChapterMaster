@@ -1030,46 +1030,49 @@ function scr_initialize_custom() {
 		}
 	}
 
-
-	var c_specialists = obj_creation.extra_specialists;
-	var c_specialist_names = struct_get_names(c_specialists);
-	for(var s = 0; s < array_length(c_specialist_names); s++){
-		var s_name = c_specialist_names[s];
-		var s_val = struct_get(c_specialists, s_name);
-		show_debug_message($"updating specialist {s_name} with {s_val})");
-		switch (s_name){
-			case "chaplains": chaplains = chaplains + real(s_val); break;
-			case "chaplains_per_company": chaplains_per_company = chaplains_per_company + real(s_val); break;
-			case "techmarines": techmarines  = techmarines  + real(s_val); break;
-			case "techmarines_per_company": techmarines_per_company = techmarines_per_company + real(s_val); break;
-			case "apothecary": apothecary = apothecary  + real(s_val); break;
-			case "apothecary_per_company": apothecary_per_company = apothecary_per_company + real(s_val); break;
-			case "epistolary": epistolary = epistolary  + real(s_val); break;
-			case "epistolary_per_company": epistolary_per_company = epistolary_per_company + real(s_val); break;
-			case "codiciery": codiciery  = codiciery + real(s_val); break;
-			case "lexicanum": lexicanum  = lexicanum + real(s_val); break;
-			case "terminator": terminator  = terminator + real(s_val); break;
-			case "assault": assault = assault + real(s_val); break;
-			case "veteran": veteran = veteran + real(s_val); break;
-			case "devastator": devastator = devastator + real(s_val); break;
+	if(struct_exists(obj_creation, "extra_specialists")){
+		var c_specialists = obj_creation.extra_specialists;
+		var c_specialist_names = struct_get_names(c_specialists);
+		for(var s = 0; s < array_length(c_specialist_names); s++){
+			var s_name = c_specialist_names[s];
+			var s_val = struct_get(c_specialists, s_name);
+			show_debug_message($"updating specialist {s_name} with {s_val})");
+			switch (s_name){
+				case "chaplains": chaplains = chaplains + real(s_val); break;
+				case "chaplains_per_company": chaplains_per_company = chaplains_per_company + real(s_val); break;
+				case "techmarines": techmarines  = techmarines  + real(s_val); break;
+				case "techmarines_per_company": techmarines_per_company = techmarines_per_company + real(s_val); break;
+				case "apothecary": apothecary = apothecary  + real(s_val); break;
+				case "apothecary_per_company": apothecary_per_company = apothecary_per_company + real(s_val); break;
+				case "epistolary": epistolary = epistolary  + real(s_val); break;
+				case "epistolary_per_company": epistolary_per_company = epistolary_per_company + real(s_val); break;
+				case "codiciery": codiciery  = codiciery + real(s_val); break;
+				case "lexicanum": lexicanum  = lexicanum + real(s_val); break;
+				case "terminator": terminator  = terminator + real(s_val); break;
+				case "assault": assault = assault + real(s_val); break;
+				case "veteran": veteran = veteran + real(s_val); break;
+				case "devastator": devastator = devastator + real(s_val); break;
+			}
 		}
 	}
-	// todo untested
-	var c_marines = obj_creation.extra_marines;
-	var c_marines_names = struct_get_names(c_marines);
-	for(var s = 0; s < array_length(c_marines_names); s++){
-		var s_name = c_marines_names[s];
-		var s_val = struct_get(c_marines, s_name);
-		switch(s_name){
-			case "second": second = second + real(s_val); break;
-			case "third": third = third + real(s_val); break;
-			case "fourth": fourth = fourth + real(s_val); break;
-			case "fifth": fifth = fifth + real(s_val); break;
-			case "sixth": sixth = sixth + real(s_val); break;
-			case "seventh": seventh = seventh + real(s_val); break;
-			case "eighth": eighth = eighth + real(s_val); break;
-			case "ninth": ninth = ninth + real(s_val); break;
-			case "tenth": tenth = tenth + real(s_val); break;
+
+	if(struct_exists(obj_creation, "extra_marines")){
+		var c_marines = obj_creation.extra_marines;
+		var c_marines_names = struct_get_names(c_marines);
+		for(var s = 0; s < array_length(c_marines_names); s++){
+			var s_name = c_marines_names[s];
+			var s_val = struct_get(c_marines, s_name);
+			switch(s_name){
+				case "second": second = second + real(s_val); break;
+				case "third": third = third + real(s_val); break;
+				case "fourth": fourth = fourth + real(s_val); break;
+				case "fifth": fifth = fifth + real(s_val); break;
+				case "sixth": sixth = sixth + real(s_val); break;
+				case "seventh": seventh = seventh + real(s_val); break;
+				case "eighth": eighth = eighth + real(s_val); break;
+				case "ninth": ninth = ninth + real(s_val); break;
+				case "tenth": tenth = tenth + real(s_val); break;
+			}
 		}
 	}
 	if(chaplains <= 0) {chaplains_per_company = 0};
@@ -1348,7 +1351,7 @@ function scr_initialize_custom() {
 						of all required loadout options
 
 	*/
-	var squad_name = obj_creation.squad_name;
+	var squad_name = "Squad";
 	if(obj_creation.custom != 0){
 		if (obj_ini.progenitor == ePROGENITOR.SPACE_WOLVES) {
 			squad_name = "Pack";
@@ -1356,6 +1359,8 @@ function scr_initialize_custom() {
 		if (obj_ini.progenitor == ePROGENITOR.IRON_HANDS) {
 			squad_name = "Clave";
 		}
+	}
+	if(struct_exists(obj_creation, "squad_name")) {squad_name = obj_creation.squad_name;
 	}
 	squad_types = {};
 	var st = {
