@@ -2252,18 +2252,20 @@ function scr_initialize_custom() {
 			}
 		}
 	}
-	if(struct_exists(obj_creation.chapter_master, "gear") && obj_creation.chapter_master.gear != ""){
-		chapter_master_equip.gear = obj_creation.chapter_master.gear;
-	}
-	if(struct_exists(obj_creation.chapter_master, "mobi") && obj_creation.chapter_master.mobi != ""){
-		chapter_master_equip.mobi = obj_creation.chapter_master.mobi;
-	}
-	if(struct_exists(obj_creation.chapter_master, "armour") && obj_creation.chapter_master.armour != ""){
-		chapter_master_equip.armour = obj_creation.chapter_master.armour;
-	}
-	if(struct_exists(obj_creation.chapter_master, "bionics") && obj_creation.chapter_master.bionics != ""){
-		for (i = 0; i < real(obj_creation.chapter_master.bionics); i++) {
-			chapter_master.add_bionics("none", "standard", false);
+	if(struct_exists(obj_creation, "chapter_master")){
+		if(struct_exists(obj_creation.chapter_master, "gear") && obj_creation.chapter_master.gear != ""){
+			chapter_master_equip.gear = obj_creation.chapter_master.gear;
+		}
+		if(struct_exists(obj_creation.chapter_master, "mobi") && obj_creation.chapter_master.mobi != ""){
+			chapter_master_equip.mobi = obj_creation.chapter_master.mobi;
+		}
+		if(struct_exists(obj_creation.chapter_master, "armour") && obj_creation.chapter_master.armour != ""){
+			chapter_master_equip.armour = obj_creation.chapter_master.armour;
+		}
+		if(struct_exists(obj_creation.chapter_master, "bionics") && obj_creation.chapter_master.bionics != ""){
+			for (i = 0; i < real(obj_creation.chapter_master.bionics); i++) {
+				chapter_master.add_bionics("none", "standard", false);
+			}
 		}
 	}
 	spe[company, 1] = "";
