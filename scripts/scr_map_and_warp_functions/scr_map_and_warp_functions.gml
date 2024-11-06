@@ -149,6 +149,7 @@ function draw_warp_lanes(){
 						break;
 					}
 				}
+				
 				if (!star_overlap){
 					var to = instance_nearest(route_coords[2],route_coords[3], obj_star);
 					if (allow_tooltips){
