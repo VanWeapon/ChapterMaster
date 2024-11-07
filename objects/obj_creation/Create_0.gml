@@ -361,7 +361,7 @@ global.chapters_count = array_length(all_chapters);
  */
 all_chapters[eCHAPTERS.UNKNOWN].disabled = true; //this should always be disabled, it exists for array indexing purposes for now
 // all_chapters[CHAPTERS.CARCHARODONS].disabled = true;
-all_chapters[eCHAPTERS.ANGRY_MARINES].disabled = true;
+// all_chapters[eCHAPTERS.ANGRY_MARINES].disabled = true;
 all_chapters[eCHAPTERS.EMPERORS_NIGHTMARE].disabled = true;
 all_chapters[eCHAPTERS.STAR_KRAKENS].disabled = true;
 all_chapters[eCHAPTERS.CONSERVATORS].disabled = true;
