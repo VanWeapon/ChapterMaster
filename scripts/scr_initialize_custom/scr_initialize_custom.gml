@@ -1222,7 +1222,7 @@ function scr_initialize_custom() {
 	load_default_gear(Role.VETERAN, "Veteran", "Combiflamer", "Chainsword","Power Armour", "", "");
 	load_default_gear(Role.TERMINATOR, "Terminator", "Power Fist", "Storm Bolter", "Terminator Armour", "", "");
 	load_default_gear(Role.CAPTAIN, "Captain", "Power Sword", "Bolt Pistol", "Power Armour", "", "Iron Halo");
-	load_default_gear(Role.DREADNOUGHT, "Dreadnought", "Dreadnought Lightning Claw", "Lascannon", "Dreadnought", "", "");
+	load_default_gear(Role.DREADNOUGHT, "Dreadnought", "Close Combat Weapon", "Lascannon", "Dreadnought", "", "");
 	load_default_gear(Role.CHAMPION, "Champion", "Power Sword", "Bolt Pistol", "Power Armour", "", "Combat Shield");
 	load_default_gear(Role.TACTICAL, "Tactical", "Bolter", "Combat Knife", "Power Armour", "", "");
 	load_default_gear(Role.DEVASTATOR, "Devastator", "", "Combat Knife", "Power Armour", "", "");
@@ -2619,7 +2619,7 @@ function scr_initialize_custom() {
 	repeat(scr_has_adv("Venerable Ancients") ? 3 : 2) {
 		k += 1;
 		commands += 1;
-		add_unit_to_company("dreadnought", company, k, "Venerable" + string(roles.dreadnought),Role.DREADNOUGHT, "default", "Plasma Cannon","default","default","Dreadnought");
+		add_unit_to_company("dreadnought", company, k, "Venerable " + string(roles.dreadnought),Role.DREADNOUGHT, "default", "Plasma Cannon","default","default","Dreadnought");
 	}
 
 	for (var i = 0; i < 4; i++) {
@@ -3052,7 +3052,7 @@ function scr_initialize_custom() {
 					k += 1;
 					man_size += 10;
 					commands += 1;
-					var _wep1 =  "Close Combat Weapon"; 
+					var _wep1 =  "default"; 
 					if(company == 9) {
 						_wep1 = "Missile Launcher"; 
 					}
