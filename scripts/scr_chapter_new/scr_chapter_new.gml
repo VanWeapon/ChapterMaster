@@ -317,8 +317,8 @@ function scr_chapter_new(argument0) {
 
 		obj_creation.color_to_main = chapter_object.colors.main;
 		obj_creation.color_to_secondary = chapter_object.colors.secondary;
-		obj_creation.color_to_pauldron = chapter_object.colors.pauldron_r;
-		obj_creation.color_to_pauldron2 = chapter_object.colors.pauldron_l;
+		obj_creation.color_to_pauldron = chapter_object.colors.pauldron_l;
+		obj_creation.color_to_pauldron2 = chapter_object.colors.pauldron_r;
 		obj_creation.color_to_trim = chapter_object.colors.trim;
 		obj_creation.color_to_lens = chapter_object.colors.lens;
 		obj_creation.color_to_weapon = chapter_object.colors.weapon;
@@ -338,13 +338,13 @@ function scr_chapter_new(argument0) {
 			        main_trim = max(array_find_value(col,color_to_trim),0);
 			        color_to_trim = "";
 			    }
-			    if (color_to_pauldron!=""){
-			        right_pauldron = max(array_find_value(col,color_to_pauldron),0);
-			        color_to_pauldron = "";  
-			    }
 			    if (color_to_pauldron2!=""){
-			        left_pauldron = max(array_find_value(col,color_to_pauldron2),0);
-			        color_to_pauldron2 = "";
+			        right_pauldron = max(array_find_value(col,color_to_pauldron2),0);
+			        color_to_pauldron2 = "";  
+			    }
+			    if (color_to_pauldron!=""){
+			        left_pauldron = max(array_find_value(col,color_to_pauldron),0);
+			        color_to_pauldron = "";
 			    }
 			    if (color_to_lens!=""){
 			        lens_color = max(array_find_value(col,color_to_lens),0);
