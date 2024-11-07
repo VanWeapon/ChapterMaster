@@ -30,7 +30,7 @@
             "Enemy: Orks",
             "Enemy: Tau",
             "Enemy: Tyranids",
-            "",
+            "Elite Guard",
             "",
             ""
         ],
@@ -301,7 +301,7 @@
         "custom_squads": {
             "tactical_squad": [
                 [ // Aquila Kill Team
-                    "Tactical",
+                    "Veteran",
                     {
                         "max": 9,
                         "min": 4,

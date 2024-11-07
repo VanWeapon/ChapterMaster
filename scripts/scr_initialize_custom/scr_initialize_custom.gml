@@ -2972,7 +2972,11 @@ function scr_initialize_custom() {
 					repeat(temp1) {
 						k += 1;
 						man_size += 1;
-						add_unit_to_company("marine", company, k, roles.tactical, Role.TACTICAL, "default","default", "", "", "");
+						if(scr_has_adv("Elite Guard")){
+						add_unit_to_company("marine", company, k, roles.veteran, Role.VETERAN, "", "", "","","");
+						} else {
+							add_unit_to_company("marine", company, k, roles.tactical, Role.TACTICAL, "default","default", "", "", "");
+						}
 					}
 					repeat(assault) {
 						k += 1;
@@ -3002,7 +3006,11 @@ function scr_initialize_custom() {
 				if (company < 8) then repeat(temp1) {
 					k += 1;
 					man_size += 1;
-					add_unit_to_company("marine", company, k, roles.tactical, Role.TACTICAL, "default", "default", "", "", "");
+					if(scr_has_adv("Elite Guard")){
+						add_unit_to_company("marine", company, k, roles.veteran, Role.VETERAN, "", "", "","","");
+					} else {
+						add_unit_to_company("marine", company, k, roles.tactical, Role.TACTICAL, "default", "default", "", "", "");
+					}
 				} 
 				
 				// reserve company only of assault
