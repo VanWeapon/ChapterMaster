@@ -102,9 +102,9 @@
             0, // Progenitor faction
             50, // Imperium
             50, // Admech
-            50, //Inquisition
+            70, //Inquisition
             50, // Ecclesiarchy
-            50, // Astartes
+            60, // Astartes
             0 // nothing
         ],
         "chapter_master": {
@@ -134,7 +134,7 @@
             "",
             ""
         ],
-        "flagship_name": "Flagship Name", // leave blank to autogenerate
+        "flagship_name": "", // leave blank to autogenerate
         /**
         * * Default fleet composition
         * * Homeworld 
@@ -835,6 +835,150 @@
                             "scout",
                             "tactical"
                         ]
+                    }
+                ]
+            ],
+            "terminator_squad": [
+                // Terminator Sergeant
+                [
+                    "Veteran Sergeant",
+                    {
+                        "max": 1,
+                        "min": 1,
+                        "role": "Purgatus Kill Team Sergeant",
+                        "loadout": {
+                            "required": {
+                                "wep1": [
+                                    "Power Sword",
+                                    1
+                                ],
+                            },
+                        }
+                    }
+                ],
+                // Terminator
+                [
+                    "Terminator",
+                    {
+                        "max": 4,
+                        "min": 2,
+                        "loadout": {
+                            "required": {
+                                "wep1": [
+                                    "",
+                                    0
+                                ],
+                                "wep2": [
+                                    "Storm Bolter",
+                                    3
+                                ],
+                            },
+                            "option": {
+                                "wep1": [
+                                    [
+                                        [
+                                            "Power Fist",
+                                            "Chainfist"
+                                        ],
+                                        4
+                                    ],
+                                ],
+                                "wep2": [
+                                    [
+                                        [
+                                            "Assault Cannon",
+                                            "Heavy Flamer"
+                                        ],
+                                        1
+                                    ],
+                                ],
+                            }
+                        }
+                    }
+                ],
+                [
+                    "type_data",
+                    {
+                        "display_data": "Purgatus Kill Team",
+                        "formation_options": [
+                            "terminator",
+                            "veteran",
+                            "assault",
+                            "devastator",
+                            "scout",
+                            "tactical"
+                        ],
+                    }
+                ]
+            ],
+            "terminator_assault_squad": [
+                // Assault Terminator Sergeant
+                [
+                    "Veteran Sergeant",
+                    {
+                        "max": 1,
+                        "min": 1,
+                        "role": "Furor Kill Team Sergeant",
+                        "loadout": {
+                            "required": {
+                                "wep1": [
+                                    "Thunder Hammer",
+                                    1
+                                ],
+                                "wep2": [
+                                    "Storm Shield",
+                                    1
+                                ],
+                            },
+                        },
+                    }
+                ],
+                // Assault Terminator
+                [
+                    "Terminator",
+                    {
+                        "max": 4,
+                        "min": 2,
+                        "role": "Assault Terminator",
+                        "loadout": {
+                            "required": {
+                                "wep1": [
+                                    "Thunder Hammer",
+                                    1
+                                ],
+                                "wep2": [
+                                    "Storm Shield",
+                                    1
+                                ],
+                            },
+                            "option": {
+                                "wep1": [
+                                    [
+                                        [
+                                            "Lightning Claw"
+                                        ],
+                                        3,
+                                        {
+                                            "wep2": "Lightning Claw",
+                                        }
+                                    ]
+                                ]
+                            }
+                        }
+                    }
+                ],
+                [
+                    "type_data",
+                    {
+                        "display_data": "Furor Kill Team",
+                        "formation_options": [
+                            "terminator",
+                            "veteran",
+                            "assault",
+                            "devastator",
+                            "scout",
+                            "tactical"
+                        ],
                     }
                 ]
             ]
