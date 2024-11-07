@@ -1,0 +1,843 @@
+{
+    "chapter": {
+        "id": 33,
+        "name": "The Deathwatch",
+        "flavor": "Known as the Shield that Slays, they are the Chamber Militant of the Ordo Xenos, charged with protecting it in its search of information, containment, and ultimate destruction of all xeno species. Consisting of Battle-Brothers drawn from many Chapters, the Deathwatch operates from Watch Fortresses and Watch Stations across the whole of the Imperium.",
+        "origin": 3, // 1 - Founding, 2 - Successor, 3 - Other/non-canon/fanmade, 4 - Custom
+        "points": 150,
+        "founding": 0, // The id of the founding chapter, 0 for unknown or none, 10 for random
+        "splash": 23, // in \images\creation\chapters\splash folder, the img number, 1 being Dark Angels etc.
+        "icon": 22, // in \images\creation\chapters\icons folder, the icon number, 1 being Dark Angels etc.
+        "icon_name": "dw", // ? dunno what this is used for yet but the icon breaks if you dont use it 
+        "fleet_type": 1, // 1= Homeworld, 2 = Fleet based, 3 = Penitent
+        "strength": 1, // 1-10
+        "purity": 10, // 1-10
+        "stability": 8, // 1-10
+        "cooperation": 5, // 1-10
+        "homeworld_exists": 1, // 1 = true
+        "recruiting_exists": 0, // 1 = true
+        "homeworld_rule": 1, // 1 = Govenor, 2 = Countries, 3 = Personal Rule
+        "homeworld": "Dead", // one of  "Lava" "Desert" "Forge" "Hive" "Death" "Agri" "Feudal" "Temperate" "Ice" "Dead" "Shrine"
+        "homeworld_name": "", // Homeworld Planet name, leave blank to autogenerate
+        "recruiting": "Death", // one of "Lava" "Desert" "Forge" "Hive" "Death" "Agri" "Feudal" "Temperate" "Ice" "Dead" "Shrine"
+        "recruiting_name": "", // Recruiting Planet name, leave blank to autogenerate
+        "discipline": "default", // one of 'default' 'biomancy' 'pyromancy' 'telekinesis' 'rune Magick'
+        "aspirant_trial": "SURVIVAL", // one of "BLOODDUEL" "HUNTING" "SURVIVAL" "EXPOSURE" "KNOWLEDGE" "CHALLENGE"  "APPRENTICESHIP" 
+        "advantages": [
+            "", // leave the first entry blank for now
+            "Enemy: Eldar",
+            "Enemy: Necrons",
+            "Enemy: Orks",
+            "Enemy: Tau",
+            "Enemy: Tyranids",
+            "",
+            "",
+            ""
+        ],
+        "disadvantages": [
+            "", // leave the first entry blank for now
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+        ],
+        "colors": {
+            "main": "Black",
+            "secondary": "Black",
+            "pauldron_r": "Black",
+            "pauldron_l": "Silver",
+            "trim": "Silver",
+            "lens": "Red",
+            "weapon": "Dark Red",
+            "special": 0 // 0 - normal, 1 - Breastplate, 2 - Vertical, 3 - Quadrant
+            //"trim_on": 0 // 0 no, 1 yes for pauldron trim colours. Trim colour will still be used for certain complex livery items 
+        },
+        "names": {
+            //Chapter Staff
+            "hchaplain": "", // Head Chaplain
+            "clibrarian": "", // Chief Librarian
+            "fmaster": "", // Forge Master
+            "hapothecary": "", // Head Apothecary
+            //Company Captains 1 - 10
+            "honorcapt": "",
+            "watchmaster": "",
+            "arsenalmaster": "",
+            "admiral": "",
+            "marchmaster": "",
+            "ritesmaster": "",
+            "victualler": "",
+            "lordexec": "",
+            "relmaster": "",
+            "recruiter": ""
+        },
+        "battle_cry": "For the Emperor!",
+        "equal_specialists": 0, // 0 if no, 1 if yes. If yes, will distribute specialist roles like Assaults and Devastators equally between companies. Otherwise all Assaults go in Company 8 and all Devastators in Company 9
+        "load_to_ships": {
+            "escort_load": 2, // 0 no, 2 yes, 1 doesnt do anything :)
+            "split_scouts": 0, // 0 no, 1 yes. If yes, splits scouts between companies equally. Otherwise all scouts are kept in 10th Company.
+            "split_vets": 1 // 0 no, 1 yes. If yes, all veterans are distrubuted equally between companies. Otherwise all veterans are kept in the 1st Company
+        },
+        "successors": 0, //total number of successor chapters
+        "mutations": {
+            "preomnor": 0,
+            "voice": 0,
+            "doomed": 0,
+            "lyman": 0,
+            "omophagea": 0,
+            "ossmodula": 0,
+            "membrane": 0,
+            "zygote": 0,
+            "betchers": 0,
+            "catalepsean": 0,
+            "secretions": 0,
+            "occulobe": 0,
+            "mucranoid": 0
+        },
+        "disposition": [
+            0, // nothing
+            0, // Progenitor faction
+            50, // Imperium
+            50, // Admech
+            50, //Inquisition
+            50, // Ecclesiarchy
+            50, // Astartes
+            0 // nothing
+        ],
+        "chapter_master": {
+            "name": "",
+            "specialty": 1, //1 Leader, 2 Champion, 3 Psyker,
+            "melee": 1, // 1 twin power fists ... 8 force staff
+            "ranged": 1, // 1 boltstorm gauntlets ... 7 storm shield
+            // All chapter masters have the trait `Lead by Example` by default
+            "traits": [
+                ""
+            ],
+            "gear": "",
+            "mobi": "",
+            "armour": "" // default is Artificer armour, only needed to set if changing to something else.
+        },
+        "artifact": [],
+        "company_titles": [
+            "",
+            "Watch Company Primus",
+            "Watch Company Secundus",
+            "Watch Company Tertius",
+            "Watch Company Quartus",
+            "Watch Company Quintus",
+            "",
+            "",
+            "",
+            "",
+            ""
+        ],
+        "flagship_name": "Flagship Name", // leave blank to autogenerate
+        /**
+        * * Default fleet composition
+        * * Homeworld 
+        * - 2 Battle Barges, 8 Strike cruisers, 7 Gladius, 3 Hunters
+        * * Fleet based and Penitent 
+        * - 4 Battle Barges, 3 Strike Cruisers, 7 Gladius, 3 Hunters
+        * 
+        * use negative numbers to subtract ships
+        * * Stacks with advantages/disadvantages
+        */
+        "extra_ships": {
+            "battle_barges": 0,
+            "gladius": 0,
+            "strike_cruisers": 0,
+            "hunters": 0
+        },
+        /**
+        * * Default HQ Layout (Does not include company specialists)
+        * - 8 Chaplains, 8 Techmarines, 8 Apothecary, 2 Epistolary (librarian), 
+        * - 2 Codiciery, 4 Lexicanum
+        * * Default Company specialists (divided based on `load_to_ships.split_vets` setting)
+        * - 20 Terminators, 85 Veterans, 20 Devastators, 20 Assault
+        * Use negative numbers to subtract
+        * * Stacks with advantages/disadvantages
+        */
+        "extra_specialists": {
+            "chaplains": 0,
+            "techmarines": 0,
+            "apothecary": 0,
+            "epistolary": 0,
+            "codiciery": 0,
+            "lexicanum": 0,
+            "terminator": 0,
+            "assault": -10,
+            "veteran": -40,
+            "devastator": -10
+        },
+        /**
+        * * Default Marine strength
+        * - 100 marines per company
+        * use negative numbers to subtract
+        * * Stacks with strength for non-founding chapters only
+        */
+        "extra_marines": {
+            "second": -60,
+            "third": -60,
+            "fourth": -60,
+            "fifth": -60,
+            "sixth": -100,
+            "seventh": -100,
+            "eighth": -100,
+            "ninth": -100,
+            "tenth": -100
+        },
+        "extra_vehicles": {
+            "rhino": 0,
+            "whirlwind": 0,
+            "predator": 0,
+            "land_raider": 0,
+            "land_speeder": 0
+        },
+        /** Add extra starting items ["Item Name", Number to add] */
+        "extra_equipment": [
+            [
+                "Eldar Power Sword",
+                2
+            ],
+            [
+                "Archeotech Laspistol",
+                2
+            ],
+            [
+                "Stalker Pattern Bolter",
+                10
+            ]
+        ],
+        /** 
+        * Provide a place to change the default name and equipment preferences of roles for this chapter
+        * `custom_roles` should be used for specialist/leadership type roles, 
+        * To affect an entire squad, see `custom_squads` below
+        */
+        "custom_roles": {
+            // "honour_guard": {
+            //     "name": "Honour Guard",
+            //     "wep1": "Power Sword",
+            //     "wep2": "Bolter"
+            // },
+            // "veteran": {
+            //     "name": "Veteran",
+            //     "wep1": "Chainaxe"
+            // },
+            "captain": {
+                "name": "Watch Captain",
+                "wep1": "Power Sword"
+            },
+            // "tactical": {
+            //     "name": "Tactical"
+            // },
+            // "devastator": {
+            //     "name": "Devastator"
+            // },
+            // "assault": {
+            //     "name": "Assault",
+            //     "wep1": "Chainsword"
+            // },
+            // "scout": {
+            //     "name": "Scout",
+            //     "wep1": "Sniper Rifle"
+            // },
+            // "chaplain": {
+            //     "name": "Chaplain",
+            // },
+            // "techmarine": {
+            //     "name": "Techmarine",
+            //     "wep1": "Power Axe"
+            // },
+            // "apothecary": {
+            //     "name": "Apothecary",
+            //     "wep1": "Power Axe"
+            // },
+            // "librarian": {
+            //     "name": "Librarian",
+            //     "wep1": "Force Staff"
+            // },
+            // "sergeant": {
+            //     "name": "Sergeant",
+            //     "wep1": "Chainaxe"
+            // },
+            // "veteran_sergeant": {
+            //     "name": "Veteran Sergeant",
+            //     "wep1": "Chainaxe"
+            // }
+        },
+        /**
+        * * Custom squad roles, loadouts and formations
+        * When companies are made, squads are formed based on these rules: 
+        * - squad name: one of captain, terminator, terminator_assault, sternguard_veteran,
+                vanguard_veteran, devastator, tactical, assault, scout, scout_sniper
+        * - squad array layout [Role, Role, ...Role, type_data]
+        * - each element of the array is a default Role, and their settings.
+            - if you changed the role using `custom_roles` you need to reference the role with this new name
+            - for non-leader roles it is better to change the name of the role in the squad layout instead
+        * - unit layout [Role Name, Settings Struct]
+        * - settings struct: 
+        *   - max: The most amount of this unit is allowed per squad
+        *   - min: The squad can't be formed unless at least 1 of this unit is in it
+        *   - role: The name of the unit when it is a member of the squad. This is where you rename roles e.g. 
+                "Terminator" > "Deathwing Terminator" 
+        **  - loadout: Struct containing Required and Optional weaponry this unit can equip 
+                a required loadout always follows this syntax <loadout_slot>:[<loadout_item>,<required number>]
+				so "wep1":["Bolter",4], will mean four marines are always equipped with 4 bolters in the wep1 slot
+        *       option loadouts follow the following syntax <loudout_slot>:[[<loadout_item_list>],<allowed_number>]
+				for example [["Flamer", "Meltagun"],1], means the role can have a max of one flamer or meltagun
+					[["Plasma Pistol","Bolt Pistol"], 4] means the role can have a mix of 4 plasma pistols and bolt pistols on top
+						of all required loadout options
+                - wep1: right hand weapon
+                - wep2: left hand weapon
+                - mobi: Mobility item, e.g. Jump Packs. 
+                - armour: required armour 
+                - gear: special equipment needed for certain roles, like a Roasrius or Narthecium
+        *   - type_data: names the squad, allows certain formations 
+        */
+        "squad_name": "Kill Team",
+        "custom_squads": {
+            "tactical_squad": [
+                [ // Aquila Kill Team
+                    "Tactical",
+                    {
+                        "max": 9,
+                        "min": 4,
+                        "loadout": {
+                            "required": {
+                                "wep1": [
+                                    "Bolter",
+                                    4
+                                ],
+                                "wep2": [
+                                    "Combat Knife",
+                                    7
+                                ]
+                            },
+                            "option": {
+                                "wep1": [
+                                    [
+                                        [
+                                            "Flamer",
+                                            "Flamer",
+                                            "Flamer",
+                                            "Meltagun",
+                                            "Meltagun",
+                                            "Plasma Gun"
+                                        ],
+                                        1
+                                    ],
+                                    [
+                                        [
+                                            "Heavy Bolter",
+                                            "Heavy Bolter",
+                                            "Heavy Bolter",
+                                            "Heavy Bolter",
+                                            "Missile Launcher",
+                                            "Missile Launcher",
+                                            "Multi-Melta",
+                                            "Lascannon"
+                                        ],
+                                        1,
+                                        {
+                                            "wep2": "Combat Knife",
+                                            "mobi": "Heavy Weapons Pack",
+                                        }
+                                    ],
+                                    [
+                                        [
+                                            "Stalker Pattern Bolter"
+                                        ],
+                                        3
+                                    ]
+                                ],
+                            }
+                        }
+                    }
+                ],
+                [
+                    "Sergeant",
+                    {
+                        "max": 1,
+                        "min": 1,
+                        "role": "Aquila Kill Team Sergeant",
+                        "loadout": {
+                            "required": {
+                                "wep1": [
+                                    "",
+                                    0
+                                ],
+                                "wep2": [
+                                    "Chainsword",
+                                    1
+                                ]
+                            },
+                            "option": {
+                                "wep1": [
+                                    [
+                                        [
+                                            "Bolt Pistol",
+                                            "Bolt Pistol",
+                                            "Bolt Pistol",
+                                            "Bolt Pistol",
+                                            "Plasma Pistol"
+                                        ],
+                                        1
+                                    ],
+                                ],
+                                "wep2": [
+                                    [
+                                        [
+                                            "Chainsword",
+                                            "Chainsword",
+                                            "Chainsword",
+                                            "Chainsword",
+                                            "Chainsword",
+                                            "Chainsword",
+                                            "Chainsword",
+                                            "Chainsword",
+                                            "Chainsword",
+                                            "Power Sword",
+                                            "Power Sword",
+                                            "Power Sword",
+                                            "Lightning Claw",
+                                            "Lightning Claw",
+                                            "Lightning Claw",
+                                            "Power Fist",
+                                            "Power Fist"
+                                        ],
+                                        1
+                                    ]
+                                ]
+                            }
+                        }
+                    }
+                ],
+                [
+                    "type_data",
+                    {
+                        "display_data": "Aquila Kill Team",
+                        "formation_options": [
+                            "tactical",
+                            "assault",
+                            "devastator",
+                            "scout"
+                        ],
+                    }
+                ]
+            ],
+            "devastator_squad": [
+                [ //Venator Kill team
+                    "Devastator",
+                    {
+                        "max": 9,
+                        "min": 4,
+                        "loadout": {
+                            "required": {
+                                "wep1": [
+                                    "Bolter",
+                                    5
+                                ],
+                                "wep2": [
+                                    "Combat Knife",
+                                    9
+                                ],
+                                "mobi": [
+                                    "",
+                                    5
+                                ],
+                            },
+                            "option": {
+                                "wep1": [
+                                    [
+                                        [
+                                            "Heavy Bolter",
+                                            "Heavy Bolter",
+                                            "Heavy Bolter",
+                                            "Heavy Bolter",
+                                            "Missile Launcher",
+                                            "Missile Launcher",
+                                            "Multi-Melta",
+                                            "Lascannon"
+                                        ],
+                                        4,
+                                        {
+                                            "mobi": "Heavy Weapons Pack",
+                                        }
+                                    ]
+                                ]
+                            }
+                        }
+                    }
+                ],
+                [
+                    "Sergeant",
+                    {
+                        "max": 1,
+                        "min": 1,
+                        "role": "Venator Kill Team Sergeant",
+                        "loadout": {
+                            "required": {
+                                "mobi": [
+                                    "",
+                                    1
+                                ],
+                            },
+                            "option": {
+                                "wep1": [
+                                    [
+                                        [
+                                            "Bolt Pistol",
+                                            "Bolt Pistol",
+                                            "Plasma Pistol"
+                                        ],
+                                        1
+                                    ]
+                                ],
+                                "wep2": [
+                                    [
+                                        [
+                                            "Chainsword",
+                                            "Chainsword",
+                                            "Chainsword",
+                                            "Chainsword",
+                                            "Chainsword",
+                                            "Chainsword",
+                                            "Chainsword",
+                                            "Chainsword",
+                                            "Chainsword",
+                                            "Power Sword",
+                                            "Power Sword",
+                                            "Power Sword",
+                                            "Lightning Claw",
+                                            "Lightning Claw",
+                                            "Lightning Claw",
+                                            "Power Fist",
+                                            "Power Fist"
+                                        ],
+                                        1
+                                    ]
+                                ]
+                            }
+                        }
+                    }
+                ],
+                [
+                    "type_data",
+                    {
+                        "display_data": "Venator Kill Team",
+                        "formation_options": [
+                            "devastator"
+                        ]
+                    }
+                ]
+            ],
+            "assault_squad": [
+                [ // Dominatus Kill Team
+                    "Assault",
+                    {
+                        "max": 9,
+                        "min": 4,
+                        "loadout": {
+                            "required": {
+                                "wep1": [
+                                    "Chainsword",
+                                    7
+                                ],
+                                "wep2": [
+                                    "Bolt Pistol",
+                                    7
+                                ]
+                            },
+                            "option": {
+                                "wep1": [
+                                    [
+                                        [
+                                            "Eviscerator"
+                                        ],
+                                        2
+                                    ]
+                                ],
+                                "wep2": [
+                                    [
+                                        [
+                                            "Plasma Pistol",
+                                            "Flamer"
+                                        ],
+                                        2
+                                    ]
+                                ]
+                            }
+                        }
+                    }
+                ],
+                [
+                    "Sergeant",
+                    {
+                        "max": 1,
+                        "min": 1,
+                        "role": "Dominatus Kill Team Sergeant",
+                        "loadout": {
+                            "required": {
+                                "wep1": [
+                                    "",
+                                    0
+                                ],
+                                "wep2": [
+                                    "",
+                                    0
+                                ],
+                                "gear": [
+                                    "Combat Shield",
+                                    1
+                                ]
+                            },
+                            "option": {
+                                "wep1": [
+                                    [
+                                        [
+                                            "Bolt Pistol",
+                                            "Bolt Pistol",
+                                            "Bolt Pistol",
+                                            "Bolt Pistol",
+                                            "Plasma Pistol"
+                                        ],
+                                        1
+                                    ],
+                                ],
+                                "wep2": [
+                                    [
+                                        [
+                                            "Chainsword",
+                                            "Chainsword",
+                                            "Chainsword",
+                                            "Chainsword",
+                                            "Chainsword",
+                                            "Chainsword",
+                                            "Chainsword",
+                                            "Chainsword",
+                                            "Chainsword",
+                                            "Power Sword",
+                                            "Power Sword",
+                                            "Power Sword",
+                                            "Lightning Claw",
+                                            "Lightning Claw",
+                                            "Lightning Claw",
+                                            "Power Fist",
+                                            "Power Fist"
+                                        ],
+                                        1
+                                    ],
+                                ],
+                            }
+                        }
+                    }
+                ],
+                [
+                    "type_data",
+                    {
+                        "display_data": "Dominatus Kill Team",
+                        "formation_options": [
+                            "assault"
+                        ]
+                    }
+                ]
+            ],
+            "sternguard_veteran_squad": [
+                // Proteus Kill Team
+                [
+                    "Veteran",
+                    {
+                        "max": 9,
+                        "min": 4,
+                        "role": "Sternguard Veteran",
+                        "loadout": {
+                            "required": {
+                                "wep1": [
+                                    "",
+                                    0
+                                ],
+                                "wep2": [
+                                    "Combat Knife",
+                                    9
+                                ],
+                            },
+                            "option": {
+                                "wep1": [
+                                    [
+                                        [
+                                            "Stalker Pattern Bolter",
+                                            "Storm Bolter"
+                                        ],
+                                        5
+                                    ],
+                                    [
+                                        [
+                                            "Combiflamer"
+                                        ],
+                                        2
+                                    ],
+                                    [
+                                        [
+                                            "Flamer",
+                                            "Flamer",
+                                            "Flamer",
+                                            "Meltagun",
+                                            "Meltagun",
+                                            "Plasma Gun"
+                                        ],
+                                        1
+                                    ],
+                                    [
+                                        [
+                                            "Heavy Bolter",
+                                            "Heavy Bolter",
+                                            "Heavy Bolter",
+                                            "Heavy Bolter",
+                                            "Missile Launcher",
+                                            "Missile Launcher",
+                                            "Multi-Melta",
+                                            "Lascannon"
+                                        ],
+                                        1
+                                    ],
+                                ]
+                            }
+                        }
+                    }
+                ],
+                // Sternguard Veteran Sergeant
+                [
+                    "Veteran Sergeant",
+                    {
+                        "max": 1,
+                        "min": 1,
+                        "role": "Proteus Kill Team Sergeant",
+                        "loadout": {
+                            "required": {
+                                "wep1": [
+                                    "Stalker Pattern Bolter",
+                                    1
+                                ],
+                                "wep2": [
+                                    "Power Sword",
+                                    1
+                                ]
+                            }
+                        }
+                    }
+                ],
+                [
+                    "type_data",
+                    {
+                        "display_data": "Proteus Kill Team",
+                        "formation_options": [
+                            "veteran",
+                            "assault",
+                            "devastator",
+                            "scout",
+                            "tactical"
+                        ],
+                    }
+                ]
+            ],
+            "vanguard_veteran_squad": [
+                // Vanguard Veterans
+                [
+                    "Veteran",
+                    {
+                        "max": 9,
+                        "min": 4,
+                        "role": "Vanguard Veteran",
+                        "loadout": {
+                            "required": {
+                                "wep1": [
+                                    "",
+                                    0
+                                ],
+                                "wep2": [
+                                    "Bolt Pistol",
+                                    4
+                                ]
+                            },
+                            "option": {
+                                "wep1": [
+                                    [
+                                        [
+                                            "Power Sword",
+                                            "Power Axe",
+                                            "Lightning Claw"
+                                        ],
+                                        4
+                                    ],
+                                    [
+                                        [
+                                            "Power Fist"
+                                        ],
+                                        2
+                                    ],
+                                    [
+                                        [
+                                            "Thunder Hammer"
+                                        ],
+                                        3
+                                    ]
+                                ],
+                                "wep2": [
+                                    [
+                                        [
+                                            "Storm Shield"
+                                        ],
+                                        2,
+                                    ],
+                                    [
+                                        [
+                                            "Plasma Pistol"
+                                        ],
+                                        3
+                                    ]
+                                ]
+                            }
+                        }
+                    }
+                ],
+                // Vanguard Veteran Sergeant
+                [
+                    "Veteran Sergeant",
+                    {
+                        "max": 1,
+                        "min": 1,
+                        "role": "Malleus Kill Team Sergeant",
+                        "loadout": {
+                            "required": {
+                                "wep1": [
+                                    "Thunder Hammer",
+                                    1
+                                ],
+                                "wep2": [
+                                    "Storm Shield",
+                                    1
+                                ]
+                            }
+                        }
+                    }
+                ],
+                [
+                    "type_data",
+                    {
+                        "display_data": "Malleus Kill Team",
+                        "formation_options": [
+                            "veteran",
+                            "assault",
+                            "devastator",
+                            "scout",
+                            "tactical"
+                        ]
+                    }
+                ]
+            ]
+        }
+    }
+}
