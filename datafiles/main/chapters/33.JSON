@@ -110,8 +110,8 @@
         "chapter_master": {
             "name": "",
             "specialty": 1, //1 Leader, 2 Champion, 3 Psyker,
-            "melee": 1, // 1 twin power fists ... 8 force staff
-            "ranged": 1, // 1 boltstorm gauntlets ... 7 storm shield
+            "melee": 5, // 1 twin power fists ... 8 force staff
+            "ranged": 2, // 1 boltstorm gauntlets ... 7 storm shield
             // All chapter masters have the trait `Lead by Example` by default
             "traits": [
                 ""
@@ -120,7 +120,13 @@
             "mobi": "",
             "armour": "" // default is Artificer armour, only needed to set if changing to something else.
         },
-        "artifact": [],
+        "artifact": [
+            {
+                "name": "The Thief of Secrets",
+                "base_weapon_type": "Power Sword",
+                "description": "The power sword known as the Thief of Secrets is inhabited by a machine spirit that has an unquenchable thirst for knowledge. When it tastes the vital fluids of an enemy, those liquids are absorbed into the blade and codified by the honeycombed array of logicum cells within. The biological secrets of the impaled creature are then analysed by the blade’s machine spirit, allowing its wielder to exploit the stolen knowledge from that point on."
+            }
+        ],
         "company_titles": [
             "",
             "Watch Company Primus",
