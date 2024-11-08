@@ -963,21 +963,21 @@ if (slide=3){
 
     var eh,eh2;eh=0;eh2=0;name_bad=0;
     
-    if (homeworld="Lava") then eh=0;
-    if (homeworld="Desert") then eh=2;
-    if (homeworld="Forge") then eh=3;
-    if (homeworld="Hive") then eh=4;
-    if (homeworld="Death") then eh=5;
-    if (homeworld="Agri") then eh=6;
-    if (homeworld="Feudal") then eh=7;
-    if (homeworld="Temperate") then eh=8;
-    if (homeworld="Ice") then eh=9;
-    if (homeworld="Dead") then eh=10;
-    if (homeworld="Shrine") then eh=16;
-    if (fleet_type!=1) then eh=15;
+    if (homeworld="Lava") then eh=2;
+    if (homeworld="Desert") then eh=3;
+    if (homeworld="Forge") then eh=4;
+    if (homeworld="Hive") then eh=5;
+    if (homeworld="Death") then eh=6;
+    if (homeworld="Agri") then eh=7;
+    if (homeworld="Feudal") then eh=8;
+    if (homeworld="Temperate") then eh=9;
+    if (homeworld="Ice") then eh=10;
+    if (homeworld="Dead") then eh=11;
+    if (homeworld="Shrine") then eh=17;
+    if (fleet_type!=1) then eh=16;
     
     if (fleet_type == eFLEET_TYPES.HOMEWORLD){
-        scr_image("planet",eh,580,244,128,128);
+        scr_image("ui/planet",eh,580,244,128,128);
         // draw_sprite(spr_planet_splash,eh,580,244);
         
         draw_text_transformed(644,378,string_hash_to_newline(string(homeworld)),0.5,0.5,0);
@@ -1022,7 +1022,7 @@ if (slide=3){
     }
     if (fleet_type != eFLEET_TYPES.HOMEWORLD){
         // draw_sprite(spr_planet_splash,eh,580,244);
-        scr_image("planet",eh,580,244,128,128);
+        scr_image("ui/planet",eh,580,244,128,128);
         
         draw_text_transformed(644,378,string_hash_to_newline("Battle Barge"),0.5,0.5,0);
         // draw_text_transformed(644,398,string(homeworld_name),0.5,0.5,0);
@@ -1057,17 +1057,17 @@ if (slide=3){
         draw_set_alpha(1);draw_text_transformed(644+333,218,string_hash_to_newline("Recruiting World"),0.6,0.6,0);
         
         if (recruiting_exists=1){
-            if (recruiting="Lava") then eh2=0;
-            if (recruiting="Desert") then eh2=2;
-            if (recruiting="Forge") then eh2=3;
-            if (recruiting="Hive") then eh2=4;
-            if (recruiting="Death") then eh2=5;
-            if (recruiting="Agri") then eh2=6;
-            if (recruiting="Feudal") then eh2=7;
-            if (recruiting="Temperate") then eh2=8;
-            if (recruiting="Ice") then eh2=9;
-            if (recruiting="Dead") then eh2=10;
-            if (recruiting="Shrine") then eh2=16;
+            if (recruiting="Lava") then eh2=2;
+            if (recruiting="Desert") then eh2=3;
+            if (recruiting="Forge") then eh2=4;
+            if (recruiting="Hive") then eh2=5;
+            if (recruiting="Death") then eh2=6;
+            if (recruiting="Agri") then eh2=7;
+            if (recruiting="Feudal") then eh2=8;
+            if (recruiting="Temperate") then eh2=9;
+            if (recruiting="Ice") then eh2=10;
+            if (recruiting="Dead") then eh2=11;
+            if (recruiting="Shrine") then eh2=17;
             
             if (custom>1) then draw_sprite_stretched(spr_creation_arrow,0,865,285,32,32);// Left Arrow
             if (scr_hit(865,285,865+32,285+32)) and (mouse_left>=1) and (cooldown<=0) and (custom>1){
@@ -1101,7 +1101,7 @@ if (slide=3){
             }
             
             // draw_sprite(spr_planet_splash,eh2,580+333,244);
-            scr_image("planet",eh2,580+333,244,128,128);
+            scr_image("ui/planet",eh2,580+333,244,128,128);
             
             draw_text_transformed(644+333,378,string_hash_to_newline(string(recruiting)),0.5,0.5,0);
             // draw_text_transformed(644+333,398,string(recruiting_name),0.5,0.5,0);
@@ -1125,7 +1125,7 @@ if (slide=3){
     
     if (recruiting_exists==0 && homeworld_exists==1){
         // draw_sprite(spr_planet_splash,eh,580+333,244);
-        scr_image("planet",eh,580+333,244,128,128);
+        scr_image("ui/planet",eh,580+333,244,128,128);
         
         draw_set_alpha(0.5);
         draw_text_transformed(644+333,378,string_hash_to_newline(string(homeworld)),0.5,0.5,0);
