@@ -161,7 +161,7 @@ function calculate_research_points(turn_end=false){
                 }
             }
             possibility_of_heresy = 8;
-            if (array_contains(obj_ini.dis,"Tech-Heresy")) then possibility_of_heresy = 6;
+            if (scr_has_disadv("Tech-Heresy")) then possibility_of_heresy = 6;
             if (irandom(power(possibility_of_heresy,(array_length(heretics)+2.2))) == 0 && array_length(techs)>0){
                 var current_tech = techs[irandom(array_length(techs)-1)];
                if  (!global.character_tester.standard_test(current_tech, "piety")[0]){

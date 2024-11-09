@@ -934,7 +934,7 @@ function scr_initialize_custom() {
 		devastator = 0;
 	}
 
-	if  scr_has_adv ("Tech-Heresy") {
+	if  scr_has_disadv ("Tech-Heresy") {
 		techmarines -= 4;
 		tenth += 4;
 	}
