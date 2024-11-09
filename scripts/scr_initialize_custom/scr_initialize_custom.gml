@@ -1392,6 +1392,12 @@ function scr_initialize_custom() {
 			[roles.veteran, {
 				"max": 5,
 				"min": 0,
+				"loadout": {
+					"required": {
+						"wep1": [wep1[defaults_slot][Role.VETERAN], 5],
+						"wep2": [wep2[defaults_slot][Role.VETERAN], 5],
+					}
+				},
 				"role": $"Company {roles.veteran}"
 			}],
 			[roles.techmarine, {
@@ -2610,7 +2616,7 @@ function scr_initialize_custom() {
 	if (terminator > 0) then repeat(terminator) {
 		k += 1;
 		man_size += 2
-		add_unit_to_company("marine", company, k, roles.terminator, Role.TERMINATOR, "default","default","default","default","default");
+		add_unit_to_company("marine", company, k, roles.terminator, Role.TERMINATOR, "","","default","default","default");
 	}
 	repeat(veteran) {
 		k += 1;
@@ -2975,15 +2981,15 @@ function scr_initialize_custom() {
 						k += 1;
 						man_size += 1;
 						if(scr_has_adv("Elite Guard")){
-						add_unit_to_company("marine", company, k, roles.veteran, Role.VETERAN, "", "", "","","");
+							add_unit_to_company("marine", company, k, roles.veteran, Role.VETERAN, "", "", "","","");
 						} else {
-							add_unit_to_company("marine", company, k, roles.tactical, Role.TACTICAL, "default","default", "", "", "");
+							add_unit_to_company("marine", company, k, roles.tactical, Role.TACTICAL, "","", "", "", "");
 						}
 					}
 					repeat(assault) {
 						k += 1;
 						man_size += 1;
-						add_unit_to_company("marine", company, k, roles.assault, Role.ASSAULT, "default", "default", "", "default", "");
+						add_unit_to_company("marine", company, k, roles.assault, Role.ASSAULT, "", "", "", "default", "");
 					}
 					repeat(devastator) {
 						k += 1;
@@ -2999,7 +3005,7 @@ function scr_initialize_custom() {
 					repeat(temp1) {
 						k += 1;
 						man_size += 1;
-						add_unit_to_company("scout", company, k, roles.scout, Role.SCOUT, "default", "default", "", "", "Scout Armour");
+						add_unit_to_company("scout", company, k, roles.scout, Role.SCOUT, "", "", "", "", "Scout Armour");
 					}
 				}
 			}
@@ -3011,7 +3017,7 @@ function scr_initialize_custom() {
 					if(scr_has_adv("Elite Guard")){
 						add_unit_to_company("marine", company, k, roles.veteran, Role.VETERAN, "", "", "","","");
 					} else {
-						add_unit_to_company("marine", company, k, roles.tactical, Role.TACTICAL, "default", "default", "", "", "");
+						add_unit_to_company("marine", company, k, roles.tactical, Role.TACTICAL, "", "", "", "", "");
 					}
 				} 
 				
@@ -3019,7 +3025,7 @@ function scr_initialize_custom() {
 				if (company = 8) then repeat(temp1) {
 					k += 1;
 					man_size += 1; // assault reserve company
-					add_unit_to_company("marine", company, k, roles.assault,Role.ASSAULT, "default", "default", "", "default", "");
+					add_unit_to_company("marine", company, k, roles.assault,Role.ASSAULT, "", "", "", "default", "");
 				} 
 				
 				// reserve company only devo
@@ -3037,13 +3043,13 @@ function scr_initialize_custom() {
 				for (var i = 0; i < temp1; i++) {
 					k += 1;
 					man_size += 1;
-					add_unit_to_company("scout", company, k, roles.scout,Role.SCOUT, "default", "default", "", "", "Scout Armour");
+					add_unit_to_company("scout", company, k, roles.scout,Role.SCOUT, "", "", "", "", "Scout Armour");
 				}
 
 				if (company_unit2 = "assault") then repeat(assault) {
 					k += 1;
 					man_size += 1;
-					add_unit_to_company("marine", company, k, roles.assault,Role.ASSAULT, "default", "default", "", "default", "");
+					add_unit_to_company("marine", company, k, roles.assault,Role.ASSAULT, "", "", "", "default", "");
 				}
 
 				if (company_unit3 = "devastator") then repeat(devastator) {
@@ -3273,6 +3279,7 @@ function add_veh_to_company(name, company, slot, wep1, wep2, wep3, upgrade, acce
 /// @description helper function to streamline code inside of scr_initialize_custom, should only be used as part of
 /// game setup and not during normal gameplay.
 /// each item slot can be "" or "default" or a named item. "" will assign items from the available item pool. 
+/// Use "" if you want to set weapons and gear via squad layouts.
 /// "default" will set it to the value in the default slot for the given role, see `load_default_gear`
 function add_unit_to_company(ttrpg_name, company, slot, role_name, role_id, wep1, wep2, gear, mobi, armour){
 	obj_ini.TTRPG[company][slot] = new TTRPG_stats("chapter", company, slot, ttrpg_name);
@@ -3290,11 +3297,12 @@ function add_unit_to_company(ttrpg_name, company, slot, role_name, role_id, wep1
 		spawn_unit.roll_age();
 		spawn_unit.roll_experience();
 	}
-	
-	if(wep1 == "default"){
-		spawn_unit.update_weapon_one(obj_ini.wep1[obj_ini.defaults_slot][role_id], false, false);
-	} else {
-		spawn_unit.update_weapon_one(wep1, false, false);
+	if(wep1 != ""){
+		if(wep1 == "default"){
+			spawn_unit.update_weapon_one(obj_ini.wep1[obj_ini.defaults_slot][role_id], false, false);
+		} else {
+			spawn_unit.update_weapon_one(wep1, false, false);
+		}
 	}
 	if(wep2 != ""){
 		if(wep2 == "default"){
