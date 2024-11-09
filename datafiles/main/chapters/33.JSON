@@ -50,11 +50,41 @@
             "secondary": "Black",
             "pauldron_r": "Black",
             "pauldron_l": "Silver",
-            "trim": "Silver",
+            "trim": "Dark Gold",
             "lens": "Red",
             "weapon": "Dark Red",
             "special": 0 // 0 - normal, 1 - Breastplate, 2 - Vertical, 3 - Quadrant
             //"trim_on": 0 // 0 no, 1 yes for pauldron trim colours. Trim colour will still be used for certain complex livery items 
+        },
+        "complex_livery": {
+            "sgt": {
+                "helm_pattern": 0,
+                "helm_primary": 8,
+                "helm_secondary": 8,
+                "helm_detail": 8,
+                "helm_lens": 9,
+            },
+            "vet_sgt": {
+                "helm_pattern": 0,
+                "helm_primary": 8,
+                "helm_secondary": 8,
+                "helm_detail": 8,
+                "helm_lens": 9,
+            },
+            "captain": {
+                "helm_pattern": 0,
+                "helm_primary": 8,
+                "helm_secondary": 8,
+                "helm_detail": 8,
+                "helm_lens": 9,
+            },
+            "veteran": {
+                "helm_pattern": 0,
+                "helm_primary": 8,
+                "helm_secondary": 8,
+                "helm_detail": 8,
+                "helm_lens": 9,
+            }
         },
         "names": {
             //Chapter Staff
@@ -153,9 +183,9 @@
         * * Stacks with advantages/disadvantages
         */
         "extra_ships": {
-            "battle_barges": 0,
+            "battle_barges": -1,
+            "strike_cruisers": -4,
             "gladius": 0,
-            "strike_cruisers": 0,
             "hunters": 0
         },
         /**
