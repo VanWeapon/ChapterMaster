@@ -36,8 +36,8 @@
         ],
         "disadvantages": [
             "", // leave the first entry blank for now
-            "",
-            "",
+            "Splintered",
+            "Tech-Heresy",
             "",
             "",
             "",
@@ -531,9 +531,18 @@
                                     ],
                                     [
                                         [
+                                            "Power Spear"
+                                        ],
+                                        2,
+                                        {
+                                            "wep2": ""
+                                        }
+                                    ],
+                                    [
+                                        [
                                             "Power Sword"
                                         ],
-                                        5
+                                        3
                                     ]
                                 ],
                                 "wep2": [
@@ -543,7 +552,7 @@
                                             "Hand Flamer",
                                             "Infernus Pistol"
                                         ],
-                                        5
+                                        3
                                     ]
                                 ]
                             }
@@ -660,7 +669,7 @@
                                     1
                                 ],
                                 "wep2": [
-                                    "Power Sword",
+                                    "Eldar Power Sword",
                                     1
                                 ]
                             }
@@ -735,7 +744,7 @@
                                             "Multi-Melta",
                                             "Lascannon"
                                         ],
-                                        4
+                                        5
                                     ]
                                 ]
                             }
