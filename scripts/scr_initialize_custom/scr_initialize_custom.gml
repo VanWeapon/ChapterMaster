@@ -1852,7 +1852,7 @@ function scr_initialize_custom() {
 
 				if(struct_exists(custom_squads, squad_name)){
 					var custom_squad = struct_get(custom_squads, squad_name);
-					// show_debug_message($"overwriting squad layout for {squad_name}")
+					// show_debug_message($"overwriting squad layout for {squad_name}");
 					// show_debug_message($"{custom_squad}")
 					variable_struct_set(st, squad_name, custom_squad);
 				}
@@ -2015,59 +2015,58 @@ function scr_initialize_custom() {
 	}
 	if (scr_has_adv("Boarders")) {
 		variable_struct_set(st, "breachers", [
-				[roles.assault, {
-					"max": 9,
-					"min": 4,
-					"loadout": { //assault breacher marine
-						"required": {
-							"wep1":["Chainaxe", 4],
-							"wep2":["Boarding Shield", max],
-							"armour":["MK3 Iron Armour", max],
-							"gear":["Plasma Bomb", 2],
-							"mobi":["", max]
-						},
-						"option": {
-							"wep1": [
-								[
-									["Storm Bolter", "Combiflamer", "Meltagun"], 2,
-								],
-								[
-									["Power Axe", "Power Fist"], 2
-								]
-								
-							]
-									}
+			[roles.assault, {
+				"max": 9,
+				"min": 4,
+				"loadout": { //assault breacher marine
+					"required": {
+						"wep1":["Chainaxe", 4],
+						"wep2":["Boarding Shield", max],
+						"armour":["MK3 Iron Armour", max],
+						"gear":["Plasma Bomb", 2],
+						"mobi":["", max]
 					},
-					"role": $"{roles.assault} Breacher"
-				}],
-				[roles.sergeant, {
-					"max": 1,
-					"min": 1,
-					"loadout": { //sergeant 
-						"required": {
-						"armour":["MK3 Iron Armour", 1],
-						"gear": ["Plasma Bomb", 1]
-						},
-						"option": {
-							"wep1": [
-								[
-									["Power Sword", "Power Axe", "Power Fist", "Thunder Hammer", "Chainsword"], 1
-								]
+					"option": {
+						"wep1": [
+							[
+								["Storm Bolter", "Combiflamer", "Meltagun"], 2,
 							],
-							"wep2": [
-								[
-									["Boarding Shield", "Storm Bolter", "Meltagun"], 1
-								]
+							[
+								["Power Axe", "Power Fist"], 2
 							]
-						}
+							
+						]
+								}
+				},
+				"role": $"{roles.assault} Breacher"
+			}],
+			[roles.sergeant, {
+				"max": 1,
+				"min": 1,
+				"loadout": { //sergeant 
+					"required": {
+					"armour":["MK3 Iron Armour", 1],
+					"gear": ["Plasma Bomb", 1]
 					},
-					"role": $"{roles.assault} Breacher {roles.sergeant}"
-				}, ],
-				["type_data", {
-					"display_data": $"{roles.assault} Breacher {squad_name}"
-				}]
-			])
-		}
+					"option": {
+						"wep1": [
+							[
+								["Power Sword", "Power Axe", "Power Fist", "Thunder Hammer", "Chainsword"], 1
+							]
+						],
+						"wep2": [
+							[
+								["Boarding Shield", "Storm Bolter", "Meltagun"], 1
+							]
+						]
+					}
+				},
+				"role": $"{roles.assault} Breacher {roles.sergeant}"
+			}, ],
+			["type_data", {
+				"display_data": $"{roles.assault} Breacher {squad_name}"
+			}]
+		])
 		variable_struct_set(st,"assault_squad", [
 			[roles.assault, {
 				"max": 9,
@@ -2120,6 +2119,7 @@ function scr_initialize_custom() {
 				"formation_options": ["assault"],
 			}]
 		])
+	}
 
 
 	var squad_names = struct_get_names(st);
@@ -2134,6 +2134,8 @@ function scr_initialize_custom() {
 			squad_types[$squad_names[st_iter]][$s_group[iter_2][0]] = s_group[iter_2][1];
 		}
 	}
+	// show_debug_message("Squad types");
+	// show_debug_message(squad_types);
 
 
 	for (i = 0; i <= 20; i++) {
