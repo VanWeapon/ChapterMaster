@@ -2615,7 +2615,7 @@ function scr_initialize_custom() {
 	repeat(veteran) {
 		k += 1;
 		man_size += 1;
-		add_unit_to_company("marine", company, k, roles.veteran, Role.VETERAN, "default","default","default","default","default");
+		add_unit_to_company("marine", company, k, roles.veteran, Role.VETERAN, "","","default","default","default");
 	}
 
 	repeat(scr_has_adv("Venerable Ancients") ? 3 : 2) {

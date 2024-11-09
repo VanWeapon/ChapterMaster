@@ -846,6 +846,7 @@
                 ]
             ],
             "terminator_squad": [
+                //Purgatus Kill Team
                 // Terminator Sergeant
                 [
                     "Veteran Sergeant",
@@ -919,6 +920,7 @@
                 ]
             ],
             "terminator_assault_squad": [
+                // Furor Kill Team
                 // Assault Terminator Sergeant
                 [
                     "Veteran Sergeant",
@@ -935,9 +937,9 @@
                                 "wep2": [
                                     "Storm Shield",
                                     1
-                                ],
-                            },
-                        },
+                                ]
+                            }
+                        }
                     }
                 ],
                 // Assault Terminator
@@ -945,7 +947,7 @@
                     "Terminator",
                     {
                         "max": 4,
-                        "min": 2,
+                        "min": 1,
                         "role": "Assault Terminator",
                         "loadout": {
                             "required": {
@@ -964,9 +966,73 @@
                                         [
                                             "Lightning Claw"
                                         ],
-                                        3,
+                                        2,
                                         {
                                             "wep2": "Lightning Claw",
+                                        }
+                                    ],
+                                    [
+                                        [
+                                            "Heavy Thunder Hammer",
+                                            1
+                                        ]
+                                    ]
+                                ]
+                            }
+                        }
+                    }
+                ],
+                // Vanguard Veteran
+                [
+                    "Veteran",
+                    {
+                        "max": 5,
+                        "min": 1,
+                        "role": "Vanguard Veteran",
+                        "loadout": {
+                            "required": {
+                                "wep1": [
+                                    "Infernus Heavy Bolter",
+                                    1
+                                ],
+                                "wep2": [
+                                    "",
+                                    0
+                                ]
+                            },
+                            "option": {
+                                "wep1": [
+                                    [
+                                        [
+                                            "Lightning Claw"
+                                        ],
+                                        1,
+                                        {
+                                            "wep2": "Lightning Claw",
+                                        }
+                                    ],
+                                    [
+                                        [
+                                            "Hand Flamer",
+                                            1
+                                        ],
+                                        {
+                                            "wep2": "Chainsword"
+                                        }
+                                    ],
+                                    [
+                                        [
+                                            "Thunder Hammer",
+                                            1
+                                        ]
+                                    ],
+                                    [
+                                        [
+                                            "Bolt Pistol",
+                                            1
+                                        ],
+                                        {
+                                            "wep2": "Power Sword"
                                         }
                                     ]
                                 ]

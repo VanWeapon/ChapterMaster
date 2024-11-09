@@ -101,6 +101,7 @@ function scr_ui_display_weapons(left_or_right, current_armor, equiped_weapon, cu
 			"Plasma Cannon":spr_weapon_plasc,
 			"Autocannon":spr_weapon_autocannon,
             "Grav-Cannon":spr_weapon_grav_cannon,
+            "Infernus Heavy Bolter": spr_weapon_hbolt, //placeholder
         }
         var heavy_ranged_names=struct_get_names(heavy_ranged);
         for (var i=0;i<array_length(heavy_ranged_names);i++){
