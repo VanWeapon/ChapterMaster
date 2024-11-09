@@ -366,7 +366,7 @@ function scr_marine_game_spawn_constructions(){
 			if (
                 (global.chapter_name == "Iron Hands") ||
                 (obj_ini.progenitor = ePROGENITOR.IRON_HANDS) ||
-                array_contains(obj_ini.dis, "Tech-Heresy")
+                scr_has_disadv("Tech-Heresy")
             ) {
 				add_bionics("right_arm", "standard", false);
 				bionic_count = choose(6, 6, 7, 7, 7, 8, 9);
@@ -379,7 +379,7 @@ function scr_marine_game_spawn_constructions(){
 				}
 				var tech_heresy = irandom(49);
 			}
-			if (array_contains(obj_ini.dis, "Tech-Heresy")) {
+			if (scr_has_disadv("Tech-Heresy")) {
 				var tech_heresy = irandom(10);
 				technology += 4;
 			}
