@@ -2140,8 +2140,8 @@ function scr_initialize_custom() {
 			squad_types[$squad_names[st_iter]][$s_group[iter_2][0]] = s_group[iter_2][1];
 		}
 	}
-	// show_debug_message("Squad types");
-	// show_debug_message(squad_types);
+	show_debug_message("Squad types");
+	show_debug_message(squad_types);
 
 
 	for (i = 0; i <= 20; i++) {
