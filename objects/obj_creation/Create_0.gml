@@ -299,9 +299,9 @@ all_chapters = [
 var missing_splash = 99;
 var custom_splash = 97;
 all_chapters[eCHAPTERS.EMPERORS_NIGHTMARE].splash = missing_splash;
-all_chapters[eCHAPTERS.CARCHARODONS].splash = missing_splash;
 all_chapters[eCHAPTERS.CONSERVATORS].splash = missing_splash;
 all_chapters[eCHAPTERS.CUSTOM_1].splash = custom_splash;
+all_chapters[eCHAPTERS.CUSTOM_1].loaded = false;
 all_chapters[eCHAPTERS.CUSTOM_2].loaded = false;
 all_chapters[eCHAPTERS.CUSTOM_3].loaded = false;
 all_chapters[eCHAPTERS.CUSTOM_4].loaded = false;
@@ -360,15 +360,9 @@ global.chapters_count = array_length(all_chapters);
  * * Not all Chapters are implemented yet, disable the ones that arent, remove a line if the chapter gets made
  */
 all_chapters[eCHAPTERS.UNKNOWN].disabled = true; //this should always be disabled, it exists for array indexing purposes for now
-// all_chapters[CHAPTERS.CARCHARODONS].disabled = true;
-// all_chapters[eCHAPTERS.ANGRY_MARINES].disabled = true;
 all_chapters[eCHAPTERS.EMPERORS_NIGHTMARE].disabled = true;
 all_chapters[eCHAPTERS.STAR_KRAKENS].disabled = true;
 all_chapters[eCHAPTERS.CONSERVATORS].disabled = true;
-// all_chapters[CHAPTERS.CUSTOM_2].disabled = true;
-// all_chapters[CHAPTERS.CUSTOM_3].disabled = true;
-// all_chapters[CHAPTERS.CUSTOM_4].disabled = true;
-// all_chapters[CHAPTERS.CUSTOM_5].disabled = true;
 
 founding_chapters = array_filter(all_chapters, function(item){ return item.origin == eCHAPTER_ORIGINS.FOUNDING});
 successor_chapters = array_filter(all_chapters, function(item){ return item.origin == eCHAPTER_ORIGINS.SUCCESSOR});
