@@ -250,7 +250,7 @@ function scr_chapter_new(argument0) {
 		var successfully_loaded = chapter_obj.load_from_json(chapter_id);
 		if(!successfully_loaded){
 			var issue = $"No json file exists for chapter id {chapter_id} and name {argument0}";
-			debugl (issue);
+			// debugl (issue);
 			scr_popup("Error Loading Chapter", issue, "debug");
 			return false;
 		}
