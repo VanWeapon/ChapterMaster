@@ -124,7 +124,8 @@
             {
                 "name": "The Thief of Secrets",
                 "base_weapon_type": "Power Sword",
-                "description": "The power sword known as the Thief of Secrets is inhabited by a machine spirit that has an unquenchable thirst for knowledge. When it tastes the vital fluids of an enemy, those liquids are absorbed into the blade and codified by the honeycombed array of logicum cells within. The biological secrets of the impaled creature are then analysed by the blade’s machine spirit, allowing its wielder to exploit the stolen knowledge from that point on."
+                "description": "The power sword known as the Thief of Secrets is inhabited by a machine spirit that has an unquenchable thirst for knowledge. When it tastes the vital fluids of an enemy, those liquids are absorbed into the blade and codified by the honeycombed array of logicum cells within. The biological secrets of the impaled creature are then analysed by the blade’s machine spirit, allowing its wielder to exploit the stolen knowledge from that point on.",
+                "slot": "wep1"
             }
         ],
         "company_titles": [
