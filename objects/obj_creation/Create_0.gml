@@ -299,9 +299,9 @@ all_chapters = [
 var missing_splash = 99;
 var custom_splash = 97;
 all_chapters[eCHAPTERS.EMPERORS_NIGHTMARE].splash = missing_splash;
-all_chapters[eCHAPTERS.CARCHARODONS].splash = missing_splash;
 all_chapters[eCHAPTERS.CONSERVATORS].splash = missing_splash;
 all_chapters[eCHAPTERS.CUSTOM_1].splash = custom_splash;
+all_chapters[eCHAPTERS.CUSTOM_1].loaded = false;
 all_chapters[eCHAPTERS.CUSTOM_2].loaded = false;
 all_chapters[eCHAPTERS.CUSTOM_3].loaded = false;
 all_chapters[eCHAPTERS.CUSTOM_4].loaded = false;
@@ -360,15 +360,18 @@ show_debug_message(all_chapters)
  * * Not all Chapters are implemented yet, disable the ones that arent, remove a line if the chapter gets made
  */
 all_chapters[eCHAPTERS.UNKNOWN].disabled = true; //this should always be disabled, it exists for array indexing purposes for now
-// all_chapters[CHAPTERS.CARCHARODONS].disabled = true;
-// all_chapters[eCHAPTERS.ANGRY_MARINES].disabled = true;
 all_chapters[eCHAPTERS.EMPERORS_NIGHTMARE].disabled = true;
 all_chapters[eCHAPTERS.STAR_KRAKENS].disabled = true;
 all_chapters[eCHAPTERS.CONSERVATORS].disabled = true;
-// all_chapters[CHAPTERS.CUSTOM_2].disabled = true;
-// all_chapters[CHAPTERS.CUSTOM_3].disabled = true;
-// all_chapters[CHAPTERS.CUSTOM_4].disabled = true;
-// all_chapters[CHAPTERS.CUSTOM_5].disabled = true;
+
+founding_chapters = array_filter(all_chapters, function(item){ return item.origin == eCHAPTER_ORIGINS.FOUNDING});
+successor_chapters = array_filter(all_chapters, function(item){ return item.origin == eCHAPTER_ORIGINS.SUCCESSOR});
+custom_chapters = array_filter(all_chapters, function(item){ return item.origin == eCHAPTER_ORIGINS.CUSTOM});
+other_chapters = array_filter(all_chapters, function(item){ return item.origin == eCHAPTER_ORIGINS.NON_CANON});
+show_debug_message($"founding: {founding_chapters}");
+show_debug_message($"successor: {successor_chapters}");
+show_debug_message($"custom: {custom_chapters}");
+show_debug_message($"other: {other_chapters}");
 
 founding_chapters = array_filter(all_chapters, function(item){ 
     show_debug_message(item);
@@ -798,23 +801,23 @@ function load_default_gear(_role_id, _role_name, _wep1, _wep2, _armour, _mobi, _
     gear[defaults_slot, _role_id] = _gear;
     race[defaults_slot, _role_id] = 1;
 }
-load_default_gear(Role.HONOUR_GUARD, "Honour Guard", "Power Sword", "Bolter", "Artificer Armour", "", "");
-load_default_gear(Role.VETERAN, "Veteran", "Chainsword", "Combiflamer", "Power Armour", "", "");
-load_default_gear(Role.TERMINATOR, "Terminator", "Power Fist", "Storm Bolter", "Terminator Armour", "", "");
-load_default_gear(Role.CAPTAIN, "Captain", "Power Sword", "Bolt Pistol", "Power Armour", "", "Iron Halo");
-load_default_gear(Role.DREADNOUGHT, "Dreadnought", "Dreadnought Lightning Claw", "Lascannon", "Dreadnought", "", "");
-load_default_gear(Role.CHAMPION, "Champion", "Power Sword", "Bolt Pistol", "Power Armour", "", "Combat Shield");
-load_default_gear(Role.TACTICAL, "Tactical", "Bolter", "Combat Knife", "Power Armour", "", "");
-load_default_gear(Role.DEVASTATOR, "Devastator", "", "Combat Knife", "Power Armour", "", "");
-load_default_gear(Role.ASSAULT, "Assault", "Chainsword", "Bolt Pistol", "Power Armour", "Jump Pack", "");
-load_default_gear(Role.ANCIENT, "Ancient", "Company Standard", "Bolt Pistol", "Power Armour", "", "");
-load_default_gear(Role.SCOUT, "Scout", "Bolter", "Combat Knife", "Scout Armour", "", "");
-load_default_gear(Role.CHAPLAIN, "Chaplain", "Crozius Arcanum", "Bolt Pistol", "Power Armour", "", "Rosarius");
-load_default_gear(Role.APOTHECARY, "Apothecary", "Chainsword", "Bolt Pistol", "Power Armour", "", "Narthecium");
-load_default_gear(Role.TECHMARINE, "Techmarine", "Power Axe", "Bolt Pistol", "Artificer Armour", "Servo-arm", "");
-load_default_gear(Role.LIBRARIAN, "Librarian", "Force Staff", "Bolt Pistol", "Power Armour", "", "Psychic Hood");
-load_default_gear(Role.SERGEANT, "Sergeant", "Chainsword", "Bolt Pistol", "Power Armour", "", "");
-load_default_gear(Role.VETERAN_SERGEANT, "Veteran Sergeant", "Chainsword", "Plasma Pistol", "Power Armour", "", "");
+load_default_gear(eROLE.HonourGuard, "Honour Guard", "Power Sword", "Bolter", "Artificer Armour", "", "");
+load_default_gear(eROLE.Veteran, "Veteran", "Chainsword", "Combiflamer", "Power Armour", "", "");
+load_default_gear(eROLE.Terminator, "Terminator", "Power Fist", "Storm Bolter", "Terminator Armour", "", "");
+load_default_gear(eROLE.Captain, "Captain", "Power Sword", "Bolt Pistol", "Power Armour", "", "Iron Halo");
+load_default_gear(eROLE.Dreadnought, "Dreadnought", "Dreadnought Lightning Claw", "Lascannon", "Dreadnought", "", "");
+load_default_gear(eROLE.Champion, "Champion", "Power Sword", "Bolt Pistol", "Power Armour", "", "Combat Shield");
+load_default_gear(eROLE.Tactical, "Tactical", "Bolter", "Combat Knife", "Power Armour", "", "");
+load_default_gear(eROLE.Devastator, "Devastator", "", "Combat Knife", "Power Armour", "", "");
+load_default_gear(eROLE.Assault, "Assault", "Chainsword", "Bolt Pistol", "Power Armour", "Jump Pack", "");
+load_default_gear(eROLE.Ancient, "Ancient", "Company Standard", "Bolt Pistol", "Power Armour", "", "");
+load_default_gear(eROLE.Scout, "Scout", "Bolter", "Combat Knife", "Scout Armour", "", "");
+load_default_gear(eROLE.Chaplain, "Chaplain", "Crozius Arcanum", "Bolt Pistol", "Power Armour", "", "Rosarius");
+load_default_gear(eROLE.Apothecary, "Apothecary", "Chainsword", "Bolt Pistol", "Power Armour", "", "Narthecium");
+load_default_gear(eROLE.Techmarine, "Techmarine", "Power Axe", "Bolt Pistol", "Artificer Armour", "Servo-arm", "");
+load_default_gear(eROLE.Librarian, "Librarian", "Force Staff", "Bolt Pistol", "Power Armour", "", "Psychic Hood");
+load_default_gear(eROLE.Sergeant, "Sergeant", "Chainsword", "Bolt Pistol", "Power Armour", "", "");
+load_default_gear(eROLE.VeteranSergeant, "Veteran Sergeant", "Chainsword", "Plasma Pistol", "Power Armour", "", "");
 
 
 

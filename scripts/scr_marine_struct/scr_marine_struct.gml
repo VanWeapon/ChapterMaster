@@ -2346,29 +2346,29 @@ function TTRPG_stats(faction, comp, mar, class = "marine", other_spawn_data={}) 
 			// case "Forge Master":
 			// case "Master of Sanctity":
 			// case "Master of the Apothecarion":
-			// case obj_ini.role[100][Role.HONOUR_GUARD]:
+			// case obj_ini.role[100][eROLE.HonourGuard]:
 			// case "Codiciery":
 			// case "Lexicanum":
 			// 1st company only
-			// case obj_ini.role[100][Role.VETERAN]:
-			// case obj_ini.role[100][Role.TERMINATOR]:
-			// case obj_ini.role[100][Role.VETERAN_SERGEANT]:
+			// case obj_ini.role[100][eROLE.Veteran]:
+			// case obj_ini.role[100][eROLE.Terminator]:
+			// case obj_ini.role[100][eROLE.VeteranSergeant]:
 			// Command Squads
-			// case obj_ini.role[100][Role.CAPTAIN]:
-			// case obj_ini.role[100][Role.CHAMPION]:
-			// case obj_ini.role[100][Role.ANCIENT]:
+			// case obj_ini.role[100][eROLE.Captain]:
+			// case obj_ini.role[100][eROLE.Champion]:
+			// case obj_ini.role[100][eROLE.Ancient]:
 			// Command Squads and HQ
-			// case obj_ini.role[100][Role.CHAPLAIN]:
-			// case obj_ini.role[100][Role.APOTHECARY]:
-			// case obj_ini.role[100][Role.TECHMARINE]:
-			// case obj_ini.role[100][Role.LIBRARIAN]:
+			// case obj_ini.role[100][eROLE.Chaplain]:
+			// case obj_ini.role[100][eROLE.Apothecary]:
+			// case obj_ini.role[100][eROLE.Techmarine]:
+			// case obj_ini.role[100][eROLE.Librarian]:
 			// Company marines
-			// case obj_ini.role[100][Role.DREADNOUGHT]:
-			// case obj_ini.role[100][Role.TACTICAL]:
-			// case obj_ini.role[100][Role.DEVASTATOR]:
-			// case obj_ini.role[100][Role.ASSAULT]:
-			// case obj_ini.role[100][Role.SERGEANT]:
-			// case obj_ini.role[100][Role.SCOUT]:
+			// case obj_ini.role[100][eROLE.Dreadnought]:
+			// case obj_ini.role[100][eROLE.Tactical]:
+			// case obj_ini.role[100][eROLE.Devastator]:
+			// case obj_ini.role[100][eROLE.Assault]:
+			// case obj_ini.role[100][eROLE.Sergeant]:
+			// case obj_ini.role[100][eROLE.Scout]:
 			// 	break;
 		// }
 
