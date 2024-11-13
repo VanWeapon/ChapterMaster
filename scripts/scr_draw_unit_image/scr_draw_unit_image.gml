@@ -251,8 +251,10 @@ function set_shader_array(shader_array){
         }
     }
 }
+
+/// @mixin
 function scr_draw_unit_image(_background=false){
-    function draw_unit_hands(x_surface_offset, y_surface_offset, armour_type, specialist_colours, hide_bionics, right_left){
+    var draw_unit_hands = function(x_surface_offset, y_surface_offset, armour_type, specialist_colours, hide_bionics, right_left){
         if (arm_variant[right_left] == 1) {
             return;
         }
@@ -267,6 +269,7 @@ function scr_draw_unit_image(_background=false){
                 case ArmourType.Scout:
                     var _hand_spr = spr_pa_hands;
                     offset_y += 11;
+                    offset_x += ui_xmod[right_left];
                 default:
                 case ArmourType.Normal:
                     var _hand_spr = spr_pa_hands;
@@ -297,7 +300,7 @@ function scr_draw_unit_image(_background=false){
         }
     }
     
-    function draw_unit_arms(x_surface_offset, y_surface_offset, armour_type, specialist_colours, hide_bionics,complex_set){
+    var draw_unit_arms = function(x_surface_offset, y_surface_offset, armour_type, specialist_colours, hide_bionics,complex_set){
         if (array_contains([ArmourType.Normal,ArmourType.Terminator, ArmourType.Scout], armour_type)){
             var offset_x = x_surface_offset;
             var offset_y = y_surface_offset;

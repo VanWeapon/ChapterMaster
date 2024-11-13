@@ -2,6 +2,7 @@
 // TODO: Refactor a lot of individual armour/weapon checks/array_contains changes to be built-in into each weapon struct presented here.
 // TODO: Overall a refactor to weapon draw logic would be good, as current approach may be a bit too verbose and at the same time not very customizable.
 // My advice is to use Bolter and Power Sword as baselines for all origin, offset and other adjustments, to keep stuff consistent.
+/// @mixin
 function scr_ui_display_weapons(left_or_right, current_armor, equiped_weapon, current_armor_type) {
     clear = false;
     display_type = "normal_ranged";
@@ -138,6 +139,7 @@ function scr_ui_display_weapons(left_or_right, current_armor, equiped_weapon, cu
             "Eviscerator":spr_weapon_evisc,
             "Power Mace":spr_weapon_powmace,
             "Mace of Absolution":spr_weapon_mace_of_absolution,
+            "Show Maul":spr_weapon_powmaul,
         }
         var melee_weapons_names=struct_get_names(melee_weapons);
         var wep_
@@ -368,7 +370,8 @@ function scr_ui_display_weapons(left_or_right, current_armor, equiped_weapon, cu
             arm_variant[left_or_right] = 3;
         }
     } else if (current_armor_type == ArmourType.Scout){
-        ui_ymod[left_or_right] = 11;
+        ui_xmod[left_or_right] += 4;
+        ui_ymod[left_or_right] += 11;
     }
 
     // This is for when weapon sprites that are touching the ground and must be independent of unit height.

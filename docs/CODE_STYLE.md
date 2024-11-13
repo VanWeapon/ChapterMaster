@@ -16,8 +16,10 @@ All variable names, function names, etc., should use `snake_case` unless otherwi
 
 - **Local** variables are recommended to have a `_` prefix, which can ease readability.
   - Example: `var _example_e1`.
+
 - **Global** variables require no additional prefix, as they already use `global.`.
   - Example: `global.example_e1`.
+
 - **Functions** don’t need prefixes but should:
   - Use at least two words to avoid overlap with instance variables (e.g., `draw_something()`).
   - Name functions as actions where possible (`draw_something()` vs. `green_apple()`).
@@ -29,7 +31,6 @@ All variable names, function names, etc., should use `snake_case` unless otherwi
 
 - **Enum** constants:
   - Enum names should start with an `e` prefix and be in all caps.
-  - Enum names should start with an `e` prefix and be in all caps.
   - Enum entries should use `PascalCase`.
   - Example: `enum eCOLORS` with entries `DarkRed`, `Blue`, etc.
 
@@ -39,11 +40,14 @@ All variable names, function names, etc., should use `snake_case` unless otherwi
 - Use `&&` and `||` instead of `and` and `or` to ensure compatibility with JavaScript formatters.
 - Indentation should be 4 spaces (avoid tabs).
 - End simple statements with semicolons.
-- For string interpolation, use `$"text {variable}"` as it’s least error-prone and applies `string()` to `{variables}` automatically.
+- For string interpolation choose one of these methods: 
+  - For big strings - [template strings](https://manual.gamemaker.io/beta/en/index.htm#t=GameMaker_Language%2FGML_Reference%2FStrings%2FStrings.htm) (`$"text {variable}"`), as they are easier to read, less typo-prone and convert `{variables}` to strings automatically.
+  - For small strings - [string()](https://manual.gamemaker.io/lts/en/GameMaker_Language/GML_Reference/Strings/string.htm) function (`string("text {0}", value_to_insert)`), as it may be easier to read in some cases.
 - Use parentheses to clarify conditions with mixed `&&` and `||` operators, ensuring consistent behavior across platforms.
-   - Example (recommended for mixed operators): `if ((condition1 && condition2) || (condition3 && condition4))`
-   - Simple sequences of the same operator (like `&&` alone) don’t need extra parentheses: `if (condition1 && condition2 && condition3)`
-   - Avoid wrapping each condition individually when using the same operator: `if ((condition1) && (condition2) && (condition3))`
+  - Example (recommended for mixed operators): `if ((condition1 && condition2) || (condition3 && condition4))`
+  - Simple sequences of the same operator (like `&&` alone) don’t need extra parentheses: `if (condition1 && condition2 && condition3)`
+  - Avoid wrapping each condition individually when using the same operator: `if ((condition1) && (condition2) && (condition3))`
+- Use `++`/`--` instead of `+=1`/`-=1`.
 
 ### Formatters:
 > [!WARNING]
