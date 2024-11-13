@@ -293,7 +293,7 @@ all_chapters = [
     new ChapterDataLite(eCHAPTERS.CUSTOM_7, eCHAPTER_ORIGINS.CUSTOM,0,"Custom","Your Chapter"),
     new ChapterDataLite(eCHAPTERS.CUSTOM_8, eCHAPTER_ORIGINS.CUSTOM,0,"Custom","Your Chapter"),
     new ChapterDataLite(eCHAPTERS.CUSTOM_9, eCHAPTER_ORIGINS.CUSTOM,0,"Custom","Your Chapter"),
-    new ChapterDataLite(eCHAPTERS.CUSTOM_10, eCHAPTER_ORIGINS.CUSTOM,0,"Custom","Your Chapter"),
+    new ChapterDataLite(eCHAPTERS.CUSTOM_10, eCHAPTER_ORIGINS.CUSTOM,0,"Custom","Your Chapter")
 ]
 
 var missing_splash = 99;
@@ -355,7 +355,7 @@ for(var c = 1; c < 40; c++){
 }
 
 global.chapters_count = array_length(all_chapters);
-
+show_debug_message(all_chapters)
 /** 
  * * Not all Chapters are implemented yet, disable the ones that arent, remove a line if the chapter gets made
  */
@@ -370,7 +370,10 @@ all_chapters[eCHAPTERS.CONSERVATORS].disabled = true;
 // all_chapters[CHAPTERS.CUSTOM_4].disabled = true;
 // all_chapters[CHAPTERS.CUSTOM_5].disabled = true;
 
-founding_chapters = array_filter(all_chapters, function(item){ return item.origin == eCHAPTER_ORIGINS.FOUNDING});
+founding_chapters = array_filter(all_chapters, function(item){ 
+    show_debug_message(item);
+    return item.origin == eCHAPTER_ORIGINS.FOUNDING
+});
 successor_chapters = array_filter(all_chapters, function(item){ return item.origin == eCHAPTER_ORIGINS.SUCCESSOR});
 custom_chapters = array_filter(all_chapters, function(item){ return item.origin == eCHAPTER_ORIGINS.CUSTOM});
 other_chapters = array_filter(all_chapters, function(item){ return item.origin == eCHAPTER_ORIGINS.NON_CANON});

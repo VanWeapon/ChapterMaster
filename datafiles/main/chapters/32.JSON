@@ -1,6 +1,6 @@
 {
     "chapter": {
-        "id": 33,
+        "id": 32,
         "name": "Deathwatch",
         "flavor": "Known as the Shield that Slays, they are the Chamber Militant of the Ordo Xenos, charged with protecting it in its search of information, containment, and ultimate destruction of all xeno species. Consisting of Battle-Brothers drawn from many Chapters, the Deathwatch operates from Watch Fortresses and Watch Stations across the whole of the Imperium.",
         "origin": 3, // 1 - Founding, 2 - Successor, 3 - Other/non-canon/fanmade, 4 - Custom
@@ -62,28 +62,28 @@
                 "helm_primary": 8,
                 "helm_secondary": 8,
                 "helm_detail": 8,
-                "helm_lens": 9,
+                "helm_lens": 9
             },
             "vet_sgt": {
                 "helm_pattern": 0,
                 "helm_primary": 8,
                 "helm_secondary": 8,
                 "helm_detail": 8,
-                "helm_lens": 9,
+                "helm_lens": 9
             },
             "captain": {
                 "helm_pattern": 0,
                 "helm_primary": 8,
                 "helm_secondary": 8,
                 "helm_detail": 8,
-                "helm_lens": 9,
+                "helm_lens": 9
             },
             "veteran": {
                 "helm_pattern": 0,
                 "helm_primary": 8,
                 "helm_secondary": 8,
                 "helm_detail": 8,
-                "helm_lens": 9,
+                "helm_lens": 9
             }
         },
         "names": {
@@ -221,11 +221,11 @@
             "third": -55,
             "fourth": -55,
             "fifth": -55,
-            "sixth": -100,
-            "seventh": -100,
-            "eighth": -100,
-            "ninth": -100,
-            "tenth": -100
+            "sixth": -200,
+            "seventh": -200,
+            "eighth": -200,
+            "ninth": -200,
+            "tenth": -200
         },
         "extra_vehicles": {
             "rhino": 0,
@@ -260,7 +260,7 @@
                 "name": "Watch Captain",
                 "wep1": "Power Sword",
                 "wep2": "Infernus Pistol"
-            },
+            }
             // "tactical": {
             //     "name": "Tactical"
             // },
@@ -630,7 +630,7 @@
                     {
                         "max": 9,
                         "min": 4,
-                        "role": "Sternguard Veteran",
+                        "role": "Vanguard Veteran",
                         "loadout": {
                             "required": {
                                 "wep1": [
@@ -774,8 +774,15 @@
                                             "Multi-Melta",
                                             "Lascannon"
                                         ],
-                                        5
-                                    ]
+                                        3
+                                    ],
+                                    [
+                                        "Stalker Pattern Bolter"
+                                    ],
+                                    2,
+                                    {
+                                        "wep2": "Combat Knife"
+                                    }
                                 ]
                             }
                         }
