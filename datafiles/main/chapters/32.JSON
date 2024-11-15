@@ -777,12 +777,14 @@
                                         3
                                     ],
                                     [
-                                        "Stalker Pattern Bolter"
-                                    ],
-                                    2,
-                                    {
-                                        "wep2": "Combat Knife"
-                                    }
+                                        [
+                                            "Stalker Pattern Bolter"
+                                        ],
+                                        2,
+                                        {
+                                            "wep2": "Combat Knife"
+                                        }
+                                    ]
                                 ]
                             }
                         }

@@ -2946,7 +2946,7 @@ function scr_initialize_custom() {
 				commands += 1; // Company Chaplain
 				var _mobi = mobi[defaults_slot, eROLE.Chaplain];
 				if (company = 8) and(obj_creation.equal_specialists = 0) then _mobi = "Jump Pack";
-				add_unit_to_company("marine", company, k, roles.chaplain, Role.CHAPLAIN,"default",choose_weighted(weapon_weighted_lists.pistols),"default",_mobi,"");
+				add_unit_to_company("marine", company, k, roles.chaplain, eROLE.Chaplain,"default",choose_weighted(weapon_weighted_lists.pistols),"default",_mobi,"");
 			}
 			repeat (apothecary_per_company){
 				k += 1;
