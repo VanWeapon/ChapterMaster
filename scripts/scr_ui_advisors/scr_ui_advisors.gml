@@ -270,7 +270,7 @@ function scr_ui_advisors() {
 
         // draw_set_alpha(1);if (obj_controller.gene_seed<=0) or (obj_ini.zygote=1) then draw_set_alpha(0.5);
 
-        if (menu = 12.1) or(fest_sid + fest_wid > 0) then draw_set_alpha(0.25);
+/*         if (menu = 12.1) or(fest_sid + fest_wid > 0) then draw_set_alpha(0.25);
         draw_set_color(c_gray);
         draw_rectangle(xx + 560, yy + 780, xx + 682, yy + 805, 0);
         draw_set_alpha(1);
@@ -306,10 +306,8 @@ function scr_ui_advisors() {
                 fest_star = "";
                 fest_sid = 0;
                 fest_wid = 0;
-                fest_planet = 0;
 
-                if (obj_ini.fleet_type != home_world) then fest_planet = -1;
-                if (obj_ini.fleet_type = ePlayerBase.home_world) then fest_planet = 1;
+                fest_planet = (obj_ini.fleet_type == ePlayerBase.home_world) ? 1 : -1;
 
                 fest_lav = 0;
                 fest_locals = 0;
@@ -320,7 +318,7 @@ function scr_ui_advisors() {
                 fest_repeats = 1;
 
             }
-        }
+        } */
         draw_set_alpha(1);
         draw_set_font(fnt_40k_14);
 
@@ -713,7 +711,7 @@ function scr_ui_advisors() {
         draw_text_ext(xx + 222, yy + 216, string_hash_to_newline(string(tot_ki)), -1, 396);
         var unit = fetch_unit([0,1]);
         if (unit.ship_location = 0) then draw_text(xx + 222, yy + 380, string_hash_to_newline("Current Location: " + string(obj_ini.loc[0, 1]) + " " + string(unit.planet_location) + "#Health: " + unit.hp() + "%"));
-        if (unit.ship_location > 0) then draw_text(xx + 222, yy + 380, string_hash_to_newline($"Current Location: Onboard {obj_ini.ship[unit.ship_location]}#Health: {unit.hp()}%"));
+        if (unit.ship_location>-1) then draw_text(xx + 222, yy + 380, string_hash_to_newline($"Current Location: Onboard {obj_ini.ship[unit.ship_location]}#Health: {unit.hp()}%"));
         draw_text(xx + 222.5, yy + 380.5, string_hash_to_newline("Current Location:#Health:"));
 
         draw_sprite(spr_arrow, 0, xx + 217, yy + 32);
