@@ -246,7 +246,7 @@ function scr_start_load(fleet, load_from_star, load_options) {
 				}
 			}
 		}
-		for (var i=0;i<array_length(_empty_ships)i++){
+		for (var i=0; i<array_length(_empty_ships); i++){
 			var _add_fleet = array_random_element(_fleets);
 			add_ship_to_fleet(_empty_ships[i], _add_fleet);
 		}
