@@ -99,6 +99,7 @@ ships_damaged=0;
 
 marines_lost=0;
 
+en_mutation=[];
 en_mutation[0]="";
 en_mutation[1]="";
 en_mutation[2]="";
@@ -166,13 +167,13 @@ column_num[1]=0;
 column[2]="";
 column_width[2]=0;
 column_num[3]=0;
-column[3]="Capital";
+column[3]="capital";
 column_width[3]=270;
 column_num[3]=0;
-column[4]="Strike Cruiser";
+column[4]="frigate";
 column_width[4]=140;
 column_num[4]=0;
-column[5]="Escort";
+column[5]="escort";
 column_width[5]=76;
 column_num[5]=0;// Furthest right
 

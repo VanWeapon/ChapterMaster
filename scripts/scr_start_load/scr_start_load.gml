@@ -58,7 +58,7 @@ function scr_start_load(fleet, load_from_star, load_options) {
 	}
     var  ship_size, _companies_loaded;
     _company_size = 0;
-    var ship = 1;
+    var ship = 0;
     //ship_size = obj_ini.ship_size[ship];
     _companies_loaded = 1;
 	var ship_return = 1;
@@ -66,10 +66,10 @@ function scr_start_load(fleet, load_from_star, load_options) {
 
 	
 		//loop through companies. try and load whole company onto single ship else spread company across largest ships with remaining space
-	var ship_loop_start = 1;
+	var ship_loop_start = 0;
 	for (_comp = 0; _comp<10;_comp++){
 		if ((split_vets == 1 && _comp == 1) || (!comp_has_units[_comp])) then continue;
-		if (ship_loop_start>array_length(obj_ini.ship_carrying)){
+		if (ship_loop_start>=array_length(obj_ini.ship_carrying)){
 			ship_loop_start=array_length(obj_ini.ship_carrying);
 		}
 		total_vehic_size = 0;
@@ -246,7 +246,7 @@ function scr_start_load(fleet, load_from_star, load_options) {
 				}
 			}
 		}
-		for (var i=0;i<array_length(_empty_ships)i++){
+		for (var i=0; i<array_length(_empty_ships); i++){
 			var _add_fleet = array_random_element(_fleets);
 			add_ship_to_fleet(_empty_ships[i], _add_fleet);
 		}
