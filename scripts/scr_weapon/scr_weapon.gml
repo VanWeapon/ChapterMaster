@@ -252,6 +252,26 @@ global.weapons = {
 		"spli": 1,
 		"tags": ["banner"],
 	},
+	"Chapter Standard": {
+		"abbreviation": "ChpStnd",
+		"special_properties": ["Morale Boost"],
+		"description": "A banner consecrated by the Reclusiarch and dedicated to the heroes of the Chapter past, present and future. Will bolster the morale of nearby Astartes.",
+		"attack": {
+			"standard": 45,
+			"master_crafted": 60,
+			"artifact": 100
+		},
+		"hp_mod": {
+			"standard": 40,
+			"master_crafted": 40,
+			"artifact": 40
+		},
+		"melee_hands": 1,
+		"ranged_hands": 1,
+		"range": 1,
+		"spli": 1,
+		"tags": ["banner"],
+	},
 	"Eviscerator": {
 		"abbreviation": "Evisc",
 		"attack": {

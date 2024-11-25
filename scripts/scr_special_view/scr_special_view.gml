@@ -44,8 +44,10 @@ function scr_special_view(command_group) {
 			unit = obj_ini.TTRPG[0][v];	    	
 			var yep=0;
 			if (unit.base_group!="astartes") and (unit.base_group!="none"){yep=1;}
-			if ((unit.role()=="Chapter Master") or (unit.role()==obj_ini.role[100][2])){yep=1;}
-			if (yep==1){
+			if (unit.role()=="Chapter Master" || 
+				unit.role()==obj_ini.role[100][eROLE.HonourGuard] || 
+				unit.role() == obj_ini.role[100][eROLE.Champion] || 
+				unit.role() == obj_ini.role[100][eROLE.Ancient]){
 		        add_man_to_manage_arrays(unit);
 			}
 		}

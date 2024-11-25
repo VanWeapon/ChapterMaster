@@ -120,6 +120,7 @@ function scr_ui_display_weapons(left_or_right, current_armor, equiped_weapon, cu
         var chap_name = global.chapter_name;
         var melee_weapons ={
             "Company Standard":struct_exists(standards, chap_name) ? standards[$ chap_name] :spr_weapon_standard2,
+            "Chapter Standard":struct_exists(standards, chap_name) ? standards[$ chap_name] :spr_weapon_standard2,
             "Chainsword":spr_weapon_chsword,
             "Combat Knife":spr_weapon_knife,
             "Power Sword":spr_weapon_powswo,

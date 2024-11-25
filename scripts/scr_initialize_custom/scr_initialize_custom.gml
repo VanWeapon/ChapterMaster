@@ -2441,13 +2441,9 @@ function scr_initialize_custom() {
 
 	// Honour Guard
 	var _honour_guard_count = 0, unit;
-	o = 0;
-	chapter_option = 0;
-	repeat(4) {
-		o += 1;
-		if (obj_creation.adv[o] = "Retinue of Renown") then chapter_option = 1;
-	}
-	if (chapter_option = 1) then _honour_guard_count += 10;
+	if (scr_has_adv("Retinue of Renown")){
+		_honour_guard_count += 10;
+	}  
 	if (progenitor == ePROGENITOR.DARK_ANGELS && obj_creation.custom = 0) { _honour_guard_count += 6; }
 	if (_honour_guard_count == 0) {
 		_honour_guard_count = 3
@@ -2456,8 +2452,39 @@ function scr_initialize_custom() {
 		k += 1;
 		commands += 1;
 		man_size += 1;
-		add_unit_to_company("marine", company, k, roles.honour_guard, eROLE.HonourGuard,"default", "default","default","default","default");
+		
+		var _wep1 = choose("Power Sword", "Power Spear", "Power Axe");
+		if(wep1[defaults_slot][eROLE.HonourGuard] != "Power Sword"){
+			_wep1 = wep1[defaults_slot][eROLE.HonourGuard];
+		}
+		
+		add_unit_to_company("marine", company, k, roles.honour_guard, eROLE.HonourGuard,_wep1, "default","default","default","default");
 	}
+
+	// Company Ancient 
+	k += 1; 
+	man_size += 1;
+	commands += 1;
+	var _armour = "Artificer Armour";
+	if (scr_has_disadv("Poor Equipment")){
+		_armour = "MK6 Corvus"
+	}
+	var _chap_ancient = add_unit_to_company("marine", company, k, $"Chapter {roles.ancient}", eROLE.Ancient, "Chapter Standard","Storm Bolter","default","default",_armour);
+	_chap_ancient.update_weapon_one("Chapter Standard", false, false, "master_crafted");
+
+	// Company Champion
+	k += 1;
+	man_size += 1;
+	commands += 1;
+	var _armour = "Artificer Armour";
+	if (scr_has_disadv("Poor Equipment")){
+		_armour = "MK6 Corvus"
+	}
+	var _wep1 = "Power Sword";
+	var _wep2 = "Combat Knife";
+	var _chap_champ = add_unit_to_company("marine", company, k, $"Chapter {roles.champion}", eROLE.Champion, _wep1,_wep2,"default","default",_armour);
+	_chap_champ.add_trait("melee_enthusiast");
+
 
 	specials = k;
 
@@ -3308,7 +3335,7 @@ function add_unit_to_company(ttrpg_name, company, slot, role_name, role_id, wep1
 			var _msg = spawn_unit.update_armour(armour, false, false);
 		}
 		
-		show_debug_message($"updating coy {company}:{slot} {role_name} armour to {armour}: {_msg} : {spawn_unit.armour()} : {obj_ini.armour[company][slot]}");
+		// show_debug_message($"updating coy {company}:{slot} {role_name} armour to {armour}: {_msg} : {spawn_unit.armour()} : {obj_ini.armour[company][slot]}");
 	}
 	if(gear != ""){
 		if(gear == "default"){
