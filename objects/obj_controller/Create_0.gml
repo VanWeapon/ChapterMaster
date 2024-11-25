@@ -1529,7 +1529,7 @@ if (lexa > 0) then temp[njm] += $", {lexa} {string_plural("Lexicanum", lexa)}.";
 vih=string_pos(",",temp[njm]);
 temp[njm]=string_delete(temp[njm],vih,1);
 
-if (honoh>0) then temp[njm]+=$"\n\nHonour Guard, having the {honoh} most veteran {string_plural("marine", honoh)} of your chapter serving in it.";
+if (honoh>0) then temp[njm]+=$"\n\nHonour Guard, having the {honoh} most veteran {string_plural("marine", honoh)} of your chapter serving in it, along with your Chapter Champion and Chapter Ancient.";
 
 for(var company=0; company<10; company++){
     njm++;

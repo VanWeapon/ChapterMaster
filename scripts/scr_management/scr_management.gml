@@ -96,6 +96,8 @@ function scr_management(argument0) {
 			nam[i] = "";
 		}
 	    nam[2]=role_names[eROLE.HonourGuard];
+		nam[9] = "Chapter " + role_names[eROLE.Champion];
+		nam[8] = "Chapter " + role_names[eROLE.Ancient];
 
 	    for (var i = 0; i < array_length(obj_ini.name[0]); i++) {
 			unit = fetch_unit([0,i]);
@@ -103,7 +105,15 @@ function scr_management(argument0) {
 				num[1] += 1;
 				if (nam[1] == "") then nam[1] = unit.name();
 			}
-			if (unit.role() == role_names[eROLE.HonourGuard]) then num[2] += 1;
+			if (unit.role() == nam[2]) {
+				num[2] += 1;
+			}
+			if(unit.role() == nam[9]){
+				num[9] += 1;
+			}
+			if(unit.role() == nam[8]){
+				num[8] += 1;
+			}
 		}
 		
 
@@ -126,6 +136,15 @@ function scr_management(argument0) {
 	    if (num[2]>0){
 			q++;
 			obj_managment_panel.line[q]=string(num[2])+"x "+string(nam[2]);
+		}
+
+		if (num[9]>0){
+			q++;
+			obj_managment_panel.line[q]=string(num[9])+"x "+string(nam[9]);
+		}
+		if (num[8]>0){
+			q++;
+			obj_managment_panel.line[q]=string(num[8])+"x "+string(nam[8]);
 		}
 
 	    obj_managment_panel.italic[1]=1; obj_managment_panel.bold[q]=1;
@@ -424,7 +443,7 @@ function scr_management(argument0) {
 	        }
 			
 	        q=0;
-				for (var d = 1; d <= 24; d++) {
+				for (var d = 1; d < array_length(nam); d++) {
 					if (num[d] > 0) {
 							q += 1;
 							if (d == 1) {

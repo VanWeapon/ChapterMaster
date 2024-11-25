@@ -46,8 +46,8 @@ function scr_special_view(command_group) {
 			if (unit.base_group!="astartes") and (unit.base_group!="none"){yep=1;}
 			if (unit.role()=="Chapter Master" || 
 				unit.role()==obj_ini.role[100][eROLE.HonourGuard] || 
-				unit.role() == obj_ini.role[100][eROLE.Champion] || 
-				unit.role() == obj_ini.role[100][eROLE.Ancient]){
+				unit.role() == "Chapter " + obj_ini.role[100][eROLE.Champion] || 
+				unit.role() == "Chapter " + obj_ini.role[100][eROLE.Ancient]){
 		        add_man_to_manage_arrays(unit);
 			}
 		}
