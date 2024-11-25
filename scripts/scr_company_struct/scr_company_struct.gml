@@ -45,7 +45,7 @@ function CompanyStruct(comp) constructor{
 	squad_draw_surfaces=[];
 	reset_squad_surface();
 
-	if (company>0 && company<11){
+	if (company>=0 && company<11){
 		var unit;
 		var company_units = obj_controller.display_unit;
 		var role_set = obj_ini.role[100];

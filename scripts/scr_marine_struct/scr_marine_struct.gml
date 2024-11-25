@@ -345,7 +345,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine", other_spawn_data={}) 
 			return "no change"
 		}
 		if (base_group=="astartes"){
-			if (role() == obj_ini.role[100][12] && new_role!=obj_ini.role[100][12]){
+			if (role() == obj_ini.role[100][eROLE.Scout] && new_role!=obj_ini.role[100][eROLE.Scout]){
 		  		if (!get_body_data("black_carapace","torso")){
 		  			alter_body("torso", "black_carapace", true);
 		  			stat_boosts(
@@ -371,7 +371,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine", other_spawn_data={}) 
 		if instance_exists(obj_controller){
 			array_push(role_history ,[role(), obj_controller.turn])
 		}
-		if (new_role==obj_ini.role[100][5]){
+		if (new_role==obj_ini.role[100][eROLE.Captain]){
 			if (company==2) then obj_ini.watch_master_name=name();
 			if (company==3) then obj_ini.arsenal_master_name=name();
 	        if (company==4) then obj_ini.lord_admiral_name=name();
@@ -382,11 +382,11 @@ function TTRPG_stats(faction, comp, mar, class = "marine", other_spawn_data={}) 
 			if (company==9) then obj_ini.relic_master_name=name();
 	        if (company==10) then obj_ini.recruiter_name=name();
 	        scr_recent("captain_promote",name(),company);			
-		} else  if (new_role==obj_ini.role[100][4]){
+		} else  if (new_role==obj_ini.role[100][eROLE.Terminator]){
 			scr_recent("terminator_promote",name(),company);
-		} else if (new_role==obj_ini.role[100][2]){
+		} else if (new_role==obj_ini.role[100][eROLE.HonourGuard]){
 			scr_recent("honor_promote",name(),company);
-		} else if (new_role==obj_ini.role[100][6]){
+		} else if (new_role==obj_ini.role[100][eROLE.Dreadnought]){
 
             var dread_weapons = ["Close Combat Weapon","Force Staff","Twin Linked Lascannon","Assault Cannon","Missile Launcher","Plasma Cannon", "Multi-Melta", "Twin Linked Heavy Bolter"];
 

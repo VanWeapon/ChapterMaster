@@ -633,13 +633,20 @@ function scr_ui_manage() {
 	    
 	    if (!obj_controller.view_squad){
 	        man_count = 0;
+			//Companies
 	        if (managing>0 && managing<=10){
 		        var cap_slot=company_data.captain!="none";
 		        var champ_slot=company_data.champion!="none";
 		        var ancient_slot=company_data.ancient!="none";
 	    	}
+			//HQ
+			if(managing == 11){
+				var champ_slot=company_data.champion!="none";
+		        var ancient_slot=company_data.ancient!="none";
+				var cap_slot = true;
+			}
 		    for(var i=0; i<repetitions;i++){
-		    	if (managing>0 && managing<=10 && (!cap_slot || !champ_slot || !ancient_slot)){
+		    	if (managing>0 && managing<=11 && (!cap_slot || !champ_slot || !ancient_slot)){
 		    		if (!cap_slot){
 		    			draw_set_color(c_black);
 		    			draw_rectangle(xx+25,yy+64,xx+974,yy+85,0);
@@ -656,7 +663,7 @@ function scr_ui_manage() {
 								purpose:$"{scr_roman_numerals()[managing-1]} Company Captain Candidates",
 								purpose_code : "captain_promote",
 								number:1,
-								system:managing,
+								system: managing == 11 ? 0 : managing,
 								feature:"none",
 								planet : 0,
 								selections : [],
@@ -679,7 +686,7 @@ function scr_ui_manage() {
 						draw_set_color(c_gray);
 						if (point_and_click([xx+25,yy+64,xx+974,yy+85])){
 							var search_params = {
-								companies:managing,
+								companies:managing == 11 ? 0 : managing,
 								"stat":[["weapon_skill", 44, "more"]]
 							};
 							var candidates = collect_role_group("standard", "", true,search_params);
@@ -687,7 +694,7 @@ function scr_ui_manage() {
 								purpose:$"{scr_roman_numerals()[managing-1]} Champion Candidates",
 								purpose_code : "champion_promote",
 								number:1,
-								system:managing,
+								system:managing == 11 ? 0 : managing,
 								feature:"none",
 								planet : 0,
 								selections : [],
@@ -710,14 +717,20 @@ function scr_ui_manage() {
 						draw_set_color(c_gray);
 						if (point_and_click([xx+25,yy+64,xx+974,yy+85])){
 							var search_params = {
-								companies:managing,
+								companies:managing == 11 ? 1 : managing,
 							};							
 							var candidates = collect_role_group("standard", "", true,search_params);
+							var coy_roman = "";
+							if(managing < 11){
+								coy_roman = scr_roman_numerals()[managing-1] + " Company";
+							} else {
+								coy_roman = "Chapter";
+							}
 							group_selection(candidates,{
-								purpose:$"{scr_roman_numerals()[managing-1]} Company Ancient Candidates",
+								purpose:$"{coy_roman} Ancient Candidates",
 								purpose_code : "ancient_promote",
 								number:1,
-								system:managing,
+								system:managing == 11 ? 0 : managing,
 								feature:"none",
 								planet : 0,
 								selections : [],
@@ -727,7 +740,7 @@ function scr_ui_manage() {
 						yy+=20;
 						ancient_slot=true;
 						continue;
-		    		}		    				    		
+		    		}
 		    	}
 		    	if (sel>=array_length(display_unit)) then break;
 		    	while (man[sel]=="hide") and (sel<array_length(display_unit)-1){

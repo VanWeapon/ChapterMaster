@@ -446,6 +446,9 @@ function switch_view_company(new_view){
 		if (new_view>10){
 			view_squad=false;
 			company_data={};
+			if(new_view == 11){
+				company_data = new CompanyStruct(0); // HQ
+			}
 			scr_special_view(new_view);
 		} else {
 			scr_company_view(new_view);		

@@ -2462,15 +2462,15 @@ function scr_initialize_custom() {
 	}
 
 	// Company Ancient 
-	k += 1; 
-	man_size += 1;
-	commands += 1;
-	var _armour = "Artificer Armour";
-	if (scr_has_disadv("Poor Equipment")){
-		_armour = "MK6 Corvus"
-	}
-	var _chap_ancient = add_unit_to_company("marine", company, k, $"Chapter {roles.ancient}", eROLE.Ancient, "Chapter Standard","Storm Bolter","default","default",_armour);
-	_chap_ancient.update_weapon_one("Chapter Standard", false, false, "master_crafted");
+	// k += 1; 
+	// man_size += 1;
+	// commands += 1;
+	// var _armour = "Artificer Armour";
+	// if (scr_has_disadv("Poor Equipment")){
+	// 	_armour = "MK6 Corvus"
+	// }
+	// var _chap_ancient = add_unit_to_company("marine", company, k, $"Chapter {roles.ancient}", eROLE.Ancient, "Chapter Standard","Storm Bolter","default","default",_armour);
+	// _chap_ancient.update_weapon_one("Chapter Standard", false, false, "master_crafted");
 
 	// Company Champion
 	k += 1;
