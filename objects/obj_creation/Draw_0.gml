@@ -154,7 +154,7 @@ if (slate4>0){
                 // Highlight on hover
                 draw_rectangle_color_simple(grid.x1, grid.y1, grid.x2, grid.y2,0,c_white,0.1);
                 //Click
-                if (point_and_click([grid.x1, grid.y1, grid.x2, grid.y2])){
+                if (grid.clicked()){
                     cooldown=8000;
                     chapter_name=chap.name;
                     if (!chap.disabled){
@@ -195,14 +195,14 @@ if (slate4>0){
             }
             
             // Hover
-            if (scr_hit(grid.x1, grid.y1, grid.x2, grid.y2) && slate4>=30){
+            if (grid.hover() && slate4>=30){
                 if (old_highlight!=highlight) and (highlight!=i) and (goto_slide!=2){old_highlight=highlight;highlighting=1;}
                 if (goto_slide!=2){highlight=chap.id;tool=1;}
                 // Highlight white on hover
                 draw_rectangle_color_simple(grid.x1, grid.y1, grid.x2, grid.y2,0,c_white,0.1);
 
                 //Click
-                if (point_and_click([grid.x1, grid.y1, grid.x2, grid.y2])){
+                if (grid.clicked()){
 					if(chap.loaded == true && chap.disabled == false){
                         if(chap.icon > global.normal_icons_count){
                             global.chapter_icon_sprite = spr_icon_chapters;
@@ -245,13 +245,13 @@ if (slate4>0){
             scr_image("creation/chapters/icons",chap.icon,grid.x1, grid.y1, grid.w, grid.h);
 
             // Hover
-            if (scr_hit(grid.x1, grid.y1, grid.x2, grid.y2) && slate4>=30){
+            if (grid.hover() && slate4>=30){
                 if (old_highlight!=highlight) and (highlight!=i) and (goto_slide!=2){old_highlight=highlight;highlighting=1;}
                 if (goto_slide!=2){highlight=i;tool=1;}
                 // Highlight white on hover
                 draw_rectangle_color_simple(grid.x1, grid.y1, grid.x2, grid.y2,0,c_white,0.1);
                 //Click
-                if (point_and_click([grid.x1, grid.y1, grid.x2, grid.y2])){
+                if (grid.clicked()){
                     cooldown=8000;
                     chapter_name=chap.name;
                     if (!chap.disabled){
@@ -282,11 +282,11 @@ if (slate4>0){
             draw_sprite_stretched(spr_icon_chapters,i-1001,grid.x1, grid.y1, grid.w, grid.h);
 
             
-            if (grid.hover() && slate4>=30)){
+            if (grid.hover() && slate4>=30){
                 if (old_highlight!=highlight) and (highlight!=i) and (goto_slide!=2){old_highlight=highlight;highlighting=1;}
                 if (goto_slide!=2){highlight=i;tool=1;}
                 draw_rectangle_color_simple(grid.x1, grid.y1, grid.x2, grid.y2,0,c_white,0.1);
-                if (point_and_click([grid.x1, grid.y1, grid.x2, grid.y2])){
+                if (grid.clicked()){
                     cooldown=8000;
                     icon=1;
                     icon_name="da";
