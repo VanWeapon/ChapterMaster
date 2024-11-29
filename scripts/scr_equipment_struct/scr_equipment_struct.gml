@@ -21,7 +21,8 @@ function EquipmentStruct(item_data, core_type,quality="none") constructor{
 		["tags", []],
 		["name", ""],
 		["second_profiles", []],
-		["req_exp", 0]
+		["req_exp", 0],
+        ["maintenance", 0]
 	];
 
 	for (var i = 0; i < array_length(properties); i++) {
