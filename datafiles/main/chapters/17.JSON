@@ -270,7 +270,7 @@
             },
             "dreadnought": {
                 "name": "Belligerent Engine",
-                "wep1": "Inferno Cannon"
+                "wep2": "Inferno Cannon"
             },
             "assault": {
                 "name": "Angrier Marine"
