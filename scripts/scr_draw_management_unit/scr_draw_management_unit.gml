@@ -52,7 +52,7 @@ function scr_draw_management_unit(selected, yy=0, xx=0, draw=true){
         if (draw)  { 
             health_string=$"{round((unit.hp()/unit.max_health())*100)}% HP";
         
-            var exp_string= $"{ma_exp[selected]} XP";
+            var exp_string= $"{round(ma_exp[selected])} EXP";
         
             ma_ar="";ma_we1="";ma_we2="";ma_ge="";ma_mb="";ttt=0;
             ar_ar=0;ar_we1=0;ar_we2=0;ar_ge=0;ar_mb=0;
@@ -207,11 +207,11 @@ function scr_draw_management_unit(selected, yy=0, xx=0, draw=true){
 		}
 	
 		var hpText = [xx+240+8, yy+66, string_hash_to_newline(string(health_string))]; // HP
-		var xpText = [xx+330+8, yy+66, string_hash_to_newline(string(exp_string))]; // XP
+		var xpText = [xx+330+8, yy+66, exp_string]; // EXP
 		var hpColor = c_gray;
 		var xpColor = c_gray;
 		var specialismColors = [];
-		// Draw XP value and set up health color
+		// Draw EXP value and set up health color
 		if (man[selected] == "man"){
 			if (ma_promote[selected] >= 10){
 				hpColor = c_red;
@@ -249,8 +249,6 @@ function scr_draw_management_unit(selected, yy=0, xx=0, draw=true){
 		var truncatedLocation = string_truncate(string(unit_location_string), 130); // Truncate the location string to 100 pixels
 		draw_text(xx+430+8,yy+66,truncatedLocation);// LOC
 	    draw_set_alpha(1);
-	
-	    // ma_lid[i]=0;ma_wid[i]=0;
 	
 	    if (ma_loc[selected]=="Mechanicus Vessel"){
 	    	draw_sprite(spr_loc_icon,2,xx+427+8,yy+66);
@@ -337,7 +335,7 @@ function scr_draw_management_unit(selected, yy=0, xx=0, draw=true){
     var no_location = (selecting_location=="");
     var wrong_location = false;
     if (!no_location){
-    	if (selecting_ship>0){
+    	if (selecting_ship>-1){
     		if (ma_lid[selected]==0){
     			wrong_location=true;
     		} else {

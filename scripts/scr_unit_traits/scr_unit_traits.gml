@@ -145,7 +145,7 @@ global.trait_list = {
 		strength:4,
 		wisdom:3,
 		charisma:1,
-		display_name:"Lone Survivor",
+		display_name:"Beast Slayer",
 		flavour_text :"Defeated a huge beast in single combat, this proves their toughness and their great ability to overcome powerful enemies of the imperium",
 
 	},	
@@ -210,7 +210,7 @@ global.trait_list = {
 		piety:[-6,4,"min"],
 		wisdom:1,
 		display_name:"Skeptic",
-		flavour_text:"Have a skeptical outlook and put little thought in trivial matters like religion and faith",
+		flavour_text:"Skeptical outlook and put little thought in trivial matters like religion and faith",
 	},
 	"scholar":{
 		intelligence:[4,2,"max"],
@@ -218,7 +218,7 @@ global.trait_list = {
 		technology:2,
 		stength:-1,
 		display_name:"Scholar",
-		flavour_text:"Have a keen mind and enjoy reading and training it whenever possible",
+		flavour_text:"Keen mind and enjoys reading and training it whenever possible",
 	},
 	"brute":{
 		strength:[4,2,"max"],
@@ -377,6 +377,8 @@ global.trait_list = {
 
 	},
 	"siege_master" : {
+
+		display_name : "Siege Master",
 		wisdom : [2,2,"max"],
 		constitution : [2,2],
 		flavour_text:"Understands the ins and outs of defences both in building them and in taking them appart",
@@ -426,13 +428,19 @@ global.astartes_trait_dist = [
 					["Death", -10],
 					["Forge",1],
 					["Shrine",2]					
-				]	
+				],
+				recruit_trial : [
+					[eTrials.EXPOSURE, -1],
+					[eTrials.HUNTING, -3],
+					[eTrials.APPRENTICESHIP, 1],
+					[eTrials.KNOWLEDGE, 1]
+				]				
 			}				
 
 		],
 		[	
 			"very_hard_to_kill", 
-			[149,148],
+			[400,397],
 			{
 				recruit_world_type: [
 					["Ice", -1],
@@ -441,7 +449,8 @@ global.astartes_trait_dist = [
 				],
 				recruit_trial : [
 					[eTrials.EXPOSURE, -3],
-					[eTrials.SURVIVAL, -1]
+					[eTrials.SURVIVAL, -2],
+					[eTrials.APPRENTICESHIP, 1]
 				]
 			}					
 		],
@@ -455,7 +464,10 @@ global.astartes_trait_dist = [
 					["Death", -3],
 					["Forge",1],
 					["Shrine",2]					
-				]
+				],
+				recruit_trial : [
+					[eTrials.EXPOSURE, -1],
+				]				
 			}				
 		],
 		[
@@ -468,7 +480,8 @@ global.astartes_trait_dist = [
 				],
 				recruit_trial : [
 					[eTrials.KNOWLEDGE, -2],
-					[eTrials.APPRENTICESHIP, -1]
+					[eTrials.APPRENTICESHIP, -1],
+					[eTrials.BLOODDUEL, 1],					
 				]
 			}					
 		],
@@ -482,22 +495,40 @@ global.astartes_trait_dist = [
 					["Death", -3],
 					["Forge",50],
 					["Shrine",2]					
-				]
+				],
+				recruit_trial : [
+					[eTrials.KNOWLEDGE, 3],
+					[eTrials.APPRENTICESHIP, 10],
+					[eTrials.BLOODDUEL, -1],	
+					[eTrials.SURVIVAL, -1],					
+				]				
 			}
 		],
-		["brawler", [99,98],{
-				chapter_name:["Space Wolves",[20,19]]
+		[
+			"brawler",
+			[99,98],
+			{
+				chapter_name:[
+					"Space Wolves",[200,190]
+				],
+				recruit_trial : [
+					[eTrials.BLOODDUEL, -2],
+				]			
 			}
 		],
 		[
 			"brute", 
-			[99,98],
+			[200,198],
 			{
 				recruit_world_type: [
 					["Ice", -1],
 					["Lava", -1],
 					["Death", -1],				
-				]
+				],
+				recruit_trial : [
+					[eTrials.BLOODDUEL, -1],
+					[eTrials.APPRENTICESHIP, 1],
+				]				
 			}					
 		],
 		[
@@ -508,23 +539,57 @@ global.astartes_trait_dist = [
 					["Shrine", -3],
 					["Temperate", -2],
 					["Agri", -2]
-				]
+				],
+				recruit_trial : [
+					[eTrials.KNOWLEDGE, -1],
+				]				
 			}
 		],
 		["skeptic", [99,98]],
-		["blunt", [99,98]],
-		["nimble", [99,98]],
-		["recluse", [99,98]],
+		[
+			"blunt", 
+			[99,98]
+		],
+		[
+			"nimble", 
+			[99,98],
+			{
+				recruit_trial : [
+					[eTrials.HUNTING, -1],
+				]
+			}
+		],
+		[
+			"recluse", 
+			[199,198],
+			{
+				recruit_trial : [
+					[eTrials.HUNTING, -1],
+					[eTrials.EXPOSURE, -1],
+				]
+			}
+
+		],
 		[	
 			"perfectionist", 
 			[99,98],
 			{
 				recruit_trial : [
 					[eTrials.KNOWLEDGE, -3],
+					[eTrials.HUNTING, -1],
 				]	
 			}				
 		],
-		["observant", [99,98]],
+		[
+			"observant", 
+			[99,98],
+			{
+				recruit_trial : [
+					[eTrials.KNOWLEDGE, -1],
+					[eTrials.HUNTING, -1],
+				]	
+			}			
+		],
 		[
 			"cunning", 
 			[99,98],
@@ -538,35 +603,58 @@ global.astartes_trait_dist = [
 			}					
 		],
 		["guardian", [99,98]],
-		["observant", [99,98]],
+		[
+			"observant",
+			[99,98],
+			{
+				recruit_trial : [
+					[eTrials.HUNTING, -1],
+				],
+			}
+		],
 		[
 			"technophobe", 
 			[99,98],
 			{
-				"progenitor":[ePROGENITOR.IRON_HANDS,[1000,999]],
+				"progenitor":[
+					ePROGENITOR.IRON_HANDS,[1000,999]
+				],
 				recruit_world_type : [
 					["Ice", -5],
 					["Death", -2],
 					["Forge",50],
-				]
+				],
 			}
 		],
-		["jaded", [99,98]],
-		["strong", [99,98]],
+		[
+			"jaded",
+			[99,98],
+		],
+		[
+			"strong", 
+			[99,98],
+			{
+				recruit_trial : [
+					[eTrials.CHALLENGE, -1],
+				],		
+			}
+		],
 		[
 			"fast_learner", 
-			[149,148]
+			[149,148],
 		],
 		["feet_floor", 
 			[199,198],
 			{
 				chapter_name:[
 					"Space Wolves",[100,70]
-				]
+				],
 			}
 		],
 		["paragon", [999,998]],
-		["warp_touched",[299,298]],
+		[
+			"warp_touched",[299,298]
+		],
 		["shitty_luck",
 			[99,98],
 			{
@@ -575,14 +663,17 @@ global.astartes_trait_dist = [
 				]
 			}
 		],
-		["lucky",[99,98]],
+		[
+			"lucky",
+			[99,98]
+		],
 		["natural_leader",
 			[199,198],
 			{
 				recruit_world_type: [
 					["Temperate", -2],
 					["Shrine", -4],
-				]						
+				],					
 			}
 		],
 		[
@@ -600,8 +691,12 @@ global.astartes_trait_dist = [
 			{
 				"advantage":[
 					"Assault Doctrine",[300,100]
-				]
-			}
+				],
+				recruit_trial : [
+					[eTrials.BLOODDUEL, -1],
+					[eTrials.CHALLENGE, -1],
+				]				
+			}, 
 		],
 		[
 			"lightning_warriors",
@@ -622,7 +717,10 @@ global.astartes_trait_dist = [
 				],
 				recruit_world_type: [
 					["Shrine", -15]
-				]						
+				],
+				recruit_trial : [
+					[eTrials.KNOWLEDGE, -2],
+				]										
 			}
 		],
 		["flesh_is_weak",[1000,999],{
@@ -661,13 +759,19 @@ global.astartes_trait_dist = [
 		],
 		[
 			"honorable",
-			[299,298],
+			[299,297],
 			{
 				recruit_world_type: [
 					["Feudal", -9],
 					["Temperate", -3],
 					["Desert", -9],
-				]						
+				],
+				recruit_trial : [
+					[eTrials.BLOODDUEL, 1],
+				],
+				recruit_trial : [
+					[eTrials.CHALLENGE, -1],
+				]
 			}
 		],
 		[
@@ -679,10 +783,13 @@ global.astartes_trait_dist = [
 				],
 				recruit_world_type: [
 					["Feudal", -9],
-				]						
+				],
+				recruit_trial : [
+					[eTrials.CHALLENGE, -2],
+				]										
 			}
 		],	
-		{
+		[
 			"siege_master",
 			[299,297],
 			{
@@ -690,9 +797,12 @@ global.astartes_trait_dist = [
 					["Feudal", -6],
 					["hive", -2],
 					["ice", 1],
-				]
+				],
+				recruit_trial : [
+					[eTrials.APPRENTICESHIP, -2],
+				]				
 			}
-		}			
+		]		
 	];
 
 

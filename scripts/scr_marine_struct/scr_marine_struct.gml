@@ -17,17 +17,31 @@
 		the first int is a base or mean value the second int is a sd number to be passed to the gauss() function
 		the string (usually max) is guidance so in the instance of max it will pick the larger value of the mean and the gauss function return
 */
-global.stat_list = ["constitution", "strength", "luck", "dexterity", "wisdom", "piety", "charisma", "technology","intelligence", "weapon_skill", "ballistic_skill"];
+#macro ARR_stat_list ["constitution", "strength", "luck", "dexterity", "wisdom", "piety", "charisma", "technology","intelligence", "weapon_skill", "ballistic_skill"]
+
+global.stat_shorts = {
+	"constitution":"CON", 
+	"strength":"STR", 
+	"luck":"LCK", 
+	"dexterity":"DEX", 
+	"wisdom":"WIS", 
+	"piety":"PTY", 
+	"charisma":"CHA", 
+	"technology":"TEC",
+	"intelligence":"INT", 
+	"weapon_skill":"WS", 
+	"ballistic_skill":"BS",
+}
 
 // will swap these out for enums or some better method as i develop where this is going
-global.body_parts = ["left_leg", "right_leg", "torso", "right_arm", "left_arm", "left_eye", "right_eye", "throat", "jaw","head"];
-global.body_parts_display = ["Left Leg", "Right Leg", "Torso", "Right Arm", "Left Arm", "Left Eye", "Right Eye", "Throat", "Jaw","Head"];
+#macro ARR_body_parts ["left_leg", "right_leg", "torso", "right_arm", "left_arm", "left_eye", "right_eye", "throat", "jaw","head"]
+#macro ARR_body_parts_display ["Left Leg", "Right Leg", "Torso", "Right Arm", "Left Arm", "Left Eye", "Right Eye", "Throat", "Jaw","Head"]
 global.religions={
 	"imperial_cult":{"name":"Imperial Cult"},
 	"cult_mechanicus":{"name":"Cult Mechanicus"}, 
 	"eight_fold_path":{"name":"The Eight Fold Path"}
 };
-global.power_armour=["MK7 Aquila","MK6 Corvus","MK5 Heresy","MK3 Iron Armour","MK4 Maximus","Power Armour"];
+#macro ARR_power_armour ["MK7 Aquila","MK6 Corvus","MK5 Heresy","MK3 Iron Armour","MK4 Maximus","Power Armour"]
 enum location_types {
 	planet,
 	ship,
@@ -36,7 +50,7 @@ enum location_types {
 	warp
 }
 
-global.phy_levels =["Rho","Pi","Omicron","Xi","Nu","Mu","Lambda","Kappa","Iota","Theta","Eta","Zeta","Epsilon","Delta","Gamma","Beta","Alpha","Alpha Plus","Beta","Gamma Plus"]
+#macro ARR_psy_levels ["Rho","Pi","Omicron","Xi","Nu","Mu","Lambda","Kappa","Iota","Theta","Eta","Zeta","Epsilon","Delta","Gamma","Beta","Alpha","Alpha Plus","Beta","Gamma Plus"]
 
 global.base_stats = { //tempory stats subject to change by anyone that wishes to try their luck
 	"chapter_master":{ // TODO consider allowing the player to change the starting stats of the chapter master, and closest advisors, especially for custom chapters
@@ -289,12 +303,21 @@ function TTRPG_stats(faction, comp, mar, class = "marine", other_spawn_data={}) 
 	experience = 0;
 	turn_stat_gains = {};
 
-	static update_exp = function(new_val){
+	static set_exp = function(new_val){
 		experience = new_val
+		var _powers_learned = 0;
+
+		if (IsSpecialist("libs")) { 
+			_powers_learned = update_powers();
+		}
+
+		// 0 is returned to have the same return format as in add_exp, to avoid confusion;
+		return [0, _powers_learned];
 	}//change exp
 
 	static add_exp = function(add_val){
 		var instace_stat_point_gains = {};
+		var _powers_learned = 0;
 		stat_point_exp_marker += add_val;
 		experience += add_val;
 		if (base_group == "astartes"){
@@ -302,7 +325,10 @@ function TTRPG_stats(faction, comp, mar, class = "marine", other_spawn_data={}) 
 				var stat_gains = choose("weapon_skill", "ballistic_skill", "wisdom");
 				var special_stat = irandom(3);
 				if (IsSpecialist("forge") && special_stat==0) then stat_gains = "technology";
-				if (IsSpecialist("libs") && special_stat==0) then stat_gains = "intelligence";
+				if (IsSpecialist("libs")) {
+					if (special_stat==0) then stat_gains = "intelligence";
+					_powers_learned = update_powers();
+				}
 				if (IsSpecialist("chap") && special_stat==0) then stat_gains = "charisma";
 				if (IsSpecialist("apoth") && special_stat==0) then stat_gains = "intelligence";
 				if (role()=="Champion" && stat_gains!="weapon_skill" && special_stat==0) then stat_gains = "weapon_skill";
@@ -326,7 +352,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine", other_spawn_data={}) 
 			}
 			assign_reactionary_traits();
 		}
-		return instace_stat_point_gains;
+		return [instace_stat_point_gains, _powers_learned];
 	}
 	static armour = function(raw=false){
 		var wep = obj_ini.armour[company][marine_number];
@@ -503,7 +529,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine", other_spawn_data={}) 
 	allegiance =faction;	//faction alligience defaults to the chapter
 	
 	static stat_boosts = function(stat_boosters){
-		stats = global.stat_list;
+		var stats = ARR_stat_list;
 		var edits = struct_get_names(stat_boosters);
 		var edit_stat,random_stat,stat_mod;		
 		for (var stat_iter =0; stat_iter <array_length(stats);stat_iter++){
@@ -644,12 +670,13 @@ function TTRPG_stats(faction, comp, mar, class = "marine", other_spawn_data={}) 
 		} else {
 			var item_key_map = {};
 			var body_part_area_keys
-			for (var i=0;i<array_length(global.body_parts);i++){//search all body parts
-				body_area = body[$ global.body_parts[i]]
+			var _body_parts = ARR_body_parts;
+			for (var i=0;i<array_length(_body_parts);i++){//search all body parts
+				body_area = body[$ _body_parts[i]]
 				body_part_area_keys=struct_get_names(body_area);
 				for (var b=0;b<array_length(body_part_area_keys);b++){
 					if (body_part_area_keys[b]==body_item_key){
-						item_key_map[$ global.body_parts[i]] = body_area[$ body_item_key]
+						item_key_map[$ _body_parts[i]] = body_area[$ body_item_key]
 					}
 				}
 				
@@ -671,7 +698,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine", other_spawn_data={}) 
 			loyalty = 100;
 			var _astartes_trait_dist = global.astartes_trait_dist;
 
-			distribute_traits(astartes_trait_dist);
+			distribute_traits(_astartes_trait_dist);
 
 			alter_body("torso","black_carapace",true);
 			if (class=="scout" &&  global.chapter_name!="Space Wolves"){
@@ -824,8 +851,9 @@ function TTRPG_stats(faction, comp, mar, class = "marine", other_spawn_data={}) 
 				add_or_sub_health(30);
 			}
 			var bionic_possible = [];
-			for (var body_part = 0; body_part < array_length(global.body_parts);body_part++){
-				part = global.body_parts[body_part];
+			var _body_parts = ARR_body_parts;
+			for (var body_part = 0; body_part < array_length(_body_parts);body_part++){
+				part = _body_parts[body_part];
 				if (!get_body_data("bionic",part)){
 					array_push(bionic_possible, part);
 				}
@@ -1436,6 +1464,15 @@ function TTRPG_stats(faction, comp, mar, class = "marine", other_spawn_data={}) 
 				squad = "none"
 			}
 		}
+		static add_to_squad = function(new_squad){
+			if (squad != "none"){
+				if (new_squad==squad) then exit;
+				remove_from_squad();
+			}
+			squad = new_squad;
+			var _squad = fetch_squad(squad);
+			_squad.add_member(company, marine_number);
+		}
 		static marine_location = function(){
 			var location_id,location_name;
 			var location_type = planet_location;
@@ -1593,42 +1630,9 @@ function TTRPG_stats(faction, comp, mar, class = "marine", other_spawn_data={}) 
 		return (obj_ini.god[company,marine_number]>=10);
 	}
 
-	static forge_point_generation = function(turn_end=false){
-		var trained_person = IsSpecialist("forge");
-		var crafter = has_trait("crafter");
-		if (!(trained_person || crafter)) then return 0;
-		var reasons = {}
-		var points = 0;
-		if (trained_person){
-			var points = round(technology / 10);
-			reasons.trained = points;
-		}
-		if (job!="none"){
-			if (job.type == "forge"){
-				
-				if (crafter){
-					points*=3;
-					reasons.at_forge = "x3 (Crafter)";
-				} else {
-					points*=2;
-					reasons.at_forge = "x2";
-				}
-				points+=3;
-				if (turn_end){
-					add_exp(0.25);
-				}
-			}
-		}
-		if (crafter){
-			points+=3;
-			reasons.crafter = 3;
-		}
-		if (role()=="Forge Master"){
-			points+=5;
-			reasons.master = 5;
-		}
-		return [points,reasons];
-	}
+	static forge_point_generation = unit_forge_point_generation;
+
+	static apothecary_point_generation = unit_apothecary_points_gen;
 
 	static marine_assembling = scr_marine_game_spawn_constructions;
 
@@ -1783,6 +1787,19 @@ function TTRPG_stats(faction, comp, mar, class = "marine", other_spawn_data={}) 
 			};
 		return equip_data;
 	}
+	static equipment_maintenance_burden = function(){
+		var burden = 0.0;
+		burden+=get_armour_data("maintenance");
+		burden+=get_gear_data("maintenance");
+		burden+=get_mobility_data("maintenance");
+		burden+=get_weapon_one_data("maintenance");
+		burden+=get_weapon_two_data("maintenance");
+		if (has_trait("tinkerer")){
+			burden *= 0.33;
+		}
+		return burden;
+	}
+
 	static equipped_artifacts=function(){
 		artis = [
 			weapon_one(true),
@@ -1814,6 +1831,22 @@ function TTRPG_stats(faction, comp, mar, class = "marine", other_spawn_data={}) 
 			}
 		}
 		return has_tag;
+	}
+
+	static get_stat_line = function(){
+		return {
+			"constitution":constitution, 
+			"strength":strength, 
+			"luck":luck, 
+			"dexterity":dexterity, 
+			"wisdom":wisdom, 
+			"piety":piety, 
+			"charisma":charisma, 
+			"technology":technology,
+			"intelligence":intelligence, 
+			"weapon_skill":weapon_skill, 
+			"ballistic_skill":ballistic_skill
+		}
 	}
 
 	static movement_after_math = function(end_company=company, end_slot=marine_number){

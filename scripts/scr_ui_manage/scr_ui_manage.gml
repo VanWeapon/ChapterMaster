@@ -49,7 +49,7 @@ function scr_ui_manage() {
 		}
 		if (man_size<1){
 	        selecting_location="";
-	        selecting_ship=0;
+	        selecting_ship=-1;
 	        selecting_planet=0;
 	        man_size=0;
 		}	
@@ -348,9 +348,11 @@ function scr_ui_manage() {
         	x2 = x1+string_width(var_text);
         	y2 = y1+string_height(var_text);
 	        draw_text_outline(x1,y1,var_text);
-	        for (var part = 0; part<array_length(global.body_parts);part++){
-				if (struct_exists(selected_unit.body[$ global.body_parts[part]], "bionic")){
-					var part_display = global.body_parts_display[part];
+			var _body_parts = ARR_body_parts;
+			var _body_parts_display = ARR_body_parts_display;
+	        for (var part = 0; part<array_length(_body_parts);part++){
+				if (struct_exists(selected_unit.body[$ _body_parts[part]], "bionic")){
+					var part_display = _body_parts_display[part];
 					bionic_tooltip += $"Bionic {part_display}";
 					switch (part_display) {
 						case "Left Leg":
@@ -466,7 +468,7 @@ function scr_ui_manage() {
 	        draw_text_outline(x1,y1,var_text);
 	        array_push(tooltip_drawing, [tooltip_text, [x1,y1,x2,y2]]); 
 
-	        if (cn.temp[113]!="") then draw_text_outline(x_left,yy+466,string_hash_to_newline("Experience: "+string(cn.temp[113])));
+	        if (cn.temp[113]!="") then draw_text_outline(x_left, yy+466, string_hash_to_newline($"Experience: {round(cn.temp[113])}"));
 
        
         		 
@@ -503,7 +505,7 @@ function scr_ui_manage() {
 							}
 						}
         		var_text = string_hash_to_newline(string("Damage Resistance: {0}",cn.temp[118]))
-	        	tooltip_text += string_hash_to_newline(string("CON: {0}%#XP: {1}%", round(selected_unit.constitution/2), round(selected_unit.experience/10)));
+	        	tooltip_text += string_hash_to_newline(string("CON: {0}%#EXP: {1}%", round(selected_unit.constitution/2), round(selected_unit.experience/10)));
 	        	x1 = x_left;
 	        	y1 = yy+378;
 	        	x2 = x1+string_width(var_text);
@@ -969,7 +971,7 @@ function scr_ui_manage() {
 				button.label = "Move Ship";
 				button.keystroke = (keyboard_check(vk_shift) && (keyboard_check_pressed(ord("M"))));
 				button.tooltip = "Press Shift M";					
-				var moveship_possible = !array_contains(invalid_locations, selecting_location) && man_size>0 && selecting_ship>0;	
+				var moveship_possible = !array_contains(invalid_locations, selecting_location) && man_size>0 && selecting_ship>-1;	
 				if (moveship_possible){
 					button.alpha = 1;
 					if (button.draw()){
@@ -1101,7 +1103,7 @@ function scr_ui_manage() {
 			if (cn.temp[120].name()!="") and (cn.temp[120].race()!=0){
 				draw_set_alpha(1);
 				var xx=__view_get( e__VW.XView, 0 )+0, yy=__view_get( e__VW.YView, 0 )+0
-		        if ((point_in_rectangle(mouse_x, mouse_y, xx+1208, yy+210, xx+1374, yy+210+272) || obj_controller.unit_profile) && !instance_exists(obj_temp3) && !instance_exists(obj_popup)) {
+		        if (scr_hit(xx+1208, yy+210, xx+1374, yy+210+272) || obj_controller.unit_profile) && !instance_exists(obj_temp3) && !instance_exists(obj_popup) {
 					stats_displayed = true;
 		        	selected_unit.stat_display(true);
 		       		//tooltip_draw(stat_x, stat_y+string_height(stat_display),0,0,100,17);

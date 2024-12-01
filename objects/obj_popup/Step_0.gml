@@ -619,7 +619,12 @@ if (image="ancient_ruins" && woopwoopwoop && move_to_next_stage()) {
         obj_controller.menu=1;
         // obj_controller.managing=manag;
         with(obj_controller){
-            var i;i=-1;man_size=0;selecting_location="";selecting_types="";selecting_ship=0;sel_uid=0;
+            var i=-1;
+            man_size=0;
+            selecting_location="";
+            selecting_types="";
+            selecting_ship=-1;
+            sel_uid=0;
             reset_manage_arrays();
             alll=0;
             update_general_manage_view();
@@ -757,7 +762,7 @@ if (title="Necron Tunnels : 3"){option1="Continue";option2="Return to the surfac
 if (title="He Built It") and (option1="") and (string_count("submerged",text)=0){
     option1="Execute the heretic";
     option2="Move him to the Penitorium";
-    option3="mission_star see no problem";
+    option3="I see no problem";
 }
 
 

@@ -88,6 +88,12 @@ action="";
     }
 
 
+if (class="Gloriana"){turrets=3;weapons=5;shield_size=3;sprite_index=spr_ship_song;
+    weapon_facing[1]="most";weapon_dam[1]=16;weapon_range[1]=550;weapon_cooldown[1]=26;
+    weapon_facing[2]="most";weapon_dam[2]=16;weapon_range[2]=550;weapon_cooldown[2]=26;
+    weapon_facing[3]="most";weapon_dam[3]=16;weapon_range[3]=550;weapon_cooldown[3]=26;
+    weapon_facing[4]="front";weapon_dam[4]=32;weapon_range[4]=1000;weapon_cooldown[4]=90;
+}
     if (class="Strike Cruiser"){turrets=1;weapons=4;shield_size=1;sprite_index=spr_ship_stri;
         weapon_facing[1]="left";weapon_dam[1]=8;weapon_range[1]=300;weapon_cooldown[1]=30;
         weapon_facing[2]="right";weapon_dam[2]=8;weapon_range[2]=300;weapon_cooldown[2]=30;

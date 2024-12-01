@@ -425,8 +425,8 @@ function new_player_ship_defualts(){
 }
 
 
-function new_player_ship(type, start_loc="home"){
-    var ship_names="",new_name="",index=0;
+function new_player_ship(type, start_loc="home", new_name=""){
+    var ship_names="",index=0;
     var index = new_player_ship_defualts();
     
     for(var k=0; k<=200; k++){
@@ -543,6 +543,38 @@ function new_player_ship(type, start_loc="home"){
         obj_ini.ship_carrying[index]=0;
         obj_ini.ship_contents[index]="";
         obj_ini.ship_turrets[index]=1;
+    }
+    if (string_count("Gloriana",type)>0){
+		obj_ini.ship[last_ship]=new_name;
+        obj_ini.ship_size[last_ship]=3;
+    
+        obj_ini.ship_class[last_ship]="Gloriana";
+    
+        obj_ini.ship_hp[last_ship]=2400;
+        obj_ini.ship_maxhp[last_ship]=2400;
+        obj_ini.ship_conditions[last_ship]="";
+        obj_ini.ship_speed[last_ship]=25;
+        obj_ini.ship_turning[last_ship]=60;
+        obj_ini.ship_front_armour[last_ship]=8;
+        obj_ini.ship_other_armour[last_ship]=8;
+        obj_ini.ship_weapons[last_ship]=4;
+        obj_ini.ship_shields[last_ship]=24;
+        obj_ini.ship_wep[last_ship,1]="Lance Battery";
+        ship_wep_facing[last_ship,1]="most";
+        obj_ini.ship_wep_condition[last_ship,1]="";
+        obj_ini.ship_wep[last_ship,2]="Lance Battery";
+		ship_wep_facing[last_ship,2]="most";
+        obj_ini.ship_wep_condition[last_ship,2]="";
+        obj_ini.ship_wep[last_ship,3]="Lance Battery";
+        ship_wep_facing[last_ship,3]="most";
+        obj_ini.ship_wep_condition[last_ship,3]="";
+        obj_ini.ship_wep[last_ship,4]="Plasma Cannon";
+        ship_wep_facing[last_ship,4]="front";
+        obj_ini.ship_wep_condition[last_ship,4]="";
+        obj_ini.ship_capacity[last_ship]=800;
+        obj_ini.ship_carrying[last_ship]=0;
+        obj_ini.ship_contents[last_ship]="";
+        obj_ini.ship_turrets[last_ship]=8;
     }
     return index;
 }
