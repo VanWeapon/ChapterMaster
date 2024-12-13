@@ -769,7 +769,7 @@ if (slide=2){
                             global.chapter_icon_filename = ic;
                         }
                         if (ic>normal_and_builtin) {
-                            global.chapter_icon_sprite = obj_cuicons.spr_custom_icon[ic-normal_and_builtin];
+                            global.chapter_icon_sprite = sprite_duplicate(obj_cuicons.spr_custom_icon[ic-normal_and_builtin]);
                             global.chapter_icon_frame = 0;
                         }
                         if (ic>global.normal_icons_count && ic <=normal_and_builtin) {
