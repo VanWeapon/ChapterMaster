@@ -50,7 +50,13 @@ Click handling
 /// @returns {bool} usually used as part of an if statement in a Draw handler to run code when the player clicks something like a button
 function point_and_click(rect, cooldown = 60)
 ```
-
+Mouse Cursor Hover
+```gml
+/// @function scr_hit
+/// @description Returns true if mouse is hovering on the specified rectangle area.
+/// @returns {bool}
+function scr_hit(x1=0, y1=0, x2=0, y2=0) 
+```
 Drawing an image from file
 ```gml
 /// @description Draws a png image
