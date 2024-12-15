@@ -724,6 +724,11 @@ var all_advantages = [
             value : 5 
         },
         {
+            name : "Gear Surplus: Plasma Weapons",
+            description : "Extra starting gear for your chapter, found in the Armamentarium.",
+            value : 5 
+        },
+        {
             name : "Gear Surplus: Flamers",
             description : "Extra starting gear for your chapter, found in the Armamentarium.",
             value : 5 

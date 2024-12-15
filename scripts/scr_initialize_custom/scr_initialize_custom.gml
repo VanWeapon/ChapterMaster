@@ -3244,7 +3244,7 @@ function scr_initialize_custom() {
 
 
 	// 5-point advantages for rounding out and satisfying 'gear buy' type wants
-	
+
 	if(scr_has_adv("Gear Surplus: MK3 Power Armour")){
 		scr_add_item("MK3 Iron Armour", 10);
 	}
@@ -3294,6 +3294,11 @@ function scr_initialize_custom() {
 		scr_add_item("Flamer", 10);
 		scr_add_item("Combiflamer", 5);
 		scr_add_item("Heavy Flamer", 3);
+	}
+	
+	if(scr_has_adv("Gear Surplus: Plasma Weapons")){
+		scr_add_item("Plasma Pistol", 5);
+		scr_add_item("Plasma Gun", 5);
 	}
 	
 
