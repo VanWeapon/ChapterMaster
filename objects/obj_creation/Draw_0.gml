@@ -188,7 +188,12 @@ if (slate4>0){
                 draw_sprite_stretched(spr_icon_chapters, 31, grid.x1,grid.y1, grid.w, grid.h); 
             } else {
                 if(chap.icon > global.normal_icons_count){
-                    draw_sprite_stretched(spr_icon_chapters, chap.icon - global.normal_icons_count, grid.x1,grid.y1, grid.w, grid.h);
+                    if(string_starts_with(chap.icon_name, "custom")){   
+                        var cuicon = obj_cuicons.spr_custom_icon[chap.icon-normal_and_builtin];
+                        draw_sprite_stretched(cuicon, 0, grid.x1,grid.y1, grid.w, grid.h);
+                    } else {
+                        draw_sprite_stretched(spr_icon_chapters, chap.icon - global.normal_icons_count, grid.x1,grid.y1, grid.w, grid.h);
+                    }
                 } else {
                     scr_image("creation/chapters/icons", chap.icon, grid.x1,grid.y1, grid.w, grid.h);
                 }
@@ -205,8 +210,15 @@ if (slate4>0){
                 if (grid.clicked()){
 					if(chap.loaded == true && chap.disabled == false){
                         if(chap.icon > global.normal_icons_count){
-                            global.chapter_icon_sprite = spr_icon_chapters;
-                            global.chapter_icon_frame = chap.icon - global.normal_icons_count;
+                            if(string_starts_with(chap.icon_name, "custom")){   
+                                var cuicon = obj_cuicons.spr_custom_icon[chap.icon-normal_and_builtin];
+                                global.chapter_icon_sprite = sprite_duplicate(cuicon);
+                                global.chapter_icon_frame = 0;
+                                global.chapter_icon_filename = chap.icon_name;
+                            } else {
+                                global.chapter_icon_sprite = spr_icon_chapters;
+                                global.chapter_icon_frame = chap.icon - global.normal_icons_count;
+                            }
                         } else {
                             global.chapter_icon_sprite = obj_img.image_cache[$"creation/chapters/icons"][chap.icon];
                             global.chapter_icon_frame = 0;
@@ -722,9 +734,6 @@ if (slide=2){
             }
             
             x3+=110;
-            var builtin_icons = array_length(sprite_get_info(spr_icon_chapters).frames);
-            var normal_and_builtin = global.normal_icons_count + builtin_icons;
-            var total_icons = global.normal_icons_count + builtin_icons + global.custom_icons;
             if (ic<=(total_icons)){
                 //ic starts at 1, normal icons = 22
                 if (ic<global.normal_icons_count) {
@@ -769,8 +778,10 @@ if (slide=2){
                             global.chapter_icon_filename = ic;
                         }
                         if (ic>normal_and_builtin) {
-                            global.chapter_icon_sprite = sprite_duplicate(obj_cuicons.spr_custom_icon[ic-normal_and_builtin]);
+                            var cuicon_idx = ic-normal_and_builtin;
+                            global.chapter_icon_sprite = sprite_duplicate(obj_cuicons.spr_custom_icon[cuicon_idx]);
                             global.chapter_icon_frame = 0;
+                            obj_creation.icon_name = string_concat("custom", cuicon_idx);
                         }
                         if (ic>global.normal_icons_count && ic <=normal_and_builtin) {
                             global.chapter_icon_sprite = spr_icon_chapters;

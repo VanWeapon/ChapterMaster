@@ -398,6 +398,7 @@ for(var c = 1; c < 40; c++){
         );
         all_chapters[c].json = true;
         all_chapters[c].icon = json_chapter.icon;
+        all_chapters[c].icon_name = json_chapter.icon_name;
         all_chapters[c].splash = json_chapter.splash;
         all_chapters[c].loaded = true;
         all_chapters[c].disabled = false;
@@ -857,6 +858,9 @@ load_default_gear(eROLE.Librarian, "Librarian", "Force Staff", "Bolt Pistol", "P
 load_default_gear(eROLE.Sergeant, "Sergeant", "Chainsword", "Bolt Pistol", "Power Armour", "", "");
 load_default_gear(eROLE.VeteranSergeant, "Veteran Sergeant", "Chainsword", "Plasma Pistol", "Power Armour", "", "");
 
+builtin_icons = array_length(sprite_get_info(spr_icon_chapters).frames);
+normal_and_builtin = global.normal_icons_count + builtin_icons;
+total_icons = global.normal_icons_count + builtin_icons + global.custom_icons;
 
 
 
