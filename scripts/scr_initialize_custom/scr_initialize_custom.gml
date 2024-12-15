@@ -3245,27 +3245,27 @@ function scr_initialize_custom() {
 
 	// 5-point advantages for rounding out and satisfying 'gear buy' type wants
 
-	if(scr_has_adv("Gear Surplus: MK3 Power Armour")){
+	if(scr_has_adv("Gear Surplus: MK3 Armour")){
 		scr_add_item("MK3 Iron Armour", 10);
 	}
 
-	if(scr_has_adv("Gear Surplus: MK4 Power Armour")){
+	if(scr_has_adv("Gear Surplus: MK4 Armour")){
 		scr_add_item("MK4 Maximus", 10);
 	}
 
-	if(scr_has_adv("Gear Surplus: MK5 Power Armour")){
+	if(scr_has_adv("Gear Surplus: MK5 Armour")){
 		scr_add_item("MK5 Heresy", 10);
 	}
 
-	if(scr_has_adv("Gear Surplus: MK6 Power Armour")){
+	if(scr_has_adv("Gear Surplus: MK6 Armour")){
 		scr_add_item("MK6 Corvus", 10);
 	}
 
-	if(scr_has_adv("Gear Surplus: MK7 Power Armour")){
+	if(scr_has_adv("Gear Surplus: MK7 Armour")){
 		scr_add_item("MK7 Aquila", 10);
 	}
 
-	if(scr_has_adv("Gear Surplus: MK8 Power Armour")){
+	if(scr_has_adv("Gear Surplus: MK8 Armour")){
 		scr_add_item("MK8 Errant", 10);
 	}
 

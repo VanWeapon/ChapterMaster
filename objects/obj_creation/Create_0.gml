@@ -689,32 +689,32 @@ var all_advantages = [
             meta : ["Weapon Specialty"] 
         },
         {
-            name : "Gear Surplus: MK3 Power Armour",
+            name : "Gear Surplus: MK3 Armour",
             description : "Extra starting gear for your chapter, found in the Armamentarium.",
             value : 5 
         },
         {
-            name : "Gear Surplus: MK4 Power Armour",
+            name : "Gear Surplus: MK4 Armour",
             description : "Extra starting gear for your chapter, found in the Armamentarium.",
             value : 5 
         },
         {
-            name : "Gear Surplus: MK5 Power Armour",
+            name : "Gear Surplus: MK5 Armour",
             description : "Extra starting gear for your chapter, found in the Armamentarium.",
             value : 5 
         },
         {
-            name : "Gear Surplus: MK6 Power Armour",
+            name : "Gear Surplus: MK6 Armour",
             description : "Extra starting gear for your chapter, found in the Armamentarium.",
             value : 5 
         },
         {
-            name : "Gear Surplus: MK7 Power Armour",
+            name : "Gear Surplus: MK7 Armour",
             description : "Extra starting gear for your chapter, found in the Armamentarium.",
             value : 5 
         },
         {
-            name : "Gear Surplus: MK8 Power Armour",
+            name : "Gear Surplus: MK8 Armour",
             description : "Extra starting gear for your chapter, found in the Armamentarium.",
             value : 5 
         },
