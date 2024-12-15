@@ -3242,6 +3242,61 @@ function scr_initialize_custom() {
         scr_add_item("MK4 Maximus", irandom_range(3, 18));
 	}
 
+
+	// 5-point advantages for rounding out and satisfying 'gear buy' type wants
+	
+	if(scr_has_adv("Gear Surplus: MK3 Power Armour")){
+		scr_add_item("MK3 Iron Armour", 10);
+	}
+
+	if(scr_has_adv("Gear Surplus: MK4 Power Armour")){
+		scr_add_item("MK4 Maximus", 10);
+	}
+
+	if(scr_has_adv("Gear Surplus: MK5 Power Armour")){
+		scr_add_item("MK5 Heresy", 10);
+	}
+
+	if(scr_has_adv("Gear Surplus: MK6 Power Armour")){
+		scr_add_item("MK6 Corvus", 10);
+	}
+
+	if(scr_has_adv("Gear Surplus: MK7 Power Armour")){
+		scr_add_item("MK7 Aquila", 10);
+	}
+
+	if(scr_has_adv("Gear Surplus: MK8 Power Armour")){
+		scr_add_item("MK8 Errant", 10);
+	}
+
+	if(scr_has_adv("Gear Surplus: Power Weapons")){
+		scr_add_item("Power Sword", 4);
+		scr_add_item("Power Axe", 4);
+		scr_add_item("Power Fist", 2);
+		scr_add_item("Power Spear", 1);
+	}
+
+	if(scr_has_adv("Gear Surplus: Chain Weapons")){
+		scr_add_item("Chainsword", 5);
+		scr_add_item("Chainaxe", 5);
+		scr_add_item("Eviscerator", 3);
+	}
+
+	if(scr_has_adv("Gear Surplus: Bolters")){
+		scr_add_item("Bolt Pistol", 10);
+		scr_add_item("Bolter", 10);
+		scr_add_item("Stalker Pattern Bolter", 5);
+		scr_add_item("Heavy Bolter", 3);
+	}
+
+	if(scr_has_adv("Gear Surplus: Flamers")){
+		scr_add_item("Hand Flamer", 10);
+		scr_add_item("Flamer", 10);
+		scr_add_item("Combiflamer", 5);
+		scr_add_item("Heavy Flamer", 3);
+	}
+	
+
     gene_slaves = [];
     
 	var bloo = 0,

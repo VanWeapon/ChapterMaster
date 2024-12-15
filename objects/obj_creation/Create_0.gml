@@ -687,7 +687,57 @@ var all_advantages = [
             description : "Your chapter has strong ties to the Forgeworld of Ryza as a result your Techmarines are privy to the secrets of their Techpriests enhancing your Plasma and Las weaponry.",
             value : 25,
             meta : ["Weapon Specialty"] 
-        },                                                                                                                                                                             
+        },
+        {
+            name : "Gear Surplus: MK3 Power Armour",
+            description : "Extra starting gear for your chapter, found in the Armamentarium.",
+            value : 5 
+        },
+        {
+            name : "Gear Surplus: MK4 Power Armour",
+            description : "Extra starting gear for your chapter, found in the Armamentarium.",
+            value : 5 
+        },
+        {
+            name : "Gear Surplus: MK5 Power Armour",
+            description : "Extra starting gear for your chapter, found in the Armamentarium.",
+            value : 5 
+        },
+        {
+            name : "Gear Surplus: MK6 Power Armour",
+            description : "Extra starting gear for your chapter, found in the Armamentarium.",
+            value : 5 
+        },
+        {
+            name : "Gear Surplus: MK7 Power Armour",
+            description : "Extra starting gear for your chapter, found in the Armamentarium.",
+            value : 5 
+        },
+        {
+            name : "Gear Surplus: MK8 Power Armour",
+            description : "Extra starting gear for your chapter, found in the Armamentarium.",
+            value : 5 
+        },
+        {
+            name : "Gear Surplus: Bolters",
+            description : "Extra starting gear for your chapter, found in the Armamentarium.",
+            value : 5 
+        },
+        {
+            name : "Gear Surplus: Flamers",
+            description : "Extra starting gear for your chapter, found in the Armamentarium.",
+            value : 5 
+        },
+        {
+            name : "Gear Surplus: Power Weapons",
+            description : "Extra starting gear for your chapter, found in the Armamentarium.",
+            value : 5 
+        },
+        {
+            name : "Gear Surplus: Chain Weapons",
+            description : "Extra starting gear for your chapter, found in the Armamentarium.",
+            value : 5 
+        },
     ]
 
 
