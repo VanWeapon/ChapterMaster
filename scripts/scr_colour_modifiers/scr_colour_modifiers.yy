@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "scr_colour_modifiers",
-  "isCompatibility": false,
-  "isDnD": false,
-  "parent": {
-    "name": "User Interface",
-    "path": "folders/Scripts/User Interface.yy",
+  "$GMScript":"v1",
+  "%Name":"scr_colour_modifiers",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"scr_colour_modifiers",
+  "parent":{
+    "name":"User Interface",
+    "path":"folders/Scripts/User Interface.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

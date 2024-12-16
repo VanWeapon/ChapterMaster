@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "file_decrypt",
-  "isCompatibility": false,
-  "isDnD": false,
-  "parent": {
-    "name": "Sys",
-    "path": "folders/Scripts/Sys.yy",
+  "$GMScript":"v1",
+  "%Name":"file_decrypt",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"file_decrypt",
+  "parent":{
+    "name":"Sys",
+    "path":"folders/Scripts/Sys.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

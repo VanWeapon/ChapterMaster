@@ -131,7 +131,9 @@ function scr_creation(argument0) {
 	        if (chapter!="Salamanders") and (founding!=8) and (secretions=1){
 	            obj_ini.skin_color=choose(2,3,4);
 	        }
-        
+			
+			room_instance_add(Game, 0,0, obj_cursor);
+			room_instance_add(Game, 0,0, obj_controller);
 	        room_goto(Game);
 	    }
 	}

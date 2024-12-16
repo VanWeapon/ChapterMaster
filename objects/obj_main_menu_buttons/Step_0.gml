@@ -40,7 +40,15 @@ if (crap>0) and (fade=60){
     }
 }
 if (crap=1) and (fade=60) then room_goto(Tutorial);
-if (crap>1) and (fade=60){audio_stop_all();room_goto(Creation);}
+if (crap>1) and (fade=60){
+
+    audio_stop_all();
+    room_instance_add(Creation, 0,0, obj_creation);
+    room_instance_add(Creation, 0,0, obj_cursor);
+    room_instance_add(Creation, 0,0, obj_main_menu_buttons);
+       
+    room_goto(Creation);
+}
 
 if (button=4) and (fade=40) then with(obj_cursor){instance_destroy();}
 if (button=4) and (fade>=60) then game_end();

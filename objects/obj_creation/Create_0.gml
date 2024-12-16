@@ -1,3 +1,5 @@
+show_debug_log(true);
+show_debug_message("Create event for obj_creation started");
 
 keyboard_string="";
 
@@ -963,3 +965,5 @@ action_set_alarm(30, 1);
 /*  */
 
 	
+draw_self();
+show_debug_message("Create event for obj_creation finished");

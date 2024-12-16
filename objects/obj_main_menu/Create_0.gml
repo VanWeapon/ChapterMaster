@@ -1,3 +1,4 @@
+show_debug_log(true);
 
 if (!instance_exists(obj_cuicons)){
     global.custom_icons=4;
