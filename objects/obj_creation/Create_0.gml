@@ -964,6 +964,4 @@ scr_colors_initialize();
 action_set_alarm(30, 1);
 /*  */
 
-	
-draw_self();
 show_debug_message("Create event for obj_creation finished");
