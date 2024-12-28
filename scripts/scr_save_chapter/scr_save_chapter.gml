@@ -91,6 +91,9 @@ function scr_save_chapter(chapter_id){
 		traits: [],
 	}
 
+	chap.custom_roles = custom_roles;
+	
+	
 	global.chapter_creation_object = chap;
 
 	var data_json = json_stringify({chapter: global.chapter_creation_object}, true);

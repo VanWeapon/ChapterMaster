@@ -73,7 +73,7 @@ function scr_chapter_random(argument0) {
 	chapter_master_specialty=choose(1,1,1,1,1,2,2,2,2,2,3);
 
 
-
+	custom_roles = {};
 
 
 

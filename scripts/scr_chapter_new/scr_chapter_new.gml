@@ -438,6 +438,9 @@ function scr_chapter_new(argument0) {
 		if(struct_exists(chapter_object, "custom_squads")){
 			obj_creation.custom_squads = chapter_object.custom_squads;
 		}
+		
+		
+
 
 		points = chapter_object.points;
 		maxpoints=chapter_object.points;	
