@@ -20,7 +20,7 @@ function scr_save_chapter(chapter_id){
 	chap.purity = purity;
 	chap.stability = stability;
 	chap.cooperation = cooperation;
-	chap.homeword = homeworld;
+	chap.homeworld = homeworld;
 	chap.homeworld_exists = homeworld_exists;
 	chap.homeworld_name = homeworld_name;
 	chap.homeworld_rule = homeworld_rule;
