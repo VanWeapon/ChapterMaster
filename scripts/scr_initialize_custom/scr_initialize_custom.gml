@@ -3257,9 +3257,9 @@ function scr_initialize_custom() {
 				if(real(obj_creation.extra_vehicles.land_speeder) > 0){
 					repeat(real(obj_creation.extra_vehicles.land_speeder)){
 						add_veh_to_company("Land Speeder", 10, _slot, "Heavy Bolter", "", "","","");
+						_slot++;
+						man_size += 10;
 					}
-					_slot++;
-					man_size += 10;
 				}
 			}
 		}
