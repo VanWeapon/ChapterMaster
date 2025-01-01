@@ -3195,6 +3195,75 @@ function scr_initialize_custom() {
 			scr_add_item(e_name, e_qty);
 		}
 	}
+	if(struct_exists(obj_creation, "extra_vehicles")){
+		var _slot = 1;
+		while(obj_ini.veh_role[10][_slot] != ""){ // try not to overwrite existing vehicles 
+			_slot++;
+			if(_slot > 500){ // no crash pls
+				break;
+			}
+		}
+		if (_slot < 500){
+			if(struct_exists(obj_creation.extra_vehicles, "rhino")){
+				if(real(obj_creation.extra_vehicles.rhino) > 0){
+					repeat(real(obj_creation.extra_vehicles.rhino)){
+						add_veh_to_company("Rhino", 10, _slot,  "Storm Bolter","HK Missile","","","Dozer Blades");
+						_slot++;
+						man_size += 10;
+					}
+				}
+			}
+			if(struct_exists(obj_creation.extra_vehicles, "whirlwind")){
+				if(real(obj_creation.extra_vehicles.whirlwind) > 0){
+					repeat(real(obj_creation.extra_vehicles.whirlwind)){
+						add_veh_to_company("Whirlwind", 10, _slot, "Whirlwind Missiles", "HK Missile", "","","");
+						_slot++;
+						man_size += 10;
+					}
+				}
+			}
+			if(struct_exists(obj_creation.extra_vehicles, "predator")){
+				if(real(obj_creation.extra_vehicles.predator) > 0){
+					repeat(real(obj_creation.extra_vehicles.predator)){
+						if (!floor(_slot % 2) == 1) {
+							add_veh_to_company("Predator", 10, _slot, "Twin Linked Lascannon Turret", "Lascannon Sponsons", "HK Missile", "","Searchlight");
+						}
+						if (floor(_slot % 2) == 1) {
+							add_veh_to_company("Predator", 10, _slot, "Autocannon Turret", "Heavy Bolter Sponsons", "Storm Bolter", "","Dozer Blades");
+						}
+						man_size += 10;
+						_slot++;
+					}
+				}
+			}
+			if(struct_exists(obj_creation.extra_vehicles, "land_raider")){
+				if(real(obj_creation.extra_vehicles.land_raider) > 0){
+					repeat(real(obj_creation.extra_vehicles.land_raider)){
+						if (floor(_slot % 4) == 1) || (floor(_slot % 4) == 2) {
+							add_veh_to_company("Land Raider", 10, _slot, "Twin Linked Heavy Bolter Mount", "Twin Linked Lascannon Sponsons", "HK Missile", "Heavy Armour", "Searchlight")
+						}
+						if (floor(_slot % 4) == 3) {
+							add_veh_to_company("Land Raider", 10, _slot, "Twin Linked Assault Cannon Mount", "Hurricane Bolter Sponsons", "Storm Bolter", "Heavy Armour", "Frag Assault Launchers")
+						}
+						if (floor(_slot % 4) == 0) {
+							add_veh_to_company("Land Raider", 10, _slot, "Twin Linked Assault Cannon Mount", "Flamestorm Cannon Sponsons", "Storm Bolter", "Heavy Armour", "Frag Assault Launchers")
+						}						
+						_slot++;
+						man_size += 10;
+					}
+				}
+			}
+			if(struct_exists(obj_creation.extra_vehicles, "land_speeder")){
+				if(real(obj_creation.extra_vehicles.land_speeder) > 0){
+					repeat(real(obj_creation.extra_vehicles.land_speeder)){
+						add_veh_to_company("Land Speeder", 10, _slot, "Heavy Bolter", "", "","","");
+					}
+					_slot++;
+					man_size += 10;
+				}
+			}
+		}
+	}
 	
 	if(scr_has_disadv("Sieged")){
 		scr_add_item("Narthecium", 4);
