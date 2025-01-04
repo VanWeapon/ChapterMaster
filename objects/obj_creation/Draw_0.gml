@@ -1266,31 +1266,31 @@ if (slide=3){
     
     var trial_data = scr_trial_data();
     var current_trial = trial_data[aspirant_trial];
-    draw_text_transformed(80,180,"Aspirant Trial",0.6,0.6,0);
-    draw_text_transformed(110,210,current_trial.name,0.5,0.5,0);
+    draw_text_transformed(80,80,"Aspirant Trial",0.6,0.6,0)
+    draw_text_transformed(10,130,current_trial.name,0.5,0.5,0);
     
     var asp_info;
     asp_info = scr_compile_trial_bonus_string(current_trial);
 
-    draw_text_ext_transformed(100,244,asp_info,64,950,0.5,0.5,0);
+    draw_text_ext_transformed(10,160,asp_info,64,750,0.5,0.5,0);
      
-    if (scr_hit(50,480,950,510)){
+    if (scr_hit(80,80,80 + string_width("Aspirant Trial"), 80 + string_height("Aspirant Trial"))){
         tooltip="Aspirant Trial";
         tooltip2="A special challenge is needed for Aspirants to be judged worthy of becoming Astartes.  After completing the Trial they then become a Neophyte, beginning implantation and training (This can be changed once in game but the chosen trial here will effect the spawn characteristics of your starting marines).";
     }
     
     if (custom>1){
-        draw_sprite_stretched(spr_creation_arrow,0,00,200,32,32);
-        if (point_and_click([00,200,00+32,200+32]) and (cooldown<=0)){
+        draw_sprite_stretched(spr_creation_arrow,0,00,80,32,32);
+        if (point_and_click([00,80,00+32,80+32]) and (cooldown<=0)){
             var onceh=0;cooldown=8000;
             aspirant_trial++;
             if (aspirant_trial>=array_length(trial_data)){
                 aspirant_trial=0
             }
         }
-        draw_sprite_stretched(spr_creation_arrow,1,38,200,32,32);
+        draw_sprite_stretched(spr_creation_arrow,1,38,80,32,32);
 
-        if (point_and_click([38,200,38+32,200+32]) and (mouse_left>=1) and (cooldown<=0)){
+        if (point_and_click([38,80,38+32,80+32]) and (mouse_left>=1) and (cooldown<=0)){
             var onceh=0;cooldown=8000;
             aspirant_trial--;
             if (aspirant_trial<0){
