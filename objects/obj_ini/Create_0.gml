@@ -11,8 +11,8 @@ sixths=0;sevenths=0;eighths=0;ninths=0;tenths=0;commands=0;
 
 heh1=0;heh2=0;
 
-strin="";
-strin2="";
+// strin="";
+// strin2="";
 tolerant=0;
 companies=10;
 progenitor=ePROGENITOR.NONE;

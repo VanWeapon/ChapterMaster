@@ -333,7 +333,7 @@ if (title="Planetary Governor Assassinated") and (option1!="") and (cooldown<=0)
     
     if (press>0){
         var randa,randa2;randa=floor(random(100))+1;randa2=floor(random(100))+1;
-        if (string_count("Shitty",obj_ini.strin2)>0) then randa-=20;
+        if (scr_has_disadv("Shitty Luck")) then randa-=20;
     }
     
     if (press=1){
@@ -570,7 +570,7 @@ if (image="ancient_ruins" && woopwoopwoop && move_to_next_stage()) {
         _ruins.determine_race()
         
         dice=floor(random(100))+1;
-        var shit_luck = array_contains(obj_ini.dis,"Shitty Luck")
+        var shit_luck = scr_has_disadv("Shitty Luck")
         var pass_mark = shit_luck ? 66 : 50;
         ruins_battle = dice<=pass_mark;
         

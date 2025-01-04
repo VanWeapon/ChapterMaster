@@ -813,7 +813,7 @@ function scr_draw_unit_image(_background=false){
                     dev_trait=1
                 }
                 if (unit_specialization == UnitSpecialization.Techmarine){
-                    if (array_contains(obj_ini.adv,"Tech-Brothers")){
+                    if (scr_has_adv("Tech-Brothers")){
                         tech_brothers_trait=0
                     }
 				}
@@ -1473,7 +1473,7 @@ function scr_draw_unit_image(_background=false){
                     var psy_hood_offset_x = 0;
                     var psy_hood_offset_y = 0;
                     robes_hood_bypass = true;
-                    if (array_contains(obj_ini.adv,"Daemon Binders") && !modest_livery && psy_hood<7){
+                    if (scr_has_adv("Daemon Binders") && !modest_livery && psy_hood<7){
 						robes_bypass = true;
                         if (pauldron_trim=1){
 							draw_sprite(spr_gear_hood2,0,x_surface_offset-2,y_surface_offset-11);
@@ -1669,9 +1669,9 @@ function scr_draw_unit_image(_background=false){
                 var helm_ii,o,yep;
                 helm_ii=0;
 				yep=0;
-                if (array_contains(obj_ini.adv,"Tech-Brothers")){
+                if (scr_has_adv("Tech-Brothers")){
                     helm_ii=2;
-                }else if (array_contains(obj_ini.adv, "Never Forgive") || obj_ini.progenitor == ePROGENITOR.DARK_ANGELS){
+                }else if (scr_has_adv("Never Forgive") || obj_ini.progenitor == ePROGENITOR.DARK_ANGELS){
                     helm_ii=3;
                 } else if (reverent_guardians) {
                     helm_ii=4;

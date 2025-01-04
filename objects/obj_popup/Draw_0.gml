@@ -123,7 +123,7 @@ if (type=99){
             if (giveto=5) and (!is_daemon){
                 obj_controller.disposition[5]+=4;
                 var o=0
-                if (array_contains(obj_ini.adv, "Reverent Guardians")) then obj_controller.disposition[5]+=2;
+                if (scr_has_adv("Reverent Guardians")) then obj_controller.disposition[5]+=2;
             }
             if (giveto=6) then obj_controller.disposition[6]+=3;
             if (giveto=8) then obj_controller.disposition[8]+=4;

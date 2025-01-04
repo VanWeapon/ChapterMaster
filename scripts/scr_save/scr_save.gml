@@ -275,8 +275,8 @@ function scr_save(save_part,save_id) {
 	    ini_write_real("Ini","icon",obj_ini.icon);
 	    ini_write_string("Ini","icon_name",obj_ini.icon_name);
 	    ini_write_real("Ini","man_size",obj_ini.man_size);
-	    ini_write_string("Ini","strin1",obj_ini.strin);
-	    ini_write_string("Ini","strin2",obj_ini.strin2);
+	    // ini_write_string("Ini","strin1",obj_ini.strin);
+	    // ini_write_string("Ini","strin2",obj_ini.strin2);
 	    ini_write_string("Ini","psy_powers",obj_ini.psy_powers);
 	    ini_encode_and_json("Ini", "FullLivery",obj_ini.full_liveries)
 		ini_write_real("Ini","companies",obj_ini.companies);

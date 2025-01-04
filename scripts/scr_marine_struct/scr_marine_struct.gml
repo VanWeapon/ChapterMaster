@@ -867,10 +867,10 @@ function TTRPG_stats(faction, comp, mar, class = "marine", other_spawn_data={}) 
 				}
 			}
 
-			if (array_contains(obj_ini.adv, "Psyker Abundance")){
+			if (scr_has_adv("Psyker Abundance")){
 				if (psionic<16) then psionic++;
 				if (psionic<10) then psionic++;
-			} else if (array_contains(obj_ini.dis, "Psyker Intolerant")){
+			} else if (scr_has_disadv("Psyker Intolerant")){
 				if (warp_level<=190){
 					psionic=choose(0,1);
 				} else {

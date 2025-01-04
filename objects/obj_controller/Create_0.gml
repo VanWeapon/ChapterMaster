@@ -1283,7 +1283,7 @@ other1="";
 // ** Sets up bonuses once chapter is created **
 if (instance_exists(obj_ini)){
     // Tolerant trait
-    if (global.load==0) and (string_count("Tolerant",obj_ini.strin2)>0){
+    if (global.load==0 && scr_has_disadv("Tolerant")){
         obj_controller.disposition[6]+=5;
         obj_controller.disposition[7]+=5;
         obj_controller.disposition[8]+=10;
@@ -1376,7 +1376,7 @@ penitorium=0;
 end_turn_insights = {};
 // Redefines training based on chapter
 if (instance_exists(obj_ini)){
-    if (string_count("Intolerant",obj_ini.strin2)>0) then training_psyker=0;
+    if (scr_has_disadv("Psyker Intolerant")) then training_psyker=0;
     if (global.chapter_name="Space Wolves") then training_chaplain=0;
 }
 

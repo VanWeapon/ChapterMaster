@@ -563,11 +563,11 @@ if (turn=240) and (global.chapter_name="Lamenters"){
 }
 */
 // ** Battlefield Loot **
-if (array_contains(obj_ini.adv,"Tech-Scavengers")){
+if (scr_has_adv("Tech-Scavengers")){
     var lroll1,lroll2,loot="";
     lroll1=floor(random(100))+1;
     lroll2=floor(random(100))+1;
-    if (array_contains(obj_ini.dis,"Shitty Luck")){
+    if (scr_has_disadv("Shitty Luck")){
         lroll1+=2;
         lroll2+=25;
     }
@@ -1079,7 +1079,7 @@ for(var i=1; i<=99; i++){
             if (string_count("inquisitor_spared",event[i])>0){
                 var diceh=floor(random(100))+1;
 
-                if (string_count("Shit",obj_ini.strin2)>0) then diceh-=25;
+                if (scr_has_disadv("Shitty Luck")) then diceh-=25;
 
                 if (diceh<=25){
                     alarm[8]=1;

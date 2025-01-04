@@ -384,7 +384,7 @@ if (obj_controller.selecting_planet!=0){
                 
                 var improve_cost=1500,yep=0,o=0;
 
-                if (array_contains(obj_ini.adv, "Siege Masters")) then improve_cost=1100;
+                if (scr_has_adv("Siege Masters")) then improve_cost=1100;
                 
                 draw_text_glow(xx+671, yy+281,string(improve_cost),16291875,0);
                 

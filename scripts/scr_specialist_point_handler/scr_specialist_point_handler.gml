@@ -146,7 +146,7 @@ function SpecialistPointHandler() constructor{
     static new_tech_heretic_spawn = function() {
         var _tester = global.character_tester;
         var _possibility_of_heresy = 8;
-        if (array_contains(obj_ini.dis, "Tech-Heresy")) {
+        if (scr_has_disadv("Tech-Heresy")) {
             _possibility_of_heresy = 6;
         }
         if (irandom(power(_possibility_of_heresy, (array_length(techs) + 2.2))) == 0 && array_length(techs) > 0) {
