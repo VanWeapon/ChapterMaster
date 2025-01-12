@@ -1075,6 +1075,7 @@
     {"id":{"name":"spr_indomitus_left_arm_bionic","path":"sprites/spr_indomitus_left_arm_bionic/spr_indomitus_left_arm_bionic.yy",},},
     {"id":{"name":"scr_event_gossip","path":"scripts/scr_event_gossip/scr_event_gossip.yy",},},
     {"id":{"name":"spr_weapon_grav_cannon","path":"sprites/spr_weapon_grav_cannon/spr_weapon_grav_cannon.yy",},},
+    {"id":{"name":"spr_weapon_infernus_hbolt","path":"sprites/spr_weapon_infernus_hbolt/spr_weapon_infernus_hbolt.yy",},},
     {"id":{"name":"scr_alert","path":"scripts/scr_alert/scr_alert.yy",},},
     {"id":{"name":"scr_popup","path":"scripts/scr_popup/scr_popup.yy",},},
     {"id":{"name":"scr_turn_first","path":"scripts/scr_turn_first/scr_turn_first.yy",},},
