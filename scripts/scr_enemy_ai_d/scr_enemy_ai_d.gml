@@ -246,7 +246,7 @@ function scr_enemy_ai_d() {
                             p_player[i]-=scr_unit_size(obj_ini.armour[com][ide],obj_ini.role[com][ide],true);
                             obj_ini.loc[com][ide]="Mechanicus Vessel";
                             unit.planet_location=0;
-                            unit.ship_location=0;
+                            unit.ship_location=-1;
                             techs_taken+=1;
                         }
                         if (unit.ship_location>-1){
@@ -450,7 +450,7 @@ function scr_enemy_ai_d() {
             var woop=scr_role_count("Chief "+string(obj_ini.role[100,17]),"");
         
             var o,yep,yep2;o=0;yep=true;yep2=false;
-            if (array_contains(obj_ini.dis, "Psyker Intolerant")) then yep=false;
+            if (scr_has_disadv("Psyker Intolerant")) then yep=false;
             
             if (obj_controller.known[eFACTION.Tyranids]=0) and (woop!=0) and (yep!=false){
                 scr_popup("Shadow in the Warp",$"Chief {obj_ini.role[100,17]} "+string(obj_ini.name[0,5])+" reports a disturbance in the warp.  He claims it is like a shadow.","shadow","");
@@ -484,14 +484,14 @@ function scr_enemy_ai_d() {
 		storm-=1;
 	    if (storm=0){
 	        var tr="Warp Storms over "+string(name)+" dissipate.";
-	        scr_alert("green","warp",tr,x,y);scr_event_log("green",tr);
+	        scr_alert("green","Warp",tr,x,y);scr_event_log("green",tr);
 	    }
 	}
 	if (trader>0){
 		trader-=1;
 	    if (trader=0){
 	        var tr="Rogue Trader fleet departs from "+string(name)+".";
-	        scr_alert("green","warp",tr,x,y);scr_event_log("green",tr);
+	        scr_alert("green","Warp",tr,x,y);scr_event_log("green",tr);
 	    }
 	}
 

@@ -4,7 +4,7 @@ function ini_encode_and_json(ini_area, ini_code,value){
 	return ini_write_string(ini_area,ini_code,base64_encode(json_stringify(value)));
 }
 function scr_save(save_part,save_id) {
-
+	try{
 	var num=0,tot=0;
 	num=0;tot=0;
 
@@ -250,11 +250,15 @@ function scr_save(save_part,save_id) {
 	        }
 	    }
 
-		// Save chapter icon
-		ini_write_real("Ini", "global_chapter_icon_sprite", global.chapter_icon_sprite);
-		ini_write_real("Ini", "global_chapter_icon_frame", global.chapter_icon_frame);
-		ini_write_string("Ini", "global_chapter_icon_path", global.chapter_icon_path);
-		ini_write_real("Ini", "global_chapter_icon_filename", global.chapter_icon_filename);
+	    try{
+			// Save chapter icon
+			ini_write_real("Ini", "global_chapter_icon_sprite", global.chapter_icon_sprite);
+			ini_write_real("Ini", "global_chapter_icon_frame", global.chapter_icon_frame);
+			ini_write_string("Ini", "global_chapter_icon_path", global.chapter_icon_path);
+			//ini_write_real("Ini", "global_chapter_icon_filename", global.chapter_icon_filename);
+		} catch(_exception){
+            handle_exception(_exception);
+        }
 
 
 
@@ -271,8 +275,8 @@ function scr_save(save_part,save_id) {
 	    ini_write_real("Ini","icon",obj_ini.icon);
 	    ini_write_string("Ini","icon_name",obj_ini.icon_name);
 	    ini_write_real("Ini","man_size",obj_ini.man_size);
-	    ini_write_string("Ini","strin1",obj_ini.strin);
-	    ini_write_string("Ini","strin2",obj_ini.strin2);
+	    // ini_write_string("Ini","strin1",obj_ini.strin);
+	    // ini_write_string("Ini","strin2",obj_ini.strin2);
 	    ini_write_string("Ini","psy_powers",obj_ini.psy_powers);
 	    ini_encode_and_json("Ini", "FullLivery",obj_ini.full_liveries)
 		ini_write_real("Ini","companies",obj_ini.companies);
@@ -678,6 +682,9 @@ function scr_save(save_part,save_id) {
 
 
 	*/
+	} catch(_exception){
+        handle_exception(_exception);
+    }
 
 
 }

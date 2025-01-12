@@ -60,7 +60,10 @@ function scr_map_scale(){
 
 function draw_warp_lanes(){
 	static routes = [];
-	if (array_length(routes)==0){
+	static current_seed = global.game_seed;
+	if (array_length(routes)==0 || current_seed!=global.game_seed){
+		current_seed=global.game_seed;
+		routes = [];
 		var star_degrade_list = [];
 		var total_stars = instance_number(obj_star);
 		var cur_star,this_star,connection,i, check_star;

@@ -20,28 +20,41 @@ function create_error_file(_message) {
 /// @param {string} _message - Detailed message for the error.
 /// @param {string} _stacktrace - Optional.
 /// @param {string} _critical - Optional.
-function handle_error(_header, _message, _stacktrace="", _critical = false) {
+/// @param {string} _report_title - Optional. Preset title for the bug report.
+function handle_error(_header, _message, _stacktrace="", _critical = false, _report_title="") {
     var _full_message = "";
     _full_message += $"{LB_92}\n";
     _full_message += $"{_header}\n\n";
     _full_message += $"Date-Time: {DATE_TIME_3}\n"; 
-    _full_message += $"Game Version: {global.game_version}\n"; 
+    var _format_version = string_split(global.game_version, "/");
+    _full_message += $"Game Version: {_format_version[0]}\n"; 
     _full_message += $"Build Date: {global.build_date}\n";
     _full_message += $"Commit Hash: {global.commit_hash}\n\n";
     _full_message += $"Details:\n";
-    _full_message += $"{_message}\n";
+    _full_message += $"{_message}\n\n";
     _full_message += $"Stacktrace:\n";
     _full_message += $"{_stacktrace}\n";
     _full_message += $"{LB_92}";
+
+    if (_report_title != "") {
+        _report_title += "\n";
+    }
+
+    var _commit_history_link = $"https://github.com/EttyKitty/ChapterMaster/commits/{global.commit_hash}";
+
+    create_error_file($"{_report_title}{_full_message}\n{_commit_history_link}");
+    show_debug_message(_full_message);
+
+    var _clipboard_message = "";
+    _clipboard_message += $"{_report_title}";
+    _clipboard_message += $"{markdown_codeblock(_full_message, "log")}\n";
+    _clipboard_message += $"{_commit_history_link}";
+    clipboard_set_text(_clipboard_message);
 
     var _player_message = "";
     _player_message += $"{_header}\n\n";
     _player_message += $"{STR_error_message}";
     _player_message += _critical ? "" : $"\n\n{STR_error_message_ps}";
-
-    create_error_file(_full_message);
-    clipboard_set_text($"{_header}\n{markdown_codeblock(_full_message)}");
-    show_debug_message(_full_message);
     show_message(_player_message);
 }
 
@@ -55,7 +68,8 @@ function handle_exception(_exception, custom_title=STR_error_message_head, criti
     var _header = critical ? STR_error_message_head2 : custom_title;
     var _message = _exception.longMessage;
     var _stacktrace = array_to_string_list(_exception.stacktrace);
-    handle_error(_header, _message, _stacktrace, critical);
+    var _report_title = $"[{global.game_version}] {_exception.stacktrace[0]}";
+    handle_error(_header, _message, _stacktrace, critical, _report_title);
 }
 
 /// @description Attempts to run a function and reports any errors caught.
@@ -97,10 +111,11 @@ exception_unhandled_handler(function(_exception) {
 
 /// @function markdown_codeblock
 /// @description Formats text as a code block.
-/// @param {string} _message - The message to format.
+/// @param {string} _message The message to format.
+/// @param {string} _language (Optional) Code language prefix to add into the codeblock.
 /// @returns {string} The formatted message.
-function markdown_codeblock(_message) {
-    return string_length(_message) > 0 ? $"```\n{_message}\n```" : "";
+function markdown_codeblock(_message, _language = "") {
+    return string_length(_message) > 0 ? $"```{_language}\n{_message}\n```" : "";
 }
 
 /// @function format_time

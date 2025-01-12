@@ -38,6 +38,26 @@ enum ePROGENITOR {
     RAVEN_GUARD,
     RANDOM,
 }
+function progenitor_map(){
+    var founding_chapters = [
+        "",
+        "Dark Angels",
+        "White Scars",
+        "Space Wolves",
+        "Imperial Fists",
+        "Blood Angels",
+        "Iron Hands",
+        "Ultramarines",
+        "Salamanders",
+        "Raven Guard",
+    ]
+    for (i=1;i<10;i++){
+        if (global.chapter_name==founding_chapters[i] || obj_ini.progenitor==i){
+            return i;
+        }
+    }
+    return 0;
+}
 
 function complex_livery_default() {
 	return {
@@ -525,7 +545,7 @@ function trial_map(trial_name){
 /// @mixin obj_ini
 function scr_initialize_custom() {
 
-	show_debug_message("Executing scr_initialize_custom");
+	// show_debug_message("Executing scr_initialize_custom");
 	
 	progenitor = obj_creation.founding;
 	successors = obj_creation.successors;
@@ -698,8 +718,8 @@ function scr_initialize_custom() {
 	if (scr_has_disadv("Obliterated")) {battle_barges = 0; strike_cruisers = 1; gladius = 2; hunters = 0;}
 
 	var ship_summary_str = $"Ships: bb: {battle_barges} sc: {strike_cruisers} g: {gladius} h: {hunters}"
-	debugl(ship_summary_str);
-	show_debug_message(ship_summary_str);
+	// debugl(ship_summary_str);
+	// show_debug_message(ship_summary_str);
 
 	if (battle_barges>=1){
 	 	for (v=0;v<battle_barges;v++){
@@ -907,12 +927,12 @@ function scr_initialize_custom() {
 		tenth -= 10;
 	}
 	if scr_has_disadv("Obliterated") {
-		techmarines = 0;
-		epistolary = 0;
-		codiciery = 0;
-		lexicanum = 0;
-		apothecary = 0;
-		chaplains = 0;
+		techmarines -= 7;
+		epistolary -= 2;
+		codiciery -= 1;
+		lexicanum -= 4;
+		apothecary -= 7;
+		chaplains -= 7;
 		terminator = 0;
 		veteran = 0;
 		second = 0;
@@ -925,7 +945,6 @@ function scr_initialize_custom() {
 		ninth = 0;
 		tenth = 10; 
 		assault = 0;
-		siege = 0;
 		devastator = 0;
 	}
 
@@ -956,7 +975,7 @@ function scr_initialize_custom() {
 	if (obj_creation.custom != 0) {
 		var bonus_marines = 0;
 		if (obj_creation.strength > 5) then bonus_marines = (obj_creation.strength - 5) * 50;
-		if scr_has_disadv("Obliterated") then bonus_marines = (obj_creation.strength - 5) * 5;
+		if scr_has_disadv("Obliterated") then bonus_marines = (obj_creation.strength - 5) * 10;
 		var i = 0;
 		while (bonus_marines >= 5) {
 			switch (i % 10) {
@@ -1031,7 +1050,7 @@ function scr_initialize_custom() {
 		for(var s = 0; s < array_length(c_specialist_names); s++){
 			var s_name = c_specialist_names[s];
 			var s_val = struct_get(c_specialists, s_name);
-			show_debug_message($"updating specialist {s_name} with {s_val})");
+			// show_debug_message($"updating specialist {s_name} with {s_val})");
 			switch (s_name){
 				case "chaplains": chaplains = chaplains + real(s_val); break;
 				case "chaplains_per_company": chaplains_per_company = chaplains_per_company + real(s_val); break;
@@ -1214,7 +1233,7 @@ function scr_initialize_custom() {
 	}
 
 	load_default_gear(eROLE.HonourGuard, "Honour Guard", "Power Sword", "Bolter", _hi_qual_armour, "", "");
-	load_default_gear(eROLE.Veteran, "Veteran", "Combiflamer", "Chainsword","Power Armour", "", "");
+	load_default_gear(eROLE.Veteran, "Veteran", "Combiflamer", "Combat Knife","Power Armour", "", "");
 	load_default_gear(eROLE.Terminator, "Terminator", "Power Fist", "Storm Bolter", "Terminator Armour", "", "");
 	load_default_gear(eROLE.Captain, "Captain", "Power Sword", "Bolt Pistol", "Power Armour", "", "Iron Halo");
 	load_default_gear(eROLE.Dreadnought, "Dreadnought", "Close Combat Weapon", "Lascannon", "Dreadnought", "", "");
@@ -1270,9 +1289,9 @@ function scr_initialize_custom() {
 					var attribute = possible_custom_attributes[a];
 					if(struct_exists(c_roles[$ c_rolename], attribute)){
 						var value = c_roles[$ c_rolename][$ attribute];
-						var dbg_m = $"role {c_roleid} {c_rolename} updated {attribute} to {typeof(value)} {value}";
-						debugl(dbg_m);
-						show_debug_message(dbg_m);
+						// var dbg_m = $"role {c_roleid} {c_rolename} updated {attribute} to {typeof(value)} {value}";
+						// debugl(dbg_m);
+						// show_debug_message(dbg_m);
 						switch (attribute){
 							case "name": role[defaults_slot][c_roleid] = value; break;
 							case "wep1": wep1[defaults_slot][c_roleid] = value; break;
@@ -1419,7 +1438,8 @@ function scr_initialize_custom() {
 				"role": $"{roles.terminator} {roles.sergeant}",
 				"loadout": {
 					"required": {
-						"wep1": ["Power Sword", 1],
+						"wep1": [wep1[defaults_slot][eROLE.Terminator], 1],
+						"wep2": [wep2[defaults_slot][eROLE.Terminator], 1],
 					},
 				}
 			}],
@@ -1694,7 +1714,10 @@ function scr_initialize_custom() {
 			["type_data", {
 				"display_data": $"{roles.tactical} {squad_name}",
 				"formation_options": ["tactical", "assault", "devastator", "scout"],
-			}]
+				"class":["troop"]
+			}],
+			
+			
 		],
 
 		"assault_squad": [
@@ -1703,13 +1726,13 @@ function scr_initialize_custom() {
 				"min": 4,
 				"loadout": {
 					"required": {
-						"wep1": [wep1[100, 10], 7],
-						"wep2": [wep2[100, 10], 7],
+						"wep1": [wep1[100, 10], 5],
+						"wep2": [wep2[100, 10], 5],
 					},
 					"option": {
 						"wep1": [
 							[
-								["Eviscerator"], 2
+								weapon_lists.melee_weapons, 2,
 							],
 						],
 						"wep2": [
@@ -1924,22 +1947,22 @@ function scr_initialize_custom() {
 				"max": 9,
 				"min": 4,
 				"loadout": { //tactical marine
-					"required": {
-						"wep1": [wep1[100, 8], 4],
-						"wep2": [wep2[100, 8], 4],
+						"required": {
+						"wep1": [wep1[100, 8], 6],
+						"wep2": [wep2[100, 8], 6],
 						"mobi": ["Bike", max]
 					},
 					"option": {
 						"wep1": [
 							[
-								["Plasma Gun", "Storm Bolter", "Flamer", "Meltagun"], 3
+								weapon_lists.special_weapons, 3
 							],
 						],
 						"wep2": [
 							[
-								["Power Sword", "Power Axe", "Chainsword"], 3
+								weapon_lists.melee_weapons, 3
 							],
-						]
+						],
 					}
 				},
 				"role": $"{roles.tactical} Biker"
@@ -1949,25 +1972,29 @@ function scr_initialize_custom() {
 				"min": 1,
 				"loadout": { //sergeant
 					"required": {
+						"wep1": ["", 0],
+						"wep2": ["Chainsword", 1],
 						"mobi": ["Bike", 1]
 					},
 					"option": {
 						"wep1": [
 							[
-								["Power Sword", "Power Axe", "Power Fist", "Thunder Hammer", "Chainsword"], 1
-							]
+								weapon_lists.pistols, 1
+							],
 						],
 						"wep2": [
 							[
-								["Plasma Pistol", "Storm Bolter", "Plasma Gun"], 1
-							]
-						]
+								weapon_lists.melee_weapons, 1
+							],
+						],
 					}
 				},
 				"role": $"{roles.tactical} Bike {roles.sergeant}"
 			}, ],
 			["type_data", {
-				"display_data": $"{roles.tactical} Bike {squad_name}"
+				"display_data": $"{roles.tactical} Bike {squad_name}",
+				"class":["bike"],
+				"formation_options": ["tactical", "assault", "devastator", "scout"],
 			}]
 		])
 
@@ -1975,42 +2002,52 @@ function scr_initialize_custom() {
 			[roles.tactical, {
 				"max": 9,
 				"min": 4,
-				"loadout": { //tactical marine
+				"loadout": {
 					"required": {
-						"wep1": [wep1[100, 8], 4],
-						"wep2": [wep2[100, 8], 4],
+						"wep1": [wep1[100, 8], 7],
+						"wep2": [wep2[100, 8], 7]
 					},
 					"option": {
 						"wep1": [
 							[
-								["Meltagun", "Flamer"], 2
+								weapon_lists.special_weapons, 1
 							],
 							[
-								["Stalker Pattern Bolter", "Storm Bolter"], 2
-							],
-							[
-								weapon_lists.heavy_weapons, 1
+								weapon_lists.heavy_weapons, 1, {
+									"wep2":"Combat Knife",
+									"mobi":"Heavy Weapons Pack",
+								}
 							]
 						],
-						"wep2": [
-							[
-								["Chainsword"], 3
-							],
-							[
-								["Power Sword", "Power Axe"], 2
-							],
-						]
 					}
 				}
 			}],
-
 			[roles.sergeant, {
 				"max": 1,
 				"min": 1,
-				"role": $"{roles.tactical} {roles.sergeant}"
-			}], // sergeant
+				"role": $"{roles.tactical} {roles.sergeant}",
+				"loadout": {
+					"required": {
+						"wep1": ["", 0],
+						"wep2": ["Chainsword", 1]
+					},
+					"option": {
+						"wep1": [
+							[
+								weapon_lists.pistols, 1
+							],
+						],
+						"wep2": [
+							[
+								weapon_lists.melee_weapons, 1
+							],
+						],
+					}
+				}
+			}],
 			["type_data", {
-				"display_data": $"{roles.tactical} {squad_name}"
+				"display_data": $"{roles.tactical} {squad_name}",
+				"formation_options": ["tactical", "assault", "devastator", "scout"],
 			}]
 		])
 	}
@@ -2030,7 +2067,7 @@ function scr_initialize_custom() {
 					"option": {
 						"wep1": [
 							[
-								["Storm Bolter", "Combiflamer", "Meltagun"], 2,
+								["Storm Bolter", "Combiflamer", "Meltagun"], 3,
 							],
 							[
 								["Power Axe", "Power Fist"], 2
@@ -2047,6 +2084,7 @@ function scr_initialize_custom() {
 				"loadout": { //sergeant 
 					"required": {
 					"armour":["MK3 Iron Armour", 1],
+					"mobi": ["",1],
 					"gear": ["Plasma Bomb", 1]
 					},
 					"option": {
@@ -2065,7 +2103,8 @@ function scr_initialize_custom() {
 				"role": $"{roles.assault} Breacher {roles.sergeant}"
 			}, ],
 			["type_data", {
-				"display_data": $"{roles.assault} Breacher {squad_name}"
+				"display_data": $"{roles.assault} Breacher {squad_name}",
+				"formation_options": ["tactical", "assault", "devastator", "scout"],
 			}]
 		])
 		variable_struct_set(st,"assault_squad", [
@@ -2080,7 +2119,7 @@ function scr_initialize_custom() {
 					"option": {
 						"wep1": [
 							[
-								["Eviscerator"], 2
+								weapon_lists.melee_weapons, 2
 							],
 						],
 						"wep2": [
@@ -2117,7 +2156,7 @@ function scr_initialize_custom() {
 			}],
 			["type_data", {
 				"display_data": $"{roles.assault} {squad_name}",
-				"formation_options": ["assault"],
+				"formation_options": ["tactical", "assault", "devastator", "scout"],
 			}]
 		])
 	}
@@ -2135,15 +2174,27 @@ function scr_initialize_custom() {
 			squad_types[$squad_names[st_iter]][$s_group[iter_2][0]] = s_group[iter_2][1];
 		}
 	}
+	if(scr_has_adv("Ambushers")){
+		var _class_data = squad_types.tactical_squad.type_data.class;
+		array_push(_class_data, "scout")
+	}
 	// show_debug_message("Squad types");
 	// show_debug_message(squad_types);
 
 
 	for (i = 0; i <= 20; i++) {
-		if (role[defaults_slot, i] != "") then scr_start_allow(i, "wep1", wep1[defaults_slot, i]);
-		if (role[defaults_slot, i] != "") then scr_start_allow(i, "wep2", wep2[defaults_slot, i]);
-		if (role[defaults_slot, i] != "") then scr_start_allow(i, "mobi", mobi[defaults_slot, i]);
-		if (role[defaults_slot, i] != "") then scr_start_allow(i, "gear", gear[defaults_slot, i]);
+		if (role[defaults_slot, i] != "") {
+			scr_start_allow(i, "wep1", wep1[defaults_slot, i]);
+		}
+		if (role[defaults_slot, i] != "") {
+			scr_start_allow(i, "wep2", wep2[defaults_slot, i]);
+		}
+		if (role[defaults_slot, i] != "") {
+			scr_start_allow(i, "mobi", mobi[defaults_slot, i]);
+		}
+		if (role[defaults_slot, i] != "") {
+			scr_start_allow(i, "gear", gear[defaults_slot, i]);
+		}
 		// check for allowable starting equipment here
 	}
 
@@ -2567,7 +2618,7 @@ function scr_initialize_custom() {
 				}
 			}
 			var _spawn_unit = add_unit_to_company("marine", company, k, roles.techmarine, eROLE.Techmarine, "default","Storm Bolter","default","default",_armour);
-			if (_spawn_unit.armour() == "Terminator" || _spawn_unit.armour() == "Tartaros") {
+			if (_spawn_unit.armour() == "Terminator Armour" || _spawn_unit.armour() == "Tartaros") {
 				man_size += 1;
 			} 
 		}
@@ -2583,7 +2634,7 @@ function scr_initialize_custom() {
 			_armour = "MK6 Corvus"
 		}
 		var _spawn_unit = add_unit_to_company("marine", company, k, roles.ancient, eROLE.Ancient, "default","Storm Bolter","default","default",_armour);
-		if (_spawn_unit.armour() == "Terminator" || _spawn_unit.armour() == "Tartaros") {
+		if (_spawn_unit.armour() == "Terminator Armour" || _spawn_unit.armour() == "Tartaros") {
 			man_size += 1;
 		}
 
@@ -2603,7 +2654,7 @@ function scr_initialize_custom() {
 			_wep2 = "";
 		}
 		var _spawn_unit = add_unit_to_company("marine", company, k, roles.champion, eROLE.Champion, _wep1,_wep2,"default","default",_armour);
-		if (_spawn_unit.armour() == "Terminator" || _spawn_unit.armour() == "Tartaros") {
+		if (_spawn_unit.armour() == "Terminator Armour" || _spawn_unit.armour() == "Tartaros") {
 			man_size += 1;
 		}
 	}
@@ -2670,7 +2721,7 @@ function scr_initialize_custom() {
 	firsts = k;
 
 
-	show_debug_message($"2: {second} 3: {third} 4: {fourth} 5: {fifth} 6: {sixth} 7: {seventh} 8: {eighth} 9: {ninth} 10: {tenth}")
+	// show_debug_message($"2: {second} 3: {third} 4: {fourth} 5: {fifth} 6: {sixth} 7: {seventh} 8: {eighth} 9: {ninth} 10: {tenth}")
 	//non HQ and non firsst company initialised here
 	for (company = 2; company < 11; company++) {
 		// Initialize marines
@@ -2984,7 +3035,7 @@ function scr_initialize_custom() {
 					repeat(assault) {
 						k += 1;
 						man_size += 1;
-						add_unit_to_company("marine", company, k, roles.assault, eROLE.Assault, "", "", "", "default", "");
+						add_unit_to_company("marine", company, k, roles.assault, eROLE.Assault, "default", "default", "default", "default", "default");
 					}
 					repeat(devastator) {
 						k += 1;
@@ -2993,14 +3044,14 @@ function scr_initialize_custom() {
 						if (wep1[defaults_slot, eROLE.Devastator] == "Heavy Ranged") {
 							_wep1 = choose("Multi-Melta", "Lascannon", "Missile Launcher", "Heavy Bolter");
 						} 
-						add_unit_to_company("marine", company, k, roles.devastator, eROLE.Devastator, _wep1, "","", "default", "");
+						add_unit_to_company("marine", company, k, roles.devastator, eROLE.Devastator, _wep1, "default","default", "default", "default");
 					}
 				}
 				if (company = 10) {
 					repeat(temp1) {
 						k += 1;
 						man_size += 1;
-						add_unit_to_company("scout", company, k, roles.scout, eROLE.Scout, "", "", "", "", "Scout Armour");
+						add_unit_to_company("scout", company, k, roles.scout, eROLE.Scout, "default", "default", "default", "default", "Scout Armour");
 					}
 				}
 			}
@@ -3031,30 +3082,27 @@ function scr_initialize_custom() {
 					if (wep1[defaults_slot, eROLE.Devastator] == "Heavy Ranged") {
 						_wep1 = choose("Multi-Melta", "Lascannon", "Missile Launcher", "Heavy Bolter");
 					} 
-					add_unit_to_company("marine", company, k, roles.devastator,eROLE.Devastator, _wep1, "","","default", "");
+					add_unit_to_company("marine", company, k, roles.devastator,eROLE.Devastator, _wep1,);
 				}
 	
 				if (company = 10) then
 				for (var i = 0; i < temp1; i++) {
 					k += 1;
 					man_size += 1;
-					add_unit_to_company("scout", company, k, roles.scout,eROLE.Scout, "", "", "", "", "Scout Armour");
+					add_unit_to_company("scout", company, k, roles.scout,eROLE.Scout, , , , , "Scout Armour");
 				}
 
 				if (company_unit2 = "assault") then repeat(assault) {
 					k += 1;
 					man_size += 1;
-					add_unit_to_company("marine", company, k, roles.assault,eROLE.Assault, "", "", "", "default", "");
+					add_unit_to_company("marine", company, k, roles.assault,eROLE.Assault);
 				}
 
 				if (company_unit3 = "devastator") then repeat(devastator) {
 					k += 1;
 					man_size += 1;
-					var _wep1 = wep1[defaults_slot, eROLE.Devastator];
-					if (wep1[defaults_slot, eROLE.Devastator] == "Heavy Ranged") {
-						_wep1 = choose("Multi-Melta", "Lascannon", "Missile Launcher", "Heavy Bolter");
-					} 
-					add_unit_to_company("marine", company, k, roles.devastator, eROLE.Devastator, _wep1, "","", "default", "");
+
+					add_unit_to_company("marine", company, k, roles.devastator, eROLE.Devastator);
 				}
 			}
 
@@ -3166,6 +3214,75 @@ function scr_initialize_custom() {
 			scr_add_item(e_name, e_qty);
 		}
 	}
+	if(struct_exists(obj_creation, "extra_vehicles")){
+		var _slot = 1;
+		while(obj_ini.veh_role[10][_slot] != ""){ // try not to overwrite existing vehicles 
+			_slot++;
+			if(_slot > 500){ // no crash pls
+				break;
+			}
+		}
+		if (_slot < 500){
+			if(struct_exists(obj_creation.extra_vehicles, "rhino")){
+				if(real(obj_creation.extra_vehicles.rhino) > 0){
+					repeat(real(obj_creation.extra_vehicles.rhino)){
+						add_veh_to_company("Rhino", 10, _slot,  "Storm Bolter","HK Missile","","","Dozer Blades");
+						_slot++;
+						man_size += 10;
+					}
+				}
+			}
+			if(struct_exists(obj_creation.extra_vehicles, "whirlwind")){
+				if(real(obj_creation.extra_vehicles.whirlwind) > 0){
+					repeat(real(obj_creation.extra_vehicles.whirlwind)){
+						add_veh_to_company("Whirlwind", 10, _slot, "Whirlwind Missiles", "HK Missile", "","","");
+						_slot++;
+						man_size += 10;
+					}
+				}
+			}
+			if(struct_exists(obj_creation.extra_vehicles, "predator")){
+				if(real(obj_creation.extra_vehicles.predator) > 0){
+					repeat(real(obj_creation.extra_vehicles.predator)){
+						if (!floor(_slot % 2) == 1) {
+							add_veh_to_company("Predator", 10, _slot, "Twin Linked Lascannon Turret", "Lascannon Sponsons", "HK Missile", "","Searchlight");
+						}
+						if (floor(_slot % 2) == 1) {
+							add_veh_to_company("Predator", 10, _slot, "Autocannon Turret", "Heavy Bolter Sponsons", "Storm Bolter", "","Dozer Blades");
+						}
+						man_size += 10;
+						_slot++;
+					}
+				}
+			}
+			if(struct_exists(obj_creation.extra_vehicles, "land_raider")){
+				if(real(obj_creation.extra_vehicles.land_raider) > 0){
+					repeat(real(obj_creation.extra_vehicles.land_raider)){
+						if (floor(_slot % 4) == 1) || (floor(_slot % 4) == 2) {
+							add_veh_to_company("Land Raider", 10, _slot, "Twin Linked Heavy Bolter Mount", "Twin Linked Lascannon Sponsons", "HK Missile", "Heavy Armour", "Searchlight")
+						}
+						if (floor(_slot % 4) == 3) {
+							add_veh_to_company("Land Raider", 10, _slot, "Twin Linked Assault Cannon Mount", "Hurricane Bolter Sponsons", "Storm Bolter", "Heavy Armour", "Frag Assault Launchers")
+						}
+						if (floor(_slot % 4) == 0) {
+							add_veh_to_company("Land Raider", 10, _slot, "Twin Linked Assault Cannon Mount", "Flamestorm Cannon Sponsons", "Storm Bolter", "Heavy Armour", "Frag Assault Launchers")
+						}						
+						_slot++;
+						man_size += 10;
+					}
+				}
+			}
+			if(struct_exists(obj_creation.extra_vehicles, "land_speeder")){
+				if(real(obj_creation.extra_vehicles.land_speeder) > 0){
+					repeat(real(obj_creation.extra_vehicles.land_speeder)){
+						add_veh_to_company("Land Speeder", 10, _slot, "Heavy Bolter", "", "","","");
+						_slot++;
+						man_size += 10;
+					}
+				}
+			}
+		}
+	}
 	
 	if(scr_has_disadv("Sieged")){
 		scr_add_item("Narthecium", 4);
@@ -3202,20 +3319,13 @@ function scr_initialize_custom() {
 
 	// man_size+=80;// bikes
 
-	// if (string_count("Crafter",strin)>0) and (string_count("Enthusi",strin)>0) then equipment_number[1]=20;
-	// if (string_count("Crafter",strin)>0) and (string_count("Enthusi",strin)=0) then equipment_number[2]=20;
 
 	if (scr_has_adv("Crafters")) && (scr_has_adv("Melee Enthusiasts")) {
-		eqi += 1;
-		equipment[eqi] = "MK3 Iron Armour";
-		equipment_number[eqi] = round(random_range(2, 12));
-		equipment_type[eqi] = "armour";
+        scr_add_item("MK3 Iron Armour", irandom_range(2, 12));
 	}
+
 	if (scr_has_adv("Crafters")) && (!scr_has_adv("Melee Enthusiasts")) {
-		eqi += 1;
-		equipment[eqi] = "MK4 Maximus";
-		equipment_number[eqi] = round(random_range(3, 18));
-		equipment_type[eqi] = "armour";
+        scr_add_item("MK4 Maximus", irandom_range(3, 18));
 	}
 
     gene_slaves = [];
@@ -3270,7 +3380,7 @@ function add_veh_to_company(name, company, slot, wep1, wep2, wep3, upgrade, acce
 /// each item slot can be "" or "default" or a named item. "" will assign items from the available item pool. 
 /// Use "" if you want to set weapons and gear via squad layouts.
 /// "default" will set it to the value in the default slot for the given role, see `load_default_gear`
-function add_unit_to_company(ttrpg_name, company, slot, role_name, role_id, wep1, wep2, gear, mobi, armour){
+function add_unit_to_company(ttrpg_name, company, slot, role_name, role_id, wep1="default", wep2="default", gear="default", mobi="default", armour="default"){
 	obj_ini.TTRPG[company][slot] = new TTRPG_stats("chapter", company, slot, ttrpg_name);
 	obj_ini.race[company][slot] = 1;
 	obj_ini.loc[company][slot] = obj_ini.home_name;
@@ -3302,12 +3412,12 @@ function add_unit_to_company(ttrpg_name, company, slot, role_name, role_id, wep1
 	}
 	if(armour != ""){
 		if(armour == "default"){
-			var _msg = spawn_unit.update_armour(obj_ini.armour[obj_ini.defaults_slot][role_id], false, false);
+			spawn_unit.update_armour(obj_ini.armour[obj_ini.defaults_slot][role_id], false, false);
 		} else {
-			var _msg = spawn_unit.update_armour(armour, false, false);
+			spawn_unit.update_armour(armour, false, false);
 		}
 		
-		show_debug_message($"updating coy {company}:{slot} {role_name} armour to {armour}: {_msg} : {spawn_unit.armour()} : {obj_ini.armour[company][slot]}");
+		// show_debug_message($"updating coy {company}:{slot} {role_name} armour to {armour}: {_msg} : {spawn_unit.armour()} : {obj_ini.armour[company][slot]}");
 	}
 	if(gear != ""){
 		if(gear == "default"){

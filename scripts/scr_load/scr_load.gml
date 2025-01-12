@@ -155,7 +155,7 @@ function scr_load(save_part, save_id) {
 
 
 	    // obj_ini
-	    //TODO allow methods to be passed as teh defualt to return_json_from_ini to optomise load speed
+	    //TODO allow methods to be passed as teh default to return_json_from_ini to optomise load speed
 	    var livery_picker = new ColourItem(0,0);
 		livery_picker.scr_unit_draw_data();
 	    obj_ini.full_liveries = return_json_from_ini("Ini", "full_liveries",array_create(21,DeepCloneStruct(livery_picker.map_colour)));
@@ -170,8 +170,8 @@ function scr_load(save_part, save_id) {
 	    obj_ini.icon_name=ini_read_string("Ini","icon_name","custom1");
 	    global.icon_name=obj_ini.icon_name;
 	    obj_ini.man_size=ini_read_real("Ini","man_size",0);
-	    obj_ini.strin=ini_read_string("Ini","strin1","");
-	    obj_ini.strin2=ini_read_string("Ini","strin2","");
+	    // obj_ini.strin=ini_read_string("Ini","strin1","");
+	    // obj_ini.strin2=ini_read_string("Ini","strin2","");
 	    obj_ini.psy_powers=ini_read_string("Ini","psy_powers","default");
 
 		
@@ -181,8 +181,10 @@ function scr_load(save_part, save_id) {
 		global.chapter_icon_filename = ini_read_real("Ini", "global_chapter_icon_filename", 0);
 
 
-		if(!sprite_exists(global.chapter_icon_sprite) && global.chapter_icon_path != ""){
+		if(global.chapter_icon_path != "Error" && global.chapter_icon_path != "") {
 			global.chapter_icon_sprite = scr_image_cache(global.chapter_icon_path, global.chapter_icon_filename);
+		} else {
+			global.chapter_icon_sprite = spr_icon_chapters;
 		}
 
 

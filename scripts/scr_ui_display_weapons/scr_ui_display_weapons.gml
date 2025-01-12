@@ -159,6 +159,7 @@ function scr_ui_display_weapons(left_or_right, current_armor, equiped_weapon, cu
                 "Lightning Claw":spr_weapon_lightning1,
                 "Boltstorm Gauntlet":spr_weapon_boltstorm_gauntlet_small,
                 "Chainfist":spr_weapon_chainfist_small,
+                "Assault Chainfist": spr_weapon_chainfist_small,
             }
             var fist_melee_names=struct_get_names(fist_melee);
             for (var i=0;i<array_length(fist_melee_names);i++){
@@ -321,7 +322,7 @@ function scr_ui_display_weapons(left_or_right, current_armor, equiped_weapon, cu
         hand_on_top[2]=true;
     }
 
-    if (array_contains(["Power Mace", "Mace of Absolution", "Power Axe", "Shock Maul", "Chain Axe"], equiped_weapon)) {
+    if (array_contains(["Power Mace", "Mace of Absolution", "Power Axe", "Shock Maul", "Chainaxe"], equiped_weapon)) {
         hand_variant[left_or_right] = 3;
     }
 
@@ -331,7 +332,7 @@ function scr_ui_display_weapons(left_or_right, current_armor, equiped_weapon, cu
     }
 
     // New weapon draw method
-    if (array_contains(["Force Staff", "Mace of Absolution", "Power Mace", "Power Axe", "Power Sword", "Autocannon", "Combat Knife", "Power Spear", "Shock Maul", "Chainsword", "Chain Axe"], equiped_weapon)) {
+    if (array_contains(["Force Staff", "Mace of Absolution", "Power Mace", "Power Axe", "Power Sword", "Autocannon", "Combat Knife", "Power Spear", "Shock Maul", "Chainsword", "Chainaxe"], equiped_weapon)) {
         new_weapon_draw[left_or_right] = true;
     }
 

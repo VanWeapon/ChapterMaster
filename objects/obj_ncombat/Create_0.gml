@@ -1,6 +1,6 @@
 if (instance_number(obj_ncombat)>1) then  instance_destroy();
 
-set_zoom_to_defualt();
+set_zoom_to_default();
 var co,i;co=-1;
 repeat(15){co+=1;i=-1;
     repeat(401){i+=1;
@@ -21,6 +21,8 @@ if (nope!=1){audio_sound_gain(snd_battle,0.25*obj_controller.master_volume*obj_c
 
 //limit on the size of the players forces allowed
 man_size_limit = 0;
+man_limit_reached = false;
+man_size_count = 0;
 fack=0;
 cd=0;
 owner  = eFACTION.Player;
@@ -32,6 +34,7 @@ on_ship=false;
 alpha_strike=0;
 Warlord = 0;
 total_battle_exp_gain=0;
+end_alive_units = [];
 average_battle_exp_gain=0;
 upgraded_librarians=[];
 

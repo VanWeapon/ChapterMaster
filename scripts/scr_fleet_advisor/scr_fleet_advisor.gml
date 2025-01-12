@@ -200,14 +200,14 @@ function scr_fleet_advisor(){
 
                         cn.temp[109] = string(obj_ini.ship_turrets[i]);
 
-                        cn.temp[110] = obj_ini.ship_wep[i][1];
-                        cn.temp[111] = obj_ini.ship_wep_facing[i][1];
-                        cn.temp[112] = obj_ini.ship_wep[i][2];
-                        cn.temp[113] = obj_ini.ship_wep_facing[i][2];
-                        cn.temp[114] = obj_ini.ship_wep[i][3];
-                        cn.temp[115] = obj_ini.ship_wep_facing[i][3];
-                        cn.temp[116] = obj_ini.ship_wep[i][4];
-                        cn.temp[117] = obj_ini.ship_wep_facing[i][4];
+                        var facing_length = array_length(obj_ini.ship_wep_facing[i]);
+                        var wep_length = array_length(obj_ini.ship_wep[i]);
+                        var max_weapons = min(facing_length, wep_length, 5);
+
+                        for (var s = 1; s < max_weapons; s++) {
+                            cn.temp[110+((s-1)*2)] = obj_ini.ship_wep[i][s];
+                            cn.temp[110+((s-1)*2)+1] = obj_ini.ship_wep_facing[i][s];
+                        }
 
                         cn.temp[118] = $"{obj_ini.ship_carrying[i]}/{obj_ini.ship_capacity[i]}";
                         cn.temp[119] = "";
@@ -215,24 +215,16 @@ function scr_fleet_advisor(){
                     }
                     tooltip_draw($"Carrying ({cn.temp[118]}): {cn.temp[119]}");
                     if (_goto_button.click()) {
-                        obj_controller.temp[40] = obj_ini.ship[i];
                         with(obj_p_fleet) {
-                            for (var k = 0; k <= 40; k++) {
-                                if (capital[k] == obj_controller.temp[40]) then instance_create(x, y, obj_temp7);
-                                if (frigate[k] == obj_controller.temp[40]) then instance_create(x, y, obj_temp7);
-                                if (escort[k] == obj_controller.temp[40]) then instance_create(x, y, obj_temp7);
-                            }
-                        }
-                        if (instance_exists(obj_temp7)) {
-                            obj_controller.x = obj_temp7.x;
-                            obj_controller.y = obj_temp7.y;
-                            obj_controller.menu = 0;
-                            with(obj_fleet_show) {
-                                instance_destroy();
-                            }
-                            instance_create(obj_temp7.x, obj_temp7.y, obj_fleet_show);
-                            with(obj_temp7) {
-                                instance_destroy();
+                            var _fleet_ships = fleet_full_ship_array();
+                            if (array_contains(_fleet_ships, i)){
+                                obj_controller.x = x;
+                                obj_controller.y = y;
+                                obj_controller.menu = 0;
+                                with(obj_fleet_show) {
+                                    instance_destroy();
+                                }  
+                                instance_create(x, y, obj_fleet_show);                              
                             }
                         }
                     }

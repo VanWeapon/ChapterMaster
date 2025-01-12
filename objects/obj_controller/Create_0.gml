@@ -483,7 +483,7 @@ sel_all="";
 sel_promoting=0;
 drag_square=[];
 rectangle_action = -1;
-sel_loading=0;
+sel_loading=-1;
 sel_uid=0;
 
 // ** Sets Chapter events and celebrations **
@@ -675,29 +675,8 @@ if (instance_exists(obj_ini)){
     if (string_count(obj_ini.spe[0,1],"$")>0) then born_leader=1;
 }
 // ** Resets marines and other vars **
-for(var i=0; i<501; i++){
-    man[i]="";
-    ide[i]=0;
-    man_sel[i]=0;
-    ma_lid[i]=-1;
-    ma_wid[i]=0;
-    ma_promote[i]=0;
-    ma_race[i]=0;
-    ma_loc[i]="";
-    ma_name[i]="";
-    ma_role[i]="";
-    ma_wep1[i]="";
-    ma_mobi[i]="";
-    ma_wep2[i]="";
-    ma_armour[i]="";
-    ma_gear[i]="";
-    ma_health[i]=100;
-    ma_chaos[i]=0;
-    ma_exp[i]=0;
-    ma_god[i]=0;
-    squad[i]=0;
-    display_unit[i]=0;
 
+for(var i=0; i<501; i++){
     
     if (i<=50){
         penit_co[i]=0;
@@ -719,6 +698,7 @@ sh_loc = []
 sh_hp = []
 sh_cargo = []
 sh_cargo_max = []
+reset_manage_arrays();
 alll=0;
 //
 popup=0;// 1: fleet, 2: other, 3: system
@@ -1124,7 +1104,6 @@ faction_status[eFACTION.Ecclesiarchy]="Allied";
 faction_leader[eFACTION.Eldar]=global.name_generator.generate_eldar_name(2);
 faction_title[6]="Farseer";
 faction_status[eFACTION.Eldar]="Antagonism";// If disposition = 0 then instead set it to "Antagonism"
-if (instance_exists(obj_ini)){if (string_count("Eldar",obj_ini.strin)>0) then faction_status[eFACTION.Eldar]="War";}
 // Orkz faction
 faction_leader[eFACTION.Ork]=global.name_generator.generate_ork_name();
 faction_title[7]="Warboss";
@@ -1302,14 +1281,17 @@ other1_disposition=0;
 other1="";
 // ** Sets up bonuses once chapter is created **
 if (instance_exists(obj_ini)){
-    // Tolerant trait
-    if (global.load==0) and (string_count("Tolerant",obj_ini.strin2)>0){
-        obj_controller.disposition[6]+=5;
-        obj_controller.disposition[7]+=5;
-        obj_controller.disposition[8]+=10;
-    }
     // General setup
     if (global.load==0){
+        // Tolerant trait
+        if (scr_has_disadv("Tolerant")) {
+            obj_controller.disposition[6]+=5;
+            obj_controller.disposition[7]+=5;
+            obj_controller.disposition[8]+=10;
+        }
+        if (scr_has_adv("Enemy: Eldar")) {
+            faction_status[eFACTION.Eldar]="War";
+        }
         // Founding Chapter STC Bonuses here
         if (global.chapter_name=="Salamanders"){
             stc_wargear=4;
@@ -1396,7 +1378,7 @@ penitorium=0;
 end_turn_insights = {};
 // Redefines training based on chapter
 if (instance_exists(obj_ini)){
-    if (string_count("Intolerant",obj_ini.strin2)>0) then training_psyker=0;
+    if (scr_has_disadv("Psyker Intolerant")) then training_psyker=0;
     if (global.chapter_name="Space Wolves") then training_chaplain=0;
 }
 
@@ -1776,7 +1758,6 @@ if (welcome_pages>=5){
     }
 }
 remov=string_length(string(temp[65])+string(temp[66])+string(temp[67])+string(temp[68])+string(temp[69]))+1;
-
 action_set_alarm(2, 0);
 
 instance_create(0,0,obj_tooltip );

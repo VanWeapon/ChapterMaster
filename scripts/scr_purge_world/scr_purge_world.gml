@@ -5,25 +5,56 @@ function scr_purge_world(star, planet, action_type, action_score) {
 
 
 
-	if ((action_type=2) or (action_type=3)) and (star.p_traitors[planet]=0) and (star.p_chaos[planet]=0) and (obj_controller.turn>=obj_controller.chaos_turn){
+	if ((action_type==DropType.PurgeFire) or (action_type==DropType.PurgeSelective)) and (star.p_traitors[planet]=0) and (star.p_chaos[planet]=0) and (obj_controller.turn>=obj_controller.chaos_turn){
 	    if (planet_feature_bool(star.p_feature[planet],P_features.Warlord10) == 1) and (obj_controller.known[10]=0) and (obj_controller.faction_gender[10]=1) then with(obj_drop_select){
 	        var pop=instance_create(0,0,obj_popup);
 	        pop.image="chaos_symbol";
 	        pop.title="Concealed Heresy";
 	        pop.text=$"Your astartes set out and begin to cleanse {planet_numeral_name(planet, star)} of possible heresy.  The general populace appears to be devout in their faith, but a disturbing trend appears- the odd citizen cursing your forces, frothing at the mouth, and screaming out heresy most foul.  One week into the cleansing a large hostile force is detected approaching and encircling your forces.";        
-	        exit;exit;    
+	        exit;   
 	    }
 	    if (planet_feature_bool(star.p_feature[planet],P_features.Warlord10) == 1) and (obj_controller.known[10]>=2) and (obj_controller.faction_gender[10]=1) then with(obj_drop_select){
-	        alarm[6]=1; 
+
+			attacking=10;
+			obj_controller.cooldown=30;combating=1;// Start battle here
+
+			instance_deactivate_all(true);
+			instance_activate_object(obj_controller);
+			instance_activate_object(obj_ini);
+			instance_activate_object(obj_drop_select);
+
+			instance_create(0,0,obj_ncombat);
+			obj_ncombat.battle_object=p_target;
+			obj_ncombat.battle_loc=p_target.name;
+			obj_ncombat.battle_id=obj_controller.selecting_planet;
+			obj_ncombat.dropping=0;
+			obj_ncombat.attacking=10;
+			obj_ncombat.enemy=10;
+			obj_ncombat.formation_set=1;
+
+			/*
+			obj_ncombat.battle_object=p_target;
+			obj_ncombat.battle_loc=p_target.name;
+			obj_ncombat.battle_id=obj_controller.selecting_planet;
+			obj_ncombat.dropping=1-attack;
+			obj_ncombat.attacking=attack;
+			obj_ncombat.enemy=attacking;
+			obj_ncombat.formation_set=formation_possible[formation_current];
+			*/
+
+			obj_ncombat.leader=1;
+			obj_ncombat.threat=5;
+			obj_ncombat.battle_special="WL10_later";
+            scr_battle_allies();
+            setup_battle_formations();
+            roster.add_to_battle();
 	    }
 	}
 
 
-
-
 	// TODO - while I don't expect Surface to Orbit weapons retaliating against player's purge bombardment, it might still be worthwhile to consider possible situations
 
-	if (action_type=1){// Bombardment
+	if (action_type=DropType.PurgeBombard){// Bombardment
 	    txt1=choose("Your cruiser and larger ship", "The heavens rumble and thunder as your ship");
 	    if (ships_selected>1) then txt1+="s";
 	    txt1+=choose(" position themselves over the target in close orbit, and unleash", " unload");
@@ -81,7 +112,7 @@ function scr_purge_world(star, planet, action_type, action_score) {
 	}
 
 
-	if (action_type=2){// Burn baby burn
+	if (action_type=DropType.PurgeFire){// Burn baby burn
 	    var i=0;
 	    if (has_problem_planet(planet, "cleanse", star)){
         	isquest=1;
@@ -148,7 +179,7 @@ function scr_purge_world(star, planet, action_type, action_score) {
 	}
 
 
-	if (action_type=3){// Blam!
+	if (action_type=DropType.PurgeSelective){// Blam!
 	    var i=0;
 	    if (has_problem_planet(planet, "purge", star)){
         	isquest=1;
@@ -198,7 +229,7 @@ function scr_purge_world(star, planet, action_type, action_score) {
 
 
 
-	if (action_type=4){
+	if (action_type=DropType.PurgeAssassinate){
 	    var dis,chance,siz_penalty,aroll,o,yep,ambush;
 	    aroll=floor(random(100))+1;dis=0;chance=0;siz_penalty=0;o=0;yep=0;ambush=false;
     
@@ -284,19 +315,20 @@ function scr_purge_world(star, planet, action_type, action_score) {
 
 
 
-	if (action_type!=4){
+	if (action_type!=DropType.PurgeAssassinate){
 	    if (isquest=0){// DO EET
 	        txt2=txt1;
 	        star.p_heresy[planet]-=sci2;
 	        star.p_influence[planet][eFACTION.Tau]-=sci2;
-	        if (action_type<3) then star.p_population[planet]=pop_after;
-	        if (action_type=3) and (star.p_large[planet]=0) then star.p_population[planet]=pop_after;
+	        if (action_type<DropType.PurgeSelective) then star.p_population[planet]=pop_after;
+	        if (action_type=DropType.PurgeSelective) and (star.p_large[planet]=0) then star.p_population[planet]=pop_after;
         
 	        if (star.p_heresy[planet]<0) then star.p_heresy[planet]=0;
 	        if (star.p_influence[planet][eFACTION.Tau]<0) then star.p_influence[planet][eFACTION.Tau]=0;
         
 	        var pip=instance_create(0,0,obj_popup);
-	        pip.title="Purge Results";pip.text=txt2;
+	        pip.title="Purge Results";
+	        pip.text=txt2;
 	    }
 	    /*if (isquest=1){// DO EET
 	        var pip;pip=instance_create(0,0,obj_popup);
@@ -308,10 +340,12 @@ function scr_purge_world(star, planet, action_type, action_score) {
 
 
 	if instance_exists(obj_drop_select){
-		if (sh_target!=0){
+		if (instance_exists(sh_target)){
 			sh_target.acted=5;
 		}
-		with(obj_drop_select){instance_destroy();}
+		with(obj_drop_select){
+			instance_destroy();
+		}
 		instance_destroy();
 	}
 

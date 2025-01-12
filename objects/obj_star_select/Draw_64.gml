@@ -37,6 +37,9 @@ if (loading=1){
         if (target.space_hulk=1) then exit;
     }
 }
+if (obj_controller.selecting_planet>target.planets){
+    obj_controller.selecting_planet = 0;
+}
 var click_accepted = (!obj_controller.menu) and (!obj_controller.zoomed) and (!instance_exists(obj_bomb_select)) and (!instance_exists(obj_drop_select));
 if (click_accepted) {
     if (scr_click_left(0)) {
@@ -296,11 +299,11 @@ if (obj_controller.selecting_planet!=0){
         var bar_start_point = xx+349;
         var bar_percent_length = (bar_width/100);
         var current_bar_percent = 0;
-        with (target){
-            var hidden_cult = false;
-            if (planet_feature_bool(p_feature[current_planet],P_features.Gene_Stealer_Cult)){
-                hidden_cult = return_planet_features(p_feature[current_planet],P_features.Gene_Stealer_Cult)[0].hiding;
-            }            
+        var hidden_cult = false;
+        if (planet_data.has_feature(P_features.Gene_Stealer_Cult)){
+            hidden_cult = planet_data.get_features(P_features.Gene_Stealer_Cult)[0].hiding;
+        }          
+        with (target){          
             for (var i=1;i<13;i++){
                 if (p_influence[current_planet][i]>0){
                     draw_set_color(global.star_name_colors[i]);
@@ -384,7 +387,7 @@ if (obj_controller.selecting_planet!=0){
                 
                 var improve_cost=1500,yep=0,o=0;
 
-                if (array_contains(obj_ini.adv, "Siege Masters")) then improve_cost=1100;
+                if (scr_has_adv("Siege Masters")) then improve_cost=1100;
                 
                 draw_text_glow(xx+671, yy+281,string(improve_cost),16291875,0);
                 
@@ -491,7 +494,7 @@ if (obj_controller.selecting_planet!=0){
                         if (cur_feature.forge>0){
                             var forge = cur_feature.forge_data;
                             var size_string= $"{size[forge.size]} Chapter Forge"
-                            array_push(planet_displays, [size_string, target.p_feature[current_planet][i].forge_data]);
+                            array_push(planet_displays, [size_string, forge]);
                         }
                     }                
                 }
@@ -499,11 +502,12 @@ if (obj_controller.selecting_planet!=0){
         }
         if (upgrade_count>0){
             for (i =0; i <  upgrade_count ;i++){
-                if (target.p_upgrades[current_planet][i].f_type == P_features.Secret_Base){
-                    if (target.p_upgrades[current_planet][i].forge>0){
-                        var forge = target.p_upgrades[current_planet][i].forge_data;
+                var _upgrade = target.p_upgrades[current_planet][i];
+                if (_upgrade.f_type == P_features.Secret_Base){
+                    if (_upgrade.forge>0){
+                        var forge = _upgrade.forge_data;
                         var size_string= $"{size[forge.size]} Chapter Forge"
-                        array_push(planet_displays, [size_string, target.p_upgrades[current_planet][i].forge_data]);
+                        array_push(planet_displays, [size_string, forge]);
                     }
                 }
             }
@@ -660,43 +664,57 @@ if (obj_controller.selecting_planet!=0){
             if (planet_feature_bool(target.p_upgrades[obj_controller.selecting_planet], P_features.Secret_Base)) then building.lair=1;
             if (planet_feature_bool(target.p_upgrades[obj_controller.selecting_planet], P_features.Arsenal)) then building.arsenal=1;
             if (planet_feature_bool(target.p_upgrades[obj_controller.selecting_planet], P_features.Gene_Vault)) then building.gene_vault=1;
-            
-            
             obj_controller.temp[104]=string(scr_master_loc());
             obj_controller.menu=60;
             with(obj_star_select){instance_destroy();}
-        }else if (current_button=="Raid"){
-            instance_create(x,y,obj_drop_select);
-            obj_drop_select.p_target=target;
-            obj_drop_select.planet_number = obj_controller.selecting_planet;
-            obj_drop_select.sh_target=instance_nearest(x,y,obj_p_fleet);
-            if (instance_nearest(x,y,obj_p_fleet).acted>1) then with(obj_drop_select){instance_destroy();}
+        }else if (current_button=="Raid" && instance_nearest(x,y,obj_p_fleet).acted<=1){
+            instance_create_layer(x, y, layer_get_all()[0], obj_drop_select,{
+                p_target:target,
+                planet_number : obj_controller.selecting_planet,
+                sh_target:instance_nearest(x,y,obj_p_fleet),
+                purge:0,
+            });
+
         }else if (current_button=="Attack"){
-            instance_create(x,y,obj_drop_select);
-            obj_drop_select.p_target=target;
-            obj_drop_select.planet_number = obj_controller.selecting_planet;
-            obj_drop_select.attack=1;
-            if (target.present_fleet[1]=0) then obj_drop_select.sh_target=-50;
-            if (target.present_fleet[1]>0){
-                obj_drop_select.sh_target=instance_nearest(x,y,obj_p_fleet);
-                if (instance_nearest(x,y,obj_p_fleet).acted>=2) then with(obj_drop_select){instance_destroy();}
+            var _allow_attack = true;
+            var _targ = !target.present_fleet[1] ? -50 : instance_nearest(x,y,obj_p_fleet);
+            if (instance_exists(_targ)){
+                if (_targ.acted>=2){
+                    _allow_attack = false;
+                }
             }
+            if (_allow_attack){
+                instance_create_layer(x, y, layer_get_all()[0], obj_drop_select,{
+                    p_target:target,
+                    planet_number : obj_controller.selecting_planet,
+                    attack :true,
+                    sh_target : _targ,
+                    purge:0,
+                }); 
+            }           
+
         }else if (current_button=="Purge"){
-            instance_create(x,y,obj_drop_select);
-            obj_drop_select.p_target=target;
-            obj_drop_select.purge=1;
-            obj_drop_select.planet_number = obj_controller.selecting_planet;
-            if (target.present_fleet[1]=0) then obj_drop_select.sh_target=-50;
-            if (target.present_fleet[1]>0){
-                obj_drop_select.sh_target=instance_nearest(x,y,obj_p_fleet);
-                if (instance_nearest(x,y,obj_p_fleet).acted>0) then with(obj_drop_select){instance_destroy();}
+            var _allow_attack = true;
+            var _targ = !target.present_fleet[1] ? -50 : instance_nearest(x,y,obj_p_fleet);
+            if (instance_exists(_targ)){
+                if (_targ.acted>=2){
+                    _allow_attack = false;
+                }
             }
+            if (_allow_attack){           
+                instance_create_layer(x, y, layer_get_all()[0], obj_drop_select,{
+                    p_target:target,
+                    purge:1,
+                    planet_number : obj_controller.selecting_planet,
+                    sh_target : _targ,
+                });
+            }
+
         }else if (current_button=="Bombard"){
             instance_create(x,y,obj_bomb_select);
             if (instance_exists(obj_bomb_select)){
                 obj_bomb_select.p_target=target;
                 obj_bomb_select.sh_target=instance_nearest(x,y,obj_p_fleet);
-                if (instance_nearest(x,y,obj_p_fleet).acted=0) then instance_create(target.x,target.y,obj_temp3);
                 if (instance_nearest(x,y,obj_p_fleet).acted>0) then with(obj_bomb_select){instance_destroy();}
             }
         }else if (current_button=="+Recruiting"){
@@ -770,7 +788,7 @@ if (target!=0){
 if (debug){
     var current_planet;
     
-    if (!scr_hit([36,174,337,455]) && scr_click_left()){
+    if (!scr_hit([36,174,337,455]) && scr_click_left()) {
         debug=0;
         exit;
     }

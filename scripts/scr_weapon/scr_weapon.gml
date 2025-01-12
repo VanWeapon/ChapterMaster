@@ -1,66 +1,4 @@
 global.weapons = {
-	"Ranger Long Rifle": {
-		"abbreviation": "RangeLoRife",
-		"description": "Advanced and accurate rifles from mars given to skitarii sharpshooters",
-		"attack": {
-			"standard": 60,
-			"master_crafted": 70,
-			"artifact": 90
-		},
-		"ranged_hands": 2,
-		"range": 25,
-		"tags": ["las", "energy", "rifle", "precision"],
-	},
-	"Choppa": {
-		"abbreviation": "Chop",
-		"attack": {
-			"standard": 28,
-			"master_crafted": 32,
-			"artifact": 36
-		},
-		"melee_hands": 1,
-		"range": 1,
-		"spli": 3,
-		"tags": ["axe"]
-	},
-	"Venom Claws": {
-		"abbreviation": "VenClaw",
-		"attack": 200,
-		"melee_hands": 1,
-		"range": 1,
-		"spli": 3,
-		"tags": ["claw"],
-		"arp": 0,
-	},	
-	"Snazzgun": {
-		"abbreviation": "Snazz",
-		"attack": {
-			"standard": 80,
-			"master_crafted": 92,
-			"artifact": 104
-		},
-		"ranged_hands": 2,
-		"ammo": 20,
-		"range": 3.1,
-		"spli": 3,
-		"arp": 0,
-		"tags": ["rifle"]
-	},
-	"Shuriken Pistol": {
-		"abbreviation": "ShurikP",
-		"attack": {
-			"standard": 25,
-			"master_crafted": 28,
-			"artifact": 31
-		},
-		"melee_hands": 1,
-		"ranged_hands": 0,
-		"ammo": 6,
-		"range": 2.1,
-		"spli": 3,
-		"arp": 0,
-		"tags": ["pistol"]
-	},
 	"Storm Shield": {
 		"description": "Protects twice as well when boarding. A powered shield that must be held with a hand.  While powered by the marines armour it shimmers with blue energy.",
 		"abbreviation": "StrmShld",
@@ -99,38 +37,6 @@ global.weapons = {
 			"artifact": 20
 		},
 	},
-	"Hellgun": {
-		"abbreviation": "HllGun",
-		"attack": {
-			"standard": 30,
-			"master_crafted": 34,
-			"artifact": 38
-		},
-		"ammo": 10,
-		"range": 6.1,
-		"spli": 3,
-		"arp": 0,
-		"tags": [],
-		"ranged_hands": 2,
-		"tags": ["arcane"],
-		// ... (other attributes)
-	},
-	"Hellrifle": {
-		"description": "Normally used by Radical Inquisitors, it appears an antiquated rifle but fires razor-sharp shards of Daemonic matter.",
-		"abbreviation": "HllRifle",
-		"attack": {
-			"standard": 150,
-			"master_crafted": 160,
-			"artifact": 170
-		},
-		"ammo": 10,
-		"range": 6.1,
-		"spli": 3,
-		"arp": 0,
-		"tags": ["rifle", "arcane"],
-		"ranged_hands": 2,
-		// ... (other attributes)
-	},
 	"Archeotech Laspistol": {
 		"attack": {
 			"standard": 40,
@@ -143,25 +49,9 @@ global.weapons = {
 		"ranged_hands": 0.5,
 		"ammo": 30,
 		"range": 3.1,
-		"spli": 0,
+		"spli": 1,
 		"arp": 0,
 		"tags": ["pistol", "ancient", "las", "energy"],
-	},
-	"Laspistol": {
-		"attack": {
-			"standard": 20,
-			"master_crafted": 30,
-			"artifact": 40
-		},
-		"description": "The Laspistol is the pistol version of the Lasgun and like that weapon fires a coherent beam of energetic photons that can burn through most materials. The Laspistol is powered by a miniature power pack that is usually placed within the grip.",
-		"abbreviation": "Lpstl",
-		"melee_hands": 0,
-		"ranged_hands": 0.25,
-		"ammo": 30,
-		"range": 3.1,
-		"spli": 0,
-		"arp": 0,
-		"tags": ["pistol", "las", "energy"],
 	},
 	"Combat Knife": {
 		"abbreviation": "CbKnf",
@@ -178,22 +68,6 @@ global.weapons = {
 		"spli": 1,
 		"arp": 0,
 		"tags": ["knife"],
-	},
-	"Sarissa": {
-		"abbreviation": "Saris",
-		"attack": {
-			"standard": 40,
-			"master_crafted": 45,
-			"artifact": 50
-		},
-		"description": "A vicious combat attachment that is attached to Bolters, in order to allow them to be used in melee combat.",
-		"melee_hands": 0,
-		"ranged_hands": 0,
-		"ammo": 0,
-		"range": 1,
-		"spli": 2,
-		"arp": 0,
-		"tags": ["sword"],
 	},
 	"Chainsword": {
 		"abbreviation": "ChSwrd",
@@ -345,28 +219,6 @@ global.weapons = {
 		"arp": 1,
 		"tags": ["las","boarding", "siege"],
 	},
-	"Eldar Power Sword": {
-		"abbreviation": "EldPwrSwrd",
-		"attack": {
-			"standard": 170,
-			"master_crafted": 180,
-			"artifact": 190
-		},
-		"melee_mod": {
-			"standard": 1.1,
-			"master_crafted": 1.1,
-			"artifact": 1.1
-		},
-		"description": "Power weapons, infused with arcane energy, are used by Howling Banshees and Dire Avenger Exarchs. Swords such as these are as much an artistic statement as a weapon and are effective against even heavily armored troops.",
-		"melee_hands": 1.1,
-		"ranged_hands": 0,
-		"ammo": 0,
-		"range": 1,
-		"spli": 3,
-		"arp": 1,
-		"special_properties": ["Parry"],
-		"tags": ["power", "sword", "elder", "xenos"],
-	},
 	"Power Weapon": {
 		"abbreviation": "PwrWpn",
 		"attack": {
@@ -499,6 +351,22 @@ global.weapons = {
 		"arp": 1,
 		"second_profiles": ["Integrated Bolter"],
 		"tags": ["power", "fist"],
+	},
+	"Assault Chainfist": {
+		"abbreviation": "AssltChFst",
+		"attack": {
+			"standard": 550,
+			"master_crafted": 600,
+			"artifact": 700
+		},
+		"description": "Created by mounting a chainsword to a power fist, this weapon is easily able to carve through armoured bulkheads. Contains an integrated Assault Cannon",
+		"melee_hands": 1.25,
+		"ranged_hands": 1,
+		"range": 1,
+		"spli": 2,
+		"arp": 1,
+		"second_profiles": ["Assault Cannon"],
+		"tags": ["power","boarding", "chain", "fist", "dual", "siege"],
 	},
 	"Lightning Claw": {
 		"abbreviation": "LghtClw",
@@ -646,7 +514,7 @@ global.weapons = {
 		"ranged_hands": 1,
 		"ammo": 0,
 		"range": 1,
-		"spli": 0,
+		"spli": 1,
 		"arp": 0,
 		"tags": ["arcane"],
 	},
@@ -722,16 +590,16 @@ global.weapons = {
 		"ranged_hands": 2,
 		"ammo": 5,
 		"range": 4.1,
-		"spli": 0,
+		"spli": 1,
 		"arp": 0,
 		"tags": ["immobolise"]
 	},
 	"Grav-Pistol": {
 		"abbreviation": "GrvPstl",
 		"attack": {
-			"standard": 100,
-			"master_crafted": 110,
-			"artifact": 120
+			"standard": 150,
+			"master_crafted": 200,
+			"artifact": 250
 		},
 		"description": "A smaller version of the Grav-Gun which utilises the gravitic reaction principle most commonly seen powering grav-vehicles such as the Land Speeder.",
 		"melee_hands": 0,
@@ -740,7 +608,8 @@ global.weapons = {
 		"range": 2.1,
 		"spli": 1,
 		"arp": 1,
-		"tags": ["grav", "pistol"]
+		"tags": ["grav", "pistol"],
+		"maintenance" : 0.8,
 	},
 	"Grav-Gun": {
 		"abbreviation": "GrvGn",
@@ -756,7 +625,8 @@ global.weapons = {
 		"range": 4,
 		"spli": 3,
 		"arp": 1,
-		"tags": ["grav"]
+		"tags": ["grav"],
+		"maintenance" : 0.1,
 	},
 	"Grav-Cannon": {
 		"abbreviation": "GrvCan",
@@ -772,7 +642,8 @@ global.weapons = {
 		"range": 8,
 		"spli": 6,
 		"arp": 1,
-		"tags": ["grav", "heavy_weapon"]
+		"tags": ["grav", "heavy_weapon"],
+		"maintenance" : 0.2,
 	},
 	"Underslung Bolter": {
 		"abbreviation": "UndBltr",
@@ -802,7 +673,7 @@ global.weapons = {
 		"ranged_hands": 2,
 		"ammo": 20,
 		"range": 15,
-		"spli": 0,
+		"spli": 1,
 		"arp": 1,
 		"tags": ["bolt", "precision"]
 	},
@@ -1834,6 +1705,166 @@ global.weapons = {
 		"arp": 0,
 		"tags": ["vehicle","heavy_ranged", "turret", "volkite", "ancient"]
 	},
+// Hireling weapons
+	// Admech
+	"Hellgun": {
+		"abbreviation": "HllGun",
+		"attack": {
+			"standard": 30,
+			"master_crafted": 35,
+			"artifact": 40
+		},
+		"description": "Known as a Hellgun or Hot-shot Lasgun, these high-energy weapons are more potent and destructive than common Lasguns, drawing more power for a more penetrative shot, but also more complex, requiring reinforced barrels, thermal-cooling cells and gyro-stabilized power packs.",
+		"ammo": 20,
+		"range": 12,
+		"spli": 3,
+		"arp": 0,
+		"tags": ["las"],
+		"melee_hands": 0,
+		"ranged_hands": 1,
+	},
+	"Laspistol": {
+		"attack": {
+			"standard": 20,
+			"master_crafted": 30,
+			"artifact": 40
+		},
+		"description": "The Laspistol is the pistol version of the Lasgun and like that weapon fires a coherent beam of energetic photons that can burn through most materials. The Laspistol is powered by a miniature power pack that is usually placed within the grip.",
+		"abbreviation": "Lpstl",
+		"melee_hands": 0,
+		"ranged_hands": 0.25,
+		"ammo": 30,
+		"range": 3.1,
+		"spli": 1,
+		"arp": 0,
+		"tags": ["pistol", "las"],
+	},
+	// Other imperials
+	"Light Bolter": {
+		"abbreviation": "LghtBltr",
+		"attack": {
+			"standard": 35,
+			"master_crafted": 40,
+			"artifact": 45
+		},
+		"description": "A smaller variant of Bolter, intended to be useable by unaugmented humans.",
+		"melee_hands": 0,
+		"ranged_hands": 1,
+		"ammo": 16,
+		"range": 10,
+		"spli": 2,
+		"arp": 0,
+		"tags": ["bolt"],
+		"second_profiles": ["Sarissa"]
+	},
+	"Sarissa": {
+		"abbreviation": "Saris",
+		"attack": {
+			"standard": 25,
+			"master_crafted": 30,
+			"artifact": 35
+		},
+		"description": "A vicious combat attachment that is attached to Bolters, in order to allow them to be used in melee combat.",
+		"melee_hands": 0,
+		"ranged_hands": 0,
+		"ammo": 0,
+		"range": 1,
+		"spli": 1,
+		"arp": 0,
+		"tags": ["axe"],
+	},
+	"Hellrifle": {
+		"description": "Extremely effective and intricate weapons frowned upon by more Puritanical Inquisitors. Fire shards of an unknown material. Speculated to be daemonic in origin.",
+		"abbreviation": "HllRifle",
+		"attack": {
+			"standard": 200,
+			"master_crafted": 250,
+			"artifact": 300
+		},
+		"ammo": 10,
+		"range": 20,
+		"spli": 1,
+		"arp": 0,
+		"tags": ["rifle", "arcane"],
+		"ranged_hands": 1,
+	},
+	// Eldar weapons
+	"Ranger Long Rifle": {
+		"abbreviation": "RangeLoRife",
+		"description": "Advanced and accurate rifles from mars given to skitarii sharpshooters",
+		"attack": {
+			"standard": 60,
+			"master_crafted": 70,
+			"artifact": 90
+		},
+		"ranged_hands": 1,
+		"range": 25,
+		"tags": ["las", "rifle", "precision"],
+	},
+	"Shuriken Pistol": {
+		"abbreviation": "ShurikP",
+		"attack": {
+			"standard": 25,
+			"master_crafted": 28,
+			"artifact": 31
+		},
+		"melee_hands": 1,
+		"ranged_hands": 0,
+		"ammo": 6,
+		"range": 2.1,
+		"spli": 3,
+		"arp": 0,
+		"tags": ["pistol"]
+	},
+	"Eldar Power Sword": {
+		"abbreviation": "EldPwrSwrd",
+		"attack": {
+			"standard": 170,
+			"master_crafted": 180,
+			"artifact": 190
+		},
+		"melee_mod": {
+			"standard": 1.1,
+			"master_crafted": 1.1,
+			"artifact": 1.1
+		},
+		"description": "Power weapons, infused with arcane energy, are used by Howling Banshees and Dire Avenger Exarchs. Swords such as these are as much an artistic statement as a weapon and are effective against even heavily armored troops.",
+		"melee_hands": 1.1,
+		"ranged_hands": 0,
+		"ammo": 0,
+		"range": 1,
+		"spli": 3,
+		"arp": 1,
+		"special_properties": ["Parry"],
+		"tags": ["power", "sword", "elder", "xenos"],
+	},
+	// Ork weapons
+	"Choppa": {
+		"abbreviation": "Chop",
+		"attack": {
+			"standard": 28,
+			"master_crafted": 32,
+			"artifact": 36
+		},
+		"melee_hands": 1,
+		"range": 1,
+		"spli": 3,
+		"tags": ["axe"]
+	},
+	"Snazzgun": {
+		"abbreviation": "Snazz",
+		"attack": {
+			"standard": 80,
+			"master_crafted": 92,
+			"artifact": 104
+		},
+		"ranged_hands": 1,
+		"ammo": 20,
+		"range": 3.1,
+		"spli": 3,
+		"arp": 0,
+		"tags": ["rifle"]
+	},
 }
 global.gear = {
 	"armour": {
@@ -1971,25 +2002,6 @@ global.gear = {
 			"tags": ["terminator"],
 			"req_exp": 100,
 			"maintenance" : 0.75,
-		},
-		"Ork Armour": {
-			"abbreviation": "OrkArm",
-			"armour_value": {
-				"standard": 7,
-				"master_crafted": 8,
-				"artifact": 9
-			},
-			"ranged_mod": {
-				"standard": 0,
-				"master_crafted": 5, // Augmented
-				"artifact": 10 // Augmented
-			},
-			"melee_mod": {
-				"standard": 0,
-				"master_crafted": 5, // Augmented
-				"artifact": 10 // Augmented
-			},
-			"description": "Mismatched basic armour used by ork forces"
 		},
 		"Scout Armour": {
 			"abbreviation": "SctArm",
@@ -2156,24 +2168,6 @@ global.gear = {
 			"description": "The MKX Tacticus is the most advanced pattern of power armour available to the Adeptus Astartes, featuring advanced armor composites and systems. It was developed by Belisarius Cawl during the development of the Primaris Astartes program.",
 			"tags": ["power_armour"],
 		},
-		"Skitarii Armour": {
-			"abbreviation": "SkitArm",
-			"description": "Skitarri Armour is something of a misnomer as most Skitarii are in fact bonded more or less permenantly to their advanced mars armour",
-			"armour_value": {
-				"standard": 5,
-				"master_crafted": 7, // Augmented
-				"artifact": 9 // Augmented
-			},
-		},
-		"Dragon Scales": {
-			"abbreviation": "DrgnArm",
-			"description": "Dragon Scales are an dvanced armour ulitized by tech priests, it is remarkably lightweight for the protection it affords and is often greatly modified by it's wearer while also being designed to directly interface with the user's cybernetic body.",
-			"armour_value": {
-				"standard": 12,
-				"master_crafted": 14, // Augmented
-				"artifact": 16 // Augmented
-			},
-		},
 		"Armoured Ceramite": {
 			"abbreviation": "ArmCrmt",
 			"description": "Supplemental ceramite armour packages provide protection far beyond stock configurations while also adding significant weight to the chassis.",
@@ -2238,6 +2232,93 @@ global.gear = {
 				"artifact": 25
 			},
 			"tags": ["vehicle", "Upgrade"],
+		},
+// Hireling Armour
+	// Admech
+		"Skitarii Armour": {
+			"abbreviation": "SkitArm",
+			"description": "Skitarii Armour is something of a misnomer as most Skitarii are in fact bonded more or less permenantly to their advanced mars armour",
+			"armour_value": {
+				"standard": 10, // Might as well buff this
+				"master_crafted": 12, // Augmented
+				"artifact": 15 // Augmented
+			},
+		},
+		"Dragon Scales": {
+			"abbreviation": "DrgnScl",
+			"description": "Dragon Scales are an advanced armour utilized by tech priests, it is remarkably lightweight for the protection it affords and is often greatly modified by it's wearer while also being designed to directly interface with the user's cybernetic body.",
+			"armour_value": {
+				"standard": 16,
+				"master_crafted": 18,
+				"artifact": 20
+			},
+			"melee_mod": {
+				"standard": 0,
+				"master_crafted": 5,
+				"artifact": 10
+			},
+			"tags": ["power_armour"],
+		},
+	// Sororitas and other imperials
+		"Light Power Armour": { // According to lore, lack of black carapace makes regular humans less capable to use PAs properly, but this is a concern for the future
+			"abbreviation": "LPwrArm",
+			"armour_value": {
+				"standard": 14,
+				"master_crafted": 16,
+				"artifact": 18
+			},
+			"ranged_mod": {
+				"standard": 0,
+				"master_crafted": 5,
+				"artifact": 10
+			},
+			"melee_mod": {
+				"standard": 0,
+				"master_crafted": 5,
+				"artifact": 10
+			},
+			"description": "A suit of light power armour, intended to be useable by the regular humans.",
+			"tags": ["power_armour"],
+		},
+	// Eldar
+		"Ranger Armour":{
+			"abbreviation": "RngrArm",
+			"description": "This armour is used by eldar rangers.",
+			"armour_value": {
+				"standard": 25,
+				"master_crafted": 27,
+				"artifact": 30
+			},
+		},
+	// Orks
+		"Ork Armour": {
+			"abbreviation": "OrkArm",
+			"armour_value": {
+				"standard": 7,
+				"master_crafted": 8,
+				"artifact": 9
+			},
+			"ranged_mod": {
+				"standard": 0,
+				"master_crafted": 5, // Augmented
+				"artifact": 10 // Augmented
+			},
+			"melee_mod": {
+				"standard": 0,
+				"master_crafted": 5, // Augmented
+				"artifact": 10 // Augmented
+			},
+			"description": "Mismatched basic armour used by ork forces"
+		},
+	// T'au
+		"Fire Warrior Armour": {
+			"abbreviation": "FWarArm",
+			"description": "This armour is used by T'au fire warriors.",
+			"armour_value": { // TODO - needs rebalancing
+				"standard": 20,
+				"master_crafted": 22,
+				"artifact": 25
+			},
 		}
 	},
 	"gear": {

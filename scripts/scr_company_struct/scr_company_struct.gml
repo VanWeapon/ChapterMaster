@@ -66,7 +66,7 @@ function CompanyStruct(comp) constructor{
 		return obj_ini.squads[company_squads[cur_squad]];
 	}
 
-	static defualt_member = function(){
+	static default_member = function(){
 		var member = obj_ini.squads[company_squads[0]].members[0];
 		obj_controller.temp[120] = fetch_unit(member);
 		selected_unit = obj_controller.temp[120];		
@@ -89,18 +89,18 @@ function CompanyStruct(comp) constructor{
     					}
     				}
     				if (!squad_found){
-    					defualt_member();
+    					default_member();
     				}
     			}
     		} else {
-    			defualt_member();
+    			default_member();
     		}
 		} else if (obj_controller.view_squad){
 			obj_controller.view_squad = false;
 			obj_controller.unit_profile =false;
 		}
 		if (selected_unit.squad=="none"){
-			defualt_member();
+			default_member();
 		}
     	if (selected_unit.squad!="none"){			        	
 			current_squad = obj_ini.squads[selected_unit.squad];
@@ -148,7 +148,8 @@ function CompanyStruct(comp) constructor{
 				var button_row_offset = 0;
 				draw_text_transformed(xx+bound_width[0]+5, yy+bound_height[0]+125, $"Squad has no current assigments",1,1,0);
 				tooltip_text="Guard Duty";
-				if (squad_loc.same_system) and (squad_loc.system!="Warp"){
+				var _squad_sys = squad_loc.system;
+				if (squad_loc.same_system) and (_squad_sys!="Warp" && _squad_sys!="Lost"){
 					button_row_offset+=string_width(tooltip_text)+6;
 					button = draw_unit_buttons([xx+bound_width[0]+5, yy+bound_height[0]+150], tooltip_text,[1,1],c_red,,,,true);
 					if(point_in_rectangle(mouse_x, mouse_y,xx+bound_width[0]+5, yy+bound_height[0]+150, xx+bound_width[0]+5+string_width(tooltip_text), yy+bound_height[0]+150+string_height(tooltip_text))){
@@ -159,7 +160,7 @@ function CompanyStruct(comp) constructor{
 							mission_type="garrison";
 						}
 					}
-					if (array_contains(current_squad.class, "scout")){
+					if (array_contains(current_squad.class, "scout")) || (array_contains(current_squad.class, "bike")){
 						tooltip_text="Sabotage";
 						button = draw_unit_buttons([button[2] + 4, yy+bound_height[0]+150], tooltip_text,[1,1],c_red,,,,true);
 						if(point_in_rectangle(mouse_x, mouse_y,xx+bound_width[0]+5+ button_row_offset, yy+bound_height[0]+150, xx+bound_width[0]+5+string_width(tooltip_text)+ button_row_offset, yy+bound_height[0]+150+string_height(tooltip_text))){
@@ -286,6 +287,14 @@ function CompanyStruct(comp) constructor{
 				current_squad.sort_squad_loadout();
 				reset_squad_surface();
 			}
+			var _button_text = current_squad.allow_bulk_swap ? "Exclude from mass" : "Allow mass";
+			button = draw_unit_buttons([xx+bound_width[0]+5, yy+bound_height[0]+200],_button_text,[1,1],c_green,,,,true);
+			if (point_and_click(button)){
+				current_squad.allow_bulk_swap = !current_squad.allow_bulk_swap;
+			}
+			if (scr_hit(button)){
+				tooltip_draw("Enable to stop this squad from being included in mass equipment changes in chapter settings");
+			}		
 			
 			if (unit_rollover){
 				if (point_in_rectangle(mouse_x, mouse_y, xx+25, yy+144, xx+925, yy+981)){
