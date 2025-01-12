@@ -1250,7 +1250,6 @@ function scr_initialize_custom() {
 	load_default_gear(eROLE.Sergeant, "Sergeant", "Chainsword", "Bolt Pistol", "Power Armour", "", "");
 	load_default_gear(eROLE.VeteranSergeant, "Veteran Sergeant", "Chainsword", "Plasma Pistol", "Power Armour", "", "");
  	
-
 	if(struct_exists(obj_creation, "custom_roles")){
 		var c_roles = obj_creation.custom_roles;
 		var possible_custom_roles = [
@@ -1289,19 +1288,14 @@ function scr_initialize_custom() {
 					var attribute = possible_custom_attributes[a];
 					if(struct_exists(c_roles[$ c_rolename], attribute)){
 						var value = c_roles[$ c_rolename][$ attribute];
-						// var dbg_m = $"role {c_roleid} {c_rolename} updated {attribute} to {typeof(value)} {value}";
-						// debugl(dbg_m);
-						// show_debug_message(dbg_m);
 						switch (attribute){
 							case "name": role[defaults_slot][c_roleid] = value; break;
-							case "wep1": wep1[defaults_slot][c_roleid] = value; break;
-							case "wep2": wep2[defaults_slot][c_roleid] = value; break;
+							case "wep1": wep1[defaults_slot][c_roleid] = value;  break;
+							case "wep2": wep2[defaults_slot][c_roleid] = value;  break;
 							case "armour": armour[defaults_slot][c_roleid] = value; break;
-							case "gear": gear[defaults_slot][c_roleid] = value; break;
+							case "gear": gear[defaults_slot][c_roleid] = value;  break;
 							case "mobi": mobi[defaults_slot][c_roleid] = value; break;
 						}
-						// array_set_value(obj_ini[attribute][100][c_roleid], value);
-						// [$attribute][100][c_roleid] = value;
 					}
 				}
 			}
@@ -2490,19 +2484,12 @@ function scr_initialize_custom() {
 	}
 
 	// Honour Guard
-	var _honour_guard_count = 0, unit;
-	o = 0;
-	chapter_option = 0;
-	repeat(4) {
-		o += 1;
-		if (obj_creation.adv[o] = "Retinue of Renown") then chapter_option = 1;
+	var _honour_guard_count = 3;
+	if(scr_has_adv("Retinue of Renown")){
+		_honour_guard_count = 10;
 	}
-	if (chapter_option = 1) then _honour_guard_count += 10;
-	if (progenitor == ePROGENITOR.DARK_ANGELS && obj_creation.custom = 0) { _honour_guard_count += 6; }
-	if (_honour_guard_count == 0) {
-		_honour_guard_count = 3
-	}
-	for (var i = 0; i < min(_honour_guard_count, 10); i++) {
+
+	for (var i = 0; i < _honour_guard_count; i++) {
 		k += 1;
 		commands += 1;
 		man_size += 1;
@@ -3331,6 +3318,12 @@ function add_veh_to_company(name, company, slot, wep1, wep2, wep3, upgrade, acce
 /// Use "" if you want to set weapons and gear via squad layouts.
 /// "default" will set it to the value in the default slot for the given role, see `load_default_gear`
 function add_unit_to_company(ttrpg_name, company, slot, role_name, role_id, wep1, wep2, gear, mobi, armour){
+	
+	// TODO add support for weighted lists from json e.g. [["Terminator Armour", 5], ["Tartartos Armour" ,1]]; 
+
+	var overwrite = obj_creation.overwrites_map; //handles json explicitly overriding the gear slot
+	show_debug_message(overwrite)
+
 	obj_ini.TTRPG[company][slot] = new TTRPG_stats("chapter", company, slot, ttrpg_name);
 	obj_ini.race[company][slot] = 1;
 	obj_ini.loc[company][slot] = obj_ini.home_name;
@@ -3355,6 +3348,7 @@ function add_unit_to_company(ttrpg_name, company, slot, role_name, role_id, wep1
 		} else {
 			spawn_unit.update_weapon_one(wep1, false, false);
 		}
+		
 	}
 	if(wep2 != ""){
 		if(wep2 == "default"){
@@ -3362,15 +3356,14 @@ function add_unit_to_company(ttrpg_name, company, slot, role_name, role_id, wep1
 		} else {
 			spawn_unit.update_weapon_two(wep2, false, false);
 		}
+		
 	}
 	if(armour != ""){
 		if(armour == "default"){
-			var _msg = spawn_unit.random_update_armour();
+			spawn_unit.random_update_armour();
 		} else {
-			var _msg = spawn_unit.update_armour(armour, false, false);
-		}
-		
-		// show_debug_message($"updating coy {company}:{slot} {role_name} armour to {armour}: {_msg} : {spawn_unit.armour()} : {obj_ini.armour[company][slot]}");
+			spawn_unit.update_armour(armour, false, false);
+		}		
 	}
 	if(gear != ""){
 		if(gear == "default"){

@@ -144,7 +144,8 @@ function scr_marine_spawn_age(){
 }
 
 /// @mixin
-function scr_marine_spawn_armour() {
+/// @param {String} _set Allows for overwriting which set of armour to roll from, e.g. "Normal", "Terminator" etc
+function scr_marine_spawn_armour(_set = "") {
 	var _terminator_armour_roll = function(_score) {
 		if (_score > 270) {
 			update_armour(choose("Tartaros", "Terminator Armour", "Terminator Armour"), false, false);
@@ -190,6 +191,18 @@ function scr_marine_spawn_armour() {
 	};
 
 	var _terminator_roles_array = [obj_ini.role[100][eROLE.Captain], obj_ini.role[100][eROLE.Champion], obj_ini.role[100][eROLE.Ancient], obj_ini.role[100][eROLE.Chaplain], obj_ini.role[100][eROLE.Apothecary], obj_ini.role[100][eROLE.Librarian], obj_ini.role[100][eROLE.Techmarine]];
+
+	/// Allows passing in a predefined set, e.g. during initialization, that will bypass the role-based random armour distribution
+	if(_set != ""){
+		switch(_set){
+			case "Normal":	update_armour(choose_weighted(_armour_weighted_lists.normal_armour), false, false); break;
+			case "Rare": update_armour(choose_weighted(_armour_weighted_lists.rare_armour), false, false); break;
+			case "Quality": update_armour(choose_weighted(_armour_weighted_lists.quality_armour), false, false); break;
+			case "Old": update_armour(choose_weighted(_armour_weighted_lists.old_armour), false, false); break;
+			case "Terminator": _terminator_armour_roll(_total_score); break;
+		}
+		return;
+	}
 
 	if (_company == 1 && array_contains(_terminator_roles_array, _role)) {
 		_terminator_armour_roll(_total_score);

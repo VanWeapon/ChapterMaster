@@ -215,11 +215,14 @@
             "honour_guard": {
                 "name": "Deathwing Knight",
                 "wep1": "Mace of Absolution",
-                "armour": "Terminator Armour"
+                "armour": "Terminator Armour" // an exact model
             },
             "captain": {
                 "name": "Master",
                 "wep1": "Power Sword"
+            },
+            "tactical": {
+                "armour": "Old" // an armour set
             }
         },
         /**
