@@ -555,11 +555,10 @@ function scr_image_cache(path, image_id) {
         var drawing_sprite;
         var cache_arr_exists = struct_exists(obj_img.image_cache, path);
         if (!cache_arr_exists) {
-            var empty_arr = array_create(100, -1);
-            variable_struct_set(obj_img.image_cache, path, empty_arr);
+            variable_struct_set(obj_img.image_cache, path, array_create(100, -1));
         }
         // Start with 100 slots but allow it to expand if needed
-        if (cache_arr_exists && image_id > 100) {
+        if (image_id > 100) {
             for (var i = 100; i <= image_id; i++) {
                 array_push(obj_img.image_cache[$ path], -1);
             }
