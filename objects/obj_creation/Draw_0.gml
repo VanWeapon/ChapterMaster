@@ -306,8 +306,7 @@ try {
 	}
 
 	/* Chapter Master */
-
-	if (slide == 6) {
+	if (slide == eCREATIONSLIDES.CHAPTERMASTER) {
 		draw_set_color(38144);
 		draw_set_font(fnt_40k_30b);
 		draw_set_halign(fa_center);
@@ -335,7 +334,7 @@ try {
 				draw_text(580, 144, string_hash_to_newline(string(chapter_master_name) + "|"));
 			}
 			var str_width, hei;
-			str_width = max(400, string_width(string_hash_to_newline(chapter_master_name)));
+			str_width = max(350, string_width(string_hash_to_newline(chapter_master_name)));
 			hei = string_height(string_hash_to_newline(chapter_master_name));
 			if (scr_hit(580 - 2, 144 - 2, 582 + str_width, 146 + hei)) {
 				obj_cursor.image_index = 2;
@@ -348,9 +347,9 @@ try {
 			if (text_selected == "cm") {
 				chapter_master_name = keyboard_string;
 			}
-			draw_rectangle(580 - 2, 144 - 2, 582 + 400, 146 + hei, 1);
+			draw_rectangle(580 - 2, 144 - 2, 582 + 350, 146 + hei, 1);
 
-			var _refresh_cm_name_btn = [993, 142, 997 + hei, 146 + hei];
+			var _refresh_cm_name_btn = [943, 142, 947 + hei, 146 + hei];
 			draw_unit_buttons(_refresh_cm_name_btn, "?", [1, 1], 38144, , fnt_40k_14b);
 			if (point_and_click(_refresh_cm_name_btn)) {
 				var _new_cm_name = global.name_generator.generate_space_marine_name();
@@ -516,10 +515,21 @@ try {
 		//adds "Save Chapter" button if custom chapter in a save slot
 
 		if (custom > 0 && global.chapter_id != eCHAPTERS.UNKNOWN) {
-			draw_rectangle(1000, 135, 1180, 170, 1);
-			draw_text_transformed(1090, 140, string("Save Chapter"), 0.6, 0.6, 0);
+			/// save chapter box
+			var _sc_box = {
+				x1: 980,
+				y1: 135,
+				w: 180,
+				h: 35
+			};
+			_sc_box.y2 = _sc_box.y1 + _sc_box.h;
+			_sc_box.x2 = _sc_box.x1 + _sc_box.w;
+			
+			draw_set_font(fnt_40k_30b);
+			draw_rectangle(_sc_box.x1, _sc_box.y1, _sc_box.x2, _sc_box.y2, true);
+			draw_text_transformed(_sc_box.x1 + 90, _sc_box.y1 + 5, string("Save Chapter"), 0.6, 0.6, 0);
 			draw_set_font(fnt_40k_14b);
-			if (scr_hit(1000, 135, 1180, 170)) {
+			if (scr_hit(_sc_box.x1, _sc_box.y1, _sc_box.x2, _sc_box.y2)) {
 				tooltip = "Do you want to save your chapter?";
 				tooltip2 = "Click to save your chapter";
 				if (mouse_left >= 1) {

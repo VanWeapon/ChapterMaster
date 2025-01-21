@@ -7,6 +7,7 @@ enum eCREATIONSLIDES{
 	CHAPTERHOME = 3,
 	CHAPTERLIVERY = 4,
 	CHAPTERGENE = 5,
+    CHAPTERMASTER = 6
 }
 function draw_chapter_select(){
 	draw_set_color(38144);
@@ -976,7 +977,7 @@ function draw_chapter_homeworld_select(){
         if (!buttons.complex_homeworld.active){
         
             var trial_data = scr_trial_data();
-            draw_text_transformed(80,90,"Aspirant Trial",0.6,0.6,0);
+            draw_text_transformed(160,90,"Aspirant Trial",0.6,0.6,0);
 
             if (custom>1){
                 draw_sprite_stretched(spr_creation_arrow,0,40,90,32,32);
@@ -1000,7 +1001,7 @@ function draw_chapter_homeworld_select(){
 
             
 
-            draw_text_transformed(80,110,current_trial.name,0.5,0.5,0);
+            draw_text_transformed(160,110,current_trial.name,0.5,0.5,0);
             
             var asp_info;
             asp_info = scr_compile_trial_bonus_string(current_trial);
