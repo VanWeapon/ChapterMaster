@@ -542,14 +542,10 @@ function scr_ui_diplomacy() {
 		}
     
 	    if (daemon=false){
-	        if (diplomacy!=6) then scr_image("diplomacy/splash",diplomacy,xx+16,yy+43,310,828);
-	        if (diplomacy!=6) or ((diplomacy=6) and (faction_gender[6]=1)) then scr_image("diplomacy/splash",diplomacy,xx+16,yy+16,310,828);
-	        if (diplomacy=6) and (faction_gender[6]=2) then scr_image("diplomacy/splash",11,xx+16,yy+16,310,828);
-	        if (diplomacy=10) and (faction_gender[10]=2) then scr_image("diplomacy/splash",12,xx+16,yy+43,310,828);
-	        /*if (diplomacy!=6) then draw_sprite(spr_diplomacy,diplomacy,xx+16,yy+43);
-	        if (diplomacy!=6) or ((diplomacy=6) and (faction_gender[6]=1)) then draw_sprite(spr_diplomacy,diplomacy,xx+16,yy+16);
-	        if (diplomacy=6) and (faction_gender[6]=2) then draw_sprite(spr_diplomacy,11,xx+16,yy+16);
-	        if (diplomacy=10) and (faction_gender[10]=2) then draw_sprite(spr_diplomacy,12,xx+16,yy+16);*/
+	        if (diplomacy!=eFACTION.Eldar) then scr_image("diplomacy/splash",diplomacy,xx+16,yy+43,310,828);
+	        if (diplomacy!=eFACTION.Eldar) or ((diplomacy==eFACTION.Eldar) and (faction_gender[eFACTION.Eldar]=1)) then scr_image("diplomacy/splash",diplomacy,xx+16,yy+16,310,828);
+	        if (diplomacy==eFACTION.Eldar) and (faction_gender[eFACTION.Eldar]=2) then scr_image("diplomacy/splash",10,xx+16,yy+16,310,828);
+	        if (diplomacy==eFACTION.Chaos) and (faction_gender[eFACTION.Chaos]=2) then scr_image("diplomacy/splash",11,xx+16,yy+43,310,828);
 	    }
     
 	    draw_set_halign(fa_center);
@@ -560,14 +556,14 @@ function scr_ui_diplomacy() {
 	    if (diplomacy>=6) then fac2="";
     
     
-	    if (diplomacy=2) then fac="Imperium of Man";
-	    if (diplomacy=3) then fac="Adeptus Mechanicus";
-	    if (diplomacy=4) then fac="Inquisition";
-	    if (diplomacy=5) then fac="Ecclesiarchy";
-	    if (diplomacy=6) then fac="Eldar";
-	    if (diplomacy=7) then fac="Orks";
-	    if (diplomacy=8) then fac="Tau Empire";
-	    if (diplomacy=10) then fac="Heretics";
+	    if (diplomacy==eFACTION.Imperium) then fac="Imperium of Man";
+	    if (diplomacy==eFACTION.Mechanicus) then fac="Adeptus Mechanicus";
+	    if (diplomacy==eFACTION.Inquisition) then fac="Inquisition";
+	    if (diplomacy==eFACTION.Ecclesiarchy) then fac="Ecclesiarchy";
+	    if (diplomacy==eFACTION.Eldar) then fac="Eldar";
+	    if (diplomacy==eFACTION.Ork) then fac="Orks";
+	    if (diplomacy==eFACTION.Tau) then fac="Tau Empire";
+	    if (diplomacy==eFACTION.Chaos) then fac="Heretics";
 	    if (diplomacy>10) and (diplomacy<11) then fac="Chaos";
     
 	    draw_text_transformed(xx+622,yy+66,string_hash_to_newline(string(fac)),1,1,0);
