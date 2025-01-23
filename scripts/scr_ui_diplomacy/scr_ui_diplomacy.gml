@@ -544,8 +544,8 @@ function scr_ui_diplomacy() {
 	    if (daemon=false){
 	        if (diplomacy!=eFACTION.Eldar) then scr_image("diplomacy/splash",diplomacy,xx+16,yy+43,310,828);
 	        if (diplomacy!=eFACTION.Eldar) or ((diplomacy==eFACTION.Eldar) and (faction_gender[eFACTION.Eldar]=1)) then scr_image("diplomacy/splash",diplomacy,xx+16,yy+16,310,828);
-	        if (diplomacy==eFACTION.Eldar) and (faction_gender[eFACTION.Eldar]=2) then scr_image("diplomacy/splash",10,xx+16,yy+16,310,828);
-	        if (diplomacy==eFACTION.Chaos) and (faction_gender[eFACTION.Chaos]=2) then scr_image("diplomacy/splash",11,xx+16,yy+43,310,828);
+	        if (diplomacy==eFACTION.Eldar) and (faction_gender[eFACTION.Eldar]=2) then scr_image("diplomacy/splash",11,xx+16,yy+16,310,828);
+	        if (diplomacy==eFACTION.Chaos) and (faction_gender[eFACTION.Chaos]=2) then scr_image("diplomacy/splash",12,xx+16,yy+43,310,828);
 	    }
     
 	    draw_set_halign(fa_center);
