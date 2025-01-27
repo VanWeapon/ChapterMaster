@@ -718,5 +718,9 @@ try {
 	}
 } catch (_exception) {
 	handle_exception(_exception);
-    room_goto(Main_Menu);
+	room_instance_add(Main_Menu, 0, 0, obj_lol_version);
+	room_instance_add(Main_Menu, 0, 0, obj_cursor);
+	room_instance_add(Main_Menu, 0, 0, obj_main_menu_buttons);
+	room_instance_add(Main_Menu, 0, 0, obj_main_menu);
+	room_goto(Main_Menu);
 }
