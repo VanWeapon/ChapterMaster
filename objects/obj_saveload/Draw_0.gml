@@ -197,6 +197,8 @@ if (menu=1) or (menu=2){// This is the other one
                         with(obj_popup){instance_destroy();}
                         audio_stop_all();
                         
+                        room_instance_add(Game, 0, 0, obj_cursor);
+                        room_instance_add(Game, 0, 0, obj_controller);
                         room_goto(Game);
                     }
                 }
@@ -229,6 +231,8 @@ if (menu=1) or (menu=2){// This is the other one
                     with(obj_popup){instance_destroy();}
                     audio_stop_all();
                     
+                    room_instance_add(Game, 0, 0, obj_cursor);
+                    room_instance_add(Game, 0, 0, obj_controller);
                     room_goto(Game);
                 }
             }

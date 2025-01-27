@@ -12,7 +12,13 @@ if (room_get_name(room)="Creation"){
     if (fading=0) and (fade>0) then fade-=1;
     if (fading=1) and ((fade<40) or (crap>0) or (button=1)) then fade+=1;
     
-    if (fade=60) then room_goto(Main_Menu);
+    if (fade=60) {
+        room_instance_add(Main_Menu, 0, 0, obj_lol_version);
+        room_instance_add(Main_Menu, 0, 0, obj_cursor);
+        room_instance_add(Main_Menu, 0, 0, obj_main_menu_buttons);
+        room_instance_add(Main_Menu, 0, 0, obj_main_menu);
+        room_goto(Main_Menu);
+    }
     exit;
 }
 
@@ -39,8 +45,20 @@ if (crap>0) and (fade=60){
         instance_destroy();
     }
 }
-if (crap=1) and (fade=60) then room_goto(Tutorial);
-if (crap>1) and (fade=60){audio_stop_all();room_goto(Creation);}
+if ((crap == 1) && (fade == 60)) {
+    room_instance_add(Tutorial, 0, 0, obj_cursor);
+    room_instance_add(Tutorial, 0, 0, obj_controller);
+    room_instance_add(Tutorial, 0, 0, obj_star);
+	room_goto(Tutorial);
+}
+if ((crap > 1) && (fade == 60)) {
+	audio_stop_all();
+    room_instance_add(Creation, 0, 0, obj_cursor);
+    room_instance_add(Creation, 0, 0, obj_main_menu_buttons);
+    room_instance_add(Creation, 0, 0, obj_creation);
+	room_goto(Creation);
+}
+
 
 if (button=4) and (fade=40) then with(obj_cursor){instance_destroy();}
 if (button=4) and (fade>=60) then game_end();

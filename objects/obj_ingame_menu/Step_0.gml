@@ -57,7 +57,13 @@ if (fading>0){
     if (fading>=35){
         global.returned=1;
         audio_stop_all();
-        with(obj_ini){instance_destroy();}
+        with(obj_ini){
+            instance_destroy();
+        }
+        room_instance_add(Main_Menu, 0, 0, obj_lol_version);
+        room_instance_add(Main_Menu, 0, 0, obj_cursor);
+        room_instance_add(Main_Menu, 0, 0, obj_main_menu_buttons);
+        room_instance_add(Main_Menu, 0, 0, obj_main_menu);
         room_goto(Main_Menu);
     }
 }
