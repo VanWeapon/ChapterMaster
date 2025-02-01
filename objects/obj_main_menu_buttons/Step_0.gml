@@ -58,7 +58,7 @@ if ((crap == 1) && (fade == 60)) {
 if ((crap > 1) && (fade == 60)) {
 	audio_stop_all();
     room_instance_add(Creation, 0, 0, obj_cursor);
-    room_instance_add(Creation, 0, 0, obj_main_menu_buttons);
+    room_instance_add(Creation, 0, 832, obj_main_menu_buttons);
     room_instance_add(Creation, 0, 0, obj_creation);
 	room_goto(Creation);
 }
