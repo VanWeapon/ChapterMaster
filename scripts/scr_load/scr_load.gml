@@ -46,6 +46,8 @@ function scr_load(save_part, save_id) {
 		global.chapter_icon_path = globals.chapter_icon_path;
 		global.chapter_icon_filename = globals.chapter_icon_filename;
 	    global.icon_name=globals.icon_name;
+		global.chapter_name = globals.chapter_name;
+		global.custom = globals.custom;
 
 
 	}
@@ -58,7 +60,7 @@ function scr_load(save_part, save_id) {
 		var star_array = obj_saveload.GameSave.Stars;
 		for(var i = 0; i < array_length(star_array); i++){
 			var deserialized = star_array[i];
-    		instance_create_layer(deserialized.x, deserialized.y, deserialized.layer, obj_star, deserialized);
+    		instance_create_layer(deserialized.x, deserialized.y, -1, obj_star, deserialized);
 			// obj_star.deserialize(star_array[i]);
 		}
 	}
@@ -69,7 +71,7 @@ function scr_load(save_part, save_id) {
 	if (save_part=3) or (save_part=0){debugl("Loading slot "+string(save_id)+" part 3");
 		// Ini
 		var deserialized = obj_saveload.GameSave.Ini;
-    	instance_create_layer(deserialized.x, deserialized.y, deserialized.layer, obj_ini, deserialized);
+    	instance_create_layer(deserialized.x, deserialized.y, -1, obj_ini, deserialized);
 		var livery_picker = new ColourItem(0,0);
 		livery_picker.scr_unit_draw_data();
 		if(struct_exists(deserialized, "full_liveries")){
@@ -80,8 +82,15 @@ function scr_load(save_part, save_id) {
 
 
 		// Controller
-		var deserialized = obj_saveload.GameSave.Controller;
-    	var _controller_instance = instance_create_layer(deserialized.x, deserialized.y, deserialized.layer, obj_controller, deserialized);
+		var deserialized_con = obj_saveload.GameSave.Controller;
+    	instance_create_layer(deserialized_con.x, deserialized_con.y, -1, obj_controller, deserialized_con);
+		obj_controller.marines = deserialized_con.marines;
+		obj_controller.loyalty = deserialized_con.loyalty;
+		obj_controller.gene_seed = deserialized_con.gene_seed;
+		obj_controller.specialist_point_handler = new SpecialistPointHandler();
+		obj_controller.specialist_point_handler.calculate_research_points();
+		obj_controller.location_viewer = new UnitQuickFindPanel();
+		
 		// with(_controller_instance){
 		// 	scr_colors_initialize();
 		// 	scr_shader_initialize();
@@ -100,7 +109,7 @@ function scr_load(save_part, save_id) {
 	    var p_fleet = obj_saveload.GameSave.PlayerFleet;
 		for(var i = 0; i < array_length(p_fleet); i++){
 			var deserialized = p_fleet[i];
-    		instance_create_layer(deserialized.x, deserialized.y, deserialized.layer, obj_p_fleet, deserialized);
+    		instance_create_layer(deserialized.x, deserialized.y, -1, obj_p_fleet, deserialized);
 		}
 	}
 
@@ -108,7 +117,7 @@ function scr_load(save_part, save_id) {
 	    var en_fleet = obj_saveload.GameSave.EnemyFleet;
 		for(var i = 0; i < array_length(en_fleet); i++){
 			var deserialized = en_fleet[i];
-    		instance_create_layer(deserialized.x, deserialized.y, deserialized.layer, obj_en_fleet, deserialized);
+    		instance_create_layer(deserialized.x, deserialized.y, -1, obj_en_fleet, deserialized);
 		}
 	    obj_saveload.alarm[1]=30;
 	    obj_controller.invis=false;

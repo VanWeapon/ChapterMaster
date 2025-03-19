@@ -1813,7 +1813,9 @@ serialize = function(){
         production_research,
         player_forge_data,
         end_turn_insights,
-        recruit_data
+        recruit_data,
+        marines,
+        loyalty
     }
     var excluded_from_save = ["temp", "serialize", "deserialize", "build_chaos_gods", "company_data","menu_buttons",
             "location_viewer", "production_research_pathways", "specialist_point_handler"]
