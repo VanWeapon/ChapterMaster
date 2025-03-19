@@ -1803,6 +1803,10 @@ serialize = function(){
     var object_ini = self;
     
     var save_data = {
+        x,
+        y,
+        layer,
+        id,
         chaos_gods,
         master_of_forge,
         stc_research,
@@ -1868,8 +1872,12 @@ serialize = function(){
 }
 
 deserialize = function(save_data){
-    var deserialized = json_decode(save_data);
-    instance_create_layer(deserialized.x, deserialized.y, deserialized.id, obj_controller, deserialized);
+    var deserialized = save_data;
+    instance_create_layer(deserialized.x, deserialized.y, deserialized.layer, obj_controller, deserialized);
+    with(obj_controller){
+        scr_colors_initialize();
+        scr_shader_initialize();
+    }
 }
 
 #endregion

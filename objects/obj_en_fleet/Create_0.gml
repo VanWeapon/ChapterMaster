@@ -76,6 +76,10 @@ serialize = function(){
     var object_ini = self;
     
     var save_data = {
+         x,
+        y,
+        layer,
+        id
     }
     
     var excluded_from_save = ["temp", "serialize", "deserialize", "cargo_data"]
@@ -138,8 +142,11 @@ serialize = function(){
 // debugl(json_stringify(serialize(), true));
 
 deserialize = function(save_data){
-    var deserialized = json_decode(save_data);
-    instance_create_layer(deserialized.x, deserialized.y, deserialized.id, obj_en_fleet, deserialized);
+    var deserialized = save_data;
+    var instance = instance_create_layer(deserialized.x, deserialized.y, deserialized.layer, obj_en_fleet, deserialized);
+    with(instance){
+        choose_fleet_sprite_image();
+    }
 }
 
 #endregion

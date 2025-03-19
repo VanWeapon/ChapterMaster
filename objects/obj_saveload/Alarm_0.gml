@@ -67,16 +67,7 @@ if (load_part==6){
     if (global.restart>0) then txt="Praise be to the Emperor";
     with(obj_controller){
         scr_load(5,global.load);
-        // **sets up starting forge_points
-        location_viewer = new UnitQuickFindPanel();
         
-        specialist_point_handler.calculate_research_points();
-
-        //** sets up marine_by_location view
-        with(obj_controller){
-            global.star_name_colors[1] = make_color_rgb(body_colour_replace[0],body_colour_replace[1],body_colour_replace[2]);
-            sector_imperial_fleet_strength();
-        }
     }
     trickle=50;
     if (instance_exists(obj_cuicons)){
@@ -134,7 +125,7 @@ if (load_part == 2) {
 }
 
 if (load_part == 1) {
-	if (file_exists("save" + string(global.load) + ".ini")) {
+	if (file_exists("save" + string(global.load) + ".json")) {
 		load_part += 1;
 		trickle = 10;
 		txt = "Preparing";
