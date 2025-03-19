@@ -1864,15 +1864,12 @@ serialize = function(){
             }
         }
     }
-
-
     return save_data;
 }
-debugl(json_stringify(serialize(), true));
 
 deserialize = function(save_data){
-    // var deserialized = json_decode(save_data);
-    // instance_create_layer(deserialized.x, deserialized.y, deserialized.id, obj_controller, deserialized);
+    var deserialized = json_decode(save_data);
+    instance_create_layer(deserialized.x, deserialized.y, deserialized.id, obj_controller, deserialized);
 }
 
 #endregion

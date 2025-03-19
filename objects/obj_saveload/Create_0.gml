@@ -1,6 +1,6 @@
 
 scr_image("loading",-50,0,0,0,0);
-
+GameSave = {};
 menu=0;// 1 : save, 2: load
 save_part=0;
 load_part=0;
@@ -45,11 +45,11 @@ repeat(201){i+=1;
 }
 i=0;
 repeat(100){i+=1;
-    if (file_exists("save"+string(i)+".ini")){
+    if (file_exists("save"+string(i)+".json")){
         saves+=1;save[saves]=i;
     }
-    if (!file_exists("save"+string(i)+".ini")) and (i>0) and (max_ini=0) then max_ini=i;
-    if (file_exists("save"+string(i+1)+".ini")) and (max_ini>0) then max_ini=0;
+    if (!file_exists("save"+string(i)+".json")) and (i>0) and (max_ini=0) then max_ini=i;
+    if (file_exists("save"+string(i+1)+".json")) and (max_ini>0) then max_ini=0;
 }
 first_open=saves+1;
 
