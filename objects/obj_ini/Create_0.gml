@@ -145,6 +145,10 @@ serialize = function(){
     
 
     var save_data = {
+         x,
+        y,
+        layer,
+        id,
         custom_advisors,
         full_liveries,
         complex_livery_data,
@@ -212,15 +216,14 @@ serialize = function(){
 // debugl(json_stringify(serialize(), true));
 
 deserialize = function(save_data){
-    var deserialized = json_decode(save_data);
-    var marines = base64_decode(deserialized.marines);
-    var squads = base64_decode(deserialized.squads);
+    var deserialized = save_data;
+    // var marines = base64_decode(deserialized.marines);
+    // var squads = base64_decode(deserialized.squads);
 
-    instance_create_layer(deserialized.x, deserialized.y, deserialized.id, obj_ini, deserialized);
+    instance_create_layer(deserialized.x, deserialized.y, deserialized.layer, obj_ini, deserialized);
     var livery_picker = new ColourItem(0,0);
     livery_picker.scr_unit_draw_data();
     if(struct_exists(deserialized, "full_liveries")){
-
         obj_ini.full_liveries = base64_decode(deserialized.full_liveries);
     } else {
         obj_ini.full_liveries = array_create(21,DeepCloneStruct(livery_picker.map_colour));

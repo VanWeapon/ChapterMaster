@@ -117,25 +117,13 @@ global.star_name_colors = [
 serialize = function(){
     var object_star = self;
 
-    // compression :) 
-    var _is_empty = true;
-    for(var i = 0; i < array_length(object_star.p_problem); i++){
-        for(var j = 0; j < array_length(object_star.p_problem[i]); j++){
-            if(object_star.p_problem[i][j] != "" && object_star.p_problem[i][j] != 0){
-                _is_empty = false;
-            }
-        }
-    }
-
-    var p_problem_sv = [];
-    if(!_is_empty){
-        p_problem_sv = object_star.p_problem;
-    }
-    
     var save_data = {
-        p_problem: p_problem_sv
+        x,
+        y,
+        layer,
+        id
     }
-    
+      
     var excluded_from_save = ["temp", "serialize", "deserialize", "p_feature", "p_problem_other_data", "arraysum", "p_timer", "p_problem", "p_influence"]
 
     /// Check all object variable values types and save the simple ones dynamically. 
@@ -192,12 +180,9 @@ serialize = function(){
     return save_data;
 }
 
-deserialize = function(save_data){
-    var deserialized = json_decode(save_data);
-    if(deserialized.p_problem == []){
-        deserialized.p_problem = array_create(8, array_create(8, ""));
-    }
-    instance_create_layer(deserialized.x, deserialized.y, deserialized.id, obj_star, deserialized);
+function deserialize(save_data){
+    var deserialized = save_data;
+    instance_create_layer(deserialized.x, deserialized.y, deserialized.layer, obj_star, deserialized);
 }
 
 #endregion
