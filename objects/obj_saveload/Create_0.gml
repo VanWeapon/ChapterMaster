@@ -1,6 +1,13 @@
 
 scr_image("loading",-50,0,0,0,0);
 GameSave = {};
+GameSave.Stars = [];
+GameSave.PlayerFleet = [];
+GameSave.EnemyFleet = [];
+GameSave.Ini = {};
+GameSave.Controller = {};
+GameSave.EventLog = [];
+
 menu=0;// 1 : save, 2: load
 save_part=0;
 load_part=0;

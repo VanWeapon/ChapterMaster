@@ -15,143 +15,84 @@ function ini_encode_and_json_advanced(ini_area, ini_code, value){
 }
 
 function scr_save(save_part,save_id) {
-
-	obj_saveload.GameSave = {};
- 	var t=date_current_datetime();
-    var month=date_get_month(t);
-    var day=date_get_day(t);
-    var year=date_get_year(t);
-    var hour=date_get_hour(t);
-    var minute=date_get_minute(t);
-    var pm=(hour>=12 && hour<24) ? "PM":"AM";
-    if (hour=0) then hour=12;
-    var mahg=minute;
-    if (mahg<10) then minute=$"0{mahg}";
-
-	obj_saveload.GameSave.Save = {
-        chapter_name: global.chapter_name,
-        sector_name: obj_ini.sector_name,
-        version: global.game_version,
-        play_time: play_time,
-        game_seed: global.game_seed,
-        use_custom_icon: obj_ini.use_custom_icon,
-        chapter_icon_sprite: global.chapter_icon_sprite,
-        chapter_icon_frame: global.chapter_icon_frame,
-        chapter_icon_path: global.chapter_icon_path,
-		icon_name: global.icon_name,
-		chapter_icon_filename: global.chapter_icon_filename,
-		date: string(month)+"/"+string(day)+"/"+string(year)+" ("+string(hour)+":"+string(minute)+" "+string(pm)+")",
-		founding: obj_ini.progenitor,
-		custom: global.custom,
-		stars: instance_number(obj_star),
-		p_fleets: instance_number(obj_p_fleet),
-		en_fleets: instance_number(obj_en_fleet),
-		sod: random_get_seed(),
-    }
-
-
-	
 	try{
-	var num=0,tot=0;
-	num=0;tot=0;
-
-	num=instance_number(obj_star);
-	instance_array[tot]=0;
-	
-	// if (file_exists("save1.ini")) then file_delete("save1.ini");
-	// argument 0 = the part of the save to do
-	//save_id = the save ID
-
 	if (save_part=1) or (save_part=0){
-		var fileid = file_text_open_append($"save{save_id}.json");
-		file_text_write_string(fileid, "{\"GameSave\":{");
+		var t=date_current_datetime();
+		var month=date_get_month(t);
+		var day=date_get_day(t);
+		var year=date_get_year(t);
+		var hour=date_get_hour(t);
+		var minute=date_get_minute(t);
+		var pm=(hour>=12 && hour<24) ? "PM":"AM";
+		if (hour=0) then hour=12;
+		var mahg=minute;
+		if (mahg<10) then minute=$"0{mahg}";
 
-		file_text_write_string(fileid, $"\"Save\":{json_stringify(obj_saveload.GameSave.Save)},");
-		file_text_close(fileid);
-
-		// scr_save_controller(save_id);
+		obj_saveload.GameSave.Save = {
+			chapter_name: global.chapter_name,
+			sector_name: obj_ini.sector_name,
+			version: global.game_version,
+			play_time: play_time,
+			game_seed: global.game_seed,
+			use_custom_icon: obj_ini.use_custom_icon,
+			chapter_icon_sprite: global.chapter_icon_sprite,
+			chapter_icon_frame: global.chapter_icon_frame,
+			chapter_icon_path: global.chapter_icon_path,
+			icon_name: global.icon_name,
+			icon: global.icon,
+			chapter_icon_filename: global.chapter_icon_filename,
+			date: string(month)+"/"+string(day)+"/"+string(year)+" ("+string(hour)+":"+string(minute)+" "+string(pm)+")",
+			founding: obj_ini.progenitor,
+			custom: global.custom,
+			stars: instance_number(obj_star),
+			p_fleets: instance_number(obj_p_fleet),
+			en_fleets: instance_number(obj_en_fleet),
+			sod: random_get_seed(),
+		}
 		
+		/// STARS
+	    var num=instance_number(obj_star);
+	    for (var i=0; i<num; i+=1){
+	        var star_obj = instance_find(obj_star,i);
+			var star_json = star_obj.serialize();
+			array_push(obj_saveload.GameSave.Stars, star_json);
+	    }
 	}
 
 
 	if (save_part=2) or (save_part=0){
-		show_debug_message("Saving to slot "+string(save_id)+" part 2");
-		var fileid = file_text_open_append($"save{save_id}.json");
-		
-	    var num=instance_number(obj_star);
-	    instance_array=0; 
-		file_text_writeln(fileid);
-		file_text_write_string(fileid, "\"Stars\":[");
-	    for (var i=0; i<num; i+=1){
-	        instance_array[i] = instance_find(obj_star,i);
-			var star_json = instance_array[i].serialize();
-			file_text_writeln(fileid);
-			file_text_write_string(fileid, $"{json_stringify(star_json)},");
-	    }
-		file_text_write_string(fileid,"],")
-		file_text_writeln(fileid);
-
 	    // PLAYER FLEET OBJECTS
-	    num=0;tot=0;num=instance_number(obj_p_fleet);
-	    instance_array[tot]=0;
-
-		obj_saveload.GameSave.PlayerFleet = [];
-
-
+		var num = instance_number(obj_p_fleet);
 	    for (var i=0; i<num; i+=1){
-	        instance_array[i] = instance_find(obj_p_fleet,i);
-			var obj_p_fleet_json = instance_array[i].serialize();
+	        var fleet_obj = instance_find(obj_p_fleet,i);
+			var obj_p_fleet_json = fleet_obj.serialize();
 			array_push(obj_saveload.GameSave.PlayerFleet, obj_p_fleet_json);
 	    }
-		file_text_writeln(fileid);
-		file_text_write_string(fileid, "\"PlayerFleet\":");
-		file_text_write_string(fileid, $"{json_stringify(obj_saveload.GameSave.PlayerFleet)},");
 
 	    // ENEMY FLEET OBJECTS
-	    num=0;tot=0;num=instance_number(obj_en_fleet);
-	    instance_array[tot]=0;
-
 		obj_saveload.GameSave.EnemyFleet = [];
-
+		num = instance_number(obj_en_fleet);
 	    for (var i=0; i<num; i+=1){
-	        instance_array[i] = instance_find(obj_en_fleet,i);
-			var obj_en_fleet_json = instance_array[i].serialize();
+	        var fleet_obj = instance_find(obj_en_fleet,i);
+			var obj_en_fleet_json = fleet_obj.serialize();
 			array_push(obj_saveload.GameSave.EnemyFleet, obj_en_fleet_json);
 	    }
-		file_text_writeln(fileid);
-		file_text_write_string(fileid, "\"EnemyFleet\":");
-		file_text_write_string(fileid, $"{json_stringify(obj_saveload.GameSave.EnemyFleet)},");
-		file_text_close(fileid);
-
 	}
 
 
 	if (save_part=3) or (save_part=0){
-		var fileid = file_text_open_append($"save{save_id}.json");
 		var obj_controller_json = obj_controller.serialize();
 		obj_saveload.GameSave.Controller = obj_controller_json;
-		file_text_writeln(fileid);
-		file_text_write_string(fileid, "\"Controller\":");
-		file_text_write_string(fileid, $"{json_stringify(obj_saveload.GameSave.Controller)},");
-		file_text_close(fileid);
 	}
 
 	if (save_part=4) or (save_part=0){
 		var obj_ini_json = obj_ini.serialize();
 		obj_saveload.GameSave.Ini = obj_ini_json;
-		var fileid = file_text_open_append($"save{save_id}.json");
-		file_text_writeln(fileid);
-		file_text_write_string(fileid, "\"Ini\":");
-		file_text_write_string(fileid, $"{json_stringify(obj_saveload.GameSave.Ini)},");
-		file_text_close(fileid);
 	}
 
 	if (save_part=5) or (save_part=0){
-	    var fileid = file_text_open_append($"save{save_id}.json");
-		file_text_writeln(fileid);
 	    instance_activate_object(obj_event_log);
-		file_text_write_string(fileid, $"\"Event\": {json_stringify(obj_event_log.event)}");
-		file_text_close(fileid);
+		obj_saveload.GameSave.EventLog = obj_event_log.event;
 	    obj_saveload.hide=true;
 	    obj_controller.invis=true;
 	    obj_saveload.alarm[2]=2;
@@ -175,13 +116,14 @@ function scr_save(save_part,save_id) {
 
 	    obj_saveload.save[save_id]=1;
 
-	    debugl("Saving to slot "+string(save_id)+" complete");
+		var _gamesave_string = json_stringify(obj_saveload.GameSave);
+		var _gamesave_buffer = buffer_create(string_byte_length(_gamesave_string) + 1, buffer_fixed, 1);
 
-		var fileid = file_text_open_append($"save{save_id}.json");
-		file_text_writeln(fileid);
-		file_text_write_string(fileid, "}}");
-		file_text_writeln(fileid);
-		file_text_close(fileid);
+		var filename = $"save{save_id}.json";
+
+		buffer_write(_gamesave_buffer, buffer_string, _gamesave_string);
+		buffer_save(_gamesave_buffer, filename);
+		buffer_delete(_gamesave_buffer)
 	}
 
 

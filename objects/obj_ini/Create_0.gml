@@ -103,6 +103,10 @@ gene_slaves = [];
     if (obj_creation.custom=0) then scr_initialize_standard();
 }*/
 
+adv = [];
+dis = [];
+
+
 if (instance_exists(obj_creation)) then custom=obj_creation.custom;
 
 if (global.load=0) then scr_initialize_custom();
@@ -146,14 +150,15 @@ serialize = function(){
     
 
     var save_data = {
+        obj: object_get_name(object_index),
          x,
         y,
         layer,
         id,
         custom_advisors,
-        full_liveries,
-        complex_livery_data,
-        squad_types,
+        full_liveries: base64_encode(full_liveries),
+        complex_livery_data: base64_encode(complex_livery_data),
+        squad_types: base64_encode(squad_types),
         artifact_struct,
         // marines,
         // squads
@@ -213,22 +218,6 @@ serialize = function(){
     }
     return save_data;
 }
-// debugl("obj_ini save data serialized:");
-// debugl(json_stringify(serialize(), true));
 
-deserialize = function(save_data){
-    var deserialized = save_data;
-    // var marines = base64_decode(deserialized.marines);
-    // var squads = base64_decode(deserialized.squads);
-
-    instance_create_layer(deserialized.x, deserialized.y, deserialized.layer, obj_ini, deserialized);
-    var livery_picker = new ColourItem(0,0);
-    livery_picker.scr_unit_draw_data();
-    if(struct_exists(deserialized, "full_liveries")){
-        obj_ini.full_liveries = base64_decode(deserialized.full_liveries);
-    } else {
-        obj_ini.full_liveries = array_create(21,DeepCloneStruct(livery_picker.map_colour));
-    }
-}
 
 #endregion
