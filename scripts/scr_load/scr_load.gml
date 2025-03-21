@@ -20,35 +20,30 @@ function load_marine_struct(company, marine){
 };
 
 function scr_load(save_part, save_id) {
-	var unit;
-	var rang=0,stars=0,pfleets=0,efleets=0;
-
 	var filename = $"save{save_id}.json";
-	var fileid = file_text_open_read(filename);
-	var raw_json = "";
-	while(file_text_eof(fileid) == false){
-		raw_json = string_concat(raw_json, file_text_readln(fileid))
-	} 
-	file_text_close(fileid);
-	debugl(raw_json);
-	var json_game_save = json_parse(raw_json);
+	if(file_exists(filename)){
+		var _gamesave_buffer = buffer_load(filename);
+		var _gamesave_string = buffer_read(_gamesave_buffer, buffer_string);
+		var json_game_save = json_parse(_gamesave_string);
+	}
 
 	if(!struct_exists(obj_saveload.GameSave, "Save")){
-		obj_saveload.GameSave = json_game_save.GameSave;
+		obj_saveload.GameSave = json_game_save;
 	}
 
 
 	if (save_part=1) or (save_part=0){
 		// Globals
 		var globals = obj_saveload.GameSave.Save;
-		global.chapter_icon_sprite = globals.chapter_icon_sprite;
+		global.chapter_icon_sprite = spr_icon_chapters;
 		global.chapter_icon_frame = globals.chapter_icon_frame;
 		global.chapter_icon_path = globals.chapter_icon_path;
 		global.chapter_icon_filename = globals.chapter_icon_filename;
 	    global.icon_name=globals.icon_name;
 		global.chapter_name = globals.chapter_name;
 		global.custom = globals.custom;
-
+		// global.icon = globals.icon;
+		
 
 	}
 
@@ -60,46 +55,106 @@ function scr_load(save_part, save_id) {
 		var star_array = obj_saveload.GameSave.Stars;
 		for(var i = 0; i < array_length(star_array); i++){
 			var deserialized = star_array[i];
-    		instance_create_layer(deserialized.x, deserialized.y, -1, obj_star, deserialized);
-			// obj_star.deserialize(star_array[i]);
+			
+    		var star_instance = instance_create_layer(0,0, deserialized.layer, asset_get_index(deserialized.obj))
+			with(star_instance){
+
+				var exclusions = []; // skip automatic setting of certain vars, handle explicitly later
+
+				// Automatic var setting
+				var all_names = struct_get_names(star_instance);
+				var _len = array_length(all_names);
+				for(var i = 0; i < _len; i++){
+					var var_name = all_names[i];
+					if(array_contains(exclusions, var_name)){
+						continue;
+					}
+					var loaded_value = deserialized[var_name];
+					variable_struct_set(star_instance, var_name, loaded_value);	
+				}
+
+				// Set explicit vars here
+			}
 		}
 	}
-
-
-
 
 	if (save_part=3) or (save_part=0){debugl("Loading slot "+string(save_id)+" part 3");
 		// Ini
 		var deserialized = obj_saveload.GameSave.Ini;
-    	instance_create_layer(deserialized.x, deserialized.y, -1, obj_ini, deserialized);
-		var livery_picker = new ColourItem(0,0);
-		livery_picker.scr_unit_draw_data();
-		if(struct_exists(deserialized, "full_liveries")){
-			obj_ini.full_liveries = base64_decode(deserialized.full_liveries);
-		} else {
-			obj_ini.full_liveries = array_create(21,DeepCloneStruct(livery_picker.map_colour));
+		with(obj_ini){
+			var exclusions = ["complex_livery_data", "full_liveries", "squad_types", "id"]; // skip automatic setting of certain vars, handle explicitly later
+
+			// Automatic var setting
+			var all_names = struct_get_names(deserialized);
+			var _len = array_length(all_names);
+			for(var i = 0; i < _len; i++){
+				var var_name = all_names[i];
+				if(array_contains(exclusions, var_name)){
+					continue;
+				}
+				
+				var loaded_value = struct_get(deserialized, var_name);
+				show_debug_message($"obj_ini var: {var_name}  -  val: {loaded_value}");
+				try {
+					variable_struct_set(obj_ini, var_name, loaded_value);	
+				} catch (e){
+					show_debug_message(e);
+				}
+			}
+
+			// Set explicit vars here
+			var livery_picker = new ColourItem(0,0);
+			livery_picker.scr_unit_draw_data();
+			if(struct_exists(deserialized, "full_liveries")){
+				variable_struct_set(obj_ini, "full_liveries", base64_decode(deserialized.full_liveries));
+			} else {
+				variable_struct_set(obj_ini, "full_liveries", array_create(21,DeepCloneStruct(livery_picker.map_colour)));
+			}
+
+			if(struct_exists(deserialized, "complex_livery_data")){
+				variable_struct_set(obj_ini, "complex_livery_data", base64_decode(deserialized.complex_livery_data));
+			}
+			if(struct_exists(deserialized, "squad_types")){
+				variable_struct_set(obj_ini, "squad_types", base64_decode(deserialized.squad_types));
+			}
+
+			// variable_struct_set(obj_ini, "spe", deserialized.spe);
 		}
+		// debugl(obj_ini.spe);
+
+
+		
 
 
 		// Controller
 		var deserialized_con = obj_saveload.GameSave.Controller;
-    	instance_create_layer(deserialized_con.x, deserialized_con.y, -1, obj_controller, deserialized_con);
-		obj_controller.marines = deserialized_con.marines;
-		obj_controller.loyalty = deserialized_con.loyalty;
-		obj_controller.gene_seed = deserialized_con.gene_seed;
-		obj_controller.specialist_point_handler = new SpecialistPointHandler();
-		obj_controller.specialist_point_handler.calculate_research_points();
-		obj_controller.location_viewer = new UnitQuickFindPanel();
-		
-		// with(_controller_instance){
-		// 	scr_colors_initialize();
-		// 	scr_shader_initialize();
-		// 	// // **sets up starting forge_points
-		// 	// location_viewer = new UnitQuickFindPanel();
-		// 	// specialist_point_handler.calculate_research_points();
-		// 	// //** sets up marine_by_location view
-		// 	// global.star_name_colors[1] = make_color_rgb(body_colour_replace[0],body_colour_replace[1],body_colour_replace[2]);
-		// }
+		with(obj_controller){
+			var exclusions = ["specialist_point_handler", "location_viewer", "id"]; // skip automatic setting of certain vars, handle explicitly later
+
+			// Automatic var setting
+			var all_names = struct_get_names(deserialized_con);
+			var _len = array_length(all_names);
+			for(var i = 0; i < _len; i++){
+				var var_name = all_names[i];
+				if(array_contains(exclusions, var_name)){
+					continue;
+				}
+				var loaded_value = struct_get(deserialized_con, var_name);
+				show_debug_message($"obj_controller var: {var_name}  -  val: {loaded_value}");
+				try {
+					variable_struct_set(obj_controller, var_name, loaded_value);	
+				} catch (e){
+					show_debug_message(e);
+				}
+			}
+			specialist_point_handler = new SpecialistPointHandler();
+			specialist_point_handler.calculate_research_points();
+			location_viewer = new UnitQuickFindPanel();
+			scr_colors_initialize();
+			scr_shader_initialize();
+			global.star_name_colors[1] = make_color_rgb(body_colour_replace[0],body_colour_replace[1],body_colour_replace[2]);
+
+		}
 	}
 
 

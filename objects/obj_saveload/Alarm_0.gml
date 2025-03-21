@@ -48,15 +48,12 @@ if (save_part == 2) {
 }
 
 if (save_part == 1) {
-	if (file_exists("save" + string(save_number) + ".ini")) {
-		file_delete("save" + string(save_number) + ".ini");
+	if (file_exists("save" + string(save_number) + ".json")) {
+		file_delete("save" + string(save_number) + ".json");
 	}
 	if (file_exists("screen" + string(save_number) + ".png")) {
 		file_delete("screen" + string(save_number) + ".png");
 	}
-	ini_open("saves.ini");
-	ini_section_delete(string(save_number));
-	ini_close();
 	obj_saveload.save[save_number] = 0;
 	save_part += 1;
 	trickle = 10;

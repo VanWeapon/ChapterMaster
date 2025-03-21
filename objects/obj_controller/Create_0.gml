@@ -1770,6 +1770,7 @@ serialize = function(){
     var object_ini = self;
     
     var save_data = {
+        obj: object_get_name(object_index),
         x,
         y,
         layer,
