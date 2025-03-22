@@ -58,18 +58,17 @@ function scr_load(save_part, save_id) {
 			
     		var star_instance = instance_create_layer(0,0, deserialized.layer, asset_get_index(deserialized.obj))
 			with(star_instance){
-
-				var exclusions = []; // skip automatic setting of certain vars, handle explicitly later
+				var exclusions = ["id"]; // skip automatic setting of certain vars, handle explicitly later
 
 				// Automatic var setting
-				var all_names = struct_get_names(star_instance);
+				var all_names = struct_get_names(deserialized);
 				var _len = array_length(all_names);
 				for(var i = 0; i < _len; i++){
 					var var_name = all_names[i];
 					if(array_contains(exclusions, var_name)){
 						continue;
 					}
-					var loaded_value = deserialized[var_name];
+					var loaded_value =  struct_get(deserialized, var_name);
 					variable_struct_set(star_instance, var_name, loaded_value);	
 				}
 
@@ -82,7 +81,7 @@ function scr_load(save_part, save_id) {
 		// Ini
 		var deserialized = obj_saveload.GameSave.Ini;
 		with(obj_ini){
-			var exclusions = ["complex_livery_data", "full_liveries", "squad_types", "id"]; // skip automatic setting of certain vars, handle explicitly later
+			var exclusions = ["complex_livery_data", "full_liveries", "squad_types", "id", "marine_structs", "squad_structs"]; // skip automatic setting of certain vars, handle explicitly later
 
 			// Automatic var setting
 			var all_names = struct_get_names(deserialized);
@@ -164,7 +163,27 @@ function scr_load(save_part, save_id) {
 	    var p_fleet = obj_saveload.GameSave.PlayerFleet;
 		for(var i = 0; i < array_length(p_fleet); i++){
 			var deserialized = p_fleet[i];
-    		instance_create_layer(deserialized.x, deserialized.y, -1, obj_p_fleet, deserialized);
+    		var p_fleet_instance = instance_create_layer(0,0, deserialized.layer, obj_p_fleet);
+			with(p_fleet_instance){
+				var exclusions = ["id"]; // skip automatic setting of certain vars, handle explicitly later
+
+				// Automatic var setting
+				var all_names = struct_get_names(p_fleet);
+				var _len = array_length(all_names);
+				for(var i = 0; i < _len; i++){
+					var var_name = all_names[i];
+					if(array_contains(exclusions, var_name)){
+						continue;
+					}
+					var loaded_value = struct_get(deserialized_con, var_name);
+					show_debug_message($"p_fleet {p_fleet_instance.id}  - var: {var_name}  -  val: {loaded_value}");
+					try {
+						variable_struct_set(p_fleet_instance, var_name, loaded_value);	
+					} catch (e){
+						show_debug_message(e);
+					}
+				}
+			}
 		}
 	}
 
@@ -172,7 +191,27 @@ function scr_load(save_part, save_id) {
 	    var en_fleet = obj_saveload.GameSave.EnemyFleet;
 		for(var i = 0; i < array_length(en_fleet); i++){
 			var deserialized = en_fleet[i];
-    		instance_create_layer(deserialized.x, deserialized.y, -1, obj_en_fleet, deserialized);
+    		var en_fleet_instance = instance_create_layer(0,0, deserialized.layer, obj_en_fleet);
+			with(en_fleet_instance){
+				var exclusions = ["id"]; // skip automatic setting of certain vars, handle explicitly later
+
+				// Automatic var setting
+				var all_names = struct_get_names(en_fleet);
+				var _len = array_length(all_names);
+				for(var i = 0; i < _len; i++){
+					var var_name = all_names[i];
+					if(array_contains(exclusions, var_name)){
+						continue;
+					}
+					var loaded_value = struct_get(deserialized_con, var_name);
+					show_debug_message($"en_fleet {en_fleet_instance.id}  - var: {var_name}  -  val: {loaded_value}");
+					try {
+						variable_struct_set(en_fleet_instance, var_name, loaded_value);	
+					} catch (e){
+						show_debug_message(e);
+					}
+				}
+			}		
 		}
 	    obj_saveload.alarm[1]=30;
 	    obj_controller.invis=false;

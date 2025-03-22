@@ -159,6 +159,8 @@ serialize = function(){
         complex_livery_data: base64_encode(complex_livery_data),
         squad_types: base64_encode(squad_types),
         artifact_struct,
+        marine_structs: base64_encode(marines),
+        squad_structs: base64_encode(squads),
         // marines,
         // squads
     }
