@@ -39,7 +39,6 @@ function scr_save(save_part,save_id) {
 			chapter_icon_frame: global.chapter_icon_frame,
 			chapter_icon_path: global.chapter_icon_path,
 			icon_name: global.icon_name,
-			icon: global.icon,
 			chapter_icon_filename: global.chapter_icon_filename,
 			date: string(month)+"/"+string(day)+"/"+string(year)+" ("+string(hour)+":"+string(minute)+" "+string(pm)+")",
 			founding: obj_ini.progenitor,
