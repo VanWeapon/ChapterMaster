@@ -126,18 +126,22 @@ if (global.load=0) then scr_initialize_custom();
 serialize = function(){
     var object_ini = self;
     
-    var marines = [];
+    var marines = array_create(0, "");
     for(var coy = 0; coy <=10; coy++){
         with(object_ini){
             scr_company_order(coy);
         }
         for(var mar = 0; mar <=500; mar++){
             var marine_json;
-            if (!is_struct(object_ini.TTRPG[coy][mar])){
-                object_ini.TTRPG[coy][mar] = new TTRPG_stats("chapter", coy,mar, "blank");
+            if(obj_ini.name[coy][mar] != ""){
+                if (!is_struct(object_ini.TTRPG[coy][mar])){
+                    object_ini.TTRPG[coy][mar] = new TTRPG_stats("chapter", coy,mar, "blank");
+                }
+                marine_json = jsonify_marine_struct(coy, mar);
+                array_push(marines, base64_encode(marine_json));
+            } else if(mar > 0){
+                break;
             }
-            marine_json = jsonify_marine_struct(coy, mar);
-            array_push(marines, marine_json);
         }
     }
     var squads = [];
@@ -150,17 +154,15 @@ serialize = function(){
 
     var save_data = {
         obj: object_get_name(object_index),
-         x,
+        x,
         y,
-        layer,
-        id,
         custom_advisors,
-        full_liveries: base64_encode(full_liveries),
-        complex_livery_data: base64_encode(complex_livery_data),
-        squad_types: base64_encode(squad_types),
+        full_liveries: base64_encode(json_stringify(full_liveries)),
+        complex_livery_data: base64_encode(json_stringify(complex_livery_data)),
+        squad_types: base64_encode(json_stringify(squad_types)),
         artifact_struct,
-        marine_structs: base64_encode(marines),
-        squad_structs: base64_encode(squads),
+        marine_structs: marines,
+        squad_structs: base64_encode(json_stringify(squads)),
         // marines,
         // squads
     }
@@ -218,6 +220,70 @@ serialize = function(){
         }
     }
     return save_data;
+}
+
+deserialize = function(save_data){
+    var exclusions = ["complex_livery_data", "full_liveries", "squad_types", "id", "marine_structs", "squad_structs"]; // skip automatic setting of certain vars, handle explicitly later
+
+    // Automatic var setting
+    var all_names = struct_get_names(save_data);
+    var _len = array_length(all_names);
+    for(var i = 0; i < _len; i++){
+        var var_name = all_names[i];
+        if(array_contains(exclusions, var_name)){
+            continue;
+        }
+        
+        var loaded_value = struct_get(save_data, var_name);
+        show_debug_message($"obj_ini var: {var_name}  -  val: {loaded_value}");
+        try {
+            variable_struct_set(obj_ini, var_name, loaded_value);	
+        } catch (e){
+            show_debug_message(e);
+        }
+    }
+
+    // Set explicit vars here
+    var livery_picker = new ColourItem(0,0);
+    livery_picker.scr_unit_draw_data();
+    if(struct_exists(save_data, "full_liveries")){
+        variable_struct_set(obj_ini, "full_liveries", json_parse(base64_decode(save_data.full_liveries)))
+    } else {
+        variable_struct_set(obj_ini, "full_liveries", array_create(21,DeepCloneStruct(livery_picker.map_colour)));
+    }
+
+    if(struct_exists(save_data, "complex_livery_data")){
+        variable_struct_set(obj_ini, "complex_livery_data", json_parse(base64_decode(save_data.complex_livery_data)));
+    }
+    if(struct_exists(save_data, "squad_types")){
+        variable_struct_set(obj_ini, "squad_types", json_parse(base64_decode(save_data.squad_types)));
+    }
+
+    if(struct_exists(save_data, "marine_structs")){
+        var marines_encoded_arr = save_data.marine_structs;
+        var _m_ar_len = array_length(marines_encoded_arr);
+        for(var m = 0; m < _m_ar_len; m++){
+                var marine_json = json_parse(base64_decode(marines_encoded_arr[m]));
+                var coy = marine_json.company;
+                var mar = marine_json.marine_number;
+                load_marine_struct(coy, mar, marine_json); 
+        }
+        for(var coy = 0; coy < 11; coy++){
+            var mar_start = array_length(obj_ini.TTRPG[coy]);
+            for(var mar = mar_start; mar < 501; mar++){
+                obj_ini.TTRPG[coy][mar] = new TTRPG_stats("chapter",coy, mar, "blank");
+            }
+        }
+    }
+
+    if(struct_exists(save_data, "squad_structs")){
+        obj_ini.squads = [];
+        var squad_fetch = json_parse(base64_decode(save_data.squad_structs))
+        for (i=0;i<array_length(squad_fetch);i++){
+            array_push(obj_ini.squads, new UnitSquad());
+            obj_ini.squads[i].load_json_data(json_parse(squad_fetch[i]));
+        }
+    }
 }
 
 

@@ -7,16 +7,11 @@ function return_json_from_ini(ini_area,ini_code, default_val=[]){
 	}
 }
 
-function load_marine_struct(company, marine){
-		var marStruct = ini_read_string("Mar","Struct"+string(company)+"."+string(marine),"");
-		if (marStruct != ""){
-			marStruct = json_parse(base64_decode(marStruct));
-			obj_ini.TTRPG[company, marine] = new TTRPG_stats("chapter", company, marine, "blank");
-			obj_ini.TTRPG[company, marine].load_json_data(marStruct);
-			delete marStruct;
-		} else {
-			obj_ini.TTRPG[company, marine] = new TTRPG_stats("chapter", company, marine,"blank");
-		}		
+function load_marine_struct(company, marine, struct){
+
+	obj_ini.TTRPG[company, marine] = new TTRPG_stats("chapter", company, marine, "blank");
+	obj_ini.TTRPG[company, marine].load_json_data(struct);
+			
 };
 
 function scr_load(save_part, save_id) {
@@ -54,105 +49,23 @@ function scr_load(save_part, save_id) {
 	    // Stars
 		var star_array = obj_saveload.GameSave.Stars;
 		for(var i = 0; i < array_length(star_array); i++){
-			var deserialized = star_array[i];
-			
-    		var star_instance = instance_create_layer(0,0, deserialized.layer, asset_get_index(deserialized.obj))
+			var star_save_data = star_array[i];
+    		var star_instance = instance_create(0,0, obj_star);
 			with(star_instance){
-				var exclusions = ["id"]; // skip automatic setting of certain vars, handle explicitly later
-
-				// Automatic var setting
-				var all_names = struct_get_names(deserialized);
-				var _len = array_length(all_names);
-				for(var i = 0; i < _len; i++){
-					var var_name = all_names[i];
-					if(array_contains(exclusions, var_name)){
-						continue;
-					}
-					var loaded_value =  struct_get(deserialized, var_name);
-					variable_struct_set(star_instance, var_name, loaded_value);	
-				}
-
-				// Set explicit vars here
+				deserialize(star_save_data);
 			}
 		}
 	}
 
 	if (save_part=3) or (save_part=0){debugl("Loading slot "+string(save_id)+" part 3");
 		// Ini
-		var deserialized = obj_saveload.GameSave.Ini;
-		with(obj_ini){
-			var exclusions = ["complex_livery_data", "full_liveries", "squad_types", "id", "marine_structs", "squad_structs"]; // skip automatic setting of certain vars, handle explicitly later
-
-			// Automatic var setting
-			var all_names = struct_get_names(deserialized);
-			var _len = array_length(all_names);
-			for(var i = 0; i < _len; i++){
-				var var_name = all_names[i];
-				if(array_contains(exclusions, var_name)){
-					continue;
-				}
-				
-				var loaded_value = struct_get(deserialized, var_name);
-				show_debug_message($"obj_ini var: {var_name}  -  val: {loaded_value}");
-				try {
-					variable_struct_set(obj_ini, var_name, loaded_value);	
-				} catch (e){
-					show_debug_message(e);
-				}
-			}
-
-			// Set explicit vars here
-			var livery_picker = new ColourItem(0,0);
-			livery_picker.scr_unit_draw_data();
-			if(struct_exists(deserialized, "full_liveries")){
-				variable_struct_set(obj_ini, "full_liveries", base64_decode(deserialized.full_liveries));
-			} else {
-				variable_struct_set(obj_ini, "full_liveries", array_create(21,DeepCloneStruct(livery_picker.map_colour)));
-			}
-
-			if(struct_exists(deserialized, "complex_livery_data")){
-				variable_struct_set(obj_ini, "complex_livery_data", base64_decode(deserialized.complex_livery_data));
-			}
-			if(struct_exists(deserialized, "squad_types")){
-				variable_struct_set(obj_ini, "squad_types", base64_decode(deserialized.squad_types));
-			}
-
-			// variable_struct_set(obj_ini, "spe", deserialized.spe);
-		}
-		// debugl(obj_ini.spe);
-
-
-		
-
+		var ini_save_data = obj_saveload.GameSave.Ini;
+		obj_ini.deserialize(ini_save_data);
 
 		// Controller
-		var deserialized_con = obj_saveload.GameSave.Controller;
+		var con_save_data = obj_saveload.GameSave.Controller;
 		with(obj_controller){
-			var exclusions = ["specialist_point_handler", "location_viewer", "id"]; // skip automatic setting of certain vars, handle explicitly later
-
-			// Automatic var setting
-			var all_names = struct_get_names(deserialized_con);
-			var _len = array_length(all_names);
-			for(var i = 0; i < _len; i++){
-				var var_name = all_names[i];
-				if(array_contains(exclusions, var_name)){
-					continue;
-				}
-				var loaded_value = struct_get(deserialized_con, var_name);
-				show_debug_message($"obj_controller var: {var_name}  -  val: {loaded_value}");
-				try {
-					variable_struct_set(obj_controller, var_name, loaded_value);	
-				} catch (e){
-					show_debug_message(e);
-				}
-			}
-			specialist_point_handler = new SpecialistPointHandler();
-			specialist_point_handler.calculate_research_points();
-			location_viewer = new UnitQuickFindPanel();
-			scr_colors_initialize();
-			scr_shader_initialize();
-			global.star_name_colors[1] = make_color_rgb(body_colour_replace[0],body_colour_replace[1],body_colour_replace[2]);
-
+			load_con_data(con_save_data);
 		}
 	}
 
@@ -176,7 +89,7 @@ function scr_load(save_part, save_id) {
 						continue;
 					}
 					var loaded_value = struct_get(deserialized_con, var_name);
-					show_debug_message($"p_fleet {p_fleet_instance.id}  - var: {var_name}  -  val: {loaded_value}");
+					// show_debug_message($"p_fleet {p_fleet_instance.id}  - var: {var_name}  -  val: {loaded_value}");
 					try {
 						variable_struct_set(p_fleet_instance, var_name, loaded_value);	
 					} catch (e){
@@ -204,7 +117,7 @@ function scr_load(save_part, save_id) {
 						continue;
 					}
 					var loaded_value = struct_get(deserialized_con, var_name);
-					show_debug_message($"en_fleet {en_fleet_instance.id}  - var: {var_name}  -  val: {loaded_value}");
+					// show_debug_message($"en_fleet {en_fleet_instance.id}  - var: {var_name}  -  val: {loaded_value}");
 					try {
 						variable_struct_set(en_fleet_instance, var_name, loaded_value);	
 					} catch (e){
@@ -218,6 +131,7 @@ function scr_load(save_part, save_id) {
 	    global.load=0;
 	    scr_image("force",-50,0,0,0,0);
 	    debugl("Loading slot "+string(save_id)+" completed");
+		room_goto(Game);
 	}
 
 

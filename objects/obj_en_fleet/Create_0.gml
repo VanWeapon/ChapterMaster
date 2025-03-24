@@ -78,8 +78,6 @@ serialize = function(){
         obj: object_get_name(object_index),
         x,
         y,
-        layer,
-        id
     }
     
     var excluded_from_save = ["temp", "serialize", "deserialize", "cargo_data"]

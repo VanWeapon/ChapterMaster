@@ -117,15 +117,32 @@ global.star_name_colors = [
 serialize = function(){
     var object_star = self;
 
+    var planet_data = [];
+
+    for(var p = 1; p <= object_star.planets; p++){
+        planet_data[p] = {
+            dispo: object_star.dispo[p],
+            planet: object_star.planet[p],
+        };
+        var var_names = variable_struct_get_names(object_star);
+        for(var n = 0; n < array_length(var_names); n++){
+            var var_name = var_names[n];
+            if(string_starts_with(var_name, "p_")){
+                var val = object_star[$var_name][p];
+                variable_struct_set(planet_data[p], var_name, val);
+            }
+        }
+    }
+
     var save_data = {
         obj: object_get_name(object_index),
         x,
         y,
-        layer,
-        id
+        present_fleet: base64_encode(json_stringify(object_star.present_fleet)),
+        planet_data: planet_data
     }
       
-    var excluded_from_save = ["temp", "serialize", "deserialize", "p_feature", "p_problem_other_data", "arraysum", "p_timer", "p_problem", "p_influence"]
+    var excluded_from_save = ["temp", "serialize", "deserialize", "arraysum"]
 
     /// Check all object variable values types and save the simple ones dynamically. 
     /// simple types are numbers, strings, bools. arrays of only simple types are also considered simple. 
@@ -137,6 +154,9 @@ serialize = function(){
         var var_name = all_names[i];
         if(array_contains(excluded_from_save, var_name)){
             continue;
+        }
+        if(string_starts_with(var_name, "p_")){
+            continue; //handled in planet_data above
         }
         if(struct_exists(save_data, var_name)){
             continue; //already added above
@@ -182,8 +202,38 @@ serialize = function(){
 }
 
 function deserialize(save_data){
-    var deserialized = save_data;
-    instance_create_layer(deserialized.x, deserialized.y, deserialized.layer, obj_star, deserialized);
+    var exclusions = ["id", "present_fleet", "planet_data"]; // skip automatic setting of certain vars, handle explicitly later
+
+    // Automatic var setting
+    var all_names = struct_get_names(save_data);
+    var _len = array_length(all_names);
+    for(var i = 0; i < _len; i++){
+        var var_name = all_names[i];
+        if(array_contains(exclusions, var_name)){
+            continue;
+        }
+        var loaded_value =  struct_get(save_data, var_name);
+        variable_struct_set(self, var_name, loaded_value);	
+    }
+
+    // Set explicit vars here
+    if(struct_exists(save_data, "present_fleet")){
+        var encoded_fleet = save_data.present_fleet;
+        variable_struct_set(self, "present_fleet", json_parse(base64_decode(encoded_fleet)));
+    }
+
+    if(struct_exists(save_data, "planet_data")){
+        var planet_arr = save_data.planet_data;
+        var _len = array_length(planet_arr);
+        for(var p = 1; p < _len; p++){
+            var planet = planet_arr[p];
+            var var_names = struct_get_names(planet);
+            for(var v = 0; v < array_length(var_names); v++){
+                var var_name = var_names[v];
+                variable_struct_set(self, var_name, planet[$var_name]);
+            }
+        }
+    }
 }
 
 #endregion
