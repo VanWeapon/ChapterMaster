@@ -1806,8 +1806,6 @@ serialize = function(){
         obj: object_get_name(object_index),
         x,
         y,
-        layer,
-        id,
         chaos_gods,
         master_of_forge,
         stc_research,
@@ -1834,6 +1832,9 @@ serialize = function(){
         }
         if(struct_exists(save_data, var_name)){
             continue; //already added above
+        }
+        if(string_starts_with(var_name, "restart_")){
+            continue;
         }
         if(is_numeric(object_ini[$var_name]) || is_string(object_ini[$var_name]) || is_bool(object_ini[$var_name])){
             variable_struct_set(save_data, var_name, object_ini[$var_name]);
@@ -1874,13 +1875,31 @@ serialize = function(){
     return save_data;
 }
 
-deserialize = function(save_data){
-    var deserialized = save_data;
-    instance_create_layer(deserialized.x, deserialized.y, deserialized.layer, obj_controller, deserialized);
-    with(obj_controller){
-        scr_colors_initialize();
-        scr_shader_initialize();
+function load_con_data(save_data){
+    var exclusions = ["specialist_point_handler", "location_viewer", "id"]; // skip automatic setting of certain vars, handle explicitly later
+
+    // Automatic var setting
+    var all_names = struct_get_names(save_data);
+    var _len = array_length(all_names);
+    for(var i = 0; i < _len; i++){
+        var var_name = all_names[i];
+        if(array_contains(exclusions, var_name)){
+            continue;
+        }
+        var loaded_value = struct_get(save_data, var_name);
+        show_debug_message($"obj_controller var: {var_name}  -  val: {loaded_value}");
+        try {
+            variable_struct_set(obj_controller, var_name, loaded_value);	
+        } catch (e){
+            show_debug_message(e);
+        }
     }
+    specialist_point_handler = new SpecialistPointHandler();
+    specialist_point_handler.calculate_research_points();
+    location_viewer = new UnitQuickFindPanel();
+    scr_colors_initialize();
+    scr_shader_initialize();
+    global.star_name_colors[1] = make_color_rgb(body_colour_replace[0],body_colour_replace[1],body_colour_replace[2]);
 }
 
 #endregion
