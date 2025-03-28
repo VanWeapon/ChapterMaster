@@ -152,6 +152,15 @@ serialize = function(){
             array_push(squads, object_ini.squads[i].jsonify());
         }
     }
+
+    var artifact_struct_trimmed = [];
+    for(var i = 0; i < array_length(artifact_struct); i++){
+        if(artifact_struct[i].name != ""){
+            array_push(artifact_struct_trimmed, artifact_struct[i]);
+        } else {
+            array_push(artifact_struct_trimmed, -1); //save some space
+        }
+    }
     
 
     var save_data = {
@@ -162,7 +171,7 @@ serialize = function(){
         full_liveries: base64_encode(json_stringify(full_liveries)),
         complex_livery_data: base64_encode(json_stringify(complex_livery_data)),
         squad_types: base64_encode(json_stringify(squad_types)),
-        artifact_struct,
+        artifact_struct: artifact_struct_trimmed,
         marine_structs: marines,
         squad_structs: base64_encode(json_stringify(squads)),
         // marines,
@@ -237,7 +246,7 @@ deserialize = function(save_data){
         }
         
         var loaded_value = struct_get(save_data, var_name);
-        show_debug_message($"obj_ini var: {var_name}  -  val: {loaded_value}");
+        // show_debug_message($"obj_ini var: {var_name}  -  val: {loaded_value}");
         try {
             variable_struct_set(obj_ini, var_name, loaded_value);	
         } catch (e){
@@ -280,10 +289,28 @@ deserialize = function(save_data){
 
     if(struct_exists(save_data, "squad_structs")){
         obj_ini.squads = [];
-        var squad_fetch = json_parse(base64_decode(save_data.squad_structs))
+        var squad_fetch = json_parse(base64_decode(save_data.squad_structs));
+        // log_message($"Squads: {squad_fetch}");
         for (i=0;i<array_length(squad_fetch);i++){
-            array_push(obj_ini.squads, new UnitSquad());
-            obj_ini.squads[i].load_json_data(json_parse(squad_fetch[i]));
+            var sq = new UnitSquad();
+            sq.load_json_data(json_parse(squad_fetch[i]));
+            // show_debug_message($"sq id: {i} - sq: {sq}");
+            array_push(obj_ini.squads, sq);
+        }
+        show_debug_message($"Finished adding squads, final amount: {array_length(obj_ini.squads)}");
+    }
+
+    if(struct_exists(save_data, "artifact_struct")){
+        obj_ini.artifact_struct = [];
+        var artifact_str_arr = save_data.artifact_struct;
+        var _len = array_length(artifact_str_arr);
+        for(var i = 0; i < _len; i++){
+            var arti = artifact_str_arr[i];
+            var arti_struct = new ArtifactStruct(i);
+            if(arti != -1){ // in the serializer we trim out empty slots so there will be nothing to load
+                arti_struct.load_json_data(arti);
+            }
+            array_push(obj_ini.artifact_struct, arti_struct);
         }
     }
 }

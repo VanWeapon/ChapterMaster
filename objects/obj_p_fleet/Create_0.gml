@@ -66,6 +66,7 @@ serialize = function(){
         obj: object_get_name(object_index),
         x,
         y,
+        layer,
     }
     
     var excluded_from_save = ["temp", "serialize", "deserialize"]
@@ -128,8 +129,24 @@ serialize = function(){
 // debugl(json_stringify(serialize(), true));
 
 deserialize = function(save_data){
-    var deserialized = save_data;
-    instance_create_layer(deserialized.x, deserialized.y, deserialized.layer, obj_p_fleet, deserialized);
+    var exclusions = ["id"]; // skip automatic setting of certain vars, handle explicitly later
+
+    // Automatic var setting
+    var all_names = struct_get_names(save_data);
+    var _len = array_length(all_names);
+    for(var i = 0; i < _len; i++){
+        var var_name = all_names[i];
+        if(array_contains(exclusions, var_name)){
+            continue;
+        }
+        var loaded_value = struct_get(save_data, var_name);
+        // show_debug_message($"p_fleet {p_fleet_instance.id}  - var: {var_name}  -  val: {loaded_value}");
+        try {
+            variable_struct_set(self, var_name, loaded_value);	
+        } catch (e){
+            show_debug_message(e);
+        }
+    }
 }
 
 #endregion

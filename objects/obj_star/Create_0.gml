@@ -230,7 +230,13 @@ function deserialize(save_data){
             var var_names = struct_get_names(planet);
             for(var v = 0; v < array_length(var_names); v++){
                 var var_name = var_names[v];
-                variable_struct_set(self, var_name, planet[$var_name]);
+                var val = planet[$var_name];
+                // var_name = "p_type"
+                // planet = {"p_type":"hive"};
+                // val = planet[$var_name] = "hive"
+
+                self[$var_name][p] = val;
+                // variable_struct_set(self, var_name, planet[$var_name]);
             }
         }
     }

@@ -72,6 +72,8 @@
     
     The Machine God watches over you.
 */
+show_debug_message("Creating Controller");
+log_message("Creating Controller");
 marine_surface = surface_create(600, 600);
 scr_colors_initialize();
 is_test_map=false;
@@ -1814,10 +1816,11 @@ serialize = function(){
         end_turn_insights,
         recruit_data,
         marines,
-        loyalty
+        loyalty,
+        spec_train_data
     }
     var excluded_from_save = ["temp", "serialize", "deserialize", "build_chaos_gods", "company_data","menu_buttons",
-            "location_viewer", "production_research_pathways", "specialist_point_handler"]
+            "location_viewer", "production_research_pathways", "specialist_point_handler", "spec_train_data"]
 
     /// Check all object variable values types and save the simple ones dynamically. 
     /// simple types are numbers, strings, bools. arrays of only simple types are also considered simple. 
@@ -1848,7 +1851,7 @@ serialize = function(){
                     for(var k = 0; k < array_length(_check_arr[j]); k++){
                         if((is_numeric(_check_arr[j][k]) || is_string(_check_arr[j][k]) || is_bool(_check_arr[j][k])) == false){
                             var type = typeof(_check_arr[j][k]);
-                            debugl($"Bad 2d array save: '{var_name}' internal type found was of type '{type}'");
+                            log_error($"Bad 2d array save: '{var_name}' internal type found was of type '{type}'");
                             _ok_array = false;
                             break;
                         }
@@ -1856,7 +1859,7 @@ serialize = function(){
                 } else {
                     if((is_numeric(_check_arr[j]) || is_string(_check_arr[j]) || is_bool(_check_arr[j])) == false){
                         var type = typeof(_check_arr[j]);
-                        debugl($"Bad array save: '{var_name}' internal type found was of type '{type}'");
+                        log_error($"Bad array save: '{var_name}' internal type found was of type '{type}'");
                         _ok_array = false;
                         break;
                     }
@@ -1868,38 +1871,12 @@ serialize = function(){
         }
         if(is_struct(object_ini[$var_name])){
             if(!struct_exists(save_data, var_name)){
-                debugl($"WARNING: obj_ini.serialze() - object contains struct variable '{var_name}' which has not been serialized. \n\tEnsure that serialization is written into the serialize and deserialization function if it is needed for this value, or that the variable is added to the ignore list to suppress this warning");
+                log_warning($"obj_ini.serialze() - object contains struct variable '{var_name}' which has not been serialized. \n\tEnsure that serialization is written into the serialize and deserialization function if it is needed for this value, or that the variable is added to the ignore list to suppress this warning");
             }
         }
     }
     return save_data;
 }
 
-function load_con_data(save_data){
-    var exclusions = ["specialist_point_handler", "location_viewer", "id"]; // skip automatic setting of certain vars, handle explicitly later
-
-    // Automatic var setting
-    var all_names = struct_get_names(save_data);
-    var _len = array_length(all_names);
-    for(var i = 0; i < _len; i++){
-        var var_name = all_names[i];
-        if(array_contains(exclusions, var_name)){
-            continue;
-        }
-        var loaded_value = struct_get(save_data, var_name);
-        show_debug_message($"obj_controller var: {var_name}  -  val: {loaded_value}");
-        try {
-            variable_struct_set(obj_controller, var_name, loaded_value);	
-        } catch (e){
-            show_debug_message(e);
-        }
-    }
-    specialist_point_handler = new SpecialistPointHandler();
-    specialist_point_handler.calculate_research_points();
-    location_viewer = new UnitQuickFindPanel();
-    scr_colors_initialize();
-    scr_shader_initialize();
-    global.star_name_colors[1] = make_color_rgb(body_colour_replace[0],body_colour_replace[1],body_colour_replace[2]);
-}
-
+// Deserialization is done within scr_load
 #endregion
