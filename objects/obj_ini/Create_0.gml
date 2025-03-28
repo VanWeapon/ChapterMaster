@@ -30,6 +30,7 @@ penitent_max=0;
 penitent_current=0;
 penitent_end=0;
 man_size=0;
+home_planet = 2;
 artifact_struct = array_create(200);
 
 // Equipment- maybe the bikes should go here or something?          yes they should
