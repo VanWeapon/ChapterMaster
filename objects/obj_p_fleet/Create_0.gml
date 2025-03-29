@@ -97,7 +97,7 @@ serialize = function(){
                     for(var k = 0; k < array_length(_check_arr[j]); k++){
                         if((is_numeric(_check_arr[j][k]) || is_string(_check_arr[j][k]) || is_bool(_check_arr[j][k])) == false){
                             var type = typeof(_check_arr[j][k]);
-                            debugl($"Bad 2d array save: '{var_name}' internal type found was of type '{type}' - obj_p_fleet");
+                            log_warning($"Bad 2d array save: '{var_name}' internal type found was of type '{type}' - obj_p_fleet");
                             _ok_array = false;
                             break;
                         }
@@ -105,7 +105,7 @@ serialize = function(){
                 } else {
                     if((is_numeric(_check_arr[j]) || is_string(_check_arr[j]) || is_bool(_check_arr[j])) == false){
                         var type = typeof(_check_arr[j]);
-                        debugl($"Bad array save: '{var_name}' internal type found was of type '{type}' - obj_p_fleet");
+                        log_warning($"Bad array save: '{var_name}' internal type found was of type '{type}' - obj_p_fleet");
                         _ok_array = false;
                         break;
                     }
@@ -117,7 +117,7 @@ serialize = function(){
         }
         if(is_struct(object_ini[$var_name])){
             if(!struct_exists(save_data, var_name)){
-                debugl($"WARNING: obj_ini.serialze() - obj_p_fleet - object contains struct variable '{var_name}' which has not been serialized. \n\tEnsure that serialization is written into the serialize and deserialization function if it is needed for this value, or that the variable is added to the ignore list to suppress this warning");
+                log_warning($"WARNING: obj_ini.serialze() - obj_p_fleet - object contains struct variable '{var_name}' which has not been serialized. \n\tEnsure that serialization is written into the serialize and deserialization function if it is needed for this value, or that the variable is added to the ignore list to suppress this warning");
             }
         }
     }
