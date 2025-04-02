@@ -79,7 +79,6 @@ serialize = function(){
         obj: object_get_name(object_index),
         x,
         y,
-        layer
     }
     
     var excluded_from_save = ["temp", "serialize", "deserialize", "cargo_data"]
@@ -159,6 +158,12 @@ deserialize = function(save_data){
         } catch (e){
             show_debug_message(e);
         }
+    }
+
+    if(save_data.orbiting != 0){
+        var nearest_star = instance_nearest(x, y, obj_star);
+        orbiting = nearest_star;
+        // show_debug_message($"p_fleet id {id} deserialized: {self}");
     }
 }
 

@@ -66,9 +66,7 @@ serialize = function(){
         obj: object_get_name(object_index),
         x,
         y,
-        layer,
     }
-    
     var excluded_from_save = ["temp", "serialize", "deserialize"]
 
     /// Check all object variable values types and save the simple ones dynamically. 
@@ -129,7 +127,7 @@ serialize = function(){
 // debugl(json_stringify(serialize(), true));
 
 deserialize = function(save_data){
-    var exclusions = ["id"]; // skip automatic setting of certain vars, handle explicitly later
+    var exclusions = ["id", "orbiting"]; // skip automatic setting of certain vars, handle explicitly later
 
     // Automatic var setting
     var all_names = struct_get_names(save_data);
@@ -140,12 +138,20 @@ deserialize = function(save_data){
             continue;
         }
         var loaded_value = struct_get(save_data, var_name);
-        // show_debug_message($"p_fleet {p_fleet_instance.id}  - var: {var_name}  -  val: {loaded_value}");
+        show_debug_message($"p_fleet {self.id}  - var: {var_name}  -  val: {loaded_value}");
         try {
             variable_struct_set(self, var_name, loaded_value);	
         } catch (e){
             show_debug_message(e);
         }
+    }
+
+    if(save_data.orbiting != 0){
+        var nearest_star = instance_nearest(x, y, obj_star);
+        set_player_fleet_image();
+        orbiting = nearest_star;
+        // show_debug_message($"p_fleet id {id} deserialized: {self}");
+
     }
 }
 
