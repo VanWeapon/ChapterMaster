@@ -1494,12 +1494,12 @@ serialize = function(){
         if(string_starts_with(var_name, "restart_")){
             continue;
         }
-        if(is_numeric(object_controller[$var_name]) || is_string(object_controller[$var_name]) || is_bool(object_controller[$var_name])){
+        if(is_basic_variable(object_controller[$var_name])){
             variable_struct_set(save_data, var_name, object_controller[$var_name]);
         }
         if(is_array(object_controller[$var_name])){
             var _check_arr = object_controller[$var_name];
-            var _ok_array = array_is_simple_2d(_check_arr);
+            var _ok_array = is_basic_array(_check_arr, 2);
             if(!_ok_array){
                 log_warning($"Bad array save: '{var_name}' internal type found was not a simple type and should probably have it's own serialize functino - obj_controller");
             } else {
