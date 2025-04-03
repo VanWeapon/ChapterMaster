@@ -130,11 +130,14 @@ function scr_load(save_part, save_id) {
 		log_message("ENEMY FLEET OBJECTS loaded");
 
 		log_message("Loading EVENT LOG");
-		// instance_activate_object(obj_event_log);
-		// obj_event_log.event = obj_saveload.GameSave.EventLog
+		if(!instance_exists(obj_event_log)){
+			instance_create(0,0,obj_event_log);
+		}
+		instance_activate_object(obj_event_log);
+		obj_event_log.event = obj_saveload.GameSave.EventLog
 		log_message("EVENT LOG Loaded");
 
-	    obj_saveload.alarm[1]=30;
+	    obj_saveload.alarm[1]=5;
 	    obj_controller.invis=false;
 	    global.load=0;
 	    scr_image("force",-50,0,0,0,0);
