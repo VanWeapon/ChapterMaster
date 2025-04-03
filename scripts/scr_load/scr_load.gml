@@ -86,19 +86,11 @@ function scr_load(save_part, save_id) {
 					show_debug_message(e);
 				}
 			}
-			show_debug_message($"specialist point handler");
 			specialist_point_handler = new SpecialistPointHandler();
-			show_debug_message($"specialist point handler created");
 			specialist_point_handler.calculate_research_points();
-			show_debug_message($"specialist point handler calculate_research_points");
-			show_debug_message($"location_viewer");
 			location_viewer = new UnitQuickFindPanel();
-			show_debug_message($"location_viewer created");
-			show_debug_message($"scr_colors_initialize");
 			scr_colors_initialize();
-			show_debug_message($"scr_shader_initialize");
 			scr_shader_initialize();
-			show_debug_message($"scr_shader_initialize done");
 			
 			global.star_name_colors[1] = make_color_rgb(body_colour_replace[0],body_colour_replace[1],body_colour_replace[2]);
 
