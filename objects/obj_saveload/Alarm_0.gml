@@ -49,10 +49,11 @@ if (save_part == 2) {
 
 if (save_part == 1) {
 	if (file_exists("save" + string(save_number) + ".json")) {
-		file_delete("save" + string(save_number) + ".json");
+	if (file_exists($"save{save_number}.json")) {
+		file_delete($"save{save_number}.json");
 	}
-	if (file_exists("screen" + string(save_number) + ".png")) {
-		file_delete("screen" + string(save_number) + ".png");
+	if (file_exists($"screen{save_number}.png")) {
+		file_delete($"screen{save_number}.png");
 	}
 	obj_saveload.save[save_number] = 0;
 	save_part += 1;
