@@ -128,7 +128,7 @@ if (load_part == 2) {
 }
 
 if (load_part == 1) {
-	if (file_exists("save" + string(global.load) + ".json")) {
+	if (file_exists($"save{global.load}.json")) {
 		load_part += 1;
 		trickle = 2;
 		txt = "Preparing";
