@@ -138,7 +138,6 @@ deserialize = function(save_data){
             continue;
         }
         var loaded_value = struct_get(save_data, var_name);
-        show_debug_message($"p_fleet {self.id}  - var: {var_name}  -  val: {loaded_value}");
         try {
             variable_struct_set(self, var_name, loaded_value);	
         } catch (e){
@@ -150,8 +149,6 @@ deserialize = function(save_data){
         var nearest_star = instance_nearest(x, y, obj_star);
         set_player_fleet_image();
         orbiting = nearest_star;
-        // show_debug_message($"p_fleet id {id} deserialized: {self}");
-        
     }
     
 }

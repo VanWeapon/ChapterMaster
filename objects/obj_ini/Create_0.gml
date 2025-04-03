@@ -287,7 +287,7 @@ deserialize = function(save_data){
         obj_ini.artifact_struct = [];
         var artifact_str_arr = save_data.artifact_struct;
         var _len = array_length(artifact_str_arr);
-        for(var i = 0; i <= 201; i++){ // 200 is the max number of artifacts
+        for(var i = 0; i < 200; i++){ // 200 is the max number of artifacts
             var arti_struct = new ArtifactStruct(i);
             if(i < _len){ // still within the save_data array
                 var arti = artifact_str_arr[i];
