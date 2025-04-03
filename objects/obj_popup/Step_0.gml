@@ -760,7 +760,6 @@ try {
         var _explore_feature = obj_ground_mission.explore_feature;
         _explore_feature.suprise_attack();
         woopwoopwoop = 0;
-        show_debug_message("ruins combat");
         instance_destroy(self.id);
         instance_destroy();
         exit;
@@ -1879,7 +1878,7 @@ try {
 	if (image == "new_forge_master") {
 		if (pathway == "") {
 			obj_controller.complex_event = true;
-			techs = collect_role_group("forge");
+			techs = collect_role_group(SPECIALISTS_TECHS);
 			charisma_pick = 0;
 			experience_pick = 0;
 			talent_pick = 0;
@@ -2007,7 +2006,7 @@ try {
 		}
 		if (pathway == "tech_aftermath") {
 			var tech, t, i, check_tech, location_techs, location_heretics, delete_positions, heretic_data = [0, 0, 0], loyal_data = [0, 0, 0];
-			techs = collect_role_group("forge");
+			techs = collect_role_group(SPECIALISTS_TECHS);
 			var tech_count = array_length(techs);
 			for (i = 0; i < tech_count; i++) {
 				delete_positions = [];

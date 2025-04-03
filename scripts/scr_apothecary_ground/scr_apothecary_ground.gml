@@ -28,11 +28,11 @@ function calculate_full_chapter_spread(){
 	    		}
 	    	}
 	        tech_points_used += _unit.equipment_maintenance_burden();
-		    _is_tech = (_unit.IsSpecialist("forge"));
+		    _is_tech = (_unit.IsSpecialist(SPECIALISTS_TECHS));
 		    if (_is_tech){
 		    	add_forge_points_to_stack(_unit);
 		    }
-		    is_healer = (((_unit.IsSpecialist("apoth",true) && _unit.gear()=="Narthecium") || (_unit.role()=="Sister Hospitaler")) && _unit.hp()>=10);
+		    is_healer = (((_unit.IsSpecialist(SPECIALISTS_APOTHECARIES,true) && _unit.gear()=="Narthecium") || (_unit.role()=="Sister Hospitaler")) && _unit.hp()>=10);
 		    if (is_healer){
 		    	add_apoth_points_to_stack(_unit);
 		    }

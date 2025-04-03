@@ -584,7 +584,7 @@ function UnitSquad(squad_type = undefined, company = undefined) constructor{
 		var remove_sgt;
 		if (sgt!="none"){
 			remove_sgt = fetch_unit(sgt);
-			if (remove_sgt.IsSpecialist("squad_leaders")){
+			if (remove_sgt.IsSpecialist(SPECIALISTS_SQUAD_LEADERS)){
 				var replace_role = remove_sgt.role();
 				remove_sgt.update_role(new_sgt.role());
 				//TODO centralise loyalty changes for role changes in the update_role method

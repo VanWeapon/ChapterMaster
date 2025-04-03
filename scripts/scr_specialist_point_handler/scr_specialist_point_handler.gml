@@ -177,7 +177,7 @@ function SpecialistPointHandler() constructor{
             if (unit.has_trait("tech_heretic")) {
                 array_push(heretics, _tech_array_id);
             }
-            if (unit.IsSpecialist("heads")) {
+            if (unit.IsSpecialist(SPECIALISTS_HEADS)) {
                 forge_master = _tech_array_id;
             }  
         }

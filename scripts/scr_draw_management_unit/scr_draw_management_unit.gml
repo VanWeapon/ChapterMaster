@@ -411,7 +411,7 @@ function scr_draw_management_unit(selected, yy = 0, xx = 0, draw = true) {
             } else if (sel_all == "man" && is_man) {
                 changed = true;
             } else if (sel_all == "Command" && is_man) {
-                if (unit.IsSpecialist("command")) {
+                if (unit.IsSpecialist(SPECIALISTS_COMMAND)) {
                     changed = true;
                 } else if (unit.squad != "none") {
                     if (obj_ini.squads[unit.squad].type == "command_squad") {
