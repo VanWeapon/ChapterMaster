@@ -185,28 +185,10 @@ serialize = function(){
         }
         if(is_array(object_ini[$var_name])){
             var _check_arr = object_ini[$var_name];
-            var _ok_array = true;
-            for(var j = 0; j < array_length(_check_arr); j++){
-                if(is_array(_check_arr[j])){
-                    // 2d array probably but check anyway
-                    for(var k = 0; k < array_length(_check_arr[j]); k++){
-                        if((is_numeric(_check_arr[j][k]) || is_string(_check_arr[j][k]) || is_bool(_check_arr[j][k])) == false){
-                            var type = typeof(_check_arr[j][k]);
-                            log_warning($"Bad 2d array save: '{var_name}' internal type found was of type '{type}' - obj_ini");
-                            _ok_array = false;
-                            break;
-                        }
-                    }
-                } else {
-                    if((is_numeric(_check_arr[j]) || is_string(_check_arr[j]) || is_bool(_check_arr[j])) == false){
-                        var type = typeof(_check_arr[j]);
-                        log_warning($"Bad array save: '{var_name}' internal type found was of type '{type}' - obj_ini");
-                        _ok_array = false;
-                        break;
-                    }
-                }
-            }
-            if(_ok_array){
+            var _ok_array = array_is_simple_2d(_check_arr);
+            if(!_ok_array){
+                log_warning($"Bad array save: '{var_name}' internal type found was not a simple type and should probably have it's own serialize functino - obj_ini");
+            } else {
                 variable_struct_set(save_data, var_name, object_ini[$var_name]);
             }
         }
@@ -220,7 +202,7 @@ serialize = function(){
 }
 
 deserialize = function(save_data){
-    var exclusions = ["complex_livery_data", "full_liveries", "squad_types", "id", "marine_structs", "squad_structs"]; // skip automatic setting of certain vars, handle explicitly later
+    var exclusions = ["complex_livery_data", "full_liveries", "squad_types", "marine_structs", "squad_structs"]; // skip automatic setting of certain vars, handle explicitly later
 
     // Automatic var setting
     var all_names = struct_get_names(save_data);

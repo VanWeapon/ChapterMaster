@@ -1457,7 +1457,7 @@ command_slots_count=array_length(get_command_slots_data());
 
 /// Called from save function to take all object variables and convert them to a json savable format and return it 
 serialize = function(){
-    var object_ini = self;
+    var object_controller = self;
     
     var save_data = {
         obj: object_get_name(object_index),
@@ -1481,7 +1481,7 @@ serialize = function(){
     /// simple types are numbers, strings, bools. arrays of only simple types are also considered simple. 
     /// non-simple types are structs, functions, methods
     /// functions and methods will be ignored completely, structs to be manually serialized/deserialised.
-    var all_names = struct_get_names(object_ini);
+    var all_names = struct_get_names(object_controller);
     var _len = array_length(all_names);
     for(var i = 0; i < _len; i++){
         var var_name = all_names[i];
@@ -1494,37 +1494,19 @@ serialize = function(){
         if(string_starts_with(var_name, "restart_")){
             continue;
         }
-        if(is_numeric(object_ini[$var_name]) || is_string(object_ini[$var_name]) || is_bool(object_ini[$var_name])){
-            variable_struct_set(save_data, var_name, object_ini[$var_name]);
+        if(is_numeric(object_controller[$var_name]) || is_string(object_controller[$var_name]) || is_bool(object_controller[$var_name])){
+            variable_struct_set(save_data, var_name, object_controller[$var_name]);
         }
-        if(is_array(object_ini[$var_name])){
-            var _check_arr = object_ini[$var_name];
-            var _ok_array = true;
-            for(var j = 0; j < array_length(_check_arr); j++){
-                if(is_array(_check_arr[j])){
-                    // 2d array probably but check anyway
-                    for(var k = 0; k < array_length(_check_arr[j]); k++){
-                        if((is_numeric(_check_arr[j][k]) || is_string(_check_arr[j][k]) || is_bool(_check_arr[j][k])) == false){
-                            var type = typeof(_check_arr[j][k]);
-                            log_error($"Bad 2d array save: '{var_name}' internal type found was of type '{type}'");
-                            _ok_array = false;
-                            break;
-                        }
-                    }
-                } else {
-                    if((is_numeric(_check_arr[j]) || is_string(_check_arr[j]) || is_bool(_check_arr[j])) == false){
-                        var type = typeof(_check_arr[j]);
-                        log_error($"Bad array save: '{var_name}' internal type found was of type '{type}'");
-                        _ok_array = false;
-                        break;
-                    }
-                }
-            }
-            if(_ok_array){
-                variable_struct_set(save_data, var_name, object_ini[$var_name]);
+        if(is_array(object_controller[$var_name])){
+            var _check_arr = object_controller[$var_name];
+            var _ok_array = array_is_simple_2d(_check_arr);
+            if(!_ok_array){
+                log_warning($"Bad array save: '{var_name}' internal type found was not a simple type and should probably have it's own serialize functino - obj_controller");
+            } else {
+                variable_struct_set(save_data, var_name, object_controller[$var_name]);
             }
         }
-        if(is_struct(object_ini[$var_name])){
+        if(is_struct(object_controller[$var_name])){
             if(!struct_exists(save_data, var_name)){
                 log_warning($"obj_ini.serialze() - object contains struct variable '{var_name}' which has not been serialized. \n\tEnsure that serialization is written into the serialize and deserialization function if it is needed for this value, or that the variable is added to the ignore list to suppress this warning");
             }
