@@ -12,6 +12,7 @@ menu=0;// 1 : save, 2: load
 save_part=0;
 load_part=0;
 save_number=0;
+/// number of frames between load sections to draw the progress bar
 trickle=0;
 txt="";
 hide=0;

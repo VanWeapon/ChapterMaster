@@ -29,6 +29,12 @@ function scr_load(save_part, save_id) {
 	    global.icon_name=globals.icon_name;
 		global.chapter_name = globals.chapter_name;
 		global.custom = globals.custom;
+		if(global.chapter_icon_path != "Error" && global.chapter_icon_path != "") {
+			global.chapter_icon_sprite = scr_image_cache(global.chapter_icon_path, global.chapter_icon_filename);
+		} else {
+			global.chapter_icon_sprite = spr_icon_chapters;
+		}
+
 		// global.icon = globals.icon;
 		
 
@@ -112,6 +118,7 @@ function scr_load(save_part, save_id) {
 			with(p_fleet_instance){
 				deserialize(deserialized);
 			}
+			
 		}
 		log_message("PLAYER FLEET OBJECTS loaded");
 	}
@@ -126,8 +133,15 @@ function scr_load(save_part, save_id) {
 			with(en_fleet_instance){
 				deserialize(deserialized);
 			}		
+
 		}
 		log_message("ENEMY FLEET OBJECTS loaded");
+
+		log_message("Loading EVENT LOG");
+		// instance_activate_object(obj_event_log);
+		// obj_event_log.event = obj_saveload.GameSave.EventLog
+		log_message("EVENT LOG Loaded");
+
 	    obj_saveload.alarm[1]=30;
 	    obj_controller.invis=false;
 	    global.load=0;

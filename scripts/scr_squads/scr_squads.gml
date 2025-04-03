@@ -434,7 +434,7 @@ function UnitSquad(squad_type = undefined, company = undefined) constructor{
 		life_members++;
 	}
 	// for saving squads
-	static jsonify = function(){
+	static jsonify = function(stringify = true){
 		var copy_struct = self; //grab marine structure
 		var new_struct = {};
 		var copy_part;
@@ -445,7 +445,11 @@ function UnitSquad(squad_type = undefined, company = undefined) constructor{
 				variable_struct_set(new_struct, names[name],copy_part); //if key value is not a method add to copy structure
 			}
 		}
-		return json_stringify(new_struct);
+		if(stringify){
+			return json_stringify(new_struct);
+		} else {
+			return new_struct;
+		}
 	}
 
 	//function for loading in squad save data

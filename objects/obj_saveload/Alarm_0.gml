@@ -4,7 +4,7 @@ if (save_part == 6) {
 	with (obj_controller) {
 		scr_save(5, obj_saveload.save_number);
 	}
-	trickle = 50;
+	trickle = 2;
 }
 
 if (save_part == 5) {
@@ -13,7 +13,7 @@ if (save_part == 5) {
 	with (obj_controller) {
 		scr_save(4, obj_saveload.save_number);
 	}
-	trickle = 40;
+	trickle = 2;
 	save_part = 6;
 }
 
@@ -23,7 +23,7 @@ if (save_part == 4) {
 	with (obj_controller) {
 		scr_save(3, obj_saveload.save_number);
 	}
-	trickle = 10;
+	trickle = 2;
 	save_part = 5;
 }
 
@@ -33,7 +33,7 @@ if (save_part == 3) {
 	with (obj_controller) {
 		scr_save(2, obj_saveload.save_number);
 	}
-	trickle = 10;
+	trickle = 2;
 	save_part = 4;
 }
 
@@ -43,7 +43,7 @@ if (save_part == 2) {
 	with (obj_controller) {
 		scr_save(1, obj_saveload.save_number);
 	}
-	trickle = 10;
+	trickle = 2;
 	save_part = 3;
 }
 
@@ -56,7 +56,7 @@ if (save_part == 1) {
 	}
 	obj_saveload.save[save_number] = 0;
 	save_part += 1;
-	trickle = 10;
+	trickle = 2;
 	txt = "Preparing";
 }
 if (load_part==6){
@@ -67,7 +67,7 @@ if (load_part==6){
         scr_load(5,global.load);
         
     }
-    trickle=50;
+    trickle=2;
     if (instance_exists(obj_cuicons)){
         obj_cuicons.alarm[1]=30;
     }
@@ -83,7 +83,7 @@ if (load_part == 5) {
 		show_debug_message($"load section 4");
 		scr_load(4, global.load);
 	}
-	trickle = 10;
+	trickle = 2;
 	load_part = 6;
 }
 
@@ -96,7 +96,7 @@ if (load_part == 4) {
 		show_debug_message($"load section 3");
 		scr_load(3, global.load);
 	}
-	trickle = 40;
+	trickle = 2;
 	load_part = 5;
 }
 
@@ -109,7 +109,7 @@ if (load_part == 3) {
 		show_debug_message($"load section 2");
 		scr_load(2, global.load);
 	}
-	trickle = 10;
+	trickle = 2;
 	load_part = 4;
 }
 
@@ -122,14 +122,14 @@ if (load_part == 2) {
 		show_debug_message($"load section 1");
 		scr_load(1, global.load);
 	}
-	trickle = 10;
+	trickle = 2;
 	load_part = 3;
 }
 
 if (load_part == 1) {
 	if (file_exists("save" + string(global.load) + ".json")) {
 		load_part += 1;
-		trickle = 10;
+		trickle = 2;
 		txt = "Preparing";
 	}
 }

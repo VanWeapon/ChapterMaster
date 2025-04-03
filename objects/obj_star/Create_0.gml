@@ -134,13 +134,21 @@ serialize = function(){
         }
     }
 
+
     var save_data = {
         obj: object_get_name(object_index),
         x,
         y,
         present_fleet: base64_encode(json_stringify(object_star.present_fleet)),
-        planet_data: planet_data
+        planet_data: planet_data,
     }
+    if(struct_exists(object_star, "system_garrison")){
+        save_data.system_garrison = base64_encode(json_stringify(object_star.system_garrison));
+    }
+    if(struct_exists(object_star, "system_sabatours")){
+        save_data.system_sabatours = base64_encode(json_stringify(object_star.system_sabatours));
+    }
+
       
     var excluded_from_save = ["temp", "serialize", "deserialize", "arraysum"]
 
@@ -173,7 +181,7 @@ serialize = function(){
                     for(var k = 0; k < array_length(_check_arr[j]); k++){
                         if((is_numeric(_check_arr[j][k]) || is_string(_check_arr[j][k]) || is_bool(_check_arr[j][k])) == false){
                             var type = typeof(_check_arr[j][k]);
-                            debugl($"Bad 2d array save: '{var_name}' internal type found was of type '{type}' - obj_star");
+                            log_warning($"Bad 2d array save: '{var_name}' internal type found was of type '{type}' - obj_star");
                             _ok_array = false;
                             break;
                         }
@@ -181,7 +189,7 @@ serialize = function(){
                 } else {
                     if((is_numeric(_check_arr[j]) || is_string(_check_arr[j]) || is_bool(_check_arr[j])) == false){
                         var type = typeof(_check_arr[j]);
-                        debugl($"Bad array save: '{var_name}' internal type found was of type '{type}' - obj_star");
+                        log_warning($"Bad array save: '{var_name}' internal type found was of type '{type}' - obj_star");
                         _ok_array = false;
                         break;
                     }
@@ -193,7 +201,7 @@ serialize = function(){
         }
         if(is_struct(object_star[$var_name])){
             if(!struct_exists(save_data, var_name)){
-                debugl($"WARNING: obj_ini.serialze() - obj_star - object contains struct variable '{var_name}' which has not been serialized. \n\tEnsure that serialization is written into the serialize and deserialization function if it is needed for this value, or that the variable is added to the ignore list to suppress this warning");
+                log_warning($"WARNING: obj_ini.serialze() - obj_star - object contains struct variable '{var_name}' which has not been serialized. \n\tEnsure that serialization is written into the serialize and deserialization function if it is needed for this value, or that the variable is added to the ignore list to suppress this warning");
             }
         }
     }
@@ -240,6 +248,16 @@ function deserialize(save_data){
             }
         }
     }
+
+     if(struct_exists(save_data, "system_sabatours")){
+        var encoded_sabatours = save_data.system_sabatours;
+        variable_struct_set(self, "system_sabatours", json_parse(base64_decode(encoded_sabatours)));
+    }
+     if(struct_exists(save_data, "system_garrison")){
+        var encoded_garrison = save_data.system_garrison;
+        variable_struct_set(self, "system_garrison", json_parse(base64_decode(encoded_garrison)));
+    }
+
 }
 
 #endregion

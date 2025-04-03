@@ -112,35 +112,19 @@ if (instance_exists(obj_creation)) then custom=obj_creation.custom;
 
 if (global.load=0) then scr_initialize_custom();
 
-
-
-
-// 135;
-// with(obj_creation){instance_destroy();}
-
-/* */
-/*  */
-
-
 #region save/load serialization 
 
 /// Called from save function to take all object variables and convert them to a json savable format and return it 
 serialize = function(){
     var object_ini = self;
     
-    var marines = array_create(0, "");
+    var marines = array_create(0);
     for(var coy = 0; coy <=10; coy++){
-        with(object_ini){
-            scr_company_order(coy);
-        }
         for(var mar = 0; mar <=500; mar++){
             var marine_json;
             if(obj_ini.name[coy][mar] != ""){
-                if (!is_struct(object_ini.TTRPG[coy][mar])){
-                    object_ini.TTRPG[coy][mar] = new TTRPG_stats("chapter", coy,mar, "blank");
-                }
-                marine_json = jsonify_marine_struct(coy, mar);
-                array_push(marines, base64_encode(marine_json));
+                marine_json = jsonify_marine_struct(coy, mar, false);
+                array_push(marines, marine_json);
             } else if(mar > 0){
                 break;
             }
@@ -149,7 +133,7 @@ serialize = function(){
     var squads = [];
     if (array_length(object_ini.squads)> 0){
         for (var i = 0;i < array_length(object_ini.squads);i++){
-            array_push(squads, object_ini.squads[i].jsonify());
+            array_push(squads, object_ini.squads[i].jsonify(false));
         }
     }
 
@@ -157,8 +141,6 @@ serialize = function(){
     for(var i = 0; i < array_length(artifact_struct); i++){
         if(artifact_struct[i].name != ""){
             array_push(artifact_struct_trimmed, artifact_struct[i]);
-        } else {
-            array_push(artifact_struct_trimmed, -1); //save some space
         }
     }
     
@@ -168,17 +150,21 @@ serialize = function(){
         x,
         y,
         custom_advisors,
-        full_liveries: base64_encode(json_stringify(full_liveries)),
-        complex_livery_data: base64_encode(json_stringify(complex_livery_data)),
-        squad_types: base64_encode(json_stringify(squad_types)),
+        full_liveries: full_liveries,
+        complex_livery_data: complex_livery_data,
+        squad_types: squad_types,
         artifact_struct: artifact_struct_trimmed,
         marine_structs: marines,
-        squad_structs: base64_encode(json_stringify(squads)),
+        squad_structs: squads,
         // marines,
         // squads
     }
+
+    if(struct_exists(object_ini, "last_ship")){
+        save_data.last_ship = object_ini.last_ship;
+    }
     
-    var excluded_from_save = ["temp", "serialize", "deserialize", "load_default_gear", "role_spawn_buffs", "TTRPG", "squads", "squad_types", "marines" ]
+    var excluded_from_save = ["temp", "serialize", "deserialize", "load_default_gear", "role_spawn_buffs", "TTRPG", "squads", "squad_types", "marines", "last_ship"]
 
     /// Check all object variable values types and save the simple ones dynamically. 
     /// simple types are numbers, strings, bools. arrays of only simple types are also considered simple. 
@@ -206,7 +192,7 @@ serialize = function(){
                     for(var k = 0; k < array_length(_check_arr[j]); k++){
                         if((is_numeric(_check_arr[j][k]) || is_string(_check_arr[j][k]) || is_bool(_check_arr[j][k])) == false){
                             var type = typeof(_check_arr[j][k]);
-                            debugl($"Bad 2d array save: '{var_name}' internal type found was of type '{type}' - obj_ini");
+                            log_warning($"Bad 2d array save: '{var_name}' internal type found was of type '{type}' - obj_ini");
                             _ok_array = false;
                             break;
                         }
@@ -214,7 +200,7 @@ serialize = function(){
                 } else {
                     if((is_numeric(_check_arr[j]) || is_string(_check_arr[j]) || is_bool(_check_arr[j])) == false){
                         var type = typeof(_check_arr[j]);
-                        debugl($"Bad array save: '{var_name}' internal type found was of type '{type}' - obj_ini");
+                        log_warning($"Bad array save: '{var_name}' internal type found was of type '{type}' - obj_ini");
                         _ok_array = false;
                         break;
                     }
@@ -226,7 +212,7 @@ serialize = function(){
         }
         if(is_struct(object_ini[$var_name])){
             if(!struct_exists(save_data, var_name)){
-                debugl($"WARNING: obj_ini.serialze() - obj_ini - object contains struct variable '{var_name}' which has not been serialized. \n\tEnsure that serialization is written into the serialize and deserialization function if it is needed for this value, or that the variable is added to the ignore list to suppress this warning");
+                log_warning($"WARNING: obj_ini.serialze() - obj_ini - object contains struct variable '{var_name}' which has not been serialized. \n\tEnsure that serialization is written into the serialize and deserialization function if it is needed for this value, or that the variable is added to the ignore list to suppress this warning");
             }
         }
     }
@@ -258,23 +244,23 @@ deserialize = function(save_data){
     var livery_picker = new ColourItem(0,0);
     livery_picker.scr_unit_draw_data();
     if(struct_exists(save_data, "full_liveries")){
-        variable_struct_set(obj_ini, "full_liveries", json_parse(base64_decode(save_data.full_liveries)))
+        variable_struct_set(obj_ini, "full_liveries", save_data.full_liveries)
     } else {
         variable_struct_set(obj_ini, "full_liveries", array_create(21,DeepCloneStruct(livery_picker.map_colour)));
     }
 
     if(struct_exists(save_data, "complex_livery_data")){
-        variable_struct_set(obj_ini, "complex_livery_data", json_parse(base64_decode(save_data.complex_livery_data)));
+        variable_struct_set(obj_ini, "complex_livery_data", save_data.complex_livery_data);
     }
     if(struct_exists(save_data, "squad_types")){
-        variable_struct_set(obj_ini, "squad_types", json_parse(base64_decode(save_data.squad_types)));
+        variable_struct_set(obj_ini, "squad_types", save_data.squad_types);
     }
 
     if(struct_exists(save_data, "marine_structs")){
         var marines_encoded_arr = save_data.marine_structs;
         var _m_ar_len = array_length(marines_encoded_arr);
         for(var m = 0; m < _m_ar_len; m++){
-                var marine_json = json_parse(base64_decode(marines_encoded_arr[m]));
+                var marine_json = marines_encoded_arr[m];
                 var coy = marine_json.company;
                 var mar = marine_json.marine_number;
                 load_marine_struct(coy, mar, marine_json); 
@@ -289,28 +275,29 @@ deserialize = function(save_data){
 
     if(struct_exists(save_data, "squad_structs")){
         obj_ini.squads = [];
-        var squad_fetch = json_parse(base64_decode(save_data.squad_structs));
-        // log_message($"Squads: {squad_fetch}");
+        var squad_fetch = save_data.squad_structs;
         for (i=0;i<array_length(squad_fetch);i++){
             var sq = new UnitSquad();
-            sq.load_json_data(json_parse(squad_fetch[i]));
-            // show_debug_message($"sq id: {i} - sq: {sq}");
+            sq.load_json_data(squad_fetch[i]);
             array_push(obj_ini.squads, sq);
         }
-        show_debug_message($"Finished adding squads, final amount: {array_length(obj_ini.squads)}");
     }
 
     if(struct_exists(save_data, "artifact_struct")){
         obj_ini.artifact_struct = [];
         var artifact_str_arr = save_data.artifact_struct;
         var _len = array_length(artifact_str_arr);
-        for(var i = 0; i < _len; i++){
-            var arti = artifact_str_arr[i];
+        for(var i = 0; i <= 201; i++){ // 200 is the max number of artifacts
             var arti_struct = new ArtifactStruct(i);
-            if(arti != -1){ // in the serializer we trim out empty slots so there will be nothing to load
-                arti_struct.load_json_data(arti);
+            if(i < _len){ // still within the save_data array
+                var arti = artifact_str_arr[i];
+                if(arti != -1){ // in the serializer we trim out empty slots so there will be nothing to load
+                    arti_struct.load_json_data(arti);
+                }
+                array_push(obj_ini.artifact_struct, arti_struct);
+            } else {
+                array_push(obj_ini.artifact_struct, arti_struct); //load empty ones into the rest of the slots
             }
-            array_push(obj_ini.artifact_struct, arti_struct);
         }
     }
 }

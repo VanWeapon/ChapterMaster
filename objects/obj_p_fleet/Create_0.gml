@@ -145,14 +145,15 @@ deserialize = function(save_data){
             show_debug_message(e);
         }
     }
-
+    
     if(save_data.orbiting != 0){
         var nearest_star = instance_nearest(x, y, obj_star);
         set_player_fleet_image();
         orbiting = nearest_star;
         // show_debug_message($"p_fleet id {id} deserialized: {self}");
-
+        
     }
+    
 }
 
 #endregion
