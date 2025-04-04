@@ -169,13 +169,13 @@ serialize = function(){
         if(struct_exists(save_data, var_name)){
             continue; //already added above
         }
-        if(is_numeric(object_star[$var_name]) || is_string(object_star[$var_name]) || is_bool(object_star[$var_name])){
+        if(is_basic_variable(object_star[$var_name])){
             variable_struct_set(save_data, var_name, object_star[$var_name]);
         }
         if(is_array(object_star[$var_name])){
             var _check_arr = object_star[$var_name];
             var _ok_array = true;
-            var _ok_array = array_is_simple_2d(_check_arr);
+            var _ok_array = is_basic_array(_check_arr, 2);
             if(!_ok_array){
                 log_warning($"Bad array save: '{var_name}' internal type found was not a simple type and should probably have it's own serialize functino - object_star");
             } else {
