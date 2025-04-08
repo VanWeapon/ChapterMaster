@@ -137,7 +137,8 @@ function scr_ui_display_weapons(left_or_right, current_armor, equiped_weapon, cu
             "Eviscerator":spr_weapon_evisc,
             "Power Mace":spr_weapon_powmace,
             "Mace of Absolution":spr_weapon_mace_of_absolution,
-            "Show Maul":spr_weapon_powmaul,
+            "Shock Maul":spr_weapon_powmaul,
+            "Xenophase Blade": spr_weapon_xenophase_blade_var1
         }
         var melee_weapons_names=struct_get_names(melee_weapons);
         var wep_

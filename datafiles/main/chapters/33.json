@@ -410,6 +410,10 @@
                                     [
                                         [
                                             "Power Sword",
+                                            "Power Sword",
+                                            "Power Sword",
+                                            "Power Axe",
+                                            "Xenophase Blade"
                                         ],
                                         1
                                     ]
@@ -512,7 +516,8 @@
                                     [
                                         [
                                             "Chainsword",
-                                            "Power Sword"
+                                            "Power Sword",
+                                            "Power Axe"
                                         ],
                                         1
                                     ]
@@ -552,25 +557,18 @@
                                 "wep1": [
                                     [
                                         [
-                                            "Eviscerator"
-                                        ],
-                                        2,
-                                        {
-                                            "wep2": ""
-                                        }
-                                    ],
-                                    [
-                                        [
+                                            "Eviscerator",
                                             "Power Spear"
                                         ],
-                                        2,
+                                        4,
                                         {
                                             "wep2": ""
                                         }
                                     ],
                                     [
                                         [
-                                            "Power Sword"
+                                            "Power Sword",
+                                            "Power Axe"
                                         ],
                                         3
                                     ]
@@ -699,7 +697,7 @@
                                     1
                                 ],
                                 "wep2": [
-                                    "Eldar Power Sword",
+                                    "Xenophase Blade",
                                     1
                                 ]
                             }

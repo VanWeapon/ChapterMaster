@@ -191,6 +191,28 @@ global.weapons = {
 		"special_properties": ["Parry"],
 		"tags": ["power", "spear"],
 	},
+	"Xenophase Blade": {
+		"abbreviation": "XenoPhs",
+		"attack": {
+			"standard": 190,
+			"master_crafted": 210,
+			"artifact": 250
+		},
+		"melee_mod": {
+			"standard": 1,
+			"master_crafted": 1.1,
+			"artifact": 1.2
+		},
+		"description": "A Xenophase Blade is a potent, Power Sword-like melee weapon derived from xenos technology used by select warriors of the Deathwatch Chapter who have earned by their deeds and time of service in the Long Vigil the special trust of their watch fortress' watch commander.",
+		"melee_hands": 1.1,
+		"ranged_hands": 0,
+		"ammo": 0,
+		"range": 1,
+		"spli": 4,
+		"arp": 1,
+		"special_properties": ["Parry"],
+		"tags": ["power", "sword", "xenos"],
+	},
 	"Chainfist": {
 		"abbreviation": "ChFst",
 		"attack": {
@@ -1707,6 +1729,7 @@ global.weapons = {
 		"arp": 0,
 		"tags": ["vehicle","heavy_ranged", "turret", "volkite", "ancient"]
 	},
+	
 // Hireling weapons
 	// Admech
 	"Hellgun": {
