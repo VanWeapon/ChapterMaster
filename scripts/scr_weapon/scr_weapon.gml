@@ -1043,6 +1043,23 @@ global.weapons = {
 		"arp": 1,
 		"tags": ["heavy_ranged", "bolt"]
 	},
+	"Infernus Heavy Bolter": {
+		"abbreviation": "InfrHvyBltr",
+		"attack": {
+			"standard": 320,
+			"master_crafted": 352,
+			"artifact": 384
+		},
+		"description": "The Deathwatch mag-clamp rare suspensor discs onto their infernus heavy bolters that reduce the weapon’s effective weight considerably. Such weapons are further bolstered by underslung heavy flamers that can incinerate those enemies that make it through the hail of explosive bolts.",
+		"melee_hands": 1,
+		"ranged_hands": 2,
+		"ammo": 10,
+		"range": 16,
+		"spli": 6,
+		"arp": 1,
+		"second_profiles": ["Flamer"],
+		"tags": ["heavy_ranged", "combi", "bolt"]
+	},
 	"Whirlwind Missiles": {
 		"attack": {
 			"standard": 400,
