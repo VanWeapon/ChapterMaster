@@ -21,7 +21,7 @@
         "homeworld_name": "", // Homeworld Planet name, leave blank to autogenerate
         "recruiting": "Death", // one of "Lava" "Desert" "Forge" "Hive" "Death" "Agri" "Feudal" "Temperate" "Ice" "Dead" "Shrine"
         "recruiting_name": "", // Recruiting Planet name, leave blank to autogenerate
-        "discipline": "default", // one of 'default' 'biomancy' 'pyromancy' 'telekinesis' 'rune Magick'
+        "discipline": "librarius", // one of 'librarius' 'biomancy' 'pyromancy' 'telekinesis' 'rune Magick'
         "aspirant_trial": "SURVIVAL", // one of "BLOODDUEL" "HUNTING" "SURVIVAL" "EXPOSURE" "KNOWLEDGE" "CHALLENGE"  "APPRENTICESHIP" 
         "advantages": [
             "", // leave the first entry blank for now
@@ -205,7 +205,7 @@
             "epistolary_per_company": 1,
             "codiciery": 0,
             "lexicanum": 0,
-            "terminator": -20,
+            "terminator": -21,
             "assault": -10,
             "veteran": -20,
             "devastator": -10

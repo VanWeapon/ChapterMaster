@@ -498,7 +498,7 @@
   "isEcma":false,
   "LibraryEmitters":[],
   "MetaData":{
-    "IDEVersion":"2024.1300.0.781",
+    "IDEVersion":"2024.1300.0.785",
   },
   "name":"ChapterMaster",
   "resources":[
@@ -1546,6 +1546,7 @@
     {"id":{"name":"spr_weapon_hflamer","path":"sprites/spr_weapon_hflamer/spr_weapon_hflamer.yy",},},
     {"id":{"name":"spr_weapon_hthhammer","path":"sprites/spr_weapon_hthhammer/spr_weapon_hthhammer.yy",},},
     {"id":{"name":"spr_weapon_inferno","path":"sprites/spr_weapon_inferno/spr_weapon_inferno.yy",},},
+    {"id":{"name":"spr_weapon_infernus_hbolt","path":"sprites/spr_weapon_infernus_hbolt/spr_weapon_infernus_hbolt.yy",},},
     {"id":{"name":"spr_weapon_knife","path":"sprites/spr_weapon_knife/spr_weapon_knife.yy",},},
     {"id":{"name":"spr_weapon_lasca","path":"sprites/spr_weapon_lasca/spr_weapon_lasca.yy",},},
     {"id":{"name":"spr_weapon_lightning1","path":"sprites/spr_weapon_lightning1/spr_weapon_lightning1.yy",},},
