@@ -863,7 +863,7 @@ var all_advantages = [
         },
         {
             name: "Elite Guard",
-            description: "Your chapter is an elite fighting force comprised almost exclusively of of Veterans. All Tactical Marines are replaced by Veterans.",
+            description: "Your chapter is an elite fighting force comprised almost exclusively of Veterans. All Tactical Marines are replaced by Veterans.",
             value: 150,
             meta: ["Specialists"]
         }                                                                                                                                                                   
