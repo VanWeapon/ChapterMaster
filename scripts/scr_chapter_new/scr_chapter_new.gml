@@ -425,6 +425,11 @@ function scr_chapter_new(argument0) {
 		var load = chapter_object.load_to_ships;
 		obj_creation.load_to_ships = [load.escort_load, load.split_scouts, load.split_vets];
 		obj_creation.equal_specialists = chapter_object.equal_specialists;
+		if(struct_exists(chapter_object, "scout_company_behaviour")){
+			obj_creation.scout_company_behaviour = chapter_object.scout_company_behaviour;
+		} else {
+			obj_creation.scout_company_behaviour = 0; //default
+		}
 		
 		obj_creation.mutations = 0;
 		struct_foreach(chapter_object.mutations, function(key, val){

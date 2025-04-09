@@ -19,7 +19,7 @@
         "homeworld_rule": 1, // 1 = Govenor, 2 = Countries, 3 = Personal Rule
         "homeworld": "", // "Lava" "Desert" "Forge" "Hive" "Death" "Agri" "Feudal" "Temperate" "Ice" "Dead" "Shrine"
         "homeworld_name": "",
-        "recruit_home_relationship" : 2, //recruit from different system
+        "recruit_home_relationship": 2, //recruit from different system
         "recruiting": "", //"Lava" "Desert" "Forge" "Hive" "Death" "Agri" "Feudal" "Temperate" "Ice" "Dead" "Shrine"
         "recruiting_name": "",
         "discipline": "librarius", // one of 'default' 'biomancy' 'pyromancy' 'telekinesis' 'rune_magic'
@@ -57,7 +57,7 @@
             "special": 0, // 0 - normal, 1 - Breastplate, 2 - Vertical, 3 - Quadrant
             //"trim_on": 0 // 0 no, 1 yes for special trim colours 
         },
-        "culture_styles" : [
+        "culture_styles": [
             "Knightly",
             "Crusader"
         ],
@@ -81,6 +81,7 @@
         },
         "battle_cry": "No Pity! No Remorse! No Fear!",
         "equal_specialists": 0,
+        "scout_company_behaviour": 0, //0 default codex compliant, 1 scouts are replaced with bolter neophytes
         "load_to_ships": {
             "escort_load": 2, // 0 no, 2 yes, 1 doesnt do anything :)
             "split_scouts": 0, // 0 no, 1 yes
