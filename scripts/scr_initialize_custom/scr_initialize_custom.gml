@@ -2525,6 +2525,84 @@ function scr_initialize_custom() {
 
 	specials = k;
 
+
+	var companies = {
+		first: {
+			total: 100,
+			veterans: veteran,
+			terminators: terminator,
+			tacticals: 0,
+			assaults: 0,
+			devastators: 0,
+		},
+		second: {
+			total: second,
+		},
+		third: {
+			total: third,
+		},
+		fourth: {
+			total: fourth
+		},
+		fifth: {
+			total: fifth,
+		},
+		sixth: {
+			total: sixth
+		},
+		seventh: {
+			total: seventh,
+		},
+		eighth: {
+			total: eighth,
+		},
+		ninth: {
+			total: ninth
+		},
+		tenth: {
+			total: tenth
+		}
+	}
+
+	// var equal_specialists = obj_creation.equal_specialists;
+	// var splti_scouts = obj_creation.load
+	// function split_company_roles(companies, )
+
+	// if(obj_creation.equal_specialists == true){
+	// 	companies.second.assault = 20 = max(0, (second - (assault + devastator)) - 1);
+	// }
+
+	// var _coys = struct_get_names(companies);
+	// for(var _c = 0, _clen =  array_length(_coys); _c < _clen; _c++ ){
+	// 	var _name = _coys[_c];
+	// 	var _coy = companies[$_name];
+	// 	if(_coy.total <= 0){
+	// 		continue;
+	// 	}
+	// 	var attrs = struct_get_names(_coy);
+	// 	for(var _a = 0, _alen =  array_length(attrs); _a < _alen; _a++ ){
+	// 		var _role = attrs[_a];
+	// 		var _count = _coy[$_role];
+	// 		var _rolename, _erole, _wep1, _wep2,_gear,_mobi, _armour;
+
+	// 		switch(_role){
+	// 			case "tactical":
+	// 				_rolename = roles.tactical;
+	// 				_erole = eROLE.Tactical;
+	// 				// etc
+	// 		}
+	// 		repeat(_count){
+	// 			add_unit_to_company("marine", company, k, _rolename, _erole, _wep1,_wep2, _gear,_mobi,_armour);
+	// 			k++;
+	// 		}
+	// 	}
+	// }
+
+			// add_unit_to_company("marine", company, k, roles.captain, eROLE.Captain, "default",choose_weighted(weapon_weighted_lists.pistols),"default",_mobi);
+
+
+
+
 	// First Company
 	company = 1;
 	for (var i = 0; i < 501; i++) {
