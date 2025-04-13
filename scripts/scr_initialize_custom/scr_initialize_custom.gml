@@ -2352,10 +2352,6 @@ function scr_initialize_custom() {
 		_hq_armour = "MK6 Corvus";
 	}
 
-	log_message($"Chapter master: {json_stringify(chapter_master)}");
-	log_message($"Chapter master role: {role[0][1]}");
-	log_message($"Chapter master name: {name[0][1]}");
-	log_message($"Chapter master slot: {json_stringify(TTRPG[0][1],true)}");
 
 	commands = 1;
 
@@ -2617,6 +2613,14 @@ function scr_initialize_custom() {
 	if(struct_exists(obj_creation, "scout_company_behaviour")){
 		var scout_company_behaviour = obj_creation.scout_company_behaviour;
 	}
+	if(scout_company_behaviour == 1){
+		load_default_gear(eROLE.Scout, "Neophyte", "Bolter", "", "Power Armour", "","");
+	}
+
+	var equal_scouts = 0;
+	if(struct_exists(obj_creation, "equal_scouts")){
+		var equal_scouts = obj_creation.equal_scouts;
+	}
 
 	var _coys = struct_get_names(companies);
 	for(var _c = 0, _clen =  array_length(_coys); _c < _clen; _c++ ){
@@ -2638,7 +2642,7 @@ function scr_initialize_custom() {
 		_coy.techmarines = techmarines_per_company;
 		_coy.librarians = epistolary_per_company;
 
-		
+		var _equal_scouts = scout_company_behaviour == 1;
 
 
 		/// Equal specialist behaviour: 
@@ -2654,19 +2658,44 @@ function scr_initialize_custom() {
 		/// comp 6 - 7: tac 100
 		/// comp 8: ass 100
 		/// comp 9: dev 100
+
+		/// equal spec with equal scout
+		/// comp 2 - 9: tac 50: scout 10, ass 20, dev 20
+		/// non-equal with equal scout
+		/// comp 2 - 5: tac 40: scout 20, ass 20, dev 20,
+		/// comp 8: ass 100
+		/// comp 9: dev 100
+		/// comp 10: tac 40: scout 50;
 		if(equal_specialists){
 			log_message("balancing for equal specialists")
+			var _moved_scouts = 0;
 			if (_coy.coy >= 2 && _coy.coy <= 9){
-				_coy.tacticals = max(0, (_coy.total - (assault + devastator)) - 1);
+				if(_equal_scouts){
+					_coy.scouts = 10;// todo this should pay more attention to relative numbers
+					_coy.tacticals = max(0, (_coy.total - (assault + devastator + _coy.scouts)) -1);
+					_moved_scouts += _coy.scouts;
+				} else {
+					_coy.tacticals = max(0, (_coy.total - (assault + devastator)) - 1);
+				}
 				_coy.assaults = assault;
 				_coy.devastators = devastator;
+			}
+			if(_equal_scouts && _coy.coy == 10){
+				// theoretically this swaps moved scouts with tacticals
+				_coy.tacticals = _moved_scouts;
+				_coy.scouts = _coy.scouts - _coy.tacticals;
 			}
 		} else {
 			log_message("balancing for non-equal specialists")
 			/// Default specialist behaviour, battle companies 2-7 have 90 tacticals each
 			/// and the assaults go into the 8th and devastators into the 9th 
 			if (_coy.coy >= 2 && _coy.coy <= 5){
-				_coy.tacticals = max(0, (_coy.total - (assault + devastator)) - 1);
+				if(_equal_scouts){
+					_coy.scouts = 20;
+					_coy.tacticals = max(0, (_coy.total - (assault + devastator + _coy.scouts)) -1)
+				} else {
+					_coy.tacticals = max(0, (_coy.total - (assault + devastator)) - 1);
+				}
 				_coy.assaults = assault;
 				_coy.devastators = devastator;
 			}
