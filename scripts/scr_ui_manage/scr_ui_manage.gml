@@ -771,8 +771,11 @@ function scr_ui_manage() {
                     purpose_code: "tech_marine_promote",
                     button_text: "Tech Marine Required",
                     unit_check: "tech_marine"
-                },
-                {
+                }
+            ];
+
+            if(!scr_has_disadv("Psyker Intolerant")){
+                array_push(_command_slots_data, {
                     search_params: {
                         companies: [managing, 0]
                     },
@@ -785,8 +788,8 @@ function scr_ui_manage() {
                     purpose_code: "librarian_promote",
                     button_text: "Librarian Required",
                     unit_check: "lib"
-                }
-            ];
+                });
+            }
             
             return _command_slots_data;
         }

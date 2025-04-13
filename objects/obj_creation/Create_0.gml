@@ -1,4 +1,4 @@
-/**
+ /**
  * * obj_creation is used as part of the main menu new game and chapter creation logic
  * It contains data and logic for setting up custom chapters as well as populating the new game menu with data for pre-existing chapters.
  */
@@ -102,7 +102,7 @@ if (nope!=1){
 	audio_sound_gain(snd_diboz,0.25*master_volume*music_volume,2000);
 }
 
-global.load=0;
+global.load=-1;
 planet_types = ARR_planet_types;
 skip=false;
 premades=true;
@@ -113,6 +113,7 @@ use_chapter_object = false;
 livery_picker = new ColourItem(100,230);
 livery_picker.scr_unit_draw_data();
 full_liveries = "";
+company_liveries = "";
 complex_livery=false;
 complex_selection = "sgt";
 complex_depth_selection = 0;
@@ -150,6 +151,8 @@ heheh=0;
 icons_top=1;
 icons_max=0;
 turn_selection_change=false;
+draw_helms = true;
+
 buttons = {
     home_world_recruit_share : new ToggleButton(),
     complex_homeworld : new ToggleButton({
@@ -303,7 +306,58 @@ buttons = {
             str1 : "Runic",
             font : fnt_40k_14b,
         },                                                                                      
-    ], "Chapter Visual Styles")  
+    ], "Chapter Visual Styles"),
+    company_options_toggle : new UnitButtonObject({
+        tooltip : "toggle between chapter or role settings",
+        label : "Company Settings",
+        company_view : false,
+    }),
+    company_liveries_choice : new radio_set([
+        {
+            str1 : "HQ",
+            font : fnt_40k_14b
+        },
+        {
+            str1 : "I",
+            font : fnt_40k_14b,
+        },
+        {
+            str1 : "II",
+            font : fnt_40k_14b
+        },
+        {
+            str1 : "III",
+            font : fnt_40k_14b
+        }, 
+        {
+            str1 : "IV",
+            font : fnt_40k_14b
+        },
+        {
+            str1 : "V",
+            font : fnt_40k_14b
+        },
+        {
+            str1 : "VI",
+            font : fnt_40k_14b
+        },
+        {
+            str1 : "VII",
+            font : fnt_40k_14b
+        },
+        {
+            str1 : "VIII",
+            font : fnt_40k_14b
+        },
+        {
+            str1 : "IX",
+            font : fnt_40k_14b
+        },
+        {
+            str1 : "X",
+            font : fnt_40k_14b
+        },                    
+    ], "Companies"),
 }
 
 with (buttons){
@@ -311,12 +365,14 @@ with (buttons){
     home_planets.current_selection = 1;
     home_warp.current_selection = 1;
     recruit_home_relationship.current_selection = 1;
+    company_liveries_choice.current_selection = 1;
 }
 
 text_bars = {
-    battle_cry : new TextBarArea(920,118, 540),
+    battle_cry : new TextBarArea(920,118, 450),
     admiral : new TextBarArea(890,685, 580,true),
 }
+
 scrollbar_engaged=0;
 
 text_selected="none";
@@ -860,7 +916,13 @@ var all_advantages = [
             description : "Your chapter has strong ties to the Forgeworld of Ryza as a result your Techmarines are privy to the secrets of their Techpriests enhancing your Plasma and Las weaponry.",
             value : 40,
             meta : ["Weapon Specialty"] 
-        },                                                                                                                                                                             
+        },
+        {
+            name: "Elite Guard",
+            description: "Your chapter is an elite fighting force comprised almost exclusively of Veterans. All Tactical Marines are replaced by Veterans.",
+            value: 150,
+            meta: ["Specialists"]
+        }                                                                                                                                                                   
     ]
 
 

@@ -144,6 +144,50 @@ function arrays_to_string_with_counts(_names_array, _counts_array, _exclude_null
 	return _result_string;
 }
 
+/// @description Converts the equipment struct into a formatted string with pluralized counts
+/// @param {struct} _equipment The equipment struct
+/// @param {bool} _exclude_null Whether to exclude entries with zero total
+/// @param {bool} _dot_end Whether to end the string with a period
+/// @return {string}
+function equipment_struct_to_string(_equipment, _exclude_null = false, _dot_end = true) {
+	var _names_array = [];
+	var _counts_array = [];
+
+	var _item_keys = variable_struct_get_names(_equipment);
+	var _count = 0;
+
+	for (var i = 0; i < array_length(_item_keys); i++) {
+		var _item_name = _item_keys[i];
+		var _item_data = _equipment[$ _item_name];
+
+		if (!is_struct(_item_data) || !struct_exists(_item_data, "quantity")) {
+			continue;
+		}
+
+		var _quantities = _item_data.quantity;
+		var _quality_keys = variable_struct_get_names(_quantities);
+		var _total = 0;
+
+		for (var q = 0; q < array_length(_quality_keys); q++) {
+			_total += _quantities[$ _quality_keys[q]];
+		}
+
+		if (_exclude_null && _total == 0) {
+			continue;
+		}
+
+		array_push(_names_array, _item_name);
+		array_push(_counts_array, _total);
+		_count++;
+	}
+
+	if (_count == 0) {
+		return "";
+	}
+
+	return arrays_to_string_with_counts(_names_array, _counts_array, false, _dot_end);
+}
+
 /// @function alter_deep_array
 /// @description Modifies a value in a deeply nested array structure.
 /// @param {array} array The array to modify
@@ -188,4 +232,28 @@ function smart_delimeter_sign(_array_or_length, _loop_iteration, _dot_end = true
     }
 
     return _delimeter;
+}
+
+/// @description Checks whether an array is "simple," meaning it does not exceed a specified depth and contains only simple variables. Recursively evaluates nested arrays.
+/// @param {array} _array - The array to check.
+/// @param {real} _max_depth - The maximum allowed depth for the array.
+/// @param {real} _current_depth (DON'T PASS ANYTHING) The current recursion depth, used internally.
+/// @returns {bool}
+function is_basic_array(_array, _max_depth = 1, _current_depth = 1) {
+    if (_current_depth > _max_depth) {
+        return false;
+    }
+
+    for (var i = 0, _len = array_length(_array); i < _len; i++) {
+        var _var = _array[i];
+        if (is_array(_var)) {
+            if (!is_basic_array(_var, _max_depth, _current_depth + 1)) {
+                return false;
+            }
+        } else if (!is_basic_variable(_var)) {
+            return false;
+        }
+    }
+
+    return true;
 }
