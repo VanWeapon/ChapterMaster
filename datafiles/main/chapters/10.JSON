@@ -80,7 +80,7 @@
             "recruiter": "Emrik"
         },
         "battle_cry": "No Pity! No Remorse! No Fear!",
-        "equal_specialists": 0,
+        "equal_specialists": 1,
         "scout_company_behaviour": 0, //0 default codex compliant, 1 scouts are replaced with bolter neophytes
         "load_to_ships": {
             "escort_load": 2, // 0 no, 2 yes, 1 doesnt do anything :)
@@ -184,9 +184,9 @@
             "codiciery": 0,
             "lexicanum": 0,
             "terminator": 0,
-            "assault": 0,
+            "assault": 10,
             "veteran": 0,
-            "devastator": 0
+            "devastator": -10
         },
         /**
         * * Default Marine strength
@@ -225,6 +225,9 @@
         * for combat roles, `custom_squads` should probably? be used instead 
         */
         "custom_roles": {
+            "chapter_master": {
+                "name": "High Marshall"
+            },
             "captain": {
                 "name": "Marshall",
                 "wep1": "Power Sword"

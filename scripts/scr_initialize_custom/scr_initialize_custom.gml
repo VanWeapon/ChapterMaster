@@ -652,9 +652,9 @@ function scr_initialize_custom() {
 	ninth = 100;
 	tenth = 100;
 	assault = 20;
-	siege = 0;
 	devastator = 20;
-
+	siege = 0;
+	
 	recruit_trial = obj_creation.aspirant_trial;
 	purity = obj_creation.purity;
 	stability = obj_creation.stability;
@@ -925,7 +925,7 @@ function scr_initialize_custom() {
 		veteran = 85,
 		assault = 20,
 		devastator = 20,
-		dreadnought = 2,
+		dreadnought = 1,
 		rhino = 8,
 		whirlwind = 4,
 		landspeeder = 2,
@@ -1390,6 +1390,7 @@ function scr_initialize_custom() {
 		_hi_qual_armour = "Power Armour";
 	}
 
+	load_default_gear(eROLE.ChapterMaster, "Chapter Master", "Power Sword", "Bolt Pistol", _hi_qual_armour, "","Iron Halo");
 	load_default_gear(eROLE.HonourGuard, "Honour Guard", "Power Sword", "Bolter", _hi_qual_armour, "", "");
 	load_default_gear(eROLE.Veteran, "Veteran", "Combiflamer", "Combat Knife","Power Armour", "", "");
 	load_default_gear(eROLE.Terminator, "Terminator", "Power Fist", "Storm Bolter", "Terminator Armour", "", "");
@@ -1486,6 +1487,7 @@ function scr_initialize_custom() {
 		sergeant: role[defaults_slot][eROLE.Sergeant],
 		veteran_sergeant: role[defaults_slot][eROLE.VeteranSergeant],
 	}
+	log_message($"roles: {json_stringify(roles, true)}")
 	
 	var weapon_lists = {
 		heavy_weapons: ["Heavy Bolter", "Heavy Bolter", "Heavy Bolter", "Heavy Bolter", "Missile Launcher", "Missile Launcher", "Multi-Melta", "Lascannon"],
@@ -2287,126 +2289,35 @@ function scr_initialize_custom() {
     //loads up marine traits potential modding potential;
     // initialize_marine_traits();
 	#region Chapter HQ
+	for (var c = 0; c <11; c++){
+		for (var i = 0; i < 501; i++) {
+			race[c, i] = 1;
+			loc[c, i] = "";
+			name[c, i] = "";
+			role[c, i] = "";
+			wep1[c, i] = "";
+			spe[c, i] = "";
+			wep2[c, i] = "";
+			armour[c, i] = "";
+			chaos[c, i] = 0;
+			gear[c, i] = "";
+			mobi[c, i] = "";
+			age[c, i] = ((millenium * 1000) + year) - 10;
+			god[c, i] = 0;
+			TTRPG[c, i] = new TTRPG_stats("chapter", c, i, "blank");
+		}
+	}
 
 	// Chapter Master
 	// This needs work
-	race[company, 1] = 1;
-	loc[company, 1] = home_name;
 	name[company, 1] = obj_creation.chapter_master_name;
-	role[company, 1] = "Chapter Master";
-	TTRPG[company, 1] = new TTRPG_stats("chapter", company, 1, "chapter_master");
-	var chapter_master = TTRPG[company, 1];
-	var chapter_master_equip = {}
-	switch (master_melee) {
-		case 1:
-			chapter_master_equip.wep1 = "Power Fist";
-			chapter_master_equip.wep2 = "Power Fist";
-			break;
-		case 2:
-			chapter_master_equip.wep1 = "Lightning Claw";
-			chapter_master_equip.wep2 = "Lightning Claw";
-			break;
-		case 3:
-			chapter_master_equip.wep1 = "Relic Blade";
-			//wep1[0,1]="Relic Blade&MNR|";
-			break;
-		case 4:
-			chapter_master_equip.wep1 = "Thunder Hammer";
-			break;
-		case 5:
-			chapter_master_equip.wep1 = "Power Sword";
-			break;
-		case 6:
-			chapter_master_equip.wep1 = "Power Axe";
-			break;
-		case 7:
-			chapter_master_equip.wep1 = "Eviscerator";
-			chapter_master_equip.wep2 = "";
-			break;
-		case 8:
-			chapter_master_equip.wep1 = "Force Staff";
-			break;
+	var cm_equip = load_chapter_master_equipment();
+
+	var chapter_master = add_unit_to_company("chapter_master", 0, 1 , roles.chapter_master, eROLE.ChapterMaster, cm_equip.wep1, cm_equip.wep2, cm_equip.gear, cm_equip.mobi, cm_equip.armour);
+	repeat(cm_equip.bionics){
+		chapter_master.add_bionics("none", "standard", false);
 	}
 
-	if (!array_contains([1,2,7], master_melee)){
-		switch (master_ranged) {
-			case 1:
-				chapter_master_equip.wep2 = "Boltstorm Gauntlet";
-				break;
-			case 2:
-				chapter_master_equip.wep2 = "Infernus Pistol";
-				break;
-			case 3:
-				chapter_master_equip.wep2 = "Plasma Pistol";
-				break;
-			case 4:
-				chapter_master_equip.wep2 = "Plasma Gun";
-				break;
-			case 5:
-				chapter_master_equip.wep2 = "Heavy Bolter";
-				break;
-			case 6:
-				chapter_master_equip.wep2 = "Meltagun";
-				break;
-			case 7:
-				chapter_master_equip.wep2 = "Storm Shield";
-				break;
-		}
-	}
-
-	chapter_master_equip.armour = "Artificer Armour";
-	chapter_master_equip.gear = "Iron Halo";
-
-	//TODO will refactor how traits are distributed to chapter masters along with a refactor of chapter data
-	last_artifact = find_open_artifact_slot();
-	var arti;
-
-	// From json
-	if(struct_exists(obj_creation, "artifact") ){
-		if(is_struct(obj_creation.artifact) && struct_exists(obj_creation.artifact, "name")){
-			arti = obj_ini.artifact_struct[last_artifact];
-			arti.name = obj_creation.artifact.name;
-			arti.custom_description = obj_creation.artifact.description;
-			obj_ini.artifact[last_artifact] = obj_creation.artifact.base_weapon_type;
-			arti.bearer = [0,1];
-			obj_ini.artifact_identified[last_artifact] = 0;
-			chapter_master_equip.wep1 = last_artifact;
-		} else if(is_array(obj_creation.artifact) && array_length(obj_creation.artifact) > 0){
-			for(var a = 0; a < array_length(obj_creation.artifact); a++){
-				arti = obj_ini.artifact_struct[last_artifact];
-				arti.name = obj_creation.artifact[a].name;
-				arti.custom_description = obj_creation.artifact[a].description;
-				obj_ini.artifact[last_artifact] = obj_creation.artifact[a].base_weapon_type;
-				arti.bearer = [0,1];
-				obj_ini.artifact_identified[last_artifact] = 0;
-				switch (obj_creation.artifact[a].slot){
-					case "wep1": chapter_master_equip.wep1 = last_artifact; break;
-					case "wep2": chapter_master_equip.wep2 = last_artifact; break;
-					case "armour": chapter_master_equip.armour = last_artifact; break;
-					case "gear": chapter_master_equip.gear = last_artifact; break;
-					case "mobi": chapter_master_equip.armour = last_artifact; break;
-				}
-				last_artifact++;
-			}
-		}
-	}
-
-	if(struct_exists(obj_creation, "chapter_master")){
-		if(struct_exists(obj_creation.chapter_master, "gear") && obj_creation.chapter_master.gear != ""){
-			chapter_master_equip.gear = obj_creation.chapter_master.gear;
-		}
-		if(struct_exists(obj_creation.chapter_master, "mobi") && obj_creation.chapter_master.mobi != ""){
-			chapter_master_equip.mobi = obj_creation.chapter_master.mobi;
-		}
-		if(struct_exists(obj_creation.chapter_master, "armour") && obj_creation.chapter_master.armour != ""){
-			chapter_master_equip.armour = obj_creation.chapter_master.armour;
-		}
-		if(struct_exists(obj_creation.chapter_master, "bionics") && obj_creation.chapter_master.bionics != ""){
-			for (i = 0; i < real(obj_creation.chapter_master.bionics); i++) {
-				chapter_master.add_bionics("none", "standard", false);
-			}
-		}
-	}
 	spe[company, 1] = "";
 	chapter_master.add_trait("lead_example");
 
@@ -2425,13 +2336,12 @@ function scr_initialize_custom() {
 		case 3:
 			//TODO phychic powers need a redo but after weapon refactor
 			chapter_master.add_exp(550);
-			chapter_master_equip.gear = "Psychic Hood";
+			cm_equip.gear = "Psychic Hood";
 			chapter_master.add_trait("favoured_by_the_warp");
 			chapter_master.psionic = choose(13, 14);
 			chapter_master.update_powers();
 	}
-	mobi[company, 1] = mobi[100, 2];
-	chapter_master.alter_equipment(chapter_master_equip, false, false, "master_crafted")
+	chapter_master.alter_equipment(cm_equip, false, false, "master_crafted")
 	if(scr_has_adv("Paragon")){
 		chapter_master.add_trait("paragon");
 	}
@@ -2442,7 +2352,11 @@ function scr_initialize_custom() {
 		_hq_armour = "MK6 Corvus";
 	}
 
-	k = 1;
+	log_message($"Chapter master: {json_stringify(chapter_master)}");
+	log_message($"Chapter master role: {role[0][1]}");
+	log_message($"Chapter master name: {name[0][1]}");
+	log_message($"Chapter master slot: {json_stringify(TTRPG[0][1],true)}");
+
 	commands = 1;
 
 	// Forge Master
@@ -2463,7 +2377,6 @@ function scr_initialize_custom() {
 			_forge_master.add_bionics("none", "standard", false)
 		};
 	}
-	k+=1;
 	commands +=1;
 
 	// Master of Sanctity (Chaplain)
@@ -2475,7 +2388,6 @@ function scr_initialize_custom() {
 			_hchap.piety = 45;
 		}
 		_hchap.add_trait("zealous_faith");
-		k+=1;
 		commands +=1;
 	}
 
@@ -2483,7 +2395,6 @@ function scr_initialize_custom() {
 	name[company, 4] = obj_creation.hapothecary;
 	var _hapoth = add_unit_to_company("marine", company, 4, "Master of the Apothecarion", eROLE.Apothecary, "default", "Plasma Pistol", "default", "default", _hq_armour);
 	_hapoth.edit_corruption(0);
-	k+=1;
 	commands +=1;
 
 	// Chief Librarian
@@ -2494,10 +2405,9 @@ function scr_initialize_custom() {
 		_clibrarian.psionic = choose(11, 12);
 		_clibrarian.update_powers();
 		_clibrarian.add_trait("favoured_by_the_warp");
-		k+=1;
 		commands +=1;
 	}
-
+	k=6;
 	man_size = k;
 
 	// Techmarines in the armoury
@@ -2575,7 +2485,7 @@ function scr_initialize_custom() {
 			tacticals: 0,
 			assaults: 0,
 			devastators: 0,
-			dreadnoughts: dreadnought,
+			dreadnoughts: dreadnought+1,
 			predators: predator,
 			landraiders: landraider
 		},
@@ -2699,28 +2609,14 @@ function scr_initialize_custom() {
 			}
 		}
 	}
-	for (var c = 0; c <11; c++){
-		for (var i = 0; i < 501; i++) {
-			race[c, i] = 1;
-			loc[c, i] = "";
-			name[c, i] = "";
-			role[c, i] = "";
-			wep1[c, i] = "";
-			spe[c, i] = "";
-			wep2[c, i] = "";
-			armour[c, i] = "";
-			chaos[c, i] = 0;
-			gear[c, i] = "";
-			mobi[c, i] = "";
-			age[c, i] = ((millenium * 1000) + year) - 10;
-			god[c, i] = 0;
-			TTRPG[c, i] = new TTRPG_stats("chapter", c, i, "blank");
-		}
-	}
+
 	
 
 	var equal_specialists = obj_creation.equal_specialists;
-	var scout_company_behaviour = obj_creation.scout_company_behaviour;
+	var scout_company_behaviour = 0;
+	if(struct_exists(obj_creation, "scout_company_behaviour")){
+		var scout_company_behaviour = obj_creation.scout_company_behaviour;
+	}
 
 	var _coys = struct_get_names(companies);
 	for(var _c = 0, _clen =  array_length(_coys); _c < _clen; _c++ ){
@@ -2750,6 +2646,14 @@ function scr_initialize_custom() {
 		/// those marines are instead evenly distributed between 2nd and 9th companies
 		/// the tacticals that they replace are distributed between 8th and 9th
 		/// meaning the total number of each shouldn't change. 
+		/// on a fresh standard chapter with normal scouts, rates should be: 
+		/// equal spec: 
+		/// comp 2 - 9: tac: 60, ass: 20, dev: 20
+		/// non-equal spec:
+		/// comp 2 - 5: tac 60, ass 20, dev: 20
+		/// comp 6 - 7: tac 100
+		/// comp 8: ass 100
+		/// comp 9: dev 100
 		if(equal_specialists){
 			log_message("balancing for equal specialists")
 			if (_coy.coy >= 2 && _coy.coy <= 9){
@@ -2761,7 +2665,13 @@ function scr_initialize_custom() {
 			log_message("balancing for non-equal specialists")
 			/// Default specialist behaviour, battle companies 2-7 have 90 tacticals each
 			/// and the assaults go into the 8th and devastators into the 9th 
-			if (real(_coy.coy) >= 2 && real(_coy.coy) <= 7){
+			if (_coy.coy >= 2 && _coy.coy <= 5){
+				_coy.tacticals = max(0, (_coy.total - (assault + devastator)) - 1);
+				_coy.assaults = assault;
+				_coy.devastators = devastator;
+			}
+			
+			if (real(_coy.coy) >= 6 && real(_coy.coy) <= 7){
 				_coy.tacticals = _coy.total;
 				_coy.assaults = 0;
 				_coy.devastators = 0;
@@ -2769,13 +2679,13 @@ function scr_initialize_custom() {
 			}
 			if(real(_coy.coy) == 8){
 				_coy.tacticals = 0;
-				_coy.assaults = assault;
+				_coy.assaults = _coy.total;
 				_coy.devastators = 0;
 			}
 			if(real(_coy.coy) == 9){
 				_coy.tacticals = 0;
 				_coy.assaults = 0;
-				_coy.devastators = devastator;
+				_coy.devastators = _coy.total;
 			}
 		}
 
@@ -3313,4 +3223,122 @@ function add_unit_to_company(ttrpg_name, company, slot, role_name, role_id, wep1
 	}
 	
 	return spawn_unit;
+}
+
+///@mixin obj_ini
+function load_chapter_master_equipment(){
+	var chapter_master_equip = {};
+	switch (obj_ini.master_melee) {
+		case 1:
+			chapter_master_equip.wep1 = "Power Fist";
+			chapter_master_equip.wep2 = "Power Fist";
+			break;
+		case 2:
+			chapter_master_equip.wep1 = "Lightning Claw";
+			chapter_master_equip.wep2 = "Lightning Claw";
+			break;
+		case 3:
+			chapter_master_equip.wep1 = "Relic Blade";
+			//wep1[0,1]="Relic Blade&MNR|";
+			break;
+		case 4:
+			chapter_master_equip.wep1 = "Thunder Hammer";
+			break;
+		case 5:
+			chapter_master_equip.wep1 = "Power Sword";
+			break;
+		case 6:
+			chapter_master_equip.wep1 = "Power Axe";
+			break;
+		case 7:
+			chapter_master_equip.wep1 = "Eviscerator";
+			chapter_master_equip.wep2 = "";
+			break;
+		case 8:
+			chapter_master_equip.wep1 = "Force Staff";
+			break;
+	}
+
+	if (!array_contains([1,2,7], master_melee)){
+		switch (master_ranged) {
+			case 1:
+				chapter_master_equip.wep2 = "Boltstorm Gauntlet";
+				break;
+			case 2:
+				chapter_master_equip.wep2 = "Infernus Pistol";
+				break;
+			case 3:
+				chapter_master_equip.wep2 = "Plasma Pistol";
+				break;
+			case 4:
+				chapter_master_equip.wep2 = "Plasma Gun";
+				break;
+			case 5:
+				chapter_master_equip.wep2 = "Heavy Bolter";
+				break;
+			case 6:
+				chapter_master_equip.wep2 = "Meltagun";
+				break;
+			case 7:
+				chapter_master_equip.wep2 = "Storm Shield";
+				break;
+		}
+	}
+
+	chapter_master_equip.armour = "Artificer Armour";
+	chapter_master_equip.gear = "Iron Halo";
+	chapter_master_equip.mobi = "";
+	chapter_master_equip.bionics = 0;
+
+	last_artifact = find_open_artifact_slot();
+	var arti;
+
+	// From json
+	if(struct_exists(obj_creation, "artifact") ){
+		if(is_struct(obj_creation.artifact) && struct_exists(obj_creation.artifact, "name")){
+			arti = obj_ini.artifact_struct[last_artifact];
+			arti.name = obj_creation.artifact.name;
+			arti.custom_description = obj_creation.artifact.description;
+			obj_ini.artifact[last_artifact] = obj_creation.artifact.base_weapon_type;
+			arti.bearer = [0,1];
+			obj_ini.artifact_identified[last_artifact] = 0;
+			chapter_master_equip.wep1 = last_artifact;
+		} else if(is_array(obj_creation.artifact) && array_length(obj_creation.artifact) > 0){
+			for(var a = 0; a < array_length(obj_creation.artifact); a++){
+				arti = obj_ini.artifact_struct[last_artifact];
+				arti.name = obj_creation.artifact[a].name;
+				arti.custom_description = obj_creation.artifact[a].description;
+				obj_ini.artifact[last_artifact] = obj_creation.artifact[a].base_weapon_type;
+				arti.bearer = [0,1];
+				obj_ini.artifact_identified[last_artifact] = 0;
+				switch (obj_creation.artifact[a].slot){
+					case "wep1": chapter_master_equip.wep1 = last_artifact; break;
+					case "wep2": chapter_master_equip.wep2 = last_artifact; break;
+					case "armour": chapter_master_equip.armour = last_artifact; break;
+					case "gear": chapter_master_equip.gear = last_artifact; break;
+					case "mobi": chapter_master_equip.armour = last_artifact; break;
+				}
+				last_artifact++;
+			}
+		}
+	}
+
+	if(struct_exists(obj_creation, "chapter_master")){
+		if(struct_exists(obj_creation.chapter_master, "gear") && obj_creation.chapter_master.gear != ""){
+			chapter_master_equip.gear = obj_creation.chapter_master.gear;
+		}
+		if(struct_exists(obj_creation.chapter_master, "mobi") && obj_creation.chapter_master.mobi != ""){
+			chapter_master_equip.mobi = obj_creation.chapter_master.mobi;
+		}
+		if(struct_exists(obj_creation.chapter_master, "armour") && obj_creation.chapter_master.armour != ""){
+			chapter_master_equip.armour = obj_creation.chapter_master.armour;
+		}
+		if(struct_exists(obj_creation.chapter_master, "bionics") && obj_creation.chapter_master.bionics != ""){
+			for (var i = 0; i < real(obj_creation.chapter_master.bionics); i++) {
+				chapter_master_equip.bionics += 1;
+			}
+		}
+	}
+
+	return chapter_master_equip;
 }

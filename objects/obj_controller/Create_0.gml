@@ -1564,27 +1564,27 @@ var njm=34,com=0,vih=0,word="",masta=0,forga=0,chapla=0,apa=0,liba=0,techa=0,lib
 
 var honoh=0,termi=0,veter=0,capt=0,chap=0,apoth=0,stand=0,dread=0,champ=0,tact=0,assa=0,deva=0,rhino=0,speeder=0,raider=0,standard=0,bike=0,scou=0,whirl=0,pred=0,lib=0,serg=0,vet_serg=0;
 for(var mm=0; mm<=100; mm++){
-    if (obj_ini.role[com,mm]=="Chapter Master") then masta=1;
+    if (obj_ini.role[com,mm]==obj_ini.role[100][eROLE.ChapterMaster]) then masta=1;
     if (obj_ini.role[com,mm]=="Forge Master") then forga=1;
     if (obj_ini.role[com,mm]=="Master of Sanctity") then chapla=1;
     if (obj_ini.role[com,mm]=="Master of the Apothecarion") then apa=1;
-    if (obj_ini.role[com,mm]=="Chief "+string(obj_ini.role[100,17])) then liba=1;
-    if (obj_ini.role[com,mm]==obj_ini.role[100][16]) then techa+=1;
-    if (obj_ini.role[com,mm]==obj_ini.role[100,17]) then libra+=1;
+    if (obj_ini.role[com,mm]=="Chief "+string(obj_ini.role[100][eROLE.Librarian])) then liba=1;
+    if (obj_ini.role[com,mm]==obj_ini.role[100][eROLE.Techmarine]) then techa+=1;
+    if (obj_ini.role[com,mm]==obj_ini.role[100][eROLE.Librarian]) then libra+=1;
     if (obj_ini.role[com,mm]=="Codiciery") then coda+=1;
     if (obj_ini.role[com,mm]=="Lexicanum") then lexa+=1;
-    if (obj_ini.role[com,mm]==obj_ini.role[100][14]) then old_dudes+=1;
-    if (obj_ini.role[com,mm]==obj_ini.role[100][15]) then apotha+=1;
-    if (obj_ini.role[com,mm]==obj_ini.role[100][2]) then honoh+=1;
+    if (obj_ini.role[com,mm]==obj_ini.role[100][eROLE.Chaplain]) then old_dudes+=1;
+    if (obj_ini.role[com,mm]==obj_ini.role[100][eROLE.Apothecary]) then apotha+=1;
+    if (obj_ini.role[com,mm]==obj_ini.role[100][eROLE.HonourGuard]) then honoh+=1;
 }
 
 temp[njm]="Command staff made of";
 
-if (masta == 1) then temp[njm] += $", your majesty Chapter Master {obj_ini.name[com][0]}";
-if (forga == 1) then temp[njm] += $", Forge Master {obj_ini.name[com][1]}";
-if (chapla == 1) then temp[njm] += $", Master of Sanctity {obj_ini.name[com][2]}";
-if (apa == 1) then temp[njm] += $", Master of the Apothecarion {obj_ini.name[com][3]}";
-if (liba == 1) then temp[njm] += $", and Chief Librarian {obj_ini.name[com][4]}.  ";
+if (masta == 1) then temp[njm] += $", your majesty Chapter Master {obj_ini.name[com][1]}";
+if (forga == 1) then temp[njm] += $", Forge Master {obj_ini.name[com][2]}";
+if (chapla == 1) then temp[njm] += $", Master of Sanctity {obj_ini.name[com][3]}";
+if (apa == 1) then temp[njm] += $", Master of the Apothecarion {obj_ini.name[com][4]}";
+if (liba == 1) then temp[njm] += $", and Chief Librarian {obj_ini.name[com][5]}.  ";
 
 
 vih=string_pos(",",temp[njm]);

@@ -877,7 +877,7 @@ function ComplexSet(unit) constructor{
     static add_relative_to_status = function(area, add_sprite, status_level, overide_data="none"){
     	var _roles = active_roles();
     	var tiers = [
-    		["Chapter Master"],
+    		[_roles[eROLE.ChapterMaster]],
     		["Forge Master", "Master of Sanctity","Master of the Apothecarion",string("Chief {0}",_roles[eROLE.Librarian])],
     		[_roles[eROLE.Captain], _roles[eROLE.HonourGuard]],
     		[_roles[eROLE.Champion]],

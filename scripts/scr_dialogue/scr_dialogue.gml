@@ -136,7 +136,7 @@ function scr_dialogue(diplo_keyphrase) {
         
 	    // Option4 here if all the right conditions are met
 	    var born=false;
-		for(var ii=1; i<=200; i++){if (obj_ini.role[0,ii]="Chapter Master") and (string_count("$",obj_ini.spe[0,ii])>0) then born=true;}
+		for(var ii=1; i<=200; i++){if (obj_ini.role[0,ii]==obj_ini.role[100][eROLE.ChapterMaster]) and (string_count("$",obj_ini.spe[0,ii])>0) then born=true;}
     
 	    if (obj_ini.TTRPG[0][3].corruption>=50) and (born=true){
 	        diplo_option[4]="Right now I need my Master of Sanctity at my side, trusting that his Chapter Master is doing what is best, what is necessary for the Chapter, during this dangerous moment. All will be made clear in time, I promise you brother. This is the right path.";
@@ -309,7 +309,7 @@ function scr_dialogue(diplo_keyphrase) {
     
 	    var born=false;
 		for(var ii=1; ii<200; ii++){
-			if (obj_ini.role[0,ii]=="Chapter Master") then obj_ini.TTRPG[0][ii].corruption+=floor(random_range(30,50));
+			if (obj_ini.role[0,ii]==obj_ini.role[100][eROLE.ChapterMaster]) then obj_ini.TTRPG[0][ii].corruption+=floor(random_range(30,50));
 		}
 	    obj_controller.chaos_rating+=1;
     
