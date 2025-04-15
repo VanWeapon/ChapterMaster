@@ -450,6 +450,11 @@ function scr_chapter_new(argument0) {
 		} else {
 			obj_creation.scout_company_behaviour = 0; //default
 		}
+		if(struct_exists(chapter_object, "equal_scouts")){
+			obj_creation.equal_scouts = chapter_object.equal_scouts;
+		} else {
+			obj_creation.equal_scouts = 0;
+		}
 		
 		obj_creation.mutations = 0;
 		struct_foreach(chapter_object.mutations, function(key, val){

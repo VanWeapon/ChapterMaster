@@ -242,6 +242,10 @@
             "scout": {
                 "name": "Neophyte",
                 "wep1": "Bolter"
+            },
+            "champion": {
+                "wep1": "Relic Blade",
+                "wep2": ""
             }
         },
         /**
@@ -274,6 +278,137 @@
         *   - type_data: names the squad, allows certain formations ? idk what that does yet
         */
         "squad_name": "Squad",
-        "custom_squads": {}
+        "custom_squads": {
+            "scout_squad": [
+                [
+                    "Sergeant",
+                    {
+                        "max": 1,
+                        "min": 1,
+                        "role": "Sword Brother",
+                        "loadout": {
+                            "required": {
+                                "wep1": [
+                                    "Chainsword",
+                                    1
+                                ],
+                                "wep2": [
+                                    "Bolt Pistol",
+                                    1
+                                ]
+                            }
+                        }
+                    }
+                ],
+                [
+                    "Neophyte",
+                    {
+                        "max": 9,
+                        "min": 4,
+                        "loadout": {
+                            "required": {
+                                "wep1": [
+                                    "Bolter",
+                                    2
+                                ],
+                            },
+                            "option": {
+                                "wep1": [
+                                    [
+                                        [
+                                            "Chainsword"
+                                        ],
+                                        3,
+                                        {
+                                            "wep2": "Bolt Pistol"
+                                        }
+                                    ]
+                                ]
+                            }
+                        }
+                    }
+                ],
+                [
+                    "type_data",
+                    {
+                        "display_data": "Crusader Squad",
+                        "class": [
+                            "scout"
+                        ],
+                        "formation_options": [
+                            "scout",
+                            "tactical",
+                            "assault",
+                            "devastator"
+                        ],
+                    }
+                ]
+            ],
+            "scout_sniper_squad": [
+                [
+                    "Sergeant",
+                    {
+                        "max": 1,
+                        "min": 1,
+                        "role": "Sword Brother",
+                        "loadout": {
+                            "required": {
+                                "wep1": [
+                                    "Chainsword",
+                                    1
+                                ],
+                                "wep2": [
+                                    "Bolt Pistol",
+                                    1
+                                ]
+                            }
+                        }
+                    }
+                ],
+                [
+                    "Neophyte",
+                    {
+                        "max": 9,
+                        "min": 4,
+                        "loadout": {
+                            "required": {
+                                "wep1": [
+                                    "Bolter",
+                                    2
+                                ],
+                            },
+                            "option": {
+                                "wep1": [
+                                    [
+                                        [
+                                            "Chainsword"
+                                        ],
+                                        3,
+                                        {
+                                            "wep2": "Bolt Pistol"
+                                        }
+                                    ]
+                                ]
+                            }
+                        }
+                    }
+                ],
+                [
+                    "type_data",
+                    {
+                        "display_data": "Crusader Squad",
+                        "class": [
+                            "scout"
+                        ],
+                        "formation_options": [
+                            "scout",
+                            "tactical",
+                            "assault",
+                            "devastator"
+                        ],
+                    }
+                ]
+            ],
+        }
     }
 }

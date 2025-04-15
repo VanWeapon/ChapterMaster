@@ -2569,6 +2569,8 @@ function scr_initialize_custom() {
 			landraiders:0,
 		}
 	}
+
+	log_message($"Pre balancing company totals: {json_stringify(companies,true)}")
 	// Extra vehicles loaded from json files all get dumped into the 10th company for the player to sort out
 	if(struct_exists(obj_creation, "extra_vehicles")){
 		if(struct_exists(obj_creation.extra_vehicles, "rhino")){
@@ -2614,13 +2616,16 @@ function scr_initialize_custom() {
 		var scout_company_behaviour = obj_creation.scout_company_behaviour;
 	}
 	if(scout_company_behaviour == 1){
-		load_default_gear(eROLE.Scout, "Neophyte", "Bolter", "", "Power Armour", "","");
+		load_default_gear(eROLE.Scout, "Neophyte", "Bolter", "", "Scout Armour", "","");
 	}
 
 	var equal_scouts = 0;
 	if(struct_exists(obj_creation, "equal_scouts")){
 		var equal_scouts = obj_creation.equal_scouts;
+		obj_ini.equal_scouts = equal_scouts; // for use in squad creation later
 	}
+
+	var _moved_scouts = 0;
 
 	var _coys = struct_get_names(companies);
 	for(var _c = 0, _clen =  array_length(_coys); _c < _clen; _c++ ){
@@ -2642,10 +2647,9 @@ function scr_initialize_custom() {
 		_coy.techmarines = techmarines_per_company;
 		_coy.librarians = epistolary_per_company;
 
-		var _equal_scouts = scout_company_behaviour == 1;
 
 
-		/// Equal specialist behaviour: 
+		///* Equal specialist behaviour: 
 		/// if set to true, instead of having 8th and 9th be reserve companies of assaults and devastators,
 		/// those marines are instead evenly distributed between 2nd and 9th companies
 		/// the tacticals that they replace are distributed between 8th and 9th
@@ -2668,31 +2672,45 @@ function scr_initialize_custom() {
 		/// comp 10: tac 40: scout 50;
 		if(equal_specialists){
 			log_message("balancing for equal specialists")
-			var _moved_scouts = 0;
+			log_message($"equal_scouts? {equal_scouts}")
+
 			if (_coy.coy >= 2 && _coy.coy <= 9){
-				if(_equal_scouts){
-					_coy.scouts = 10;// todo this should pay more attention to relative numbers
-					_coy.tacticals = max(0, (_coy.total - (assault + devastator + _coy.scouts)) -1);
-					_moved_scouts += _coy.scouts;
+				if(equal_scouts){
+					if(companies.tenth.scouts > 10){ 
+						//theoretically this keeps track of moving scouts from the bank of them in 10th
+						_coy.scouts = 10;
+						_coy.tacticals = max(0, (_coy.total - (assault + devastator + _coy.scouts)) -1);
+						_moved_scouts += _coy.scouts;
+						companies.tenth.scouts -= _moved_scouts;
+					} else {
+						// if 10th is run out somehow, revert to normal behaviour
+						_coy.tacticals = max(0, (_coy.total - (assault + devastator)) - 1);
+					}
 				} else {
 					_coy.tacticals = max(0, (_coy.total - (assault + devastator)) - 1);
 				}
 				_coy.assaults = assault;
 				_coy.devastators = devastator;
 			}
-			if(_equal_scouts && _coy.coy == 10){
+			if(equal_scouts && _coy.coy == 10){
 				// theoretically this swaps moved scouts with tacticals
 				_coy.tacticals = _moved_scouts;
-				_coy.scouts = _coy.scouts - _coy.tacticals;
 			}
 		} else {
 			log_message("balancing for non-equal specialists")
 			/// Default specialist behaviour, battle companies 2-7 have 90 tacticals each
 			/// and the assaults go into the 8th and devastators into the 9th 
 			if (_coy.coy >= 2 && _coy.coy <= 5){
-				if(_equal_scouts){
-					_coy.scouts = 20;
-					_coy.tacticals = max(0, (_coy.total - (assault + devastator + _coy.scouts)) -1)
+				if(equal_scouts){
+					if(companies.tenth.scouts > 10){ 
+						_coy.scouts = 10;
+						_moved_scouts += _coy.scouts;
+						_coy.tacticals = max(0, (_coy.total - (assault + devastator + _coy.scouts)) -1)
+						companies.tenth.scouts -= _moved_scouts;
+					} else {
+						// if 10th is run out somehow, revert to normal behaviour
+						_coy.tacticals = max(0, (_coy.total - (assault + devastator)) - 1);
+					}
 				} else {
 					_coy.tacticals = max(0, (_coy.total - (assault + devastator)) - 1);
 				}
@@ -2701,7 +2719,19 @@ function scr_initialize_custom() {
 			}
 			
 			if (real(_coy.coy) >= 6 && real(_coy.coy) <= 7){
-				_coy.tacticals = _coy.total;
+				if(equal_scouts){
+					if(companies.tenth.scouts > 10){ 
+						_coy.scouts = 10;
+						_moved_scouts += _coy.scouts;
+						_coy.tacticals = _coy.total - _coy.scouts;
+						companies.tenth.scouts -= _moved_scouts;
+					} else {
+						// if 10th is run out somehow, revert to normal behaviour
+						_coy.tacticals = _coy.total;
+					}
+				} else {
+					_coy.tacticals = _coy.total;
+				}
 				_coy.assaults = 0;
 				_coy.devastators = 0;
 
@@ -2716,9 +2746,13 @@ function scr_initialize_custom() {
 				_coy.assaults = 0;
 				_coy.devastators = _coy.total;
 			}
+			if(real(_coy.coy) == 10 && equal_scouts){
+				_coy.tacticals = _moved_scouts;
+				_coy.scouts = _coy.scouts - _coy.tacticals;
+			}
 		}
 
-		log_message($"New Company Totals: eq specialists: {equal_specialists}: scout coy {scout_company_behaviour}");
+		log_message($"New Company Totals: eq specialists: {equal_specialists}: scout coy {scout_company_behaviour} equal_scouts: {equal_scouts}");
 		log_message($"Company {_coy.coy}: {json_stringify(_coy,true)}");
 
 
@@ -3141,7 +3175,7 @@ function scr_initialize_custom() {
 /// @description helper function to streamline code inside of scr_initialize_custom, should only be used as part of
 /// game setup and not during normal gameplay
 function add_veh_to_company(name, company, slot, wep1, wep2, wep3, upgrade, accessory) {
-	log_message($"adding vehicle name {name} company {company} slot {slot} ")
+	// log_message($"adding vehicle name {name} company {company} slot {slot} ")
 	obj_ini.veh_race[company, slot] = 1;
 	obj_ini.veh_loc[company, slot] = obj_ini.home_name;
 	obj_ini.veh_role[company, slot] = name;
@@ -3163,7 +3197,7 @@ function add_veh_to_company(name, company, slot, wep1, wep2, wep3, upgrade, acce
 /// Use "" if you want to set weapons and gear via squad layouts.
 /// "default" will set it to the value in the default slot for the given role, see `load_default_gear`
 function add_unit_to_company(ttrpg_name, company, slot, role_name, role_id, wep1="default", wep2="default", gear="default", mobi="default", armour="default"){
-	log_message($"adding unit to company ttrpg_name {ttrpg_name}, company {company}, slot {slot}, role_name {role_name}, role_id {role_id}")
+	// log_message($"adding unit to company ttrpg_name {ttrpg_name}, company {company}, slot {slot}, role_name {role_name}, role_id {role_id}")
 	obj_ini.TTRPG[company][slot] = new TTRPG_stats("chapter", company, slot, ttrpg_name);
 	obj_ini.race[company][slot] = 1;
 	obj_ini.loc[company][slot] = obj_ini.home_name;
