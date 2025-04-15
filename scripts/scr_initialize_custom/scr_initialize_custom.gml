@@ -2570,45 +2570,27 @@ function scr_initialize_custom() {
 		}
 	}
 
-	// log_message($"Pre balancing company totals: {json_stringify(companies,true)}")
+	log_message($"Pre balancing company totals: {json_stringify(companies,true)}")
 	// Extra vehicles loaded from json files all get dumped into the 10th company for the player to sort out
+	
+	var vehicle_keys = ["rhino", "whirlwind", "predator", "land_raider", "land_speeder"];
 	if(struct_exists(obj_creation, "extra_vehicles")){
-		if(struct_exists(obj_creation.extra_vehicles, "rhino")){
-			if(real(obj_creation.extra_vehicles.rhino) > 0){
-				companies.tenth.rhinos += obj_creation.extra_vehicles.rhino;
-			}
-		}
-		if(struct_exists(obj_creation.extra_vehicles, "whirlwind")){
-			if(real(obj_creation.extra_vehicles.whirlwind) > 0){
-				repeat(real(obj_creation.extra_vehicles.whirlwind)){
-					companies.tenth.whirlwinds += obj_creation.extra_vehicles.whirlwind;
+		for (var v = 0; v < array_length(vehicle_keys); v++){
+			var key = vehicle_keys[v];
+			if(struct_exists(obj_creation.extra_vehicles, key) && real(obj_creation.extra_vehicles[$key]) > 0){
+				var coy_key = "";
+				switch(key){
+					case "rhino": coy_key = "rhinos";break;
+					case "whirlwind": coy_key = "whirlwinds";break;
+					case "predator": coy_key = "predators";break;
+					case "land_raider": coy_key = "landraiders"; break;
+					case "land_speeder": coy_key = "landspeeders"; break;
 				}
-			}
-		}
-		if(struct_exists(obj_creation.extra_vehicles, "predator")){
-			if(real(obj_creation.extra_vehicles.predator) > 0){
-				repeat(real(obj_creation.extra_vehicles.predator)){
-					companies.tenth.predators += obj_creation.extra_vehicles.predator;
-				}
-			}
-		}
-		if(struct_exists(obj_creation.extra_vehicles, "land_raider")){
-			if(real(obj_creation.extra_vehicles.land_raider) > 0){
-				repeat(real(obj_creation.extra_vehicles.land_raider)){
-					companies.tenth.landraiders += obj_creation.extra_vehicles.land_raider;
-				}
-			}
-		}
-		if(struct_exists(obj_creation.extra_vehicles, "land_speeder")){
-			if(real(obj_creation.extra_vehicles.land_speeder) > 0){
-				repeat(real(obj_creation.extra_vehicles.land_speeder)){
-					companies.tenth.landspeeders += obj_creation.extra_vehicles.land_speeder;
-				}
+				companies.tenth[$coy_key] += obj_creation.extra_vehicles[$key];
 			}
 		}
 	}
 
-	
 
 	var equal_specialists = obj_creation.equal_specialists;
 	var scout_company_behaviour = 0;
@@ -2671,23 +2653,23 @@ function scr_initialize_custom() {
 		/// comp 9: dev 100
 		/// comp 10: tac 40: scout 50;
 		if(equal_specialists){
-			// log_message("balancing for equal specialists")
-			// log_message($"equal_scouts? {equal_scouts}")
+			log_message("balancing for equal specialists")
+			log_message($"equal_scouts? {equal_scouts}")
 
 			if (_coy.coy >= 2 && _coy.coy <= 9){
 				if(equal_scouts){
 					if(companies.tenth.scouts > 10){ 
 						//theoretically this keeps track of moving scouts from the bank of them in 10th
 						_coy.scouts = 10;
-						_coy.tacticals = max(0, (_coy.total - (assault + devastator + _coy.scouts)) -1);
+						_coy.tacticals = max(0, (_coy.total - (assault + devastator + _coy.scouts)));
 						_moved_scouts += _coy.scouts;
-						companies.tenth.scouts -= _moved_scouts;
+						companies.tenth.scouts -= _coy.scouts;
 					} else {
 						// if 10th is run out somehow, revert to normal behaviour
-						_coy.tacticals = max(0, (_coy.total - (assault + devastator)) - 1);
+						_coy.tacticals = max(0, (_coy.total - (assault + devastator)));
 					}
 				} else {
-					_coy.tacticals = max(0, (_coy.total - (assault + devastator)) - 1);
+					_coy.tacticals = max(0, (_coy.total - (assault + devastator)));
 				}
 				_coy.assaults = assault;
 				_coy.devastators = devastator;
@@ -2697,7 +2679,7 @@ function scr_initialize_custom() {
 				_coy.tacticals = _moved_scouts;
 			}
 		} else {
-			// log_message("balancing for non-equal specialists")
+			log_message("balancing for non-equal specialists")
 			/// Default specialist behaviour, battle companies 2-7 have 90 tacticals each
 			/// and the assaults go into the 8th and devastators into the 9th 
 			if (_coy.coy >= 2 && _coy.coy <= 5){
@@ -2705,14 +2687,14 @@ function scr_initialize_custom() {
 					if(companies.tenth.scouts > 10){ 
 						_coy.scouts = 10;
 						_moved_scouts += _coy.scouts;
-						_coy.tacticals = max(0, (_coy.total - (assault + devastator + _coy.scouts)) -1)
+						_coy.tacticals = max(0, (_coy.total - (assault + devastator + _coy.scouts)))
 						companies.tenth.scouts -= _moved_scouts;
 					} else {
 						// if 10th is run out somehow, revert to normal behaviour
-						_coy.tacticals = max(0, (_coy.total - (assault + devastator)) - 1);
+						_coy.tacticals = max(0, (_coy.total - (assault + devastator)));
 					}
 				} else {
-					_coy.tacticals = max(0, (_coy.total - (assault + devastator)) - 1);
+					_coy.tacticals = max(0, (_coy.total - (assault + devastator)));
 				}
 				_coy.assaults = assault;
 				_coy.devastators = devastator;
@@ -2724,7 +2706,7 @@ function scr_initialize_custom() {
 						_coy.scouts = 10;
 						_moved_scouts += _coy.scouts;
 						_coy.tacticals = _coy.total - _coy.scouts;
-						companies.tenth.scouts -= _moved_scouts;
+						companies.tenth.scouts -= _coy.scouts;
 					} else {
 						// if 10th is run out somehow, revert to normal behaviour
 						_coy.tacticals = _coy.total;
@@ -2752,8 +2734,8 @@ function scr_initialize_custom() {
 			}
 		}
 
-		// log_message($"New Company Totals: eq specialists: {equal_specialists}: scout coy {scout_company_behaviour} equal_scouts: {equal_scouts}");
-		// log_message($"Company {_coy.coy}: {json_stringify(_coy,true)}");
+		log_message($"New Company Totals: eq specialists: {equal_specialists}: scout coy {scout_company_behaviour} equal_scouts: {equal_scouts}");
+		log_message($"Company {_coy.coy}: {json_stringify(_coy,true)}");
 
 
 		var attrs = struct_get_names(_coy);
