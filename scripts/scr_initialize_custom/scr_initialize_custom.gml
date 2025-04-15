@@ -2459,7 +2459,7 @@ function scr_initialize_custom() {
 	if (scr_has_adv("Retinue of Renown")){
 		_honour_guard_count += 10;
 	} 
-	if (progenitor == ePROGENITOR.DARK_ANGELS && obj_creation.custom = 0) { 
+	if (progenitor == ePROGENITOR.DARK_ANGELS && obj_creation.custom == 0) { 
 		_honour_guard_count += 6; 
 	}
 	if (_honour_guard_count == 0) {
