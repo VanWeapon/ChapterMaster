@@ -3365,7 +3365,7 @@ function load_chapter_master_equipment(){
 					case "wep2": chapter_master_equip.wep2 = last_artifact; break;
 					case "armour": chapter_master_equip.armour = last_artifact; break;
 					case "gear": chapter_master_equip.gear = last_artifact; break;
-					case "mobi": chapter_master_equip.armour = last_artifact; break;
+					case "mobi": chapter_master_equip.mobi = last_artifact; break;
 				}
 				last_artifact++;
 			}
