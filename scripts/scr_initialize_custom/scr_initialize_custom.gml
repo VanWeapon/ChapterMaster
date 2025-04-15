@@ -2608,8 +2608,8 @@ function scr_initialize_custom() {
 	var equal_scouts = 0;
 	if(struct_exists(obj_creation, "equal_scouts")){
 		var equal_scouts = obj_creation.equal_scouts;
-		obj_ini.equal_scouts = equal_scouts; // for use in squad creation later
 	}
+	obj_ini.equal_scouts = equal_scouts; // for use in squad creation later
 
 	var _moved_scouts = 0;
 
