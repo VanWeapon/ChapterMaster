@@ -2568,7 +2568,7 @@ function scr_initialize_custom() {
 		}
 	}
 
-	log_message($"Pre balancing company totals: {json_stringify(companies,true)}")
+	// log_message($"Pre balancing company totals: {json_stringify(companies,true)}")
 	// Extra vehicles loaded from json files all get dumped into the 10th company for the player to sort out
 	
 	var vehicle_keys = ["rhino", "whirlwind", "predator", "land_raider", "land_speeder"];
@@ -2651,8 +2651,8 @@ function scr_initialize_custom() {
 		/// comp 9: dev 100
 		/// comp 10: tac 40: scout 50;
 		if(equal_specialists){
-			log_message("balancing for equal specialists")
-			log_message($"equal_scouts? {equal_scouts}")
+			// log_message("balancing for equal specialists")
+			// log_message($"equal_scouts? {equal_scouts}")
 
 			if (_coy.coy >= 2 && _coy.coy <= 9){
 				if(equal_scouts){
@@ -2677,7 +2677,7 @@ function scr_initialize_custom() {
 				_coy.tacticals = _moved_scouts;
 			}
 		} else {
-			log_message("balancing for non-equal specialists")
+			// log_message("balancing for non-equal specialists")
 			/// Default specialist behaviour, battle companies 2-7 have 90 tacticals each
 			/// and the assaults go into the 8th and devastators into the 9th 
 			if (_coy.coy >= 2 && _coy.coy <= 5){
@@ -2732,8 +2732,8 @@ function scr_initialize_custom() {
 			}
 		}
 
-		log_message($"New Company Totals: eq specialists: {equal_specialists}: scout coy {scout_company_behaviour} equal_scouts: {equal_scouts}");
-		log_message($"Company {_coy.coy}: {json_stringify(_coy,true)}");
+		// log_message($"New Company Totals: eq specialists: {equal_specialists}: scout coy {scout_company_behaviour} equal_scouts: {equal_scouts}");
+		// log_message($"Company {_coy.coy}: {json_stringify(_coy,true)}");
 
 
 		var attrs = struct_get_names(_coy);
