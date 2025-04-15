@@ -46,7 +46,7 @@ function scr_special_view(command_group) {
 			if (unit.base_group!="astartes") and (unit.base_group!="none"){
 				yep=1;
 			}
-			if ((unit.role()==obj_ini.role[100][eROLE.ChapterMaster]) or (unit.role()==obj_ini.role[100][2])){
+			if ((unit.role()==obj_ini.role[100][eROLE.ChapterMaster] || unit.role()==obj_ini.role[100][eROLE.HonourGuard])){
 				yep=1;
 			}
 			if (yep==1){
