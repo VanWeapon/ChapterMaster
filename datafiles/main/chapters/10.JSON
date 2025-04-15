@@ -285,7 +285,7 @@
                     {
                         "max": 1,
                         "min": 1,
-                        "role": "Sword Brother",
+                        "role": "Sergeant",
                         "loadout": {
                             "required": {
                                 "wep1": [
@@ -350,7 +350,7 @@
                     {
                         "max": 1,
                         "min": 1,
-                        "role": "Sword Brother",
+                        "role": "Sergeant",
                         "loadout": {
                             "required": {
                                 "wep1": [
