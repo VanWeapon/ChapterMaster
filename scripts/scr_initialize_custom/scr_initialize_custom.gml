@@ -2350,7 +2350,7 @@ function scr_initialize_custom() {
 		_hq_armour = "MK6 Corvus";
 	}
 
-
+	k+=1;
 	commands = 1;
 
 	// Forge Master
@@ -2371,6 +2371,7 @@ function scr_initialize_custom() {
 			_forge_master.add_bionics("none", "standard", false)
 		};
 	}
+	k+=1;
 	commands +=1;
 
 	// Master of Sanctity (Chaplain)
@@ -2382,6 +2383,7 @@ function scr_initialize_custom() {
 			_hchap.piety = 45;
 		}
 		_hchap.add_trait("zealous_faith");
+		k+=1;
 		commands +=1;
 	}
 
@@ -2389,6 +2391,7 @@ function scr_initialize_custom() {
 	name[company, 4] = obj_creation.hapothecary;
 	var _hapoth = add_unit_to_company("marine", company, 4, "Master of the Apothecarion", eROLE.Apothecary, "default", "Plasma Pistol", "default", "default", _hq_armour);
 	_hapoth.edit_corruption(0);
+	k+=1;
 	commands +=1;
 
 	// Chief Librarian
@@ -2399,9 +2402,9 @@ function scr_initialize_custom() {
 		_clibrarian.psionic = choose(11, 12);
 		_clibrarian.update_powers();
 		_clibrarian.add_trait("favoured_by_the_warp");
+		k+=1;
 		commands +=1;
 	}
-	k=6;
 	man_size = k;
 
 	// Techmarines in the armoury
@@ -2453,9 +2456,12 @@ function scr_initialize_custom() {
 
 	// Honour Guard
 	var _honour_guard_count = 0, unit;
-    chapter_option = scr_has_adv("Retinue of Renown");
-	if (chapter_option = 1) then _honour_guard_count += 10;
-	if (progenitor == ePROGENITOR.DARK_ANGELS && obj_creation.custom = 0) { _honour_guard_count += 6; }
+	if (scr_has_adv("Retinue of Renown")){
+		_honour_guard_count += 10;
+	} 
+	if (progenitor == ePROGENITOR.DARK_ANGELS && obj_creation.custom = 0) { 
+		_honour_guard_count += 6; 
+	}
 	if (_honour_guard_count == 0) {
 		_honour_guard_count = 3
 	}
