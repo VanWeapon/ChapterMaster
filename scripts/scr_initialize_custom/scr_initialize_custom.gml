@@ -1487,7 +1487,7 @@ function scr_initialize_custom() {
 		sergeant: role[defaults_slot][eROLE.Sergeant],
 		veteran_sergeant: role[defaults_slot][eROLE.VeteranSergeant],
 	}
-	log_message($"roles: {json_stringify(roles, true)}")
+	// log_message($"roles: {json_stringify(roles, true)}")
 	
 	var weapon_lists = {
 		heavy_weapons: ["Heavy Bolter", "Heavy Bolter", "Heavy Bolter", "Heavy Bolter", "Missile Launcher", "Missile Launcher", "Multi-Melta", "Lascannon"],
@@ -2570,7 +2570,7 @@ function scr_initialize_custom() {
 		}
 	}
 
-	log_message($"Pre balancing company totals: {json_stringify(companies,true)}")
+	// log_message($"Pre balancing company totals: {json_stringify(companies,true)}")
 	// Extra vehicles loaded from json files all get dumped into the 10th company for the player to sort out
 	if(struct_exists(obj_creation, "extra_vehicles")){
 		if(struct_exists(obj_creation.extra_vehicles, "rhino")){
@@ -2671,8 +2671,8 @@ function scr_initialize_custom() {
 		/// comp 9: dev 100
 		/// comp 10: tac 40: scout 50;
 		if(equal_specialists){
-			log_message("balancing for equal specialists")
-			log_message($"equal_scouts? {equal_scouts}")
+			// log_message("balancing for equal specialists")
+			// log_message($"equal_scouts? {equal_scouts}")
 
 			if (_coy.coy >= 2 && _coy.coy <= 9){
 				if(equal_scouts){
@@ -2697,7 +2697,7 @@ function scr_initialize_custom() {
 				_coy.tacticals = _moved_scouts;
 			}
 		} else {
-			log_message("balancing for non-equal specialists")
+			// log_message("balancing for non-equal specialists")
 			/// Default specialist behaviour, battle companies 2-7 have 90 tacticals each
 			/// and the assaults go into the 8th and devastators into the 9th 
 			if (_coy.coy >= 2 && _coy.coy <= 5){
@@ -2752,8 +2752,8 @@ function scr_initialize_custom() {
 			}
 		}
 
-		log_message($"New Company Totals: eq specialists: {equal_specialists}: scout coy {scout_company_behaviour} equal_scouts: {equal_scouts}");
-		log_message($"Company {_coy.coy}: {json_stringify(_coy,true)}");
+		// log_message($"New Company Totals: eq specialists: {equal_specialists}: scout coy {scout_company_behaviour} equal_scouts: {equal_scouts}");
+		// log_message($"Company {_coy.coy}: {json_stringify(_coy,true)}");
 
 
 		var attrs = struct_get_names(_coy);
@@ -2762,7 +2762,7 @@ function scr_initialize_custom() {
 		var _is_terminator = function(_armour) {
 			return array_contains(["Terminator Armour", "Tartaros"], _armour);
 		};
-		log_message($"attrs {attrs}");
+		// log_message($"attrs {attrs}");
 
 		for(var _a = 0, _alen =  array_length(attrs); _a < _alen; _a++ ){
 			var _is_vehicle=false, _rolename, _erole, _wep1="default", _wep2="default",_gear="default",_mobi="default", _armour="default",_wep3="", _upgrade="", _accessory="";
@@ -2777,7 +2777,7 @@ function scr_initialize_custom() {
 				_wep1 = wep1[defaults_slot][eROLE.Terminator];
 				_wep2 = wep2[defaults_slot][eROLE.Terminator];
 			}	
-			log_message($"processing: coy {_coy.coy} role {_role} count {_count}");
+			// log_message($"processing: coy {_coy.coy} role {_role} count {_count}");
 			switch(_role){
 				// MAINLINE
 				case "tacticals":
