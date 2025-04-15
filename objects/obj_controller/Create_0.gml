@@ -550,7 +550,6 @@ selecting_planet=0;
 selecting_ship=-1;
 fleet_minimized=0;
 fleet_all=1;
-tolerant=0;
 unload=0;
 new_vehicles=1;
 menu=500;

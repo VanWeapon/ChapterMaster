@@ -750,9 +750,7 @@ function scr_initialize_custom() {
 	mucranoid = obj_creation.mucranoid;
 
 
-	if (scr_has_disadv("Tolerant")) {
-		tolerant = 1; // TODO this should be replaced by calls to scr_has_disadv instead of this variable
-	}
+	
 	adv = obj_creation.adv;
 	dis = obj_creation.dis;
 

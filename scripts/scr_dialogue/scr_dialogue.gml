@@ -1776,7 +1776,7 @@ function scr_dialogue(diplo_keyphrase) {
 				if (scr_has_adv("Enemy: Eldar")){
 					diplo_text+="This is our home, Mon'keigh.  Leave it in peace or feel the full wrath of Kaela Mensha Khaine.";
 				} else {
-					if (obj_ini.tolerant==1){
+					if (scr_has_disadv("Tolerant")){
 						diplo_text+="Your future is clouded, human.  Will you be a tool, or a thorn in our side?";
 					} else {
 						diplo_text+="Another repulsive Mon'keigh.  Leave the Eldar alone, primitive.  You have no idea what you face.";
@@ -1785,7 +1785,7 @@ function scr_dialogue(diplo_keyphrase) {
 	        }
 			// * Running into eldar ships *
 	        if (string_count("2",diplo_keyphrase)>0){
-	            if (obj_ini.tolerant==1) and (!scr_has_adv("Enemy: Eldar")){
+	            if (scr_has_disadv("Tolerant")) and (!scr_has_adv("Enemy: Eldar")){
 					diplo_text+="This meeting is long since due.  I pray that you pull back your forces, "+string(obj_ini.master_name)+".  None of this concerns you.";
 				} else {
 					diplo_text+="You do not understand that which you trifle with.  Leave or be eradicated.";
@@ -1796,7 +1796,7 @@ function scr_dialogue(diplo_keyphrase) {
 				if (scr_has_adv("Enemy: Eldar")){
 					diplo_text+="Another repulsive Mon'keigh.  Leave the Eldar alone, primitive, you have no idea what you face.";
 				} else {
-					if (obj_ini.tolerant==1) {
+					if (scr_has_disadv("Tolerant")) {
 						diplo_text+="We have been expecting you, "+string(obj_ini.master_name)+".";
 					} else {
 						diplo_text+="The skeins have foretold of our meeting, Space Marine.";
@@ -2263,7 +2263,7 @@ function scr_dialogue(diplo_keyphrase) {
 			if (scr_has_adv("Enemy: Orks")){
 				diplo_text+="Oi Beaky! I ain't heard your name round here before! If ya eva get bored of havin' your ‘ead attached to your shouldas, good old "+string(faction_leader[diplomacy])+" can sort dat out for ya!";
 			} else {
-				if (obj_ini.tolerant==1){
+				if (scr_has_disadv("Tolerant")){
 					diplo_text+="You seem good for a scrap, ya beaky faced ponce! Bring your lads down my way some time and we'll have one!";
 				} else {
 					diplo_text+="All you space marines seem da same ta me. I reckon we'll be seein' each other soon enough...";
