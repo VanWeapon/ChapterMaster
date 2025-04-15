@@ -1580,11 +1580,11 @@ for(var mm=0; mm<=100; mm++){
 temp[njm]="Command staff made of";
 
 // Command staff names start at index 1 rather than 0 to align with the chapter company structure
-if (masta == 1) then temp[njm] += $", your majesty Chapter Master {obj_ini.name[com][1]}";
-if (forga == 1) then temp[njm] += $", Forge Master {obj_ini.name[com][2]}";
-if (chapla == 1) then temp[njm] += $", Master of Sanctity {obj_ini.name[com][3]}";
-if (apa == 1) then temp[njm] += $", Master of the Apothecarion {obj_ini.name[com][4]}";
-if (liba == 1) then temp[njm] += $", and Chief Librarian {obj_ini.name[com][5]}.  ";
+if (masta == 1) then temp[njm] += $", your majesty Chapter Master {obj_ini.name[com][0]}";
+if (forga == 1) then temp[njm] += $", Forge Master {obj_ini.name[com][1]}";
+if (chapla == 1) then temp[njm] += $", Master of Sanctity {obj_ini.name[com][2]}";
+if (apa == 1) then temp[njm] += $", Master of the Apothecarion {obj_ini.name[com][3]}";
+if (liba == 1) then temp[njm] += $", and Chief Librarian {obj_ini.name[com][4]}.  ";
 
 
 vih=string_pos(",",temp[njm]);

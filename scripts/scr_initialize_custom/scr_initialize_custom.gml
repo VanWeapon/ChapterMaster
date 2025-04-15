@@ -2308,15 +2308,15 @@ function scr_initialize_custom() {
 
 	// Chapter Master
 	// This needs work
-	name[company, 1] = obj_creation.chapter_master_name;
+	name[company, 0] = obj_creation.chapter_master_name;
 	var cm_equip = load_chapter_master_equipment();
 
-	var chapter_master = add_unit_to_company("chapter_master", 0, 1 , roles.chapter_master, eROLE.ChapterMaster, cm_equip.wep1, cm_equip.wep2, cm_equip.gear, cm_equip.mobi, cm_equip.armour);
+	var chapter_master = add_unit_to_company("chapter_master", 0, 0 , roles.chapter_master, eROLE.ChapterMaster, cm_equip.wep1, cm_equip.wep2, cm_equip.gear, cm_equip.mobi, cm_equip.armour);
 	repeat(cm_equip.bionics){
 		chapter_master.add_bionics("none", "standard", false);
 	}
 
-	spe[company, 1] = "";
+	spe[company, 0] = "";
 	chapter_master.add_trait("lead_example");
 
 	//builds in which of the three chapter master types your CM is
@@ -2324,11 +2324,11 @@ function scr_initialize_custom() {
 	switch (obj_creation.chapter_master_specialty) {
 		case 1:
 			chapter_master.add_exp(550);
-			spe[company, 1] += "$";
+			spe[company, 0] += "$";
 			break;
 		case 2:
 			chapter_master.add_exp(650);
-			spe[company, 1] += "@";
+			spe[company, 0] += "@";
 			chapter_master.add_trait("champion");
 			break;
 		case 3:
@@ -2354,8 +2354,8 @@ function scr_initialize_custom() {
 	commands = 1;
 
 	// Forge Master
-	name[company, 2] = obj_creation.fmaster;
-	var _forge_master = add_unit_to_company("marine", company, 2, "Forge Master", eROLE.Techmarine, "Infernus Pistol", "Power Axe", "default", "Servo-harness", _hq_armour);
+	name[company, 1] = obj_creation.fmaster;
+	var _forge_master = add_unit_to_company("marine", company, 1, "Forge Master", eROLE.Techmarine, "Infernus Pistol", "Power Axe", "default", "Servo-harness", _hq_armour);
 	if (_forge_master.technology < 40) {
 		_forge_master.technology = 40;
 	}
@@ -2376,8 +2376,8 @@ function scr_initialize_custom() {
 
 	// Master of Sanctity (Chaplain)
 	if (chaplains > 0){
-		name[company, 3] = high_chaplain_name;
-		var _hchap = add_unit_to_company("marine", company, 3, "Master of Sanctity", eROLE.Chaplain, "default", "Plasma Pistol", "default", "default", _hq_armour);
+		name[company, 2] = high_chaplain_name;
+		var _hchap = add_unit_to_company("marine", company, 2, "Master of Sanctity", eROLE.Chaplain, "default", "Plasma Pistol", "default", "default", _hq_armour);
 		_hchap.edit_corruption(-100);
 		if (_hchap.piety < 45) {
 			_hchap.piety = 45;
@@ -2388,16 +2388,16 @@ function scr_initialize_custom() {
 	}
 
 	// Maser of the Apothecarion (Apothecary)
-	name[company, 4] = obj_creation.hapothecary;
-	var _hapoth = add_unit_to_company("marine", company, 4, "Master of the Apothecarion", eROLE.Apothecary, "default", "Plasma Pistol", "default", "default", _hq_armour);
+	name[company, 3] = obj_creation.hapothecary;
+	var _hapoth = add_unit_to_company("marine", company, 3, "Master of the Apothecarion", eROLE.Apothecary, "default", "Plasma Pistol", "default", "default", _hq_armour);
 	_hapoth.edit_corruption(0);
 	k+=1;
 	commands +=1;
 
 	// Chief Librarian
 	if(!scr_has_disadv("Psyker Intolerant")){
-		name[company, 5] = obj_creation.clibrarian;
-		var _clibrarian = add_unit_to_company("marine", company, 5, string("Chief {0}", roles.librarian), eROLE.Librarian, "default", "Plasma Pistol", "default", "default", _hq_armour);
+		name[company, 4] = obj_creation.clibrarian;
+		var _clibrarian = add_unit_to_company("marine", company, 4, string("Chief {0}", roles.librarian), eROLE.Librarian, "default", "Plasma Pistol", "default", "default", _hq_armour);
 		_clibrarian.edit_corruption(0);
 		_clibrarian.psionic = choose(11, 12);
 		_clibrarian.update_powers();
