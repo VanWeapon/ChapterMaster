@@ -2479,7 +2479,7 @@ function scr_initialize_custom() {
 	var companies = {
 		first: {
 			coy: 1,
-			total: 100,
+			total: veteran + terminator,
 			veterans: veteran,
 			terminators: terminator,
 			tacticals: 0,
@@ -2738,8 +2738,8 @@ function scr_initialize_custom() {
 			}
 		}
 
-		// log_message($"New Company Totals: eq specialists: {equal_specialists}: scout coy {scout_company_behaviour} equal_scouts: {equal_scouts}");
-		// log_message($"Company {_coy.coy}: {json_stringify(_coy,true)}");
+		log_message($"New Company Totals: eq specialists: {equal_specialists}: scout coy {scout_company_behaviour} equal_scouts: {equal_scouts}");
+		log_message($"Company {_coy.coy}: {json_stringify(_coy,true)}");
 
 
 		var attrs = struct_get_names(_coy);
