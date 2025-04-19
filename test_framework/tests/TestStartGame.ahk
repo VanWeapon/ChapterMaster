@@ -17,19 +17,7 @@ TestStartGame() {
     }
 
     ; Wait for application to fully load
-    framework.Wait(7000)
-    .ClickElement("MainMenu.NewGame")  ; Click on "New Game" in the main menu
-    .Wait(8500)
-    .ClickElement("Creation.DarkAngels") ; Click Dark Angels
-    .Wait(3000)
-    .ClickElement("Creation.SkipArrow") 
-    .Wait(5000)
-    .Click(500, 400)
-    .Click(500, 400)
-    .Click(500, 400)
-    .Click(500, 400)
-    .Click(500, 400) ;skip intro sprawl
-    .Wait(1000)
+    framework.StartGameAs("DarkAngels")
     .ClickElement("GameScreen.ChapterManagement")
     .Wait(1000)
     .ClickElement("GameScreen.ChapterSettings")

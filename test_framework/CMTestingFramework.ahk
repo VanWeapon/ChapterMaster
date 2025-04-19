@@ -232,28 +232,28 @@ class CMTestingFramework {
 
     ; Take a screenshot of the current window
     ; !!! NOT IMPLEMENTED
-    TakeScreenshot(description := "") {
-        if (description == "")
-            description := "screenshot"
+    ; TakeScreenshot(description := "") {
+    ;     if (description == "")
+    ;         description := "screenshot"
 
-        ; Create filename with timestamp
-        filename := FormatTime(A_Now, "yyyyMMdd_HHmmss") . "_" . this.currentTest . "_" . description . ".png"
-        path := this.screenshotDir . filename
+    ;     ; Create filename with timestamp
+    ;     filename := FormatTime(A_Now, "yyyyMMdd_HHmmss") . "_" . this.currentTest . "_" . description . ".png"
+    ;     path := this.screenshotDir . filename
 
-        try {
-            ; Capture active window
-            WinGetPos(&x, &y, &w, &h, "A")
-            screenshot := Gui()
-            screenshot.Add("Picture", "w" . w . " h" . h, path)
-            WinCapture(x, y, w, h, path)
+    ;     try {
+    ;         ; Capture active window
+    ;         WinGetPos(&x, &y, &w, &h, "A")
+    ;         screenshot := Gui()
+    ;         screenshot.Add("Picture", "w" . w . " h" . h, path)
+    ;         WinCapture(x, y, w, h, path)
 
-            this.LogStep("Screenshot saved: " . filename)
-            return path
-        } catch as e {
-            this.LogError("Failed to take screenshot: " . e.Message)
-            return ""
-        }
-    }
+    ;         this.LogStep("Screenshot saved: " . filename)
+    ;         return path
+    ;     } catch as e {
+    ;         this.LogError("Failed to take screenshot: " . e.Message)
+    ;         return ""
+    ;     }
+    ; }
 
     ; Error Handling Functions
 
@@ -356,32 +356,6 @@ class CMTestingFramework {
         return this.LaunchApp()
     }
 
-    ; Helper function to find image on screen
-    FindImage(imagePath, variation := 50) {
-        try {
-            ImageSearch(&foundX, &foundY, 0, 0, A_ScreenWidth, A_ScreenHeight, "*" . variation . " " . imagePath)
-            if (foundX && foundY) {
-                this.LogStep("Image found at: " . foundX . ", " . foundY)
-                return { x: foundX, y: foundY, found: true }
-            } else {
-                this.LogStep("Image not found: " . imagePath)
-                return { found: false }
-            }
-        } catch as e {
-            this.LogError("Error searching for image: " . e.Message)
-            return { found: false }
-        }
-    }
-
-    ; Click on an image if found
-    ClickOnImage(imagePath, variation := 50) {
-        result := this.FindImage(imagePath, variation)
-        if (result.found) {
-            this.Click(result.x, result.y)
-            return true
-        }
-        return false
-    }
 
     ; Click on an element based on its name in CMUIMap
     ; framework.ClickElement("MainMenu.NewGame")
@@ -446,31 +420,40 @@ class CMTestingFramework {
         }
     }
 
-        
+    ;;; This section contains some snippets of common things to quickly get a test running
 
+    ; Quick start new game as given chapter
+    ; chapterName must have coords registered in CMUIMap already
+    StartGameAs(chapterName := ""){
+        if(chapterName == ""){
+            this.LogError("No chapter name provided to StartGameAs")
+            return false
+        }
 
-}
-; Helper function for capturing screenshots
-WinCapture(x, y, w, h, filename) {
-    ; Create bitmap
-    hdc := DllCall("GetDC", "Ptr", 0)
-    hdcMem := DllCall("CreateCompatibleDC", "Ptr", hdc)
-    hBitmap := DllCall("CreateCompatibleBitmap", "Ptr", hdc, "Int", w, "Int", h)
-    DllCall("SelectObject", "Ptr", hdcMem, "Ptr", hBitmap)
+        this.Wait(7000)
+        .ClickElement("MainMenu.NewGame")  
+        .Wait(8500)
+        .ClickElement("Creation." . chapterName)  
+        .Wait(3000)
+        .ClickElement("Creation.SkipArrow")
+        .Wait(4000)
+        .Click(500, 400)
+        .Click(500, 400)
+        .Click(500, 400)
+        .Click(500, 400)
+        .Click(500, 400)
+        .Wait(1000)
+        return this
+    }
 
-    ; Copy screen to bitmap
-    DllCall("BitBlt", "Ptr", hdcMem, "Int", 0, "Int", 0, "Int", w, "Int", h, "Ptr", hdc, "Int", x, "Int", y, "UInt",
-        0x00CC0020) ; SRCCOPY
+    ; Need to make sure save slots 1 2 and 3 are registered in CMUIMap
+    SaveGameToSlot(slotNum := "1"){
+        this.ClickElement("GameScreen.Menu")
+        .ClickElement("InGameMenu.Save")
+        .ClickElement("SaveMenu.SaveSlot" . slotNum)
+        return this
+    }
 
-    ; Save bitmap to file
-    DllCall("gdiplus\GdipCreateBitmapFromHBITMAP", "Ptr", hBitmap, "Ptr", 0, "Ptr*", &pBitmap := 0)
-    DllCall("gdiplus\GdipSaveImageToFile", "Ptr", pBitmap, "Str", filename, "Ptr", 0, "Ptr", 0)
-
-    ; Cleanup
-    DllCall("gdiplus\GdipDisposeImage", "Ptr", pBitmap)
-    DllCall("DeleteObject", "Ptr", hBitmap)
-    DllCall("DeleteDC", "Ptr", hdcMem)
-    DllCall("ReleaseDC", "Ptr", 0, "Ptr", hdc)
 }
 
 ; This class stores xy coordinates for common game elements and buttons
@@ -501,10 +484,10 @@ class CMUIMap {
         this.Creation.DarkAngels := { x: 371, y: 155 }
         this.Creation.BlackTemplars := { x: 388, y: 248 }
         this.Creation.CustomSlot1 := { x: 373, y: 422 }
-        this.Creation.CreateCustom := { x: 625, y: 519 }
-        this.Creation.CreateRandom := { x: 679, y: 521 }
         this.Creation.Deathwatch := { x: 539, y: 517 }
         this.Creation.AngryMarines := { x: 373, y: 524 }
+        this.Creation.CreateCustom := { x: 625, y: 519 }
+        this.Creation.CreateRandom := { x: 679, y: 521 }
         this.Creation.NextArrow := { x: 760, y: 631 }
         this.Creation.BackArrow := { x: 523, y: 639 }
         this.Creation.SkipArrow := { x: 822, y: 635 }
