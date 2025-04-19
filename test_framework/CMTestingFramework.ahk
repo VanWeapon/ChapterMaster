@@ -3,6 +3,7 @@
 
 #Requires AutoHotkey v2.0
 #SingleInstance Force
+#Include JSON.ahk
 
 class CMTestingFramework {
     ; Configuration
@@ -14,6 +15,8 @@ class CMTestingFramework {
         this.resultDir := A_ScriptDir "\results\"
         this.mouseSpeed := 8  ; 1-10, with 10 being slowest (more human-like)
         this.errorLogPath := "C:\Users\" . A_UserName . "\AppData\Local\ChapterMaster\Logs"
+        this.savesPath := "C:\Users\" . A_UserName . "\AppData\Local\ChapterMaster\Save Files"
+        this.savesIniPath := "C:\Users\" . A_UserName . "\AppData\Local\ChapterMaster\saves.ini"
 
         ; State tracking
         this.currentTest := ""
@@ -49,7 +52,12 @@ class CMTestingFramework {
     CloseApp() {
         try {
             WinClose("ahk_exe " . this.appPath)
-            return true
+            if(WinWaitClose("ahk_exe " . this.appPath, , 5) == 1){
+                return true
+            } else {
+                this.LogError("Timeout while waiting to close app")
+                return false
+            }
         } catch as e {
             this.LogError("Failed to properly close application: " . e.Message)
             return false
@@ -68,7 +76,7 @@ class CMTestingFramework {
     }
 
     ; End current test and save results
-    EndTest() {
+    EndTest(status := "Success") {
         this.testEndTime := A_Now
         duration := DateDiff(this.testEndTime, this.testStartTime, "Seconds")
 
@@ -78,7 +86,8 @@ class CMTestingFramework {
         result := "# Test Report: " . this.currentTest . "`n"
         result .= "* Date: " . FormatTime(A_Now, "yyyy-MM-dd") . "`n"
         result .= "* Time: " . FormatTime(A_Now, "HH:mm:ss") . "`n"
-        result .= "* Duration: " . duration . " seconds`n`n"
+        result .= "* Duration: " . duration . " seconds`n"
+        result .= "* Status: " . status . "`n`n"
         result .= "## Test Steps:`n"
 
         for step in this.testSteps {
@@ -91,13 +100,14 @@ class CMTestingFramework {
             f := FileOpen(fileName, "w").Write(result)
             f.Close()
             this.testResult := result
+            this.CloseApp()
             return true
         } catch as e {
             this.LogError("Failed to save test results: " . e.Message)
+            this.CloseApp()
             return false
         }
 
-        this.CloseApp()
     }
 
     ; Log a test step
@@ -262,6 +272,7 @@ class CMTestingFramework {
         } else if(this.CheckForCrashDialog()) {
             this.LogError("Crash dialog detected via window class")
             this.ReadErrorLogs()
+            this.CloseDialog()
             this.EndTest()
             return true
         }
@@ -274,6 +285,15 @@ class CMTestingFramework {
             return true
         }
         return false
+    }
+
+    CloseDialog() {
+        ; Check if any dialog from the app exists with specific window class
+        if (WinExist("ahk_exe " . this.appPath . " ahk_class #32770")) {  ; #32770 is common for dialogs
+            WinClose("ahk_exe " . this.appPath . " ahk_class #32770")
+            WinWaitClose("ahk_exe " . this.appPath . " ahk_class #32770")
+        }
+        return 
     }
 
     ; Read error logs after crash
@@ -309,10 +329,20 @@ class CMTestingFramework {
         }
     }
 
+    ; !NOT IMPLEMENTED
+    ReadSaveFile(slot := 1) {
+        saveFile := this.savesPath . "\save" . slot . ".json"
+        saveFileString := FileRead(saveFile)
+
+        FileCopy(saveFile, this.resultDir . FormatTime(A_Now, "yyyyMMdd_HHmmss") . "_savefile.json")
+        saveObject := JSON.parse(saveFileString, false, false)
+        return saveObject.Save
+    }
+
     ; General error handler
     ErrorHandler(exception, mode) {
         this.LogError("Framework error: " . exception.Message)
-        this.TakeScreenshot("framework_error")
+        ; this.TakeScreenshot("framework_error")
         return true  ; Continue running
     }
 
@@ -356,7 +386,6 @@ class CMTestingFramework {
     ; Click on an element based on its name in CMUIMap
     ; framework.ClickElement("MainMenu.NewGame")
     ClickElement(elementPath) {
-        this.LogStep("Getting element " . elementPath)
         element := this.UIMap.GetElement(elementPath)
         if (element) {
             this.Click(element.x, element.y)
@@ -416,8 +445,11 @@ class CMTestingFramework {
             }
         }
     }
-}
 
+        
+
+
+}
 ; Helper function for capturing screenshots
 WinCapture(x, y, w, h, filename) {
     ; Create bitmap
@@ -444,18 +476,19 @@ WinCapture(x, y, w, h, filename) {
 ; This class stores xy coordinates for common game elements and buttons
 ; All coordinates assume a game size of 1280x720
 class CMUIMap {
+    ; Add to this list when a new category of ui elements is wanted
     __Init(){
         this.MainMenu := {}
         this.Creation := {}
         this.GameScreen := {}
         this.InGameMenu := {}
+        this.SaveMenu := {}
+        this.LoadMenu := {}
         this.ChapterManagement := {}
         this.Apothecarium := {}
         this.Armamentarium := {}
         this.Fleet := {}
         this.Diplomacy := {}
-
-
     }
 
     ; To populate new coords, use DiscoverUIElements.ahk, see HowToUse.md for instructions
@@ -510,6 +543,9 @@ class CMUIMap {
         this.InGameMenu.Options := { x: 750, y: 363 }
         this.InGameMenu.Exit := { x: 749, y: 422 }
         this.InGameMenu.Return := { x: 746, y: 551 }
+        this.SaveMenu.SaveSlot1 := { x: 1109, y: 362 }
+        this.LoadMenu.LoadSlot1 := { x: 1109, y: 362 }
+        this.LoadMenu.LoadAutosave := { x: 1127, y: 241 }
         this.ChapterManagement.Headquarters := { x: 632, y: 173 }
         this.ChapterManagement.Company1 := { x: 79, y: 419 }
         this.ChapterManagement.Company10 := { x: 1189, y: 362 }

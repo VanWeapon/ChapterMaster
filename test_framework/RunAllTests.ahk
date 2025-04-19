@@ -1,3 +1,5 @@
+; Executes all test files in the /tests folder which start with "Test"
+
 #Requires AutoHotkey v2.0
 #SingleInstance Force
 

@@ -67,3 +67,6 @@ this.Creation.PurityDown := {x: 356, y: 364}
 this.Creation.StabilityUp := {x: 388, y: 405}
 this.Creation.StabilityDown := {x: 367, y: 407}
 this.Creation.Obliterated := {x: 384, y: 416}
+this.SaveMenu.SaveSlot1 := {x: 1109, y: 362}
+this.LoadMenu.LoadSlot1 := {x: 1109, y: 362}
+this.LoadMenu.LoadAutosave := {x: 1127, y: 241}
