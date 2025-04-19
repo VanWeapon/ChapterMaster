@@ -79,6 +79,8 @@ Here are the core methods to use in your test cases:
 - `framework.DoubleClick(x, y)` - Double-click at coordinates
 - `framework.MoveMouse(x, y)` - Move mouse to coordinates
 - `framework.DragMouse(x1, y1, x2, y2)` - Click and drag from one point to another
+- `framework.ClickElement("Section.ElementName")` - Click on a named UI element
+- `framework.MoveToElement("Section.ElementName")` - Move mouse to a named UI element
 
 ### Keyboard Interaction
 - `framework.SendText("text")` - Type text
@@ -96,18 +98,99 @@ Here are the core methods to use in your test cases:
 - `framework.CheckForCrash()` - Detect if application crashed
 - `framework.RestartApp()` - Restart the application after a crash
 
-## Finding UI Element Coordinates
+## Using Named UI Elements
 
-To interact with CM's UI elements, you'll need their screen coordinates:
+Instead of using raw coordinates, you can reference UI elements by name:
+
+### Using ClickElement and MoveToElement
+
+These methods allow you to interact with UI elements by name rather than remembering coordinates:
+
+```autohotkey
+; Click on a button using its name
+framework.ClickElement("MainMenu.NewGame")
+
+; Move to an element without clicking
+framework.MoveToElement("GameScreen.SaveGame")
+```
+
+The format is always `"Section.ElementName"`, where:
+- `Section` is a logical grouping of UI elements (e.g., MainMenu, GameScreen, Dialog)
+- `ElementName` is the specific element within that section
+
+### Benefits of Using Named Elements
+
+- **Readability**: Tests are more descriptive and easier to understand
+- **Maintainability**: If UI coordinates change, you only need to update the UI Map, not each test
+- **Consistency**: Ensures the same element is always referenced the same way
+
+### Example with Named Elements
+
+```autohotkey
+framework.StartTest("StartGameWithNamedElements")
+    .LaunchApp()
+    .Wait(7000)
+    .ClickElement("MainMenu.NewGame")
+    .Wait(8000)
+    .ClickElement("Creation.DarkAngels")
+    .Wait(3000)
+    .ClickElement("Creation.SkipArrow")
+    .Wait(2000)
+    .EndTest()
+```
+
+## Discovering UI Element Coordinates
+
+### Using the DiscoverUIElements Tool
+
+The framework includes a tool to help identify and record UI element coordinates:
+
+1. **Launch the Discovery Tool**
+   ```autohotkey
+   DiscoverUIElements()
+   ```
+
+2. **Using the Tool**
+   - Position your mouse over a UI element in the CM application
+   - Press F7 to capture the current mouse coordinates
+   - Enter a Section Name (e.g., "MainMenu")
+   - Enter an Element Name (e.g., "NewGameButton")
+   - Click "Save"
+
+3. **Finding the Saved Coordinates**
+   - The tool saves coordinates to `ui_elements.txt` in your script directory
+   - Each entry is formatted for easy pasting into the `CMUIMap` class
+
+4. **Typical Workflow**
+   ```autohotkey
+   ; Example script to discover UI elements
+   #Requires AutoHotkey v2.0
+   #Include ..\CMTestingFramework.ahk
+   
+   ; Launch CM
+   framework := CMTestingFramework()
+   framework.LaunchApp()
+   
+   ; Start the discovery tool
+   DiscoverUIElements()
+   ```
+
+5. **After Capturing Elements**
+   - Copy the contents of `ui_elements.txt`
+   - Add them to the `CMUIMap` class in the appropriate sections
+   - Use your newly mapped elements in tests with `ClickElement()` and `MoveToElement()`
+
+### Manual Coordinate Finding
+
+You can still use AutoHotkey's Window Spy as described below:
 
 1. Use AutoHotkey's built-in Window Spy tool (right-click the AutoHotkey icon in the system tray and select "Window Spy")
 2. Hover your mouse over the UI element you want to interact with
 3. Note the "Mouse Position" coordinates shown in Window Spy. Use the `client` value which should say `default` next to it.
 
+## Example Test Case Using Named Elements
 
-## Example Test Case
-
-Here's a complete example test case for Opening CM, starting a new game as Dark Angels and landing on the main game screen before finishing:
+Here's a complete example test case using named UI elements:
 
 ```autohotkey
 #Requires AutoHotkey v2.0
@@ -130,23 +213,23 @@ TestStartGame() {
     framework.Wait(7000)
     .TakeScreenshot("Main_Menu")
     
-    framework.Click(693, 520)  ; Click on "New Game" in the main menu
+    framework.ClickElement("MainMenu.NewGame")  ; Click on "New Game" using named element
     .Wait(8000)
     .TakeScreenshot("Creation")
 
-    framework.Click(404, 223) ; Click Dark Angels
+    framework.ClickElement("Creation.DarkAngels") ; Click Dark Angels by name
     .Wait(3000)
-    .Click(835, 751) ; Next button
+    .ClickElement("Creation.NextArrow") ; Click Next button
     .Wait(2000)
-    .Click(835, 751) ; Next button
+    .ClickElement("Creation.NextArrow") ; Click Next button again
     .Wait(2000)
-    .Click(835, 751) ; Next button
+    .ClickElement("Creation.NextArrow") ; Click Next button again
     .Wait(2000)
-    .Click(835, 751) ; Next button
+    .ClickElement("Creation.NextArrow") ; Click Next button again
     .Wait(2000)
-    .Click(835, 751) ; Next button
+    .ClickElement("Creation.NextArrow") ; Click Next button again
     .Wait(2000)
-    .Click(835, 751) ; Next button
+    .ClickElement("Creation.NextArrow") ; Click Next button again
     .Wait(2000)
     .TakeScreenshot("Game_Started")
 
@@ -162,27 +245,32 @@ TestStartGame()
 
 ## Best Practices
 
-1. **Start Simple**: Begin with basic workflows before attempting complex scenarios
+1. **Use Named Elements**: Prefer `ClickElement()` over raw coordinates when possible
 
-2. **Add Delays**: Include sufficient wait times between actions (use `framework.Wait()`)
+2. **Map New Elements**: When encountering a new UI element, add it to the UI Map
 
-3. **Document with Screenshots**: Take screenshots at key points in your test 
+3. **Start Simple**: Begin with basic workflows before attempting complex scenarios
 
-4. **Handle Errors**: Always check for and handle possible application crashes
+4. **Add Delays**: Include sufficient wait times between actions (use `framework.Wait()`)
 
-5. **Organize by Workflow**: Create separate test files for different functional areas
+5. **Document with Screenshots**: Take screenshots at key points in your test 
 
-6. **Comment Your Code**: Include clear comments explaining the purpose of each step
+6. **Handle Errors**: Always check for and handle possible application crashes
 
-7. **Use Consistent Naming**: Name your tests and files with clear, descriptive names
+7. **Organize by Workflow**: Create separate test files for different functional areas
 
-8. **Test One Thing**: Each test should focus on a single feature or workflow
+8. **Comment Your Code**: Include clear comments explaining the purpose of each step
+
+9. **Use Consistent Naming**: Name your tests and files with clear, descriptive names
+
+10. **Test One Thing**: Each test should focus on a single feature or workflow
 
 ## Troubleshooting
 
-- **Coordinate Issues**: If clicks aren't hitting the right spots, verify coordinates in Window Spy
+- **Coordinate Issues**: If clicks aren't hitting the right spots, verify coordinates in Window Spy or use the DiscoverUIElements tool
 - **Timing Problems**: Increase wait times if actions seem to execute before the app is ready
 - **Application Not Found**: Check the application path in CMTestingFramework.ahk
+- **Element Not Found Error**: Verify the element path is correct (e.g., "MainMenu.NewGame")
 
 ## Getting Help
 

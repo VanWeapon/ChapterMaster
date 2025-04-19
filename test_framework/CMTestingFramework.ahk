@@ -26,6 +26,9 @@ class CMTestingFramework {
         DirCreate(this.logDir)
         DirCreate(this.resultDir)
 
+        ; UI Coordinate helpers
+        this.UIMap := CMUIMap()
+
         ; Initialize error handling
         OnError(ObjBindMethod(this, "ErrorHandler"))
     }
@@ -117,11 +120,12 @@ class CMTestingFramework {
     Click(x := "", y := "", button := "left") {
         if (x != "" && y != "") {
             this.MoveMouse(x, y)
+            Sleep(30)
         }
 
         ; GameMaker behaves a lil funky with the instant clicks of AHK and sometimes they dont register
-        Click(button, , , 1 ,'D')
-        this.Wait(10)
+        Click(button, , , 1, 'D')
+        Sleep(10)
         Click(button, , , 1, 'U')
         this.LogStep("Mouse " . button . "-clicked at current position")
 
@@ -161,7 +165,7 @@ class CMTestingFramework {
         this.LogStep("Text sent: " . text)
 
         if (!this.CheckForCrash())
-           return this
+            return this
     }
 
     ; Send keyboard combo (like Ctrl+S)
@@ -169,7 +173,7 @@ class CMTestingFramework {
         Send(keys)
         this.LogStep("Key combination sent: " . keys)
 
-        if (!this.CheckForCrash()) 
+        if (!this.CheckForCrash())
             return this
     }
 
@@ -197,9 +201,16 @@ class CMTestingFramework {
             return this
     }
 
+    ; Wait for specified seconds
+    WaitSeconds(secs) {
+        ms := secs * 1000
+        return this.Wait(ms)
+    }
+
     ; Screenshot Functions
 
     ; Take a screenshot of the current window
+    ; !!! NOT IMPLEMENTED
     TakeScreenshot(description := "") {
         if (description == "")
             description := "screenshot"
@@ -316,6 +327,70 @@ class CMTestingFramework {
         }
         return false
     }
+
+    ; Click on an element based on its name in CMUIMap
+    ; framework.ClickElement("MainMenu.NewGame")
+    ClickElement(elementPath) {
+        this.LogStep("Getting element " . elementPath)
+        element := this.UIMap.GetElement(elementPath)
+        if (element) {
+            this.Click(element.x, element.y)
+            this.LogStep("Clicked element: " . elementPath)
+            return this
+        } else {
+            this.LogError("Element not found: " . elementPath)
+            return this
+        }
+    }
+
+    MoveToElement(elementPath) {
+        element := this.UIMap.GetElement(elementPath)
+        if (element) {
+            this.MoveMouse(element.x, element.y)
+            this.LogStep("Moved to element: " . elementPath)
+            return this
+        } else {
+            this.LogError("Element not found: " . elementPath)
+            return this
+        }
+    }
+
+    ; Element Discovery Tool
+    DiscoverUIElements() {
+        ; Create a GUI
+        discoveryGui := Gui(, "UI Element Discovery Tool")
+        discoveryGui.Add("Text", , "Press F7 to capture mouse position")
+        discoveryGui.Add("Text", "vCoordinates w200 h20", "X: 0, Y: 0")
+        discoveryGui.Add("Text", , "Section Name:")
+        discoveryGui.Add("Edit", "vSectionName w150")
+        discoveryGui.Add("Text", , "Element Name:")
+        discoveryGui.Add("Edit", "vElementName w150")
+        discoveryGui.Add("Button", "Default", "Save").OnEvent("Click", SavePosition)
+        discoveryGui.Show()
+
+        ; Set up hotkey
+        Hotkey("F7", CapturePosition)
+
+        CapturePosition(*) {
+            MouseGetPos(&x, &y)
+            discoveryGui["Coordinates"].Value := "{x: " . x . ", y: " . y . "}"
+        }
+
+        SavePosition(*) {
+            ; MouseGetPos(&x, &y)
+            sectionName := discoveryGui["SectionName"].Value
+            elementName := discoveryGui["ElementName"].Value
+
+            if (sectionName && elementName) {
+                ; Append to UI map file
+                FileAppend("this." . sectionName . "." . elementName . " := " . discoveryGui["Coordinates"].Value . "`n",
+                    A_ScriptDir . "\ui_elements.txt")
+                MsgBox("Saved " . sectionName . "." . elementName . " at " . discoveryGui["Coordinates"].Value)
+            } else {
+                MsgBox("Please enter both section and element names")
+            }
+        }
+    }
 }
 
 ; Helper function for capturing screenshots
@@ -339,4 +414,103 @@ WinCapture(x, y, w, h, filename) {
     DllCall("DeleteObject", "Ptr", hBitmap)
     DllCall("DeleteDC", "Ptr", hdcMem)
     DllCall("ReleaseDC", "Ptr", 0, "Ptr", hdc)
+}
+
+; This class stores xy coordinates for common game elements and buttons
+; All coordinates assume a game size of 1280x720
+class CMUIMap {
+    __Init(){
+        this.MainMenu := {}
+        this.Creation := {}
+        this.GameScreen := {}
+        this.InGameMenu := {}
+        this.ChapterManagement := {}
+        this.Apothecarium := {}
+        this.Armamentarium := {}
+        this.Fleet := {}
+        this.Diplomacy := {}
+
+
+    }
+
+    __New() {
+        this.MainMenu.NewGame := { x: 629, y: 422 }
+        this.MainMenu.LoadGame := { x: -820, y: 187 }
+        this.MainMenu.LoadGame := { x: 625, y: 452 }
+        this.MainMenu.Options := { x: 634, y: 487 }
+        this.MainMenu.Exit := { x: 634, y: 522 }
+        this.Creation.DarkAngels := { x: 371, y: 155 }
+        this.Creation.BlackTemplars := { x: 388, y: 248 }
+        this.Creation.CustomSlot1 := { x: 373, y: 422 }
+        this.Creation.CreateCustom := { x: 625, y: 519 }
+        this.Creation.CreateRandom := { x: 679, y: 521 }
+        this.Creation.Deathwatch := { x: 539, y: 517 }
+        this.Creation.AngryMarines := { x: 373, y: 524 }
+        this.Creation.NextArrow := { x: 760, y: 631 }
+        this.Creation.BackArrow := { x: 523, y: 639 }
+        this.Creation.SkipArrow := { x: 822, y: 635 }
+        this.Creation.AdvSlot1 := { x: 369, y: 479 }
+        this.Creation.DisadvSlot1 := { x: 680, y: 481 }
+        this.Creation.Slide1Homeworld := { x: 430, y: 203 }
+        this.Creation.Slide1FleetBased := { x: 630, y: 202 }
+        this.Creation.Slide1Penitent := { x: 778, y: 201 }
+        this.Creation.Slide6Leader := { x: 388, y: 581 }
+        this.Creation.Slide6Champion := { x: 584, y: 583 }
+        this.Creation.Slide6Psyker := { x: 775, y: 582 }
+        this.GameScreen.ChapterManagement := { x: 95, y: 686 }
+        this.GameScreen.ChapterSettings := { x: 197, y: 687 }
+        this.GameScreen.Apothecarium := { x: 342, y: 688 }
+        this.GameScreen.Reclusium := { x: 414, y: 690 }
+        this.GameScreen.Librarium := { x: 518, y: 690 }
+        this.GameScreen.Armamentarium := { x: 610, y: 693 }
+        this.GameScreen.Recruitment := { x: 705, y: 689 }
+        this.GameScreen.Fleet := { x: 792, y: 692 }
+        this.GameScreen.Diplomacy := { x: 952, y: 691 }
+        this.GameScreen.EventLog := { x: 1075, y: 683 }
+        this.GameScreen.EndTurn := { x: 1190, y: 690 }
+        this.GameScreen.Help := { x: 1139, y: 27 }
+        this.GameScreen.Menu := { x: 1226, y: 25 }
+        this.InGameMenu.Save := { x: 745, y: 231 }
+        this.InGameMenu.Load := { x: 753, y: 298 }
+        this.InGameMenu.Options := { x: 750, y: 363 }
+        this.InGameMenu.Exit := { x: 749, y: 422 }
+        this.InGameMenu.Return := { x: 746, y: 551 }
+        this.ChapterManagement.Headquarters := { x: 632, y: 173 }
+        this.ChapterManagement.Company1 := { x: 79, y: 419 }
+        this.ChapterManagement.Company10 := { x: 1189, y: 362 }
+        this.ChapterManagement.Company5 := { x: 575, y: 378 }
+        this.ChapterManagement.SquadView := { x: 862, y: 137 }
+        this.ChapterManagement.ShowProfile := { x: 979, y: 134 }
+        this.ChapterManagement.SelectAll := { x: 870, y: 502 }
+        this.Apothecarium.AddTestSlave := { x: 370, y: 642 }
+        this.Armamentarium.EnterForge := { x: 495, y: 322 }
+        this.Armamentarium.Equipment := { x: 816, y: 67 }
+        this.Armamentarium.Armour := { x: 898, y: 64 }
+        this.Armamentarium.Vehicles := { x: 1002, y: 72 }
+        this.Armamentarium.Ships := { x: 1218, y: 70 }
+        this.Fleet.ShipSlot1 := { x: 882, y: 93 }
+        this.Diplomacy.ImperiumAudience := { x: 244, y: 275 }
+        this.Diplomacy.MechanicusAudience := { x: 235, y: 385 }
+        this.Diplomacy.MeetChaosEmmisary := { x: 691, y: 189 }
+
+
+        ; Add more sections and elements as needed
+    }
+
+    ; Get element coordinates by path (e.g., "MainMenu.NewGame")
+    GetElement(path) {
+        parts := StrSplit(path, ".")
+        if (parts.Length != 2)
+            return false
+
+        section := parts[1]
+        element := parts[2]
+
+        if (this.HasOwnProp(section)) {
+            sectionObj := this.%section%
+            if (sectionObj.HasOwnProp(element))
+                return sectionObj.%element%
+        }
+        return false
+    }
 }

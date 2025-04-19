@@ -19,27 +19,28 @@ TestStartGame() {
 
     ; Wait for application to fully load
     framework.Wait(7000)
-    .TakeScreenshot("Main_Menu")
-    
-    framework.Click(693, 520)  ; Click on "New Game" in the main menu
-    .Wait(8000)
-    .TakeScreenshot("Creation")
-
-    framework.Click(404, 223) ; Click Dark Angels
+    .ClickElement("MainMenu.NewGame")  ; Click on "New Game" in the main menu
+    .Wait(8500)
+    .ClickElement("Creation.DarkAngels") ; Click Dark Angels
     .Wait(3000)
-    .Click(835, 751) ; Next button
+    .ClickElement("Creation.SkipArrow") 
+    .Wait(5000)
+    .Click(500, 400)
+    .Click(500, 400)
+    .Click(500, 400)
+    .Click(500, 400)
+    .Click(500, 400) ;skip intro sprawl
+    .Wait(1000)
+    .ClickElement("GameScreen.ChapterManagement")
+    .Wait(1000)
+    .ClickElement("GameScreen.ChapterSettings")
+    .Wait(1000)
+    .ClickElement("GameScreen.Fleet")
     .Wait(2000)
-    .Click(835, 751) ; Next button
-    .Wait(2000)
-    .Click(835, 751) ; Next button
-    .Wait(2000)
-    .Click(835, 751) ; Next button
-    .Wait(2000)
-    .Click(835, 751) ; Next button
-    .Wait(2000)
-    .Click(835, 751) ; Next button
-    .Wait(2000)
-    .TakeScreenshot("Game_Started")
+    .ClickElement("GameScreen.Fleet")
+    .Wait(1000)
+    .ClickElement("GameScreen.EndTurn")
+    .Wait(2000) ; waiting at the end checks for crashing
 
     ; End test and save results
     framework.EndTest()
