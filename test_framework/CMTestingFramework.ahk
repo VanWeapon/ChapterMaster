@@ -8,15 +8,17 @@ class CMTestingFramework {
     ; Configuration
 
     __New() {
-        this.appPath := "D:\Documents\ChapterMaster\ChapterMaster.exe"
-        this.screenshotDir := A_ScriptDir "\screenshots\"
-        this.logDir := A_ScriptDir "\logs\"
-        this.resultDir := A_ScriptDir "\results\"
+        this.appPath := "D:\Documents\ChapterMaster\ChapterMaster.exe" ; Path to compiled ChapterMaster.exe file to run tests against
+        this.screenshotDir := A_ScriptDir "\screenshots\" ; Not in use yet
+        this.logDir := A_ScriptDir "\logs\" ; Stores all the framework logs and errors produced by the test runner
+        this.resultDir := A_ScriptDir "\results\" ; Stores all test results
         this.mouseSpeed := 8  ; 1-10, with 10 being slowest (more human-like)
-        this.errorLogPath := "C:\Users\" . A_UserName . "\AppData\Local\ChapterMaster\Logs"
-        this.savesPath := "C:\Users\" . A_UserName . "\AppData\Local\ChapterMaster\Save Files"
-        this.savesIniPath := "C:\Users\" . A_UserName . "\AppData\Local\ChapterMaster\saves.ini"
-        this.gameStatsIniPath := "C:\Users\" . A_UserName . "\AppData\Local\ChapterMaster\gamestats.ini"
+        this.appDataPath := "C:\Users\" . A_UserName . "\AppData\Local\ChapterMaster" ; The base path to CM user folder for saves, logs etc
+        this.errorLogPath := this.appDataPath . "\Logs" ; ChapterMaster logs and error files
+        this.savesPath := this.appDataPath . "\Save Files" ; ChapterMaster saves
+        this.savesIniPath := this.appDataPath . "\saves.ini" ; ChapterMaster save stats
+        this.gameStatsIniPath := this.appDataPath . "\gamestats.ini" ; Can be created by running the cheat code 'dumpstats' ingame, helpful for checking ingame values with the test runner
+        this.testSettingsPath := this.appDataPath . "\testing_options.ini" ; Configuration for this CMTestingFramework app, use to override certain settings per-developer/tester
 
         ; State tracking
         this.currentTest := ""
@@ -28,6 +30,12 @@ class CMTestingFramework {
         DirCreate(this.screenshotDir)
         DirCreate(this.logDir)
         DirCreate(this.resultDir)
+
+
+        if(FileExist(this.testSettingsPath)){
+            prev_path := this.appPath
+            this.appPath := IniRead(this.testSettingsPath, "Config", "app_path", prev_path)
+        }
 
         ; UI Coordinate helpers
         this.UIMap := CMUIMap()

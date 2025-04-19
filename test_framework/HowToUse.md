@@ -11,6 +11,8 @@ This document provides guidance for CM developers on how to create automated tes
 2. **File Structure**
    - Place your test case scripts in the `tests` folder of the `test_framework` directory in the repo
    - Name your test scripts descriptively (e.g., `ObliteratedCustomStart.ahk`, `MenuChecks.ahk`)
+   - Test runner needs to be pointed at a compiled ChapterMaster.exe file, see `CMTestingFramework.appPath`
+   - use `testing_options.ini` in the %LocalAppData%/ChapterMaster folder to override the path of the ChapterMaster.exe file for your machine if different
 
 3. **Game Settings**
     - The test runner assumes you are running in **Windowed 720p** in order for pixels to line up.
