@@ -1,4 +1,3 @@
-; CM Application Test Case: Create New Customer Record
 ; This test case demonstrates how to use the CMTestingFramework
 
 #Requires AutoHotkey v2.0
@@ -44,8 +43,6 @@ TestStartGame() {
 
     ; End test and save results
     framework.EndTest()
-
-    MsgBox("Test completed. Results saved to: " . framework.resultDir)
 }
 
 ; Run the test

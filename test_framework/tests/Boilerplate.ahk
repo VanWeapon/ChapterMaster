@@ -1,4 +1,3 @@
-; CM Application Test Case: Create New Customer Record
 ; Copy/paste this layout for easy test creation from scratch
 
 #Requires AutoHotkey v2.0
@@ -21,8 +20,6 @@ TestBoilerplate() {
 
     ; End test and save results
     framework.EndTest()
-
-    MsgBox("Test completed. Results saved to: " . framework.resultDir)
 }
 
 ; Run the test

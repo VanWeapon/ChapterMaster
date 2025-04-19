@@ -12,8 +12,8 @@ class CMTestingFramework {
         this.screenshotDir := A_ScriptDir "\screenshots\"
         this.logDir := A_ScriptDir "\logs\"
         this.resultDir := A_ScriptDir "\results\"
-        this.mouseSpeed := 2  ; 1-10, with 10 being slowest (more human-like)
-        this.errorLogPath := A_AppData "..\Local\ChapterMaster\Logs\last_messages.log"
+        this.mouseSpeed := 8  ; 1-10, with 10 being slowest (more human-like)
+        this.errorLogPath := "C:\Users\" . A_UserName . "\AppData\Local\ChapterMaster\Logs"
 
         ; State tracking
         this.currentTest := ""
@@ -42,6 +42,16 @@ class CMTestingFramework {
             return true
         } catch as e {
             this.LogError("Failed to launch application: " . e.Message)
+            return false
+        }
+    }
+
+    CloseApp() {
+        try {
+            WinClose("ahk_exe " . this.appPath)
+            return true
+        } catch as e {
+            this.LogError("Failed to properly close application: " . e.Message)
             return false
         }
     }
@@ -87,6 +97,7 @@ class CMTestingFramework {
             return false
         }
 
+        this.CloseApp()
     }
 
     ; Log a test step
@@ -120,13 +131,13 @@ class CMTestingFramework {
     Click(x := "", y := "", button := "left") {
         if (x != "" && y != "") {
             this.MoveMouse(x, y)
-            Sleep(30)
+            Sleep(100)
         }
 
         ; GameMaker behaves a lil funky with the instant clicks of AHK and sometimes they dont register
-        Click(button, , , 1, 'D')
-        Sleep(10)
-        Click(button, , , 1, 'U')
+        Click(button, 'D')
+        Sleep(30)
+        Click(button, 'U')
         this.LogStep("Mouse " . button . "-clicked at current position")
 
         if (!this.CheckForCrash())
@@ -245,9 +256,21 @@ class CMTestingFramework {
     CheckForCrash() {
         if (!this.IsAppRunning()) {
             this.LogError("Application crashed during " . this.currentTest)
-            this.TakeScreenshot("crash")
             this.ReadErrorLogs()
             this.EndTest()
+            return true
+        } else if(this.CheckForCrashDialog()) {
+            this.LogError("Crash dialog detected via window class")
+            this.ReadErrorLogs()
+            this.EndTest()
+            return true
+        }
+        return false
+    }
+
+    CheckForCrashDialog() {
+        ; Check if any dialog from the app exists with specific window class
+        if (WinExist("ahk_exe " . this.appPath . " ahk_class #32770")) {  ; #32770 is common for dialogs
             return true
         }
         return false
@@ -257,21 +280,23 @@ class CMTestingFramework {
     ReadErrorLogs() {
         try {
             ; Find the most recent error log
-            errorLogFiles := []
-            loop files, this.errorLogPath . "\*.log" {
-                errorLogFiles.Push({ path: A_LoopFileFullPath, time: A_LoopFileTimeModified })
+            ; errorLogFiles := []
+            
+            latestFile := {path: "", time: 0}
+            loop files, this.errorLogPath . "\*_error.log" {
+                if(latestFile.time < A_LoopFileTimeModified){
+                    latestFile.path := A_LoopFileFullPath
+                    latestFile.time := A_LoopFileTimeModified
+                }
             }
 
-            ; Sort by modification time (newest first)
-            errorLogFiles := Sort(errorLogFiles, (a, b) => b.time - a.time)
-
-            if (errorLogFiles.Length > 0) {
-                latestLog := errorLogFiles[1].path
+            if (latestFile.time > 0) {
+                latestLog := latestFile.path
                 logContent := FileRead(latestLog)
 
                 ; Extract relevant information
                 this.LogStep("Error log found: " . latestLog)
-                this.LogError("Error log content: " . SubStr(logContent, 1, 500) . (StrLen(logContent) > 500 ? "..." :
+                this.LogError("Error log content: " . SubStr(logContent, 1, 1000) . (StrLen(logContent) > 1000 ? "..." :
                     ""))
 
                 ; Save error log with test results
@@ -433,6 +458,7 @@ class CMUIMap {
 
     }
 
+    ; To populate new coords, use DiscoverUIElements.ahk, see HowToUse.md for instructions
     __New() {
         this.MainMenu.NewGame := { x: 629, y: 422 }
         this.MainMenu.LoadGame := { x: -820, y: 187 }
@@ -451,12 +477,21 @@ class CMUIMap {
         this.Creation.SkipArrow := { x: 822, y: 635 }
         this.Creation.AdvSlot1 := { x: 369, y: 479 }
         this.Creation.DisadvSlot1 := { x: 680, y: 481 }
-        this.Creation.Slide1Homeworld := { x: 430, y: 203 }
-        this.Creation.Slide1FleetBased := { x: 630, y: 202 }
-        this.Creation.Slide1Penitent := { x: 778, y: 201 }
-        this.Creation.Slide6Leader := { x: 388, y: 581 }
-        this.Creation.Slide6Champion := { x: 584, y: 583 }
-        this.Creation.Slide6Psyker := { x: 775, y: 582 }
+        this.Creation.Homeworld := { x: 430, y: 203 }
+        this.Creation.FleetBased := { x: 630, y: 202 }
+        this.Creation.Penitent := { x: 778, y: 201 }
+        this.Creation.Leader := { x: 388, y: 581 }
+        this.Creation.Champion := { x: 584, y: 583 }
+        this.Creation.Psyker := { x: 775, y: 582 }
+        this.Creation.StrengthUp := { x: 388, y: 273 }
+        this.Creation.StrengthDown := { x: 363, y: 276 }
+        this.Creation.CooperationUp := { x: 391, y: 321 }
+        this.Creation.CooperationDown := { x: 359, y: 321 }
+        this.Creation.PurityUp := { x: 390, y: 367 }
+        this.Creation.PurityDown := { x: 356, y: 364 }
+        this.Creation.StabilityUp := { x: 388, y: 405 }
+        this.Creation.StabilityDown := { x: 367, y: 407 }
+        this.Creation.Obliterated := { x: 384, y: 416 }
         this.GameScreen.ChapterManagement := { x: 95, y: 686 }
         this.GameScreen.ChapterSettings := { x: 197, y: 687 }
         this.GameScreen.Apothecarium := { x: 342, y: 688 }
