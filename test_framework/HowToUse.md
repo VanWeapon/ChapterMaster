@@ -73,6 +73,7 @@ Here are the core methods to use in your test cases:
 - `framework.StartTest("TestName")` - Initialize a test with a name
 - `framework.LaunchApp()` - Launch the CM application
 - `framework.EndTest()` - Complete the test and save results
+- `framework.CloseApp()` - Exit CM but keep the test running
 
 ### Mouse Interaction
 - `framework.Click(x, y)` - Click at specific coordinates
@@ -87,12 +88,17 @@ Here are the core methods to use in your test cases:
 - `framework.SendCombo("{Ctrl down}{s}{Ctrl up}")` - Send key combinations
 - `framework.KeyDown("key")` and `framework.KeyUp("key")` - Press and release keys
 
+### Premade Step Sequences
+- `framework.StartGameAs("ChapterName")` - Opens game, clicks New Game, selects ChapterName, Skips through Creation screen, dismisses intro sprawl
+- `framework.SaveToSlot("1")` - Opens the ingame menu and saves the game to the slot specified. Only works for slots 1 - 3
+
 ### Wait and Timing
-- `framework.Wait(milliseconds)` - Pause execution for specified time
+- `framework.Wait(milliseconds)` - Pause execution for specified time in ms
+- `framework.WaitSeconds(seconds)` - Pause execution for specified time in seconds
 
 ### Documentation
-- `framework.TakeScreenshot("description")` - Capture the current screen state
 - `framework.LogStep("description")` - Record a test step with description
+- `framework.LogError("description")` - Record a test step error with description. Builtin methods will do this if they fail to perform an action like clicking or if the game crashes.
 
 ### Error Handling
 - `framework.CheckForCrash()` - Detect if application crashed

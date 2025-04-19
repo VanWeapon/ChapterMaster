@@ -3,7 +3,6 @@
 
 #Requires AutoHotkey v2.0
 #SingleInstance Force
-#Include JSON.ahk
 
 class CMTestingFramework {
     ; Configuration
@@ -17,6 +16,7 @@ class CMTestingFramework {
         this.errorLogPath := "C:\Users\" . A_UserName . "\AppData\Local\ChapterMaster\Logs"
         this.savesPath := "C:\Users\" . A_UserName . "\AppData\Local\ChapterMaster\Save Files"
         this.savesIniPath := "C:\Users\" . A_UserName . "\AppData\Local\ChapterMaster\saves.ini"
+        this.gameStatsIniPath := "C:\Users\" . A_UserName . "\AppData\Local\ChapterMaster\gamestats.ini"
 
         ; State tracking
         this.currentTest := ""
@@ -182,6 +182,7 @@ class CMTestingFramework {
 
     ; Send text (typing)
     SendText(text) {
+        SetKeyDelay(100)
         Send(text)
         this.LogStep("Text sent: " . text)
 
@@ -267,13 +268,13 @@ class CMTestingFramework {
         if (!this.IsAppRunning()) {
             this.LogError("Application crashed during " . this.currentTest)
             this.ReadErrorLogs()
-            this.EndTest()
+            this.EndTest("Failure")
             return true
         } else if(this.CheckForCrashDialog()) {
             this.LogError("Crash dialog detected via window class")
             this.ReadErrorLogs()
             this.CloseDialog()
-            this.EndTest()
+            this.EndTest("Failure")
             return true
         }
         return false
@@ -330,14 +331,14 @@ class CMTestingFramework {
     }
 
     ; !NOT IMPLEMENTED
-    ReadSaveFile(slot := 1) {
-        saveFile := this.savesPath . "\save" . slot . ".json"
-        saveFileString := FileRead(saveFile)
+    ; ReadSaveFile(slot := 1) {
+    ;     saveFile := this.savesPath . "\save" . slot . ".json"
+    ;     saveFileString := FileRead(saveFile)
 
-        FileCopy(saveFile, this.resultDir . FormatTime(A_Now, "yyyyMMdd_HHmmss") . "_savefile.json")
-        saveObject := JSON.parse(saveFileString, false, false)
-        return saveObject.Save
-    }
+    ;     FileCopy(saveFile, this.resultDir . FormatTime(A_Now, "yyyyMMdd_HHmmss") . "_savefile.json")
+    ;     saveObject := JSON.parse(saveFileString, false, false)
+    ;     return saveObject.Save
+    ; }
 
     ; General error handler
     ErrorHandler(exception, mode) {
@@ -390,7 +391,8 @@ class CMTestingFramework {
         discoveryGui.Add("Text", , "Press F7 to capture mouse position")
         discoveryGui.Add("Text", "vCoordinates w200 h20", "X: 0, Y: 0")
         discoveryGui.Add("Text", , "Section Name:")
-        discoveryGui.Add("Edit", "vSectionName w150")
+        ; Should match CMUIMap top level sections
+        discoveryGui.Add("DropDownList", "vSectionName w150", ["MainMenu", "Creation", "GameScreen", "InGameMenu", "SaveMenu", "LoadMenu", "Apothecarium", "Armamentarium", "Fleet", "Diplomacy"])
         discoveryGui.Add("Text", , "Element Name:")
         discoveryGui.Add("Edit", "vElementName w150")
         discoveryGui.Add("Button", "Default", "Save").OnEvent("Click", SavePosition)
@@ -454,6 +456,21 @@ class CMTestingFramework {
         return this
     }
 
+    ; must be called from the normal game screen
+    DumpGameStats(){
+        this.SendText("p")
+        .WaitSeconds(1)
+        .SendText("dumpstats")
+        .WaitSeconds(1)
+        .SendCombo("{enter}")
+
+        return this
+    }
+
+    ; Copy gamestats.ini to the test results folder so that they can be inspected upon failure
+    CopyGameStats(){
+        FileCopy(this.gameStatsIniPath, this.resultDir . FormatTime(A_Now, "yyyyMMdd_HHmmss") . "_gamestats.ini")
+    }
 }
 
 ; This class stores xy coordinates for common game elements and buttons
@@ -485,6 +502,7 @@ class CMUIMap {
         this.Creation.BlackTemplars := { x: 388, y: 248 }
         this.Creation.CustomSlot1 := { x: 373, y: 422 }
         this.Creation.Deathwatch := { x: 539, y: 517 }
+        this.Creation.Lamenters := { x: 546, y: 249 }
         this.Creation.AngryMarines := { x: 373, y: 524 }
         this.Creation.CreateCustom := { x: 625, y: 519 }
         this.Creation.CreateRandom := { x: 679, y: 521 }

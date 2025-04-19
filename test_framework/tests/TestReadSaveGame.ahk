@@ -6,23 +6,40 @@
 TestSaveGame() {
     ; Initialize testing framework
     framework := CMTestingFramework()
+    framework.StartTest("LamentersStartStats")
+    status := "Success"
 
-    ; Start test
-    framework.StartTest("SaveGame")
+    ; Launch CM application
+    if (!framework.LaunchApp()) {
+        MsgBox("Failed to launch application")
+        return
+    }
+    
+    framework.StartGameAs("Lamenters")
+    .DumpGameStats()
+    .Wait(1000)
 
-    ; JSON reading doesn't work in AHK, but ini reading does. 
-    slot := "1"
-    marinesCount := IniRead(framework.savesIniPath, slot, "marines", 0)
+    requisition := IniRead(framework.gameStatsIniPath, "Resources", "requisition")
 
-    if(Integer(marinesCount) < 1000){
-        status := "Success"
-    } else {
+    if (Integer(requisition) > 500) {
+        framework.LogStep("Step Failed: Requisition should be 500 for Lamenters")
         status := "Failure"
-        framework.LogStep("Failed Step: Expected a marines value between 990 and 1100, instead got " . marinesCount)
+    } else {
+        framework.LogStep("Requisition matched expected value")
     }
 
-    MsgBox("Marines in save slot 1: " . marinesCount)
-   
+    coy_5_marines := IniRead(framework.gameStatsIniPath, "Marines.Coy5", "total")
+
+    if (Integer(coy_5_marines) > 0) {
+        framework.LogStep("Step Failed: Lamenters should not have any marines in company 5")
+        status := "Failure"
+    } else {
+        framework.LogStep("Coy 5 marines matched expected value")
+    }
+
+    if(status == "Failure"){
+        framework.CopyGameStats()
+    }
 
     ; End test and save results
     framework.EndTest(status)
