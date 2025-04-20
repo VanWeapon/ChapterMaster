@@ -10,9 +10,11 @@ This document provides guidance for CM developers on how to create automated tes
 
 2. **File Structure**
    - Place your test case scripts in the `tests` folder of the `test_framework` directory in the repo
-   - Name your test scripts descriptively (e.g., `ObliteratedCustomStart.ahk`, `MenuChecks.ahk`)
+   - Name your test scripts descriptively (e.g., `TestObliteratedCustomStart.ahk`, `TestMenuChecks.ahk`)
+   - Tests file names need to start with `Test` in order to be picked up by the test suite runner that runs all tests together
+   - Test filenames and test names and ahk function names dont have to line up, but its easier for everyone if they do
    - Test runner needs to be pointed at a compiled ChapterMaster.exe file, see `CMTestingFramework.appPath`
-   - use `testing_options.ini` in the %LocalAppData%/ChapterMaster folder to override the path of the ChapterMaster.exe file for your machine if different
+     - use `testing_options.ini` in the %LocalAppData%/ChapterMaster folder to override the path of the ChapterMaster.exe file for your machine if different
 
 3. **Game Settings**
     - The test runner assumes you are running in **Windowed 720p** in order for pixels to line up.
@@ -30,6 +32,12 @@ This document provides guidance for CM developers on how to create automated tes
     - AHK native method
         - In the file explorer, right-click your test case .ahk file and select "Run Script" (should be first option)
         - Better for running tests if you're not editing them
+    - Results are stored in `test_framework/tests/results` and should be sorted by date
+    - Errors caught by the test framework are stored in `test_framework/tests/logs/error_log.txt` which includes both game crashes and errors with the .ahk tests themselves
+
+5. **Running all tests as a Suite**
+    - Alongside CMTestingFramework.ahk should be a file **RunAllTests.ahk**. Running this file using the method above will execute all test files in the `tests` folder whose filenames start with "Test"
+    - Proper stats on test suite pass/fail/error are wip
 
 ## Creating a Basic Test Case
 
