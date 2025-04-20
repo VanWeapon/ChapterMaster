@@ -83,10 +83,16 @@ Here are the core methods to use in your test cases:
 - `framework.StartTest("TestName")` - Initialize a test with a name
 - `framework.LaunchApp()` - Launch the CM application
 - `framework.EndTest()` - Complete the test and save results
-- `framework.CloseApp()` - Exit CM but keep the test running
+- `framework.CloseApp()` - Exit CM but keep the test running until `EndTest()` is called
 
 ### Mouse Interaction
 The `Click`, `DoubleClick`, and `ClickElement` functions have a small builtin wait timer so that you dont have to call Wait explicitly after every click if you dont actually have to wait for something to happen before moving on.
+The property `mouseSpeed` on CMTestingFramework controls how fast the mouse moves. Its default setting is pretty slow, high speeds can cause clicks to not register properly sometimes.
+To edit the mouse speed for a single test, you can use the below snippet: 
+```autohotkey
+framework := CMTestingFramework()
+framework.mouseSpeed := 2 ; 1 - 10, 10 being slowest
+```
 - `framework.Click(x, y, button="left")` - Moves Mouse to and left-Clicks at specific coordinates. 
 - `framework.DoubleClick(x, y, button="left")` - Double-click at coordinates
 - `framework.MoveMouse(x, y)` - Move mouse to coordinates
@@ -95,6 +101,14 @@ The `Click`, `DoubleClick`, and `ClickElement` functions have a small builtin wa
 - `framework.MoveToElement("Section.ElementName")` - Move mouse to a named UI element
 
 ### Keyboard Interaction
+The property `keypressDelay` on CMTestingFramework controls how fast each keystroke is sent. Its default setting is pretty average, at 50 milliseconds between keypresses. You can increase or decrease this per test.
+`keypressDelay` only affects `SendText()`
+To edit the keypress speed for a single test, you can use the below snippet: 
+```autohotkey
+framework := CMTestingFramework()
+framework.keypressDelay := 10 ; number of milliseconds between keypresses when using .SendText()
+```
+
 - `framework.SendText("text")` - Type text
 - `framework.SendCombo("{Ctrl down}{s}{Ctrl up}")` - Send key combinations
 - `framework.KeyDown("key")` and `framework.KeyUp("key")` - Press and release keys
@@ -102,6 +116,8 @@ The `Click`, `DoubleClick`, and `ClickElement` functions have a small builtin wa
 ### Premade Step Sequences
 - `framework.StartGameAs("ChapterName")` - Opens game, clicks New Game, selects ChapterName, Skips through Creation screen, dismisses intro sprawl
 - `framework.SaveToSlot("1")` - Opens the ingame menu and saves the game to the slot specified. Only works for slots 1 - 3
+- `framework.DumpGameStats()` - triggers an ingame cheatcode to export some game values to a file called `gamestats.ini` which can be read from to check that ingame values are matching expectations. 
+- `framework.CopyGameStats()` - copies the `gamestats.ini` file into the test results folder, which can be handy if you want to manually inspect values after running a test
 
 ### Wait and Timing
 - `framework.Wait(milliseconds)` - Pause execution for specified time in ms
@@ -113,7 +129,9 @@ The `Click`, `DoubleClick`, and `ClickElement` functions have a small builtin wa
 
 ### Error Handling
 - `framework.CheckForCrash()` - Detect if application crashed
+- `framework.CheckForCrashDialog()` - Automatically called by `CheckForCrash()`, this method specifically checks if the Crash popup window was created.
 - `framework.RestartApp()` - Restart the application after a crash
+
 
 ## Using Named UI Elements
 
