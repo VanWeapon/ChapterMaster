@@ -181,12 +181,11 @@ framework.StartTest("StartGameWithNamedElements")
 The framework includes a tool to help identify and record UI element coordinates:
 
 1. **Launch the Discovery Tool**
-   ```autohotkey
-   DiscoverUIElements()
-   ```
+   - Open `DiscoverUIElements.ahk` and run with AHK++ or just run the script from windows explorer
 
 2. **Using the Tool**
    - Position your mouse over a UI element in the CM application
+   - Make sure the window is in focus, you can click in the game window to make sure it is
    - Press F7 to capture the current mouse coordinates
    - Enter a Section Name (e.g., "MainMenu")
    - Enter an Element Name (e.g., "NewGameButton")
@@ -196,24 +195,11 @@ The framework includes a tool to help identify and record UI element coordinates
    - The tool saves coordinates to `ui_elements.txt` in your script directory
    - Each entry is formatted for easy pasting into the `CMUIMap` class
 
-4. **Typical Workflow**
-   ```autohotkey
-   ; Example script to discover UI elements
-   #Requires AutoHotkey v2.0
-   #Include ..\CMTestingFramework.ahk
-   
-   ; Launch CM
-   framework := CMTestingFramework()
-   framework.LaunchApp()
-   
-   ; Start the discovery tool
-   DiscoverUIElements()
-   ```
-
-5. **After Capturing Elements**
+4. **After Capturing Elements**
    - Copy the contents of `ui_elements.txt`
    - Add them to the `CMUIMap` class in the appropriate sections
    - Use your newly mapped elements in tests with `ClickElement()` and `MoveToElement()`
+   - If you need to create a new Section, you need to update `CMTestingFramework.DiscoverUIElements` method and `CMUIMap` class in CMTestingFramework.ahk to add the section otherwise you will get .ahk compiler errors when running tests
 
 ### Manual Coordinate Finding
 
