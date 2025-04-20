@@ -12,14 +12,16 @@ class CMTestingFramework {
         this.screenshotDir := A_ScriptDir "\screenshots\" ; Not in use yet
         this.logDir := A_ScriptDir "\logs\" ; Stores all the framework logs and errors produced by the test runner
         this.resultDir := A_ScriptDir "\results\" ; Stores all test results
-        this.mouseSpeed := 8  ; 1-10, with 10 being slowest (more human-like)
         this.appDataPath := "C:\Users\" . A_UserName . "\AppData\Local\ChapterMaster" ; The base path to CM user folder for saves, logs etc
         this.errorLogPath := this.appDataPath . "\Logs" ; ChapterMaster logs and error files
         this.savesPath := this.appDataPath . "\Save Files" ; ChapterMaster saves
         this.savesIniPath := this.appDataPath . "\saves.ini" ; ChapterMaster save stats
         this.gameStatsIniPath := this.appDataPath . "\gamestats.ini" ; Can be created by running the cheat code 'dumpstats' ingame, helpful for checking ingame values with the test runner
         this.testSettingsPath := this.appDataPath . "\testing_options.ini" ; Configuration for this CMTestingFramework app, use to override certain settings per-developer/tester
-
+        
+        this.mouseSpeed := 8  ; 1-10, with 10 being slowest (more human-like)
+        this.keypressDelay := 50 ; number of milliseconds between keypresses when typing with .Send(text). 
+        
         ; State tracking
         this.currentTest := ""
         this.testSteps := []
@@ -190,8 +192,8 @@ class CMTestingFramework {
 
     ; Send text (typing)
     SendText(text) {
-        SetKeyDelay(100)
-        Send(text)
+        SetKeyDelay(this.keypressDelay)
+        SendEvent(text)
         this.LogStep("Text sent: " . text)
 
         if (!this.CheckForCrash())

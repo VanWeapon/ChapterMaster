@@ -78,8 +78,9 @@ Here are the core methods to use in your test cases:
 - `framework.CloseApp()` - Exit CM but keep the test running
 
 ### Mouse Interaction
-- `framework.Click(x, y)` - Click at specific coordinates
-- `framework.DoubleClick(x, y)` - Double-click at coordinates
+The `Click`, `DoubleClick`, and `ClickElement` functions have a small builtin wait timer so that you dont have to call Wait explicitly after ever click if you dont actually have to wait.
+- `framework.Click(x, y, button="left")` - Moves Mouse to and left-Clicks at specific coordinates. 
+- `framework.DoubleClick(x, y, button="left")` - Double-click at coordinates
 - `framework.MoveMouse(x, y)` - Move mouse to coordinates
 - `framework.DragMouse(x1, y1, x2, y2)` - Click and drag from one point to another
 - `framework.ClickElement("Section.ElementName")` - Click on a named UI element
