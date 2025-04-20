@@ -34,6 +34,7 @@ RunAllTests() {
     ; Display progress
     MsgBox("Found " . testFiles.Length . " test files. Running tests in sequence...")
 
+    DirCreate(scriptDir . "\tests\results")
     ; Create a log file for results
     logFile := scriptDir . "\tests\results\TestSuiteResults_" . FormatTime(A_Now, "yyyyMMdd_HHmmss") . ".log"
     FileAppend("CM Test Suite Run - " . FormatTime(A_Now, "yyyy-MM-dd HH:mm:ss") . "`n`n", logFile)
