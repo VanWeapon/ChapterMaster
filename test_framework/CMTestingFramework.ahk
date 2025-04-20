@@ -502,7 +502,6 @@ class CMUIMap {
     ; To populate new coords, use DiscoverUIElements.ahk, see HowToUse.md for instructions
     __New() {
         this.MainMenu.NewGame := { x: 629, y: 422 }
-        this.MainMenu.LoadGame := { x: -820, y: 187 }
         this.MainMenu.LoadGame := { x: 625, y: 452 }
         this.MainMenu.Options := { x: 634, y: 487 }
         this.MainMenu.Exit := { x: 634, y: 522 }
