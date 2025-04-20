@@ -274,25 +274,23 @@ TestStartGame()
 
 4. **Add Delays**: Include sufficient wait times between actions (use `framework.Wait()`)
 
-5. **Document with Screenshots**: Take screenshots at key points in your test 
+5. **Handle Errors**: The framework will report hard errors and crashes, but you can use `framework.LogStep()` and `framework.LogError()` to write your own output to the test file at any point during a test to clarify what went right/wrong
 
-6. **Handle Errors**: Always check for and handle possible application crashes
+6. **Organize by Workflow**: Create separate test files for different functional areas
 
-7. **Organize by Workflow**: Create separate test files for different functional areas
+7. **Comment Your Code**: Include clear comments explaining the purpose of each step
 
-8. **Comment Your Code**: Include clear comments explaining the purpose of each step
+8. **Use Consistent Naming**: Name your tests and files with clear, descriptive names
 
-9. **Use Consistent Naming**: Name your tests and files with clear, descriptive names
-
-10. **Test One Thing**: Each test should focus on a single feature or workflow
+9. **Test One Thing**: Each test should focus on a single feature or workflow
 
 ## Troubleshooting
 
-- **Coordinate Issues**: If clicks aren't hitting the right spots, verify coordinates in Window Spy or use the DiscoverUIElements tool
-- **Timing Problems**: Increase wait times if actions seem to execute before the app is ready
-- **Application Not Found**: Check the application path in CMTestingFramework.ahk
+- **Coordinate Issues**: If clicks aren't hitting the right spots, first make sure you're running in **Windowed 720p**, see Getting Started section 3. Verify coordinates in Window Spy or use the DiscoverUIElements tool if still having issues
+- **Timing Problems**: Increase wait times if actions seem to execute before the app is ready. You can slow down the mouse speed and keyboard typing speed too if needed on a per-test basis. See Mouse Interaction and Keyboard Interaction sections
+- **Application Not Found**: Check the application path in CMTestingFramework.ahk. You can overwrite this value with an `testing_options.ini` file in you %LocalAppData%/ChapterMaster folder
 - **Element Not Found Error**: Verify the element path is correct (e.g., "MainMenu.NewGame")
 
 ## Getting Help
 
-If you encounter issues creating test cases, contact the testing team for assistance.
+If you encounter issues creating test cases, contact @VanWeapon in the discord.
