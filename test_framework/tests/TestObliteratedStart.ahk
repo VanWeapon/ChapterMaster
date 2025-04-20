@@ -20,7 +20,7 @@ TestObliteratedStart() {
     framework.Wait(7000)
     .ClickElement("MainMenu.NewGame")  ; Click on "New Game" in the main menu
     .Wait(8500)
-    .ClickElement("Creation.CreateCustom") ; Click Dark Angels
+    .ClickElement("Creation.CreateCustom") ; Click Create Custom Chapter
     .Wait(3000)
     .ClickElement("Creation.Homeworld")
     .ClickElement("Creation.PurityUp")
