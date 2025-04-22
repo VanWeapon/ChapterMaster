@@ -134,6 +134,38 @@ function scr_cheatcode(argument0) {
 						}
 					}
 					break;
+				case "inquismission": 
+					var mission = cheat_arguments[0];
+					switch (mission){
+						case "1": //default 
+							scr_inquistion_mission(EVENT.inquisition_mission);
+						break;
+						case "planet":
+							scr_inquistion_mission(EVENT.inquisition_planet);
+						break;
+						case "spyrer": 
+							scr_inquistion_mission(EVENT.inquisition_mission, INQUISITION_MISSION.spyrer);
+						break;
+						case "artifact": 
+							scr_inquistion_mission(EVENT.inquisition_mission, INQUISITION_MISSION.artifact);
+						break;
+						case "inquisitor": 
+							scr_inquistion_mission(EVENT.inquisition_mission, INQUISITION_MISSION.inquisitor);
+						break;
+						case "purge": 
+							scr_inquistion_mission(EVENT.inquisition_mission, INQUISITION_MISSION.purge);
+						break;
+						case "tomb_world": 
+							scr_inquistion_mission(EVENT.inquisition_mission, INQUISITION_MISSION.tomb_world);
+						break;
+						case "tyranid_organism": 
+							scr_inquistion_mission(EVENT.inquisition_mission, INQUISITION_MISSION.tyranid_organism);
+						break;
+						default: 
+							scr_inquistion_mission(EVENT.inquisition_mission);
+						break;
+					}
+					break;
 				case "artifactpopulate":
 					with (obj_star) {
 						for (var i = 1; i <= planets; i++) {

@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"scr_inquistion_mission",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"scr_inquistion_mission",
+  "parent":{
+    "name":"Turn",
+    "path":"folders/Scripts/Turn.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}
