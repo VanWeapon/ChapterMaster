@@ -55,7 +55,7 @@ function scr_inquistion_mission(event, forced_mission = -1){
             }
 
             if(star_has_planet_with_forces(star, "Demons", 1)){
-                array_push(demon_worlds, star);
+                // array_push(demon_worlds, star); // turning this off til i have a way to finish the mission
                 found_demon_world = true;
             }
 
