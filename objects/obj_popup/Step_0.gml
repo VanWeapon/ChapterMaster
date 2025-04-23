@@ -1430,6 +1430,11 @@ try {
 						if (has_problem_star("recon", mission_star)) {
 							scr_event_log("", $"Inquisition Mission Accepted: The Inquisition wish for {global.chapter_name} to capture the Tau Ethereal somewhere within {mission_star.name}.", mission_star.name);
 						}
+					} else if (mission == "demon_world"){
+						scr_event_log("", $"Inquisition Mission Accepted: The demon world of {mission_star.name} {scr_roman(planet)} will be purged by your hand.", mission_star.name);
+						if (demand) {
+							text = $"The Inquisition demands that your Chapter demonstrate its loyalty to the Imperium of Mankind and the Emperor.  An out of control Demon World {mission_star.name} {scr_roman(onceh)} must be cleansed within {estimate} months.";
+						}
 					}
 				}
 			}

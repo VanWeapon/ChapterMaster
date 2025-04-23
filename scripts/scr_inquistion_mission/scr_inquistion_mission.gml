@@ -68,14 +68,20 @@ function scr_inquistion_mission(event, forced_mission = -1){
         if(found_sleeping_necrons){
             array_push(inquisition_missions, INQUISITION_MISSION.tomb_world);
             log_message($"Was able to find a star with dormant necron tomb for inquisition mission");
+        } else {
+            log_message($"Couldn't find any planets with a dormant necron tomb for inquisition mission")
         }
         if(found_tyranid_org){
             log_message($"Was able to find a star with lvl 4 tyranids for inquisition mission");
             array_push(inquisition_missions, INQUISITION_MISSION.tyranid_organism);
+        } else {
+            log_message($"Couldn't find any planets with lvl 4 tyranids for inquisition mission")
         }
         if(found_demon_world){
             array_push(inquisition_missions, INQUISITION_MISSION.demon_world);
             log_message($"Was able to find a star with demons on it for inquisition mission");
+        } else {
+            log_message($"Couldn't find any planets with demons for inquisition mission")
         }
 		
 		//if (string_count("Tau",obj_controller.useful_info)=0){
@@ -99,33 +105,19 @@ function scr_inquistion_mission(event, forced_mission = -1){
         if(forced_mission != -1){
             chosen_mission = forced_mission;
         }
+        switch (chosen_mission){
+            case INQUISITION_MISSION.purge: mission_inquistion_purge(); break;
+            case INQUISITION_MISSION.inquisitor: mission_inquistion_hunt_inquisitor(); break;
+            case INQUISITION_MISSION.spyrer: mission_inquistion_spyrer(); break;
+            case INQUISITION_MISSION.artifact: mission_inquisition_artifact(); break;
+            case INQUISITION_MISSION.tomb_world: mission_inquisition_tomb_world(necron_tomb_worlds); break;
+            case INQUISITION_MISSION.tyranid_organism: mission_inquisition_tyranid_organism(tyranid_org_worlds); break;
+            case INQUISITION_MISSION.ethereal: mission_inquisition_ethereal(); break;
+            case INQUISITION_MISSION.demon_world: mission_inquisition_demon_world(demon_worlds); break;
+        }
     
+   
     
-	    if (chosen_mission == INQUISITION_MISSION.purge){
-            mission_inquistion_purge()
-	    }
-    
-	    else if (chosen_mission == INQUISITION_MISSION.inquisitor){
-            mission_inquistion_hunt_inquisitor();
-	    }
-    
-	    else if (chosen_mission == INQUISITION_MISSION.spyrer) { 
-            mission_inquistion_spyrer();
-		}
-    
-	    else if (chosen_mission == INQUISITION_MISSION.artifact) {
-            mission_inquisition_artifact();
-	    }
-    
-	    else if (chosen_mission == INQUISITION_MISSION.tomb_world){
-			mission_inquisition_tomb_world(necron_tomb_worlds);
-	    }
-    
-	    else if (chosen_mission == INQUISITION_MISSION.tyranid_organism) {
-            mission_inquisition_tyranid_organism();
-	    } else if (chosen_mission == INQUISITION_MISSION.ethereal) { 
-            mission_inquisition_ethereal();
-	    }
     }
 }
 

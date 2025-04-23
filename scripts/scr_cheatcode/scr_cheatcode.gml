@@ -161,6 +161,9 @@ function scr_cheatcode(argument0) {
 						case "tyranid_organism": 
 							scr_inquistion_mission(EVENT.inquisition_mission, INQUISITION_MISSION.tyranid_organism);
 						break;
+						case "demon": 
+							scr_inquistion_mission(EVENT.inquisition_mission, INQUISITION_MISSION.demon_world);
+						break;
 						default: 
 							scr_inquistion_mission(EVENT.inquisition_mission);
 						break;

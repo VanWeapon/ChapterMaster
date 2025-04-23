@@ -41,7 +41,6 @@ function fetch_faction_group(group="imperium_default") {
 }
 
 function scr_star_has_planet_with_feature(star, feature){
-	log_message($"Checking {star.name} for feature {feature}")
 	return scr_get_planet_with_feature(star, feature) != -1;
 }
 
@@ -394,4 +393,5 @@ function planet_has_forces(star, planet_id, faction, minimum_strength = 1){
 			found = star.p_demons[planet_id] >= minimum_strength;
 			break;
 	}
+	return found;
 }

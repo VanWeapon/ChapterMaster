@@ -53,6 +53,7 @@ Arguments with stars `(argument*)` can be omitted.
     - `tomb_world` - destroy tomb world mission. Needs at least 1 planet with a dormant necron tomb on the map
     - `ethereal` - not implemented yet
     - `tyranid_organism` - capture tyranis mission
+    - `demon` clear demon world mission. Requires at least one planet to have demons on it
 
     
 ### Disposition:

@@ -36,6 +36,7 @@ function mission_name_key(mission){
 		"artifact_loan" : "Safeguard Artifact for the Inquisition",
 		"necron": "Bomb Necron Tomb for Inquisitor",
 		"ethereal": "Capture Ethereal for Inquisitor",
+		"demon_world": "Clear Demon World for Inquisitor"
 		
 	}
 	if (struct_exists(mission_key, mission)){
