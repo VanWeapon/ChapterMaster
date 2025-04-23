@@ -203,6 +203,8 @@ function scr_cheatcode(argument0) {
 						new_inquisitor_inspection();
 					} else if (cheat_arguments[0] == "slaughtersong") {
 						create_starship_event();
+					} else if (cheat_arguments[0] == "fallen"){
+						event_fallen();
 					} else {
 						with (obj_controller) {
 							scr_random_event(false);
