@@ -41,6 +41,7 @@ function fetch_faction_group(group="imperium_default") {
 }
 
 function scr_star_has_planet_with_feature(star, feature){
+	log_message($"Checking {star.name} for feature {feature}")
 	return scr_get_planet_with_feature(star, feature) != -1;
 }
 
@@ -113,6 +114,7 @@ function scr_star_has_planet_with_owner(star, owner){
 	return scr_get_planet_with_owner(star,owner) != -1;
 }
 
+/// @returns {Array<Id.Instance.obj_star>} stars
 function scr_get_stars(shuffled=false, ownership=[]) {
 	var stars = [];
 	var _owner_sort = array_length(ownership);
@@ -137,7 +139,7 @@ function planet_imperium_ground_total(planet_check){
 
 function star_by_name(search_name){
 	with(obj_star){
-		if (name = search_name){
+		if (name == search_name){
 			return self;
 		}
 	}
@@ -387,6 +389,9 @@ function planet_has_forces(star, planet_id, faction, minimum_strength = 1){
 			break;
 		case eFACTION.Necrons:
 			found = star.p_necrons[planet_id] >= minimum_strength;
+			break;
+		case "Demons": //special case for demon world mission
+			found = star.p_demons[planet_id] >= minimum_strength;
 			break;
 	}
 }

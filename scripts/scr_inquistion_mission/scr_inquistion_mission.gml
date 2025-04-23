@@ -3,14 +3,16 @@
     scr_random_event -> rolls rng for inquis mission
     scr_inquisition_mission -> rolls rng and tests suitable planets for which mission
     mission_inquisition_<mission_name> -> logic and mechanics for spawning the mission and triggering the popup
-    scr_popup -> 
+    scr_popup -> displays the panel with mission details and Accept/Refuse buttons
+    obj_popup.Step0 -> find `mission_is_go` section and add necessary event logic for when the player accepts
+    scr_mission_functions > mission_name_key -> need to update this so that missions display in the mission log
 
 
     Helpers: 
     scr_mission_eta -> given the xy of a star where the mission is, calculate how long you should have to complete the mission
             Todo? maybe add a disposition influence here so that angy inquisitor gives you less spare time and vice versa
     scr_star_has_planet_with_feature -> given the id of a star and a `P_features` enum value, check if any planet on that star has the desired  feature
-
+    star_has_planet_with_forces -> given the id of a star, and a faction, returns whether or not there are forces present there and in sufficient number
 */
 
 
@@ -36,21 +38,44 @@ function scr_inquistion_mission(event, forced_mission = -1){
 		];
 		
 		var found_sleeping_necrons = false;
-		with(obj_star){
-			if(scr_star_has_planet_with_feature(id, P_features.Necron_Tomb) && !awake_necron_Star(id)){
-				array_push(inquisition_missions, INQUISITION_MISSION.tomb_world);
-				found_sleeping_necrons = true;
-                log_message($"Was able to find a star: {name} with dormant necron tomb for inquisition mission");
-				break;
-			}
-		}
-		
-		
-        with(obj_star){
-            if(star_has_planet_with_forces(id, eFACTION.Tyranids, 4)){
-                log_message($"Was able to find a star: {name} with lvl 4 tyranids for inquisition mission");
-                array_push(inquisition_missions, INQUISITION_MISSION.tyranid_organism);
+        var found_tyranid_org = false;
+        var found_demon_world = false;
+        
+        var necron_tomb_worlds = [];
+        var tyranid_org_worlds = [];
+        var demon_worlds = [];
+
+        var all_stars = scr_get_stars();
+        for(var s = 0, _len =  array_length(all_stars); s <_len; s++){
+            var star = all_stars[s];
+
+            if(scr_star_has_planet_with_feature(star, P_features.Necron_Tomb) && !awake_necron_Star(star.id)){
+                array_push(necron_tomb_worlds, star);
+                found_sleeping_necrons = true;
             }
+
+            if(star_has_planet_with_forces(star, "Demons", 1)){
+                array_push(demon_worlds, star);
+                found_demon_world = true;
+            }
+
+            if(star_has_planet_with_forces(star, eFACTION.Tyranids, 4)){
+                array_push(tyranid_org_worlds, star)
+                found_tyranid_org = true;
+            }
+        }
+
+        if(found_sleeping_necrons){
+            array_push(inquisition_missions, INQUISITION_MISSION.tomb_world);
+            log_message($"Was able to find a star with dormant necron tomb for inquisition mission");
+        }
+        if(found_tyranid_org){
+            log_message($"Was able to find a star with lvl 4 tyranids for inquisition mission");
+            array_push(inquisition_missions, INQUISITION_MISSION.tyranid_organism);
+        }
+        if(found_demon_world){
+            array_push(inquisition_missions, INQUISITION_MISSION.demon_world);
+            log_message($"Was able to find a star with demons on it for inquisition mission");
         }
 		
 		//if (string_count("Tau",obj_controller.useful_info)=0){
@@ -93,7 +118,7 @@ function scr_inquistion_mission(event, forced_mission = -1){
 	    }
     
 	    else if (chosen_mission == INQUISITION_MISSION.tomb_world){
-			mission_inquisition_tomb_world();
+			mission_inquisition_tomb_world(necron_tomb_worlds);
 	    }
     
 	    else if (chosen_mission == INQUISITION_MISSION.tyranid_organism) {
@@ -102,6 +127,21 @@ function scr_inquistion_mission(event, forced_mission = -1){
             mission_inquisition_ethereal();
 	    }
     }
+}
+
+function mission_inquisition_demon_world(demon_worlds){
+    var star = choose_array(demon_worlds);
+    var planet = -1;
+    for(var i = 1; i <= star.planets; i++){
+        if(star.p_demons[i] > 1){
+            planet = i;
+            break;
+        }
+    }
+    var eta = scr_mission_eta(star.x, star.y, 25);
+    var text="The Inquisitor is trusting you with a special mission.  The planet " + string(star.name) + " " + scr_roman(planet);
+    text+=" has been uncovered as a Demon World. The taint of chaos must be eradicated from this system.  Can your chapter handle this mission?";
+    scr_popup("Inquisition Mission",text,"inquisition","demon_world|"+string(star.name)+"|"+string(planet)+"|"+string(eta+1)+"|");
 }
 
 function mission_inquisition_ethereal(){
@@ -134,25 +174,9 @@ function mission_inquisition_ethereal(){
 
 }
 
-function mission_inquisition_tyranid_organism(){
+function mission_inquisition_tyranid_organism(worlds){
     log_message("RE: Gaunt Capture");
-    var stars= scr_get_stars();
-    var valid_stars = array_filter_ext(stars,
-        function(star,index){
-            for(var i = 1; i <= star.planets; i++){
-                if(star.p_tyranids[i]>4){
-                    return true;
-                }
-            }
-            return false;
-    });
-
-    if(valid_stars == 0){
-        log_error("RE: Gaunt Capture, couldn't find star");
-        exit;
-    }
-
-    var star = stars[irandom(valid_stars-1)];
+    var star = choose_array(worlds);
     var planet = -1;
     for(var i = 1; i <= star.planets; i++){
         if(star.p_tyranids[i] > 4){
@@ -170,21 +194,9 @@ function mission_inquisition_tyranid_organism(){
 
 }
 
-function mission_inquisition_tomb_world(){
-    log_message("RE: Tomb Bombing");
-    var stars = scr_get_stars();
-    var valid_stars = array_filter_ext(stars,
-        function(star, index) {
-            return scr_star_has_planet_with_feature(star, "Necron Tomb") && !scr_star_has_planet_with_feature(star, "Awakaned");	
-    });
-    
-    if(valid_stars == 0){
-        log_error("RE: Tomb Bombing, couldn't find star");
-        exit;
-    }
-    
-    
-    var star = stars[irandom(valid_stars-1)];
+function mission_inquisition_tomb_world(tomb_worlds){
+    log_message("RE: Necron Tomb Bombing");
+    var star = choose_array(tomb_worlds)
     var planet = scr_get_planet_with_feature(star, P_features.Necron_Tomb);
     var eta = scr_mission_eta(star.x, star.y,1)
     
@@ -227,11 +239,12 @@ function mission_inquistion_hunt_inquisitor(){
     
     var gender = choose(0,1);
     var name=global.name_generator.generate_imperial_name(gender);
+    var planet = irandom_range(1, star.planets);
     
     var eta = scr_mission_eta(star.x,star.y,1);
     eta=max(eta, 8);
     var text="The Inquisition is trusting you with a special mission.  A radical inquisitor named "+string(name)+" will be visiting the "+string(star.name)+" system in "+string(eta)+" month's time.  They are highly suspect of heresy, and as such, are to be put down.  Can your chapter handle this mission?";
-    scr_popup("Inquisition Mission",text,"inquisition","inquisitor|"+string(star.name)+"|"+string(gender)+"|"+string(real(eta))+"|");
+    scr_popup("Inquisition Mission",text,"inquisition","inquisitor|"+string(star.name)+"|"+string(planet)+"|"+string(real(eta))+"|");
 }
 
 function mission_inquistion_spyrer(){
@@ -254,7 +267,9 @@ function mission_inquistion_spyrer(){
     
     var text="The Inquisition is trusting you with a special mission.  An experienced Spyrer on hive world " + string(star.name) + " " + scr_roman(planet);
     text += " has began to hunt indiscriminately, and proven impossible to take down by conventional means.  If they are not put down within "+string(eta)+" month's time panic is likely.  Can your chapter handle this mission?";
-    scr_popup("Inquisition Mission",text,"inquisition","spyrer|"+string(star.name)+"|"+string(planet)+"|"+string(eta+1)+"|");
+    var mission_params = "spyrer|"+string(star.name)+"|"+string(planet)+"|"+string(eta+1)+"|";
+    log_message($"Starting spyrer mission with params {mission_params}")
+    scr_popup("Inquisition Mission",text,"inquisition",mission_params);
 }
 
 function mission_inquistion_purge(){
