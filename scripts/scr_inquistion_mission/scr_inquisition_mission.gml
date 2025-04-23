@@ -282,7 +282,7 @@ function mission_inquistion_purge(){
             function(star,index){
                 var hive_idx = scr_get_planet_with_type(star,"Hive")
                 var desert_idx =  scr_get_planet_with_type(star,"Desert")
-                var temperate_idx = scr_get_planet_with_type(star,"Temparate")
+                var temperate_idx = scr_get_planet_with_type(star,"Temperate")
                 var allied_hive = scr_is_planet_owned_by_allies(star, hive_idx)
                 var allied_desert = scr_is_planet_owned_by_allies(star, desert_idx)
                 var allied_temperate =scr_is_planet_owned_by_allies(star, temperate_idx)
