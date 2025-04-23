@@ -1206,10 +1206,10 @@ try {
 					}
 
 					instance_activate_object(obj_star);
-					mission_star = star_by_name(obj_controller.temp[200]);
-
+					mission_star = star_by_name(obj_controller.obj_temp8.loc);
+					log_message($"end of necron mission mission_star {mission_star}")
 					var ppp = 0;
-					remove_planet_problem(planet, "bomb", mission_star);
+					remove_planet_problem(planet, "necron", mission_star);
 					mission_star.p_feature[planet][search_planet_features(mission_star.p_feature[planet], P_features.Necron_Tomb)[0]].sealed = 1;
 					with (obj_temp8) {
 						instance_destroy();

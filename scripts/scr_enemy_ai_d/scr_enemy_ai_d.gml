@@ -311,7 +311,7 @@ function scr_enemy_ai_d() {
             obj_controller.disposition[3]-=6; 
             remove_planet_problem(i,"mech_bionics");       	
         }
-        if (has_problem_planet_and_time(i,"bomb", 0)>-1){
+        if (has_problem_planet_and_time(i,"necron", 0)>-1){
 
             var alert_text="The Necron Tomb of planet ";
 
@@ -321,7 +321,7 @@ function scr_enemy_ai_d() {
         
             p_necrons[i]=4;
             if (awake_tomb_world(p_feature[i])==0) then awaken_tomb_world(p_feature[i]);
-        	remove_planet_problem(i,"bomb"); 
+        	remove_planet_problem(i,"necron"); 
             // scr_alert("red","mission_failed",alert_text,0,0);
             obj_controller.disposition[4]-=8;
         }

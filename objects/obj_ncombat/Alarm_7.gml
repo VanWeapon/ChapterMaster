@@ -324,7 +324,7 @@ try {
             with(obj_star){if (name!=obj_ncombat.battle_loc) then instance_deactivate_object(id);}
             with(obj_star){
                 var planet = obj_ncombat.battle_id;
-                if (remove_planet_problem(planet,"bomb")){
+                if (remove_planet_problem(planet,"necron")){
                     p_necrons[planet]=4;
                 }
                 if (awake_tomb_world(p_feature[planet])==0) then awaken_tomb_world(p_feature[planet])
@@ -388,7 +388,7 @@ try {
                         // show_message("TEMP5: "+string(instance_number(obj_temp5))+"#Star: "+string(you));
                         
                         var ppp;ppp=0;
-                        remove_planet_problem(obj_temp8.wid, "bomb", you);
+                        remove_planet_problem(obj_temp8.wid, "necron", you);
     
                         pip.option1="";pip.option2="";pip.option3="";
                         scr_event_log("","Inquisition Mission Completed: Your Astartes have sealed the Necron Tomb on "+string(you.name)+" "+string(scr_roman(obj_temp8.wid))+".");

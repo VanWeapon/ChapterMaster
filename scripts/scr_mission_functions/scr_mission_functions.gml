@@ -32,7 +32,7 @@ function mission_name_key(mission){
 		"cleanse" : "Cleanse Planet for Inquisitor",
 		"purge": "Purge Leadership for Inquisitor",
 		"tyranid_org" : "Capture Tyranid for Inquisitor",
-		"bomb" : "Bombard World for Inquisitor",
+		// "bomb" : "Bombard World for Inquisitor",
 		"artifact_loan" : "Safeguard Artifact for the Inquisition",
 		"necron": "Bomb Necron Tomb for Inquisitor",
 		"ethereal": "Capture Ethereal for Inquisitor",
