@@ -381,7 +381,7 @@ try {
                         with(obj_star){if (name!=obj_temp8.loc) then instance_deactivate_object(id);}
                         with(obj_star){if (name=obj_temp8.loc) then instance_create(x,y,obj_temp5);}
                         
-                        var star=instance_nearest(obj_temp5.x,obj_temp5.y,obj_star);onceh=0;
+                        var star = star_by_name(obj_temp8.loc)
                         var planet = obj_temp8.wid
                         // show_message(you.name);
                         

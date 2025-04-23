@@ -18,7 +18,7 @@
 
 /// @param {Enum.EVENT} event 
 /// @param {Enum.INQUISITION_MISSION} forced_mission optional
-function scr_inquistion_mission(event, forced_mission = -1){
+function scr_inquisition_mission(event, forced_mission = -1){
     
     log_message($"RE: Inquisition Mission, event {event}, forced_mission {forced_mission}");
 	if(obj_controller.known[eFACTION.Inquisition] == 0 || obj_controller.faction_status[eFACTION.Inquisition] == "War"){
@@ -150,6 +150,7 @@ function mission_inquisition_ethereal(){
     if(valid_stars == 0){
         exit;
     }
+    var star = stars[irandom(valid_stars-1)];
     
     var planet = -1;
     for(var i = 1; i <= star.planets; i++){
@@ -321,7 +322,7 @@ function mission_inquistion_purge(){
     
     var eta = infinity
     with(obj_p_fleet){
-        if (capital_number+frigate_number=0) {
+        if (capital_number+frigate_number==0) {
             eta = min(scr_mission_eta(star.x,star.y,1),eta); // this is wrong
         }
     }

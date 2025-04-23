@@ -568,7 +568,7 @@ function scr_random_event(execute_now) {
 	}
     
 	else if (chosen_event == EVENT.inquisition_planet || chosen_event == EVENT.inquisition_mission) {
-		scr_inquistion_mission(chosen_event);
+		scr_inquisition_mission(chosen_event);
 	    evented = true;
 	}
 
