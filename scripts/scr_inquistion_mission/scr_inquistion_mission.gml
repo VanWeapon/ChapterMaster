@@ -1,10 +1,27 @@
+/*
+    Mission flow: 
+    scr_random_event -> rolls rng for inquis mission
+    scr_inquisition_mission -> rolls rng and tests suitable planets for which mission
+    mission_inquisition_<mission_name> -> logic and mechanics for spawning the mission and triggering the popup
+    scr_popup -> 
+
+
+    Helpers: 
+    scr_mission_eta -> given the xy of a star where the mission is, calculate how long you should have to complete the mission
+            Todo? maybe add a disposition influence here so that angy inquisitor gives you less spare time and vice versa
+    scr_star_has_planet_with_feature -> given the id of a star and a `P_features` enum value, check if any planet on that star has the desired  feature
+
+*/
+
+
 /// @param {Enum.EVENT} event 
 /// @param {Enum.INQUISITION_MISSION} forced_mission optional
 function scr_inquistion_mission(event, forced_mission = -1){
     
     log_message($"RE: Inquisition Mission, event {event}, forced_mission {forced_mission}");
 	if(obj_controller.known[eFACTION.Inquisition] == 0 || obj_controller.faction_status[eFACTION.Inquisition] == "War"){
-        log_message("Player is either hasn't met or is at war with Inquisition, not proceeding with inquisition mission")
+        log_message("Player is either hasn't met or is at war with Inquisition, not proceeding with inquisition mission");
+        return;
     }
     if(event == EVENT.inquisition_planet){
         mission_investigate_planet();
@@ -20,27 +37,21 @@ function scr_inquistion_mission(event, forced_mission = -1){
 		
 		var found_sleeping_necrons = false;
 		with(obj_star){
-			if(scr_star_has_planet_with_feature(id,"Necron Tomb") && !scr_star_has_planet_with_feature(id, "Awake")){
+			if(scr_star_has_planet_with_feature(id, P_features.Necron_Tomb) && !awake_necron_Star(id)){
 				array_push(inquisition_missions, INQUISITION_MISSION.tomb_world);
 				found_sleeping_necrons = true;
+                log_message($"Was able to find a star: {name} with dormant necron tomb for inquisition mission");
 				break;
 			}
 		}
 		
 		
-		var found_tyranids = false;
-		if (string_count("Tyr",obj_controller.useful_info)==0) { // idk what this means, its some dukecode
-			with(obj_star){
-				for(var i = 1; i <= planets && !found_tyranids; i++)
-				{
-					if (p_tyranids[i]>4) {
-						array_push(inquisition_missions, INQUISITION_MISSION.tyranid_organism);
-						found_tyranids = true;
-						break;
-					}
-				}
-			}
-		}
+        with(obj_star){
+            if(star_has_planet_with_forces(id, eFACTION.Tyranids, 4)){
+                log_message($"Was able to find a star: {name} with lvl 4 tyranids for inquisition mission");
+                array_push(inquisition_missions, INQUISITION_MISSION.tyranid_organism);
+            }
+        }
 		
 		//if (string_count("Tau",obj_controller.useful_info)=0){
 		//	var found_tau = false;
