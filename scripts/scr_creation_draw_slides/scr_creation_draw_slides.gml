@@ -659,7 +659,7 @@ function draw_chapter_trait_select(){
             tooltip="Chapter Disadvantages";
             tooltip2="Disadvantages grant additional points, and penalize the performance of your chapter. You can only have 1 trait of the same category, shown in brackets.";
         }
-    }else if (popup="icons"){
+    }else if (popup=="icons"){
         draw_set_alpha(1);
         draw_set_color(0);
         draw_rectangle(450,206,1144,711,0);
@@ -747,16 +747,16 @@ function draw_chapter_trait_select(){
                             _type = "chapters";
                             _id = ic;
                         }
-                        if (ic>normal_and_builtin) {
+                        if (ic>=normal_and_builtin) {
                             _type = "player";
                             _id = ic-normal_and_builtin;
                         }
-                        if (ic>global.normal_icons_count && ic <=normal_and_builtin) {
+                        if (ic>global.normal_icons_count && ic <normal_and_builtin) {
                             _type = "game";
                             _id = ic-global.normal_icons_count;
                         }
                         scr_load_chapter_icon(_type, _id, true);
-                        show_debug_message($"icon  selected ic {ic} _type {_type} _id {_id} icon {icon}")
+                        show_debug_message($"icon selected ic {ic} _type {_type} _id {_id} icon {icon}")
                         // show_message(string(icon_name));
                     }
                     

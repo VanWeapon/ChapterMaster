@@ -623,11 +623,6 @@ for(var c = 1; c < 40; c++){
         all_chapters[c].splash = json_chapter.splash;
         all_chapters[c].loaded = true;
         all_chapters[c].disabled = false;
-        var icon = file_exists($"{working_directory}\\images\\creation\\chapters\\icons\\{all_chapters[c].icon}.png");
-        if(icon) {
-            // show_debug_message($"icon {c}.png exists");
-            global.normal_icons_count += 1;
-        }
     }
 }
 
@@ -1120,6 +1115,12 @@ load_default_gear(eROLE.Sergeant, "Sergeant", "Chainsword", "Bolt Pistol", STR_A
 load_default_gear(eROLE.VeteranSergeant, "Veteran Sergeant", "Chainsword", "Plasma Pistol", STR_ANY_POWER_ARMOUR, "", "");
 
 builtin_icons = 0;
+var _search_normal = file_find_first($"{working_directory}\\images\\creation\\chapters\\icons\\*", fa_directory);
+while(_search_normal != ""){
+    global.normal_icons_count++;
+    _search_normal = file_find_next();
+}
+
 var _search_custom = file_find_first($"{working_directory}\\images\\creation\\customicons\\*", fa_directory);
 while(_search_custom != ""){
     builtin_icons++;
