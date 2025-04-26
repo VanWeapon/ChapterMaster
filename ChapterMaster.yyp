@@ -571,7 +571,6 @@
     {"id":{"name":"obj_creation","path":"objects/obj_creation/obj_creation.yy",},},
     {"id":{"name":"obj_credits","path":"objects/obj_credits/obj_credits.yy",},},
     {"id":{"name":"obj_crusade","path":"objects/obj_crusade/obj_crusade.yy",},},
-    {"id":{"name":"obj_cuicons","path":"objects/obj_cuicons/obj_cuicons.yy",},},
     {"id":{"name":"obj_cursor","path":"objects/obj_cursor/obj_cursor.yy",},},
     {"id":{"name":"obj_defeat","path":"objects/obj_defeat/obj_defeat.yy",},},
     {"id":{"name":"obj_drop_select","path":"objects/obj_drop_select/obj_drop_select.yy",},},
