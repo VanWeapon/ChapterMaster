@@ -29,7 +29,7 @@ function scr_load(save_part, save_id) {
 		// Globals
 		var globals = obj_saveload.GameSave.Save;
 		global.chapter_icon_sprite = spr_icon_chapters;
-		global.chapter_icon_frame = globals.chapter_icon_frame;
+		// global.chapter_icon_frame = globals.chapter_icon_frame;
 		global.chapter_icon_path = globals.chapter_icon_path;
 		if(struct_exists(globals, "chapter_icon_filename")){
 			global.chapter_icon_filename = globals.chapter_icon_filename;

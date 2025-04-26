@@ -1,6 +1,6 @@
 
 if (!instance_exists(obj_cuicons)){
-    global.custom_icons=4;
+    global.custom_icons=0;
     instance_create(0,0,obj_cuicons);
 }
 
@@ -10,6 +10,15 @@ global.cheat_gene=false;
 global.cheat_disp=false;
 global.cheat_debug=false;
 global.language="en";
+
+global.chapter_icon = {
+    /// either "game", "custom" or "player"
+    type: "",
+    /// corresponds to icon name e.g. {id}.png. A value of -1 is unset
+    icon_id: -1, 
+    /// the sprite id once loaded from file
+    sprite: -1
+}
 
 
 window_data="fullscreen";

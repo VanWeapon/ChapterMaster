@@ -100,8 +100,12 @@ function draw_chapter_select(){
 				chapter_name = chap.name;
 				if (!chap.disabled) {
 					if (scr_chapter_new(chapter_name)) {
-						global.chapter_icon_sprite = obj_img.image_cache[$ "creation/chapters/icons"][chap.icon];
+                        scr_load_chapter_icon("game", chap.icon, true);
+                        // global.chapter_icon.sprite = scr_image_cache("creation/chapters/icons", chap.icon,);
+						// global.chapter_icon_sprite = obj_img.image_cache[$ "creation/chapters/icons"][chap.icon];
 						global.chapter_icon_frame = 0;
+                        global.chapter_icon.icon_id = chap.icon;
+                        global.chapter_icon.type = "game";
 						global.chapter_icon_path = $"creation/chapters/icons";
 						global.chapter_icon_filename = chap.icon;
 
@@ -179,7 +183,7 @@ function draw_chapter_select(){
 		draw_sprite(spr_creation_icon, 0, grid.x1, grid.y1);
 		if (chap.loaded == false) {
 			// should be the icon that says 'custom'
-			draw_sprite_stretched(spr_icon_chapters, 31, grid.x1, grid.y1, grid.w, grid.h);
+			draw_sprite_stretched(scr_load_chapter_icon("game", 31), 0, grid.x1, grid.y1, grid.w, grid.h);
 		} else {
 			if (chap.icon > global.normal_icons_count) {
 				if (string_starts_with(chap.icon_name, "custom")) {
@@ -734,10 +738,11 @@ function draw_chapter_trait_select(){
                     scr_image("creation/chapters/icons",ic,x3,y3,96,96);
                 } 
                 if (ic>=global.normal_icons_count) and (ic<normal_and_builtin) {
-                    draw_sprite_stretched(spr_icon_chapters,ic-global.normal_icons_count,x3,y3,96,96);
+                    scr_image("creation/customicons", ic-global.normal_icons_count,x3,y3,96,96)
+                    // draw_sprite_stretched(spr_icon_chapters,,);
                 } 
                 if (ic>=normal_and_builtin) and (obj_cuicons.spr_custom[ic-normal_and_builtin]>0) and (obj_cuicons.spr_custom_icon[ic-normal_and_builtin]!=-1){
-                    draw_sprite_stretched(obj_cuicons.spr_custom_icon[ic-normal_and_builtin],0,x3,y3,96,96);
+                    draw_sprite_stretched(scr_load_chapter_icon("player", ic-normal_and_builtin),0,x3,y3,96,96);
                 }
                 
                 // highlight on hover

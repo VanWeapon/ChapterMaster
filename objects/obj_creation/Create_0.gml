@@ -623,16 +623,16 @@ for(var c = 1; c < 40; c++){
         );
         all_chapters[c].json = true;
         all_chapters[c].icon = json_chapter.icon;
+        all_chapters[c].icon_type = json_chapter.icon_type;
         all_chapters[c].icon_name = json_chapter.icon_name;
         all_chapters[c].splash = json_chapter.splash;
         all_chapters[c].loaded = true;
         all_chapters[c].disabled = false;
-    }
-    
-    var icon = file_exists($"{working_directory}\\images\\creation\\chapters\\icons\\{c}.png");
-    if(icon) {
-        // show_debug_message($"icon {c}.png exists");
-        global.normal_icons_count += 1;
+        var icon = file_exists($"{working_directory}\\images\\creation\\chapters\\icons\\{all_chapters[c].icon}.png");
+        if(icon) {
+            // show_debug_message($"icon {c}.png exists");
+            global.normal_icons_count += 1;
+        }
     }
 }
 
@@ -1124,7 +1124,18 @@ load_default_gear(eROLE.Librarian, "Librarian", "Force Staff", "Bolt Pistol", ST
 load_default_gear(eROLE.Sergeant, "Sergeant", "Chainsword", "Bolt Pistol", STR_ANY_POWER_ARMOUR, "", "");
 load_default_gear(eROLE.VeteranSergeant, "Veteran Sergeant", "Chainsword", "Plasma Pistol", STR_ANY_POWER_ARMOUR, "", "");
 
-builtin_icons = array_length(sprite_get_info(spr_icon_chapters).frames);
+builtin_icons = 0;
+var _search_custom = file_find_first($"{working_directory}\\images\\creation\\customicons\\*", fa_directory);
+while(_search_custom != ""){
+    builtin_icons++;
+    _search_custom = file_find_next();
+}
+var _search_player = file_find_first($"{PATH_custom_icons}\\*", fa_directory);
+while(_search_player != ""){
+    global.custom_icons++;
+    _search_player = file_find_next();
+}
+log_message($"Found {global.normal_icons_count} normal icons and {builtin_icons} builtins and {global.custom_icons} player icons");
 normal_and_builtin = global.normal_icons_count + builtin_icons;
 total_icons = global.normal_icons_count + builtin_icons + global.custom_icons;
 

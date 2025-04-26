@@ -52,7 +52,7 @@ if (!zoomed && !zui){
         sprh = 141;
     
     if (sprite_exists(global.chapter_icon_sprite)){
-        draw_sprite_stretched(global.chapter_icon_sprite, global.chapter_icon_frame, sprx, spry, sprw, sprh);
+        draw_sprite_stretched(global.chapter_icon_sprite, 0, sprx, spry, sprw, sprh);
     }
        
     

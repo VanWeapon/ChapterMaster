@@ -69,8 +69,11 @@ try {
 		// if (icon<=20) then draw_sprite_stretched(spr_icon,icon,436,74,128,128);
 
 		var sprx = 436, spry = 74, sprw = 128, sprh = 128;
-		if (global.chapter_icon_sprite != -1){
-			draw_sprite_stretched(global.chapter_icon_sprite, global.chapter_icon_frame, sprx, spry, sprw, sprh);
+		if (global.chapter_icon.sprite != -1){
+			draw_sprite_stretched(global.chapter_icon.sprite, 0, sprx, spry, sprw, sprh);
+		} else {
+			// red (?)
+			draw_sprite_stretched(scr_load_chapter_icon("game", 0), 0, sprx, spry, sprw, sprh);
 		}
 
 		obj_cursor.image_index = 0;

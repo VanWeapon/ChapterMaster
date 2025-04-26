@@ -550,7 +550,11 @@ function scr_image(path, image_id, x1, y1, width, height) {
 
 /// @description Use this to load the image at given path and id into the image cache so it can be 
 /// referenced in a different function to scr_image. Obtain the image later with `obj_img.image_cache[$path][image_id]`
-function scr_image_cache(path, image_id) {
+/// returns the sprite id if it exists or -1 if it doesnt
+/// @param {String} path the filepath after "images" in the 'datafiles' folder, OR, the filepath after "ChapterMaster" in the %LocalAppData% foler if `use_app_data` is true
+/// @param {Real} image_id the number of the image file, convention follows that numbers are "1.png" and so on, if using a prefix, include this in the `path` 
+/// @param {Bool} use_app_data determines whether reading from `datafiles` or `%LocalAppData%\ChapterMaster` folder 
+function scr_image_cache(path, image_id, use_app_data=false) {
     try {
         var drawing_sprite;
         var cache_arr_exists = struct_exists(obj_img.image_cache, path);
@@ -576,7 +580,12 @@ function scr_image_cache(path, image_id) {
             drawing_sprite = existing_sprite;
         } else if (image_id > -1) {
             var folders = string_replace_all(path, "/", "\\");
-            var dir = $"{working_directory}\\images\\{folders}\\{string(image_id)}.png";
+			var dir;
+			if(use_app_data){
+				dir = $"{folders}{string(image_id)}.png";
+			} else {
+				dir = $"{working_directory}\\images\\{folders}\\{string(image_id)}.png";
+			}
             if (file_exists(dir)) {
                 drawing_sprite = sprite_add(dir, 1, false, false, 0, 0);
                 if (image_id >= array_length(obj_img.image_cache[$ path])) {
@@ -585,11 +594,57 @@ function scr_image_cache(path, image_id) {
                 array_set(obj_img.image_cache[$ path], image_id, drawing_sprite);
             } else {
                 drawing_sprite = -1;
-                // log_error($"No directory/file found matching {dir}"); // too much noise
+                log_error($"No directory/file found matching {dir}"); // too much noise
             }
         }
         return drawing_sprite;
     } catch (_exception) {
         handle_exception(_exception);
     }
+}
+
+
+function scr_load_chapter_icon(_type, _id, update_global_var = false){
+	var iconPath = "";
+    var iconSprite = -1;
+    
+    switch(_type) {
+        case "chapters":
+            // These are built into the game, reference by name
+            iconSprite = scr_image_cache("creation/chapters/icons", _id);
+            break;
+            
+        case "game":
+            // These are built into the game, reference by name
+            iconSprite = scr_image_cache("creation/customicons", _id);
+            break;
+            
+        case "player":
+            // These are external files, need to be loaded from disk
+            iconPath = $"{PATH_custom_icons}{_id}.png";
+			if(!file_exists(iconPath)){
+				log_warning($"Attempted to retrieve a player custom sprite at filepath {iconPath} but found nothing");
+				iconSprite = scr_load_chapter_icon("game", 0);
+				break;
+			}
+            
+            // Create a unique sprite name based on the custom icon ID
+			iconSprite = scr_image_cache($"{PATH_custom_icons}", _id, true);
+			
+            // Check if sprite is already loaded
+            if (!sprite_exists(iconSprite)) {
+				log_warning($"Attempted to set sprite for a player custom sprite as {iconSprite} but no sprite found");
+                iconSprite = scr_load_chapter_icon("game", 0); // should load red (?) icon from customicons folder
+            }
+            break;
+    }
+	if(update_global_var){
+		global.chapter_icon.sprite = iconSprite;
+		global.chapter_icon.icon_id = _id;
+		global.chapter_icon.type = _type;
+	}
+    
+    // Return the loaded sprite
+    return iconSprite;
+
 }

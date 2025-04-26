@@ -11,6 +11,7 @@ function ChapterData() constructor {
 	splash = 0;
 	icon = 0;
 	icon_name = "aa";
+	icon_type = "game";
 	aspirant_trial = eTrials.BLOODDUEL;
 	fleet_type = ePlayerBase.none;
 	strength = 0;
