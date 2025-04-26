@@ -89,27 +89,21 @@ try {
 
 		var i;
 		i = 0;
-		repeat (290) {
-			i += 1;
-			if ((icon_name == "custom" + string(i)) && (obj_cuicons.spr_custom[i] > 0)) {
-				if (sprite_exists(obj_cuicons.spr_custom_icon[i])) {
-					draw_sprite_stretched(obj_cuicons.spr_custom_icon[i], 0, 436, 74, 128, 128);
+		// repeat (290) {
+		// 	i += 1;
+		// 	if ((icon_name == "custom" + string(i)) && (obj_cuicons.spr_custom[i] > 0)) {
+		// 		if (sprite_exists(obj_cuicons.spr_custom_icon[i])) {
+		// 			draw_sprite_stretched(obj_cuicons.spr_custom_icon[i], 0, 436, 74, 128, 128);
 
-					// obj_cuicons.spr_custom_icon[ic-78]
-				}
-			}
-		}
+		// 			// obj_cuicons.spr_custom_icon[ic-78]
+		// 		}
+		// 	}
+		// }
 
 		// draw_set_color(c_orange);
 		// draw_text(436+64,74-30,string(icon_name));
 
 		if (slide == 2) {
-			/*if (scr_hit(548,149,584,193)){obj_cursor.image_index=1;
-            if (cooldown<=0) and (mouse_left>=1){cooldown=8000;scr_icon("-");}
-        }
-        if (scr_hit(595,149,634,193)){obj_cursor.image_index=1;
-            if (cooldown<=0) and (mouse_left>=1){cooldown=8000;scr_icon("+");}
-        }*/
 
 			if (founding != 0) {
 				draw_set_font(fnt_40k_30b);

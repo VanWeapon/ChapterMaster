@@ -185,7 +185,6 @@ function scr_creation(slide_num) {
 	// 6 to finish
 	if (slide_num=6){
 	    if (chapter_master_name!="" && chapter_master_melee!=0 && chapter_master_ranged!=0 && chapter_master_specialty!=0){
-	        global.icon_name=obj_creation.icon_name;
 	        cooldown=9999;
 			instance_create(0,0,obj_ini);
 			audio_stop_all();

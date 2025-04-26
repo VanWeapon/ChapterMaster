@@ -74,7 +74,7 @@ if (global.load == -1 && (obj_controller.zoomed || in_camera_view(star_box_shape
             var main_color = make_colour_from_array(obj_controller.body_colour_replace);
             var right_pauldron = make_colour_from_array(obj_controller.pauldron_colour_replace);
             draw_sprite_general(spr_p_name_bg, 0, 0, 0, string_width(name) + 60, 32, xx-(panel_width/2), yy+30, 1, 1, 0, main_color, main_color, right_pauldron, right_pauldron, 1);
-            var faction_sprite = global.chapter_icon_sprite;
+            var faction_sprite = global.chapter_icon.sprite;
             var _faction_index = 0;
             draw_sprite_ext(faction_sprite,_faction_index,xx+(panel_width/2)-30,yy+30, 0.2, 0.2, 0, c_white, 1);
             //context.set_vertical_gradient(main_color, right_pauldron);

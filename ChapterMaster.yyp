@@ -786,7 +786,6 @@
     {"id":{"name":"scr_has_adv","path":"scripts/scr_has_adv/scr_has_adv.yy",},},
     {"id":{"name":"scr_has_disadv","path":"scripts/scr_has_disadv/scr_has_disadv.yy",},},
     {"id":{"name":"scr_hit","path":"scripts/scr_hit/scr_hit.yy",},},
-    {"id":{"name":"scr_icon","path":"scripts/scr_icon/scr_icon.yy",},},
     {"id":{"name":"scr_image","path":"scripts/scr_image/scr_image.yy",},},
     {"id":{"name":"scr_imperial_manage_fleet_functions","path":"scripts/scr_imperial_manage_fleet_functions/scr_imperial_manage_fleet_functions.yy",},},
     {"id":{"name":"scr_imperial_navy_functions","path":"scripts/scr_imperial_navy_functions/scr_imperial_navy_functions.yy",},},

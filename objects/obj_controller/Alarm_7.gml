@@ -13,4 +13,3 @@ if (obj_controller.marines+obj_controller.command<=50) and (global.defeat!=2) th
 
 room_goto(Defeat);
 global.icon=obj_ini.icon;
-global.icon_name=obj_ini.icon_name;

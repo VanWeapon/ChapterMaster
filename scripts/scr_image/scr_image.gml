@@ -603,7 +603,11 @@ function scr_image_cache(path, image_id, use_app_data=false) {
     }
 }
 
-
+/// @description Simplified handling of chapter icon stuff for both Creation and player chapter icon 
+/// attempting to keep things consistent and easy through save/load and etc 
+/// @param {"chapters"|"game"|"player"} _type chapters is for premade chapter icons, in images/creation/chapters/icons. Game for builtin icons in creation/customicons. player for Custom Icons in appdata folder
+/// @param {Real} _id the id corresponding to file name e.g. "1.png" _id = 1
+/// @param {Bool} update_global_var set to true when wanting to update the player's icon, false if you just want to return the sprite for further use
 function scr_load_chapter_icon(_type, _id, update_global_var = false){
 	var iconPath = "";
     var iconSprite = -1;
@@ -642,6 +646,7 @@ function scr_load_chapter_icon(_type, _id, update_global_var = false){
 		global.chapter_icon.sprite = iconSprite;
 		global.chapter_icon.icon_id = _id;
 		global.chapter_icon.type = _type;
+		show_debug_message($"Updated global chapter icons {_type} {_id} - {iconSprite}")
 	}
     
     // Return the loaded sprite

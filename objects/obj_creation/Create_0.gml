@@ -86,9 +86,6 @@ restarted=0;
 custom_icon=0;
 
 /// Stores the chapter icon in one spot so we dont have to keep checking whether we're using a custom image or not every time we wanna display it somewhere
-global.chapter_icon_sprite = spr_icon_chapters;
-global.chapter_icon_frame = 0;
-global.chapter_icon_path = "";
 global.chapter_id = 0;
 
 
@@ -387,7 +384,6 @@ chapter_name="Unnamed";
 chapter_string="Unnamed";
 chapter_year=0;
 icon=1;
-icon_name="da";
 /// @instancevar {Real} custom 0 if premade, 1 if random, 2 if custom
 custom=0;
 /// @instancevar {Enum.ePROGENITOR} founding 
@@ -624,7 +620,6 @@ for(var c = 1; c < 40; c++){
         all_chapters[c].json = true;
         all_chapters[c].icon = json_chapter.icon;
         all_chapters[c].icon_type = json_chapter.icon_type;
-        all_chapters[c].icon_name = json_chapter.icon_name;
         all_chapters[c].splash = json_chapter.splash;
         all_chapters[c].loaded = true;
         all_chapters[c].disabled = false;

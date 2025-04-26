@@ -1,8 +1,5 @@
 
-if (!instance_exists(obj_cuicons)){
-    global.custom_icons=0;
-    instance_create(0,0,obj_cuicons);
-}
+
 
 global.save_version=0;
 global.cheat_req=false;
@@ -11,6 +8,7 @@ global.cheat_disp=false;
 global.cheat_debug=false;
 global.language="en";
 
+global.custom_icons = 0;
 global.chapter_icon = {
     /// either "game", "custom" or "player"
     type: "",

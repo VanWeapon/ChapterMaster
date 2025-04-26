@@ -23,7 +23,7 @@ function scr_chapter_random(argument0) {
 	phrase1="";phrase2="";
 
 	chapter_name="Unnamed";chapter_string="Unnamed";
-	icon=1;icon_name="da";
+	icon=1;
 	founding=1;found_secret=0;
 	points=0;maxpoints=100;
 	fleet_type=1;strength=5;cooperation=5;purity=5;stability=90;
@@ -93,7 +93,6 @@ function scr_chapter_random(argument0) {
     
 	    discipline=choose("librarius","librarius","librarius","librarius","biomancy","pyromancy","telekinesis");
     
-	    scr_icon("random");
 	}
 
 

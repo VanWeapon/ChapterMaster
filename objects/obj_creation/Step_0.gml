@@ -90,7 +90,6 @@ if (change_slide==35) or (change_slide==36) or (chapter_name=="Doom Benefactors"
         chapter_name="Unnamed";
         chapter_string="Unnamed";
         icon=1;
-        icon_name="da";
         custom=0;
         founding=1;
         points=0;
