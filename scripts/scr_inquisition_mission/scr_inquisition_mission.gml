@@ -162,7 +162,7 @@ function mission_inquisition_ethereal(){
     var eta = scr_mission_eta(star.x,star.y,1);
     eta = min(max(eta,12),50);
     var text = $"An Inquisitor is trusting you with a special mission.";
-    text +=$"They require that you capture a Tau Ethereal from the planet {string(star.name)} {scr_roman(planet)}for research purposes.  You have{string(eta)} months to locate and capture one.  Can your chapter handle this mission?";
+    text +=$"They require that you capture a Tau Ethereal from the planet {string(star.name)} {scr_roman(planet)} for research purposes. You have {string(eta)} months to locate and capture one. Can your chapter handle this mission?";
     scr_popup("Inquisition Mission",text,"inquisition",$"ethereal|{string(star.name)}|{string(planet)}|{string(eta+1)}|");
 
 }
