@@ -51,14 +51,10 @@ try {
 		if (press == 1) {
 			var del = obj_saveload.save[save];
 			var _save_file = string(PATH_save_files, del);
-			var _save_preview = string(PATH_save_previews, del);
 			if (file_exists(_save_file)) {
 				file_delete(_save_file);
 				if (file_exists($"save{del}log.ini")) {
 					file_delete($"save{del}log.ini");
-				}
-				if (file_exists(_save_preview)) {
-					file_delete(_save_preview);
 				}
 				with (obj_saveload) {
 					instance_destroy();
@@ -489,7 +485,7 @@ try {
 
 		if (press > 0) {
 			var randa, randa2;
-			randa = roll_dice(1, 100, "high");
+			randa = roll_dice_chapter(1, 100, "high");
 			randa2 = roll_dice(1, 100);
 		}
 
@@ -680,13 +676,13 @@ try {
 
             _ruins.determine_race();
 
-            dice = roll_dice(1, 100, "high");
+            dice = roll_dice_chapter(1, 100, "high");
             ruins_battle = dice <= 50;
 
             // ruins_battle=1;
 
             if (ruins_battle == 1) {
-                dice = roll_dice(1, 100, "low");
+                dice = roll_dice_chapter(1, 100, "low");
 
                 if (dice >= 0 && dice <= 60) {
                     battle_threat = 1;
@@ -1363,15 +1359,6 @@ try {
 						}
 						if (obj_ini.home_type == "Lava") {
 							image = "fortress_lava";
-						}
-						if (obj_ini.icon_name == "dorf1") {
-							image = "fortress_dorf";
-						}
-						if (obj_ini.icon_name == "dorf2") {
-							image = "fortress_dorf";
-						}
-						if (obj_ini.icon_name == "dorf3") {
-							image = "fortress_dorf";
 						}
 						last_artifact = scr_add_artifact("good", "inquisition", 0, obj_ini.home_name, 2);
 					} else if (obj_ini.fleet_type != ePlayerBase.home_world) {

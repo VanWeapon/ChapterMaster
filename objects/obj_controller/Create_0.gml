@@ -94,7 +94,7 @@ complex_event=false;
 current_eventing="";
 chaos_rating=0;
 chapter_made = 0;
-obj_cuicons.alarm[1]=1; // Clean up custom icons
+// obj_cuicons.alarm[1]=1; // Clean up custom icons
 map_scale = 1;
 scale_mod = 1;
 
@@ -127,7 +127,6 @@ obj_controller.restart_founding="";
 obj_controller.restart_secret="";
 for(var i=0; i<=11; i++){obj_controller.restart_title[i]="";}
 obj_controller.restart_icon=0;
-obj_controller.restart_icon_name="";
 obj_controller.restart_powers="";
 for(var ad=0; ad<5; ad ++){
     obj_controller.restart_adv[ad]="";
