@@ -3201,6 +3201,15 @@ function scr_initialize_custom() {
         scr_add_item("MK4 Maximus", irandom_range(3, 18));
 	}
 
+	if(scr_has_adv("Ancient Armoury")){
+		scr_add_item("MK4 Maximus", irandom_range(5, 10));
+		scr_add_item("MK5 Heresy", irandom_range(5, 10));
+		scr_add_item("MK3 Iron Armour", irandom_range(1, 5));
+		scr_add_item("MK6 Corvus", irandom_range(10, 15));
+		scr_add_item("MK7 Aquila", -10);
+		scr_add_item("MK8 Errant", -1);
+	}
+
     gene_slaves = [];
     
 	var bloo = 0,

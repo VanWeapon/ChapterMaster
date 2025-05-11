@@ -786,6 +786,12 @@ var all_advantages = [
             meta : ["Gear Quality"]
         },
         {
+            name : "Ancient Armoury",
+            description : "Your chapter is dedicated to preserving ancient wargear and as such have substantially higher amounts of rare Heresy-era armour than normal.",
+            value: 20,
+            meta : ["Gear Quality"]
+        },
+        {
             name : "Enemy: Eldar",
             description : "Eldar are particularly hated by your chapter.  When fighting Eldar damage is increased.",
             value : 20,

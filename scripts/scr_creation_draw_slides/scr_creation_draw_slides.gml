@@ -265,6 +265,8 @@ function draw_chapter_select(){
 
 
 	grid.new_cell();
+	grid.new_cell();
+	grid.new_cell(); //padding between fanmade and the custom/random buttons
 
 
     // Blank Custom Chapter
