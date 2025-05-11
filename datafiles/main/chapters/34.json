@@ -1,5 +1,6 @@
 {
   "chapter": {
+    "name": "Flesh Tearers",
     "mutations": {
       "betchers": 0.0,
       "catalepsean": 0.0,
@@ -162,7 +163,6 @@
       ""
     ],
     "discipline": "librarius",
-    "name": "Flesh Tearers",
     "full_liveries": [
       {
         "right_trim": 7.0,
