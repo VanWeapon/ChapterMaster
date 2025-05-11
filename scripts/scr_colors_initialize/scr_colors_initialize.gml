@@ -36,7 +36,8 @@ enum Colors {
     Dark_Ultramarine,
     Purple,
     Pink,
-    Imperial_Fists
+    Imperial_Fists,
+    Raptors_Green
 }
 function scr_colors_initialize() {
 
@@ -78,7 +79,9 @@ function scr_colors_initialize() {
         ["Dark Ultramarine", 31, 74, 127],
         ["Purple", 117, 0, 217],
         ["Pink", 255, 0, 198],
-        ["Imperial Fists", 255, 200, 0]
+        ["Imperial Fists", 255, 200, 0],
+        ["Raptors Green", 65, 74, 29],
+
     ];
 
 	global.colors_count = array_length(colors_array);
