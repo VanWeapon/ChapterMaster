@@ -2798,8 +2798,13 @@ function scr_initialize_custom() {
 			switch (_role) {
 				// MAINLINE
 				case "tacticals":
-					_rolename = roles.tactical;
-					_erole = eROLE.Tactical;
+					if(scr_has_adv("Elite Guard")){
+						_rolename = roles.veteran;
+						_erole = eROLE.Veteran;
+					} else {
+						_rolename = roles.tactical;
+						_erole = eROLE.Tactical;
+					}
 					break;
 				case "assaults":
 					_rolename = roles.assault;
@@ -2814,6 +2819,7 @@ function scr_initialize_custom() {
 					}
 					break;
 				case "scouts":
+                    _unit_type = "scout";                    
 					_rolename = roles.scout;
 					_erole = eROLE.Scout;
 					break;
@@ -2969,6 +2975,7 @@ function scr_initialize_custom() {
 						_wep2 = wep2[defaults_slot][eROLE.Terminator];
 					}
 					break;
+
 			
 				// VEHICLES
 				case "rhinos":
