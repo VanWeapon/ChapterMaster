@@ -1055,6 +1055,7 @@ function scr_initialize_custom() {
 		landspeeder = 0;
 		rhino = 0;
 		whirlwind = 0;
+		dreadnought = 0;
 
 	}
 	if  scr_has_disadv("Enduring Angels") {
@@ -2509,7 +2510,7 @@ function scr_initialize_custom() {
 			tacticals: 0,
 			assaults: 0,
 			devastators: 0,
-			dreadnoughts: dreadnought+1,
+			dreadnoughts: dreadnought == 0 ? 0 : dreadnought+1, //handle obliterated
 			predators: predator,
 			landraiders: landraider
 		},
@@ -2598,7 +2599,7 @@ function scr_initialize_custom() {
 		}
 	}
 
-	// log_message($"Pre balancing company totals: {json_stringify(companies,true)}")
+	log_message($"Pre balancing company totals: {json_stringify(companies,true)}")
 	// Extra vehicles loaded from json files all get dumped into the 10th company for the player to sort out
 	
 	var vehicle_keys = ["rhino", "whirlwind", "predator", "land_raider", "land_speeder"];
@@ -2638,6 +2639,9 @@ function scr_initialize_custom() {
 	var _moved_scouts = 0;
 
 	var _coys = struct_get_names(companies);
+	function _is_terminator (_armour) {
+		return array_contains(["Terminator Armour", "Tartaros"], _armour);
+	};
 	for(var _c = 0, _clen =  array_length(_coys); _c < _clen; _c++ ){
 		var k = 0, v = 0;//k = marine slot, v = vehicle slot
 		
@@ -2762,16 +2766,14 @@ function scr_initialize_custom() {
 			}
 		}
 
-		// log_message($"New Company Totals: eq specialists: {equal_specialists}: scout coy {scout_company_behaviour} equal_scouts: {equal_scouts}");
-		// log_message($"Company {_coy.coy}: {json_stringify(_coy,true)}");
+		log_message($"New Company Totals: eq specialists: {equal_specialists}: scout coy {scout_company_behaviour} equal_scouts: {equal_scouts}");
+		log_message($"Company {_coy.coy}: {json_stringify(_coy,true)}");
 
 
 		var attrs = struct_get_names(_coy);
 		
 		
-		var _is_terminator = function(_armour) {
-			return array_contains(["Terminator Armour", "Tartaros"], _armour);
-		};
+		
 		// log_message($"attrs {attrs}");
 
 		for(var _a = 0, _alen =  array_length(attrs); _a < _alen; _a++ ){
@@ -3317,7 +3319,7 @@ function add_unit_to_company(ttrpg_name, company, slot, role_name, role_id, wep1
     } else {
         spawn_unit.roll_age();
         spawn_unit.roll_experience();
-    }    
+    }   
 	if(role_id == eROLE.HonourGuard){
 		spawn_unit.add_trait(choose("guardian", "champion", "observant", "perfectionist","natural_leader"));
 	}

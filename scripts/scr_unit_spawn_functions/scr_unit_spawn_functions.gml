@@ -196,7 +196,8 @@ function scr_marine_spawn_armour() {
 
 	var _terminator_roles_array = [obj_ini.role[100][eROLE.Captain], obj_ini.role[100][eROLE.Champion], obj_ini.role[100][eROLE.Ancient], obj_ini.role[100][eROLE.Chaplain], obj_ini.role[100][eROLE.Apothecary], obj_ini.role[100][eROLE.Librarian], obj_ini.role[100][eROLE.Techmarine]];
 
-	if (_company == 1 && array_contains(_terminator_roles_array, _role)) {
+	// terminator/tartaros should be decided in scr_initialize_custom
+	if (_company == 1 && array_contains(_terminator_roles_array, _role) && armour() == "Terminator Armour") {
 		_terminator_armour_roll(_total_score);
 	} else {
 		switch (_role) {
