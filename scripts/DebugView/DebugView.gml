@@ -17,7 +17,6 @@ function DebugView(view_name, obj) constructor {
     }
 
     static add_slider_int = function(_name, min, max, label = _name, step = 1){
-        // dbgref: Array<Undefined.DbgRef>|Undefined.DbgRef, minimum?: Real, maximum?: Real, label?: String, step?: Real)
         dbg_slider_int(ref_create(self.obj_ref, _name), min, max, label, step);
         return self;
     }
