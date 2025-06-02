@@ -18,10 +18,6 @@
 #macro LIST_BASIC_POWER_ARMOUR ["MK7 Aquila", "MK6 Corvus", "MK5 Heresy", "MK8 Errant", "MK4 Maximus", "MK3 Iron Armour","Power Armour"]
 #macro LIST_TERMINATOR_ARMOUR ["Terminator Armour", "Tartaros"]
 
-// to run in debug mode, change stitch extension setting `stitch.run.defaultConfig` to "DebugConfig"
-// or in GM change config to DefaultConfig in the top right: https://manual.gamemaker.io/lts/en/index.htm#t=Settings%2FConfigurations.htm
-#macro DEBUG_MODE false
-#macro DebugConfig:DEBUG_MODE true
 
 enum luck {
     bad = -1,

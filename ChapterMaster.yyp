@@ -5,9 +5,7 @@
     {"$GMAudioGroup":"v1","%Name":"audiogroup_default","exportDir":"","name":"audiogroup_default","resourceType":"GMAudioGroup","resourceVersion":"2.0","targets":-1,},
   ],
   "configs":{
-    "children":[
-      {"children":[],"name":"DebugConfig",},
-    ],
+    "children":[],
     "name":"Default",
   },
   "defaultScriptType":1,
@@ -717,6 +715,7 @@
     {"id":{"name":"clean_tags","path":"scripts/clean_tags/clean_tags.yy",},},
     {"id":{"name":"d3d_set_fog","path":"scripts/d3d_set_fog/d3d_set_fog.yy",},},
     {"id":{"name":"debugl","path":"scripts/debugl/debugl.yy",},},
+    {"id":{"name":"DebugView","path":"scripts/DebugView/DebugView.yy",},},
     {"id":{"name":"DiploBasicNodes","path":"scripts/DiploBasicNodes/DiploBasicNodes.yy",},},
     {"id":{"name":"DiploCommonComponents","path":"scripts/DiploCommonComponents/DiploCommonComponents.yy",},},
     {"id":{"name":"draw_line_dashed","path":"scripts/draw_line_dashed/draw_line_dashed.yy",},},
