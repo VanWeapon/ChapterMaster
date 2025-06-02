@@ -47,9 +47,9 @@ if (menu=1) or (menu=2){// This is the other one
         draw_set_halign(fa_left);
         draw_text(xx+40,yy+730,"Menu: "+string(menu)+", First Open: "+string(first_open)+", Top Save: "+string(top));
         draw_text(xx+40,yy+750,string(debug));
-        draw_set_halign(fa_center);
     }
     
+    draw_set_halign(fa_center);
     draw_set_color(0);
     
     draw_sprite(spr_save_header,0,xx+0,yy+27);
