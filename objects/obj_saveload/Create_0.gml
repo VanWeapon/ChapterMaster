@@ -113,7 +113,6 @@ if (file_exists("saves.ini")){
 // dbg_watch(ref_create(self, "debug"), "debug");
 
 // show_debug_overlay(false);
-
 var view = new DebugView("Save Debug", self);
 view.add_section("Save Vars")
 .add_watch("menu")

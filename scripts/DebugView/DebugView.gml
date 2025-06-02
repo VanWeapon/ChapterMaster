@@ -4,9 +4,9 @@
 /// @param {String} view_name the title of the view
 /// @param {Id.Instance|Struct} obj The object being debugged. Can be a regular struct, an instance or a full object
 function DebugView(view_name, obj) constructor {
-    view_ptr = dbg_view(view_name, false);
+
+    view_ptr = dbg_view(view_name, false); // calling dbg_view opens the overlay automatically 
     obj_ref = obj;
-    show_debug_overlay(false);
 
     static add_watch = function (_name, _label = _name){
         dbg_watch(ref_create(self.obj_ref, _name), _label);
