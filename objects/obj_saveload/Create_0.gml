@@ -104,19 +104,11 @@ if (file_exists("saves.ini")){
 
     ini_close();
 }
-
-
-// dbg_view("Save Debug",false);
-// dbg_watch(ref_create(self, "menu"), "menu");
-// dbg_watch(ref_create(self, "first_open"), "first_open");
-// dbg_watch(ref_create(self, "top"), "top");
-// dbg_watch(ref_create(self, "debug"), "debug");
-
-// show_debug_overlay(false);
 var view = new DebugView("Save Debug", self);
 view.add_section("Save Vars")
 .add_watch("menu")
 .add_watch("first_open")
 .add_watch("top")
 .add_watch("debug")
+.dump_props()
 .hide();
