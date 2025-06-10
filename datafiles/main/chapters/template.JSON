@@ -181,7 +181,7 @@
             "assault": 0,
             "veteran": 0,
             "devastator": 0,
-            "dreadnought": 0,
+            "dreadnought": 0
         },
         /**
         * * Default Marine strength
